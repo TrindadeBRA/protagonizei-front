@@ -6,8 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 import type {
-  GetAssets200,
-  GetAssets401,
   GetConfigs200,
   GetConfigs401,
   GetPostSlug200,
@@ -17,16 +15,6 @@ import type {
   GetPostSlugs200,
   GetPostSlugs401,
   GetPostSlugsParams,
-  GetProductLineSlug200,
-  GetProductLineSlug401,
-  GetProductLineSlug404,
-  GetProductLineSlugs200,
-  GetProductLineSlugs401,
-  GetProducts200,
-  GetProducts401,
-  GetSegmentSlug200,
-  GetSegmentSlug401,
-  GetSegmentSlug404,
   PostContactFormSubmit200,
   PostContactFormSubmit400,
   PostContactFormSubmit401,
@@ -82,53 +70,6 @@ export const getConfigs = async ( options?: RequestInit): Promise<getConfigsResp
 
 
 /**
- * Retorna uma lista de todos os produtos com suas taxonomias hierárquicas e campos personalizados
- * @summary Listar todos os produtos
- */
-export type getProductsResponse200 = {
-  data: GetProducts200
-  status: 200
-}
-
-export type getProductsResponse401 = {
-  data: GetProducts401
-  status: 401
-}
-    
-export type getProductsResponseComposite = getProductsResponse200 | getProductsResponse401;
-    
-export type getProductsResponse = getProductsResponseComposite & {
-  headers: Headers;
-}
-
-export const getGetProductsUrl = () => {
-
-
-  
-
-  return `/products`
-}
-
-export const getProducts = async ( options?: RequestInit): Promise<getProductsResponse> => {
-  
-  const res = await fetch(getGetProductsUrl(),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-)
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  const data: getProductsResponse['data'] = body ? JSON.parse(body) : {}
-
-  return { data, status: res.status, headers: res.headers } as getProductsResponse
-}
-
-
-
-/**
  * Cria um novo registro de contato no WordPress com suporte para upload de arquivos. Todos os campos são obrigatórios exceto o arquivo anexo.
  * @summary Enviar formulário de contato
  */
@@ -171,6 +112,9 @@ export const postContactFormSubmit = async (postContactFormSubmitBody: PostConta
 formData.append('name', postContactFormSubmitBody.name)
 formData.append('email', postContactFormSubmitBody.email)
 formData.append('phone', postContactFormSubmitBody.phone)
+if(postContactFormSubmitBody.linkedin !== undefined) {
+ formData.append('linkedin', postContactFormSubmitBody.linkedin)
+ }
 formData.append('message', postContactFormSubmitBody.message)
 formData.append('tag', postContactFormSubmitBody.tag)
 if(postContactFormSubmitBody.attachment !== undefined) {
@@ -250,157 +194,6 @@ export const getPostSlugs = async (params?: GetPostSlugsParams, options?: Reques
 
 
 /**
- * Retorna uma lista de produtos filtrados por uma linha de produto específica.
- * @summary Obter produtos por linha
- */
-export type getProductLineSlugResponse200 = {
-  data: GetProductLineSlug200
-  status: 200
-}
-
-export type getProductLineSlugResponse401 = {
-  data: GetProductLineSlug401
-  status: 401
-}
-
-export type getProductLineSlugResponse404 = {
-  data: GetProductLineSlug404
-  status: 404
-}
-    
-export type getProductLineSlugResponseComposite = getProductLineSlugResponse200 | getProductLineSlugResponse401 | getProductLineSlugResponse404;
-    
-export type getProductLineSlugResponse = getProductLineSlugResponseComposite & {
-  headers: Headers;
-}
-
-export const getGetProductLineSlugUrl = (slug: string,) => {
-
-
-  
-
-  return `/product-line/${slug}`
-}
-
-export const getProductLineSlug = async (slug: string, options?: RequestInit): Promise<getProductLineSlugResponse> => {
-  
-  const res = await fetch(getGetProductLineSlugUrl(slug),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-)
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  const data: getProductLineSlugResponse['data'] = body ? JSON.parse(body) : {}
-
-  return { data, status: res.status, headers: res.headers } as getProductLineSlugResponse
-}
-
-
-
-/**
- * Retorna uma lista de produtos filtrados por um segmento específico, organizados por linhas de produto
- * @summary Listar produtos por segmento
- */
-export type getSegmentSlugResponse200 = {
-  data: GetSegmentSlug200
-  status: 200
-}
-
-export type getSegmentSlugResponse401 = {
-  data: GetSegmentSlug401
-  status: 401
-}
-
-export type getSegmentSlugResponse404 = {
-  data: GetSegmentSlug404
-  status: 404
-}
-    
-export type getSegmentSlugResponseComposite = getSegmentSlugResponse200 | getSegmentSlugResponse401 | getSegmentSlugResponse404;
-    
-export type getSegmentSlugResponse = getSegmentSlugResponseComposite & {
-  headers: Headers;
-}
-
-export const getGetSegmentSlugUrl = (slug: string,) => {
-
-
-  
-
-  return `/segment/${slug}`
-}
-
-export const getSegmentSlug = async (slug: string, options?: RequestInit): Promise<getSegmentSlugResponse> => {
-  
-  const res = await fetch(getGetSegmentSlugUrl(slug),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-)
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  const data: getSegmentSlugResponse['data'] = body ? JSON.parse(body) : {}
-
-  return { data, status: res.status, headers: res.headers } as getSegmentSlugResponse
-}
-
-
-
-/**
- * Retorna uma lista de dados das linhas de produtos que são categorias pai (não inclui subcategorias)
- * @summary Listar slugs das linhas de produtos principais
- */
-export type getProductLineSlugsResponse200 = {
-  data: GetProductLineSlugs200
-  status: 200
-}
-
-export type getProductLineSlugsResponse401 = {
-  data: GetProductLineSlugs401
-  status: 401
-}
-    
-export type getProductLineSlugsResponseComposite = getProductLineSlugsResponse200 | getProductLineSlugsResponse401;
-    
-export type getProductLineSlugsResponse = getProductLineSlugsResponseComposite & {
-  headers: Headers;
-}
-
-export const getGetProductLineSlugsUrl = () => {
-
-
-  
-
-  return `/product-line-slugs`
-}
-
-export const getProductLineSlugs = async ( options?: RequestInit): Promise<getProductLineSlugsResponse> => {
-  
-  const res = await fetch(getGetProductLineSlugsUrl(),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-)
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  const data: getProductLineSlugsResponse['data'] = body ? JSON.parse(body) : {}
-
-  return { data, status: res.status, headers: res.headers } as getProductLineSlugsResponse
-}
-
-
-
-/**
  * Retorna os detalhes de um post específico usando seu slug
  * @summary Obter post por slug
  */
@@ -453,51 +246,4 @@ export const getPostSlug = async (slug: string, options?: RequestInit): Promise<
   const data: getPostSlugResponse['data'] = body ? JSON.parse(body) : {}
 
   return { data, status: res.status, headers: res.headers } as getPostSlugResponse
-}
-
-
-
-/**
- * Retorna os PDFs configurados no painel administrativo, incluindo apresentação da empresa e catálogos
- * @summary Obter assets do site
- */
-export type getAssetsResponse200 = {
-  data: GetAssets200
-  status: 200
-}
-
-export type getAssetsResponse401 = {
-  data: GetAssets401
-  status: 401
-}
-    
-export type getAssetsResponseComposite = getAssetsResponse200 | getAssetsResponse401;
-    
-export type getAssetsResponse = getAssetsResponseComposite & {
-  headers: Headers;
-}
-
-export const getGetAssetsUrl = () => {
-
-
-  
-
-  return `/assets`
-}
-
-export const getAssets = async ( options?: RequestInit): Promise<getAssetsResponse> => {
-  
-  const res = await fetch(getGetAssetsUrl(),
-  {      
-    ...options,
-    method: 'GET'
-    
-    
-  }
-)
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
-  const data: getAssetsResponse['data'] = body ? JSON.parse(body) : {}
-
-  return { data, status: res.status, headers: res.headers } as getAssetsResponse
 }

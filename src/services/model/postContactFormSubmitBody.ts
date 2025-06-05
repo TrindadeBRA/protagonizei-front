@@ -13,6 +13,8 @@ export type PostContactFormSubmitBody = {
   email: string;
   /** Telefone do contato (obrigatório) */
   phone: string;
+  /** Perfil do LinkedIn do contato (opcional) */
+  linkedin?: string;
   /** Mensagem do contato (obrigatório) */
   message: string;
   /** Tag para categorizar o contato (obrigatório) */
