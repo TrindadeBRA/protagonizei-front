@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Menu, X, Sparkles } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
+import Link from "next/link";
 import {
   Sheet,
   SheetContent,
@@ -11,24 +12,22 @@ import {
   SheetTrigger,
 } from "@/src/components/ui/sheet";
 
+type NavLink = {
+  label: string;
+  href: string;
+};
+
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsOpen(false); // Fecha o menu mobile após clicar
-  };
-
-  const navLinks = [
-    { label: "Início", id: "hero" },
-    { label: "Benefícios", id: "benefits" },
-    { label: "Como Funciona", id: "how-it-works" },
-    { label: "Exemplos", id: "examples" },
-    { label: "Depoimentos", id: "testimonials" },
-    { label: "FAQ", id: "faq" },
+  const navLinks: NavLink[] = [
+    { label: "Início", href: "/#hero" },
+    { label: "Benefícios", href: "/#benefits" },
+    { label: "Como Funciona", href: "/#how-it-works" },
+    { label: "Exemplos", href: "/#examples" },
+    { label: "Depoimentos", href: "/#testimonials" },
+    { label: "FAQ", href: "/#faq" },
+    { label: "Blog", href: "/blog" },
   ];
 
   return (
@@ -36,26 +35,26 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div 
+          <Link 
+            href="/"
             className="flex items-center space-x-2 cursor-pointer"
-            onClick={() => scrollToSection("hero")}
           >
             <Sparkles className="h-8 w-8 text-pink-500" />
             <span className="text-xl font-bold font-heading text-purple-700">
               Protagonizei
             </span>
-          </div>
+          </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => scrollToSection(link.id)}
+              <Link
+                key={link.href}
+                href={link.href}
                 className="text-purple-700 hover:text-pink-600 transition-colors duration-200 font-medium"
               >
                 {link.label}
-              </button>
+              </Link>
             ))}
           </div>
 
@@ -76,13 +75,14 @@ const Navigation = () => {
                 </SheetHeader>
                 <div className="flex flex-col space-y-4 mt-8">
                   {navLinks.map((link) => (
-                    <button
-                      key={link.id}
-                      onClick={() => scrollToSection(link.id)}
+                    <Link
+                      key={link.href}
+                      href={link.href}
                       className="text-left py-3 px-4 text-purple-700 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-colors duration-200 font-medium"
+                      onClick={() => setIsOpen(false)}
                     >
                       {link.label}
-                    </button>
+                    </Link>
                   ))}
                 </div>
               </SheetContent>
