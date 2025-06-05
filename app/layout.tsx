@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Comic_Neue, Fredoka, Inter } from "next/font/google";
 import "./globals.css";
 import "toastify-js/src/toastify.css"
-import Header from "@/src/components/Header";
 import Script from "next/script";
 import { WhatsAppFloat } from "../src/components/WhatsAppFloat";
 import Footer from "@/src/components/Footer";
@@ -11,11 +10,25 @@ import { CookieConsentComponent } from "@/src/components/CookieConsentComponent"
 import { GoogleAnalytics } from "@next/third-parties/google";
 import customFetch from "@/src/services/custom-fetch";
 import { getGetConfigsUrl } from "@/src/services/api";
+import Navigation from "@/src/components/Navigation";
 
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
 });
+
+const fredoka = Fredoka({
+  variable: '--font-fredoka',
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+});
+
+const comicNeue = Comic_Neue({
+  variable: '--font-comic-neue',
+  subsets: ['latin'],
+  weight: ['300', '400', '700'],
+});
+
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://thetrinityweb.com.br'),
@@ -65,11 +78,11 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           src="//translate.google.com/translate_a/element.js?cb=TranslateInit"
           strategy="afterInteractive"
         />
-        
+
       </head>
 
       <body
-        className={`${inter.variable} antialiased !bg-white !text-black !top-0`}
+        className={`${inter.variable} ${fredoka.variable} ${comicNeue.variable} antialiased !bg-white !text-black !top-0 !pt-16`}
       >
 
         {/* Google Tag Manager */}
@@ -82,7 +95,7 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 
         <WhatsAppFloat whatsAppUrl={whatsAppUrl} />
         <AOS_Init />
-        <Header />
+        <Navigation />
         {children}
         <Footer />
         {

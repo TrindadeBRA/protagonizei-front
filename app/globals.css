@@ -8,9 +8,6 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-inter: var(--font-inter);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,111 +24,93 @@ body {
 }
 
 @layer utilities {
-  /* Gradiente personalizado para o fundo */
-  .bg-gradient-custom {
-    background-image: linear-gradient(to right,
-      #672873,
-      #9a5183,
-      #cc2e4a,
-      #dd5736,
-      #e37d4f,
-      #e7ae24
-    );
+  .skiptranslate {
+    display: none !important;
   }
-
-  /* Gradiente para borda esquerda */
-  .border-gradient-left {
-    position: relative;
-    padding-left: 1.5rem;
-  }
-  
-  .border-gradient-left::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 2px;
-    height: 100%;
-    background-image: linear-gradient(to bottom, #f9b03a, #6a2771);
-  }
-
-  .font-geist-sans {
-    font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
-  }
-
-  .font-geist-mono {
-    font-family: var(--font-geist-mono), Arial, Helvetica, sans-serif;
-  }
-
-  .font-inter {
-    font-family: var(--font-inter), Arial, Helvetica, sans-serif;
-  }
-  
-  /* Gradiente para bordas verticais (de cima para baixo) */
-  .border-gradient-vertical {
-    position: relative;
-  }
-  
-  .border-gradient-vertical::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 2px;
-    height: 100%;
-    background-image: linear-gradient(to bottom, #f8ea1e, #6b2771);
-  }
-  
-  /* Versão específica para a segunda coluna */
-  .border-gradient-vertical-right::before {
-    left: auto;
-    right: 0;
-  }
-
-  /* Classes para as fontes */
-  .font-geist {
-    font-family: "Geist", sans-serif;
-  }
-
-  .font-geist-mono {
-    font-family: "Geist Mono", monospace;
-  }
-
-  .font-inter {
-    font-family: "Inter", sans-serif;
-  }
-
-  .img-overlay-gradient {
-    position: relative;
-    display: inline-block;
-  }
-
-  .img-overlay-gradient::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(to right,
-      #672873,
-      #9a5183,
-      #cc2e4a,
-      #dd5736,
-      #e37d4f,
-      #e7ae24
-    );
-    opacity: 0.75;
-    pointer-events: none;
-  }
-}
-
-.skiptranslate {
-  display: none!important;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+  /* scroll-padding-top: 80px; */
 }
 
+
+
+@layer base {
+  :root {
+    --background: 252 100% 98%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 330 50% 60%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 45 100% 90%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 200 100% 85%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 1rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+
+  body {
+    @apply bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 text-foreground;
+    font-family: 'Comic Neue', cursive;
+  }
+  
+  .font-heading {
+    font-family: 'Fredoka', cursive;
+  }
+}
+
+.magical-border {
+  background: linear-gradient(45deg, #ff9a9e, #fecfef, #fecfef, #a8edea);
+  background-size: 400% 400%;
+  animation: gradientShift 4s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.bounce-slow {
+  animation: bounce 2s infinite;
+}

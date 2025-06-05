@@ -1,5 +1,11 @@
-import OurBlog from "@/src/components/OurBlog";
-import TalkToUs from "@/src/components/TalkToUs";
+import BenefitsSection from "@/src/components/BenefitsSection";
+import CTASection from "@/src/components/CTASection";
+import ExamplesSection from "@/src/components/ExamplesSection";
+import FAQSection from "@/src/components/FAQSection";
+import HeroSection from "@/src/components/HeroSection";
+import HowItWorksSection from "@/src/components/HowItWorksSection";
+import RecentPostsSection from "@/src/components/RecentPostsSection";
+import TestimonialsSection from "@/src/components/TestimonialsSection";
 import { getGetPostSlugsUrl, getPostSlugsResponse } from "@/src/services/api";
 import customFetch from "@/src/services/custom-fetch";
 import { GetPostSlugs200DataItem } from "@/src/services/model";
@@ -38,11 +44,28 @@ export default async function Home() {
 
   return (
     <>
-      <div className="container mx-auto my-10 px-4">
-        <h1 className="text-4xl font-bold">HOME</h1>
+      <div id="hero">
+        <HeroSection />
       </div>
-      <OurBlog posts={recentPosts} />
-      <TalkToUs />
+      <div id="benefits">
+        <BenefitsSection />
+      </div>
+      <div id="how-it-works">
+        <HowItWorksSection />
+      </div>
+      <div id="examples">
+        <ExamplesSection />
+      </div>
+      <div id="testimonials">
+        <TestimonialsSection />
+      </div>
+      <div id="recent-posts">
+        <RecentPostsSection posts={recentPosts} />
+      </div>
+      <div id="faq">
+        <FAQSection />
+      </div>
+      <CTASection />
     </>
   );
 }
