@@ -53,7 +53,7 @@ export default function TalkToUs() {
               className="text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl" 
               data-aos={isMobile ? "fade-in" : "fade-right"}
             >
-              Entre em c
+              Entre em contato!
             </h2>
             <p 
               className="mt-6 text-lg/8 text-white" 

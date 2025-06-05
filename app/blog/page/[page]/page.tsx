@@ -31,8 +31,8 @@ export async function generateMetadata({
   const { page } = resolvedParams;
   
   return {
-    title: `Protagonizei - Blog: Página ${page}`,
-    description: 'Acompanhe as últimas notícias e informações sobre a Protagonizei.',
+    title: `TTW - Blog: Página ${page}`,
+    description: 'Acompanhe as últimas notícias e informações sobre a TTW.',
   }
 }
 

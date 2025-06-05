@@ -5,8 +5,8 @@ import customFetch from "@/src/services/custom-fetch";
 import { GetPostSlugs200DataItem } from "@/src/services/model";
 
 export const metadata = {
-  title: 'Protagonizei - Home',
-  description: 'Protagonizei - Home',
+  title: 'TTW - Home',
+  description: 'TTW - Home',
 }
 
 async function getPostsPagination(): Promise<getPostSlugsResponse> {
@@ -38,7 +38,9 @@ export default async function Home() {
 
   return (
     <>
-      HOME
+      <div className="container mx-auto my-10 px-4">
+        <h1 className="text-4xl font-bold">HOME</h1>
+      </div>
       <OurBlog posts={recentPosts} />
       <TalkToUs />
     </>
