@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-inter: var(--font-inter);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  /* Gradiente personalizado para o fundo */
+  .bg-gradient-custom {
+    background-image: linear-gradient(to right,
+      #672873,
+      #9a5183,
+      #cc2e4a,
+      #dd5736,
+      #e37d4f,
+      #e7ae24
+    );
+  }
+
+  /* Gradiente para borda esquerda */
+  .border-gradient-left {
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  
+  .border-gradient-left::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background-image: linear-gradient(to bottom, #f9b03a, #6a2771);
+  }
+
+  .font-geist-sans {
+    font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  }
+
+  .font-geist-mono {
+    font-family: var(--font-geist-mono), Arial, Helvetica, sans-serif;
+  }
+
+  .font-inter {
+    font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  }
+  
+  /* Gradiente para bordas verticais (de cima para baixo) */
+  .border-gradient-vertical {
+    position: relative;
+  }
+  
+  .border-gradient-vertical::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background-image: linear-gradient(to bottom, #f8ea1e, #6b2771);
+  }
+  
+  /* Versão específica para a segunda coluna */
+  .border-gradient-vertical-right::before {
+    left: auto;
+    right: 0;
+  }
+
+  /* Classes para as fontes */
+  .font-geist {
+    font-family: "Geist", sans-serif;
+  }
+
+  .font-geist-mono {
+    font-family: "Geist Mono", monospace;
+  }
+
+  .font-inter {
+    font-family: "Inter", sans-serif;
+  }
+
+  .img-overlay-gradient {
+    position: relative;
+    display: inline-block;
+  }
+
+  .img-overlay-gradient::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right,
+      #672873,
+      #9a5183,
+      #cc2e4a,
+      #dd5736,
+      #e37d4f,
+      #e7ae24
+    );
+    opacity: 0.75;
+    pointer-events: none;
+  }
+}
+
+.skiptranslate {
+  display: none!important;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+

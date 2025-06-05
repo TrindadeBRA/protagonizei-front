@@ -1,0 +1,95 @@
+name: 🚀 Deploy - Protagonizei (Front End)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy_main:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: '20.x'
+
+      - name: Build with secrets variables
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: |
+            npm install -g yarn
+            yarn install --frozen-lockfile
+            yarn build
+        env:
+          NEXT_PUBLIC_WORDPRESS_API_URL: ${{ secrets.NEXT_PUBLIC_WORDPRESS_API_URL }}
+          WORDPRESS_API_KEY: ${{ secrets.WORDPRESS_API_KEY }}
+
+      - name: Create robots.txt for production
+        run: |
+          echo "User-agent: *" > out/robots.txt
+          echo "Disallow: */?*" >> out/robots.txt
+          echo "Disallow: */?" >> out/robots.txt
+          echo "Allow: /sitemap.xml" >> out/robots.txt
+          echo "Allow: /sitemap.xml.gz" >> out/robots.txt
+          echo "Sitemap: https://tiken.com.br/sitemap.xml" >> out/robots.txt
+
+      - name: Create .htaccess for production
+        run: |
+          echo "# Disable directory indexes and MultiViews" >> out/.htaccess
+          echo "Options -Indexes -MultiViews" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "# Prevent mod_dir appending a slash to directory requests" >> out/.htaccess
+          echo "DirectorySlash Off" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "RewriteEngine On" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "# Redirect to HTTPS" >> out/.htaccess
+          echo "RewriteCond %{HTTPS} off" >> out/.htaccess
+          echo "RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "# Remove .html extension from URLs" >> out/.htaccess
+          echo "RewriteCond %{REQUEST_FILENAME} !-d" >> out/.htaccess
+          echo "RewriteCond %{REQUEST_FILENAME}\.html -f" >> out/.htaccess
+          echo "RewriteRule ^(.*)/$ /$1.html [L]" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "# Rewrite /foo to /foo.html if it exists" >> out/.htaccess
+          echo "RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}.html -f" >> out/.htaccess
+          echo "RewriteRule !\.\w{2,4}$ %{REQUEST_URI}.html [L]" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "# Otherwise, rewrite /foo to /foo/index.html if it exists" >> out/.htaccess
+          echo "RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/index.html -f" >> out/.htaccess
+          echo "RewriteRule !\.\w{2,4}$ %{REQUEST_URI}/index.html [L]" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "# Redirects 301 (SEO)" >> out/.htaccess
+          echo "RewriteEngine On" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "# Redirect blog to first page (prevent infinite loops)" >> out/.htaccess
+          echo "RewriteCond %{REQUEST_URI} ^/blog$ [NC]" >> out/.htaccess
+          echo "RewriteRule ^blog$ /blog/page/1 [R=301,L]" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "ErrorDocument 404 /404.html" >> out/.htaccess
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.yarn
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Deploy to FTP Server (main)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+            server: ${{secrets.FTP_HOST}}
+            username: ${{ secrets.FTP_LOGIN }}
+            password: ${{ secrets.FTP_PASSWORD }}
+            local-dir: out/
+            server-dir: /public_html/
+            state-name: .ftp-deploy-sync-state.json
