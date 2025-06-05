@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   output: 'export',
   images: {
     unoptimized: true,
-    domains: ['tailwindcss.com', 'honeydew-cassowary-327775.hostingersite.com', 'cms.tiken.com.br'],
+    domains: ['tailwindcss.com', 'cms.thetrinityweb.com.br', 'thetrinityweb.com.br'],
   },
   env: {
     GOOGLE_TRANSLATION_CONFIG: JSON.stringify({

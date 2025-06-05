@@ -192,13 +192,13 @@ export function WorkWithUsForm() {
           </div>
         </div>
         <div className="w-full leading-3 mt-2">
-          <span className="text-[11px] font-medium text-gray-600">Ao enviar, você concorda com nossa <Link href="/politica-de-privacidade" className="text-blue-500 hover:text-blue-700 underline">Política de Privacidade</Link> e autoriza o recebimento de comunicações da Tiken.</span>
+          <span className="text-[11px] font-medium text-gray-600">Ao enviar, você concorda com nossa <Link href="/politica-de-privacidade" className="text-blue-500 hover:text-blue-700 underline">Política de Privacidade</Link> e autoriza o recebimento de comunicações da TTW.</span>
         </div>
         <div className="mt-8 flex justify-end">
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex items-center gap-x-2 rounded-md bg-[#9061a8] text-white px-4 py-2.5 font-bold font-inter w-fit hover:bg-[#9061a8]/80 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-x-2 rounded-md bg-indigo-600 text-white px-4 py-2.5 font-bold font-inter w-fit hover:bg-indigo-600/80 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? 'Enviando...' : 'enviar'} <ArrowRightIcon className="size-4" />
           </button>

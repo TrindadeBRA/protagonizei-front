@@ -7,7 +7,7 @@ export default function TalkToUs() {
   const isMobile = useMobileCheck()
 
   return (
-    <div className="relative isolate bg-[#7b61c2] overflow-x-hidden" id="contato">
+    <div className="relative isolate bg-indigo-600 overflow-x-hidden" id="contato">
       <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
         <div className="relative px-6 pt-24 pb-20  lg:static lg:px-8">
           <div className="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
@@ -53,13 +53,13 @@ export default function TalkToUs() {
               className="text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl" 
               data-aos={isMobile ? "fade-in" : "fade-right"}
             >
-              Escreva para nós!
+              Entre em c
             </h2>
             <p 
               className="mt-6 text-lg/8 text-white" 
               data-aos={isMobile ? "fade-in" : "fade-right"}
             >
-              Sua mensagem é muito importante para nós da Tiken. Queremos ouvir você e entender melhor a sua necessidade.
+              Sua mensagem é muito importante para nós da TTW. Queremos ouvir você e entender melhor a sua necessidade.
             </p>
           </div>
         </div>

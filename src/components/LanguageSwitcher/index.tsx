@@ -2,7 +2,6 @@ import { LanguageDescriptor, useLanguageSwitcher } from "@/src/hooks/useLanguage
 import { NextPageContext } from "next";
 import { twMerge } from "tailwind-merge";
 
-
 export const LanguageSwitcher = ({ context, isGradient }: { context?: NextPageContext; isGradient?: boolean } = {}) => {
   const { currentLanguage, switchLanguage, languageConfig } = useLanguageSwitcher({ context });
 
@@ -11,15 +10,33 @@ export const LanguageSwitcher = ({ context, isGradient }: { context?: NextPageCo
   }
 
   return (
-    <div className={twMerge("text-center notranslate text-base lg:text-lg flex gap-x-1 mr-4 font-semibold text-gray-900 border-gray-900", isGradient && "text-white border-white")}>
+    <div className={twMerge(
+      "flex items-center gap-2 mr-4 font-medium text-sm",
+      isGradient ? "text-white" : "text-gray-900"
+    )}>
       {languageConfig.languages.map((ld: LanguageDescriptor) => (
         <span key={`l_s_${ld.name}`}>
           {currentLanguage === ld.name ? (
-            <span className="cursor-not-allowed rounded-lg border p-1.5">{ld.name.toUpperCase()}</span>
-          ) : (
-            <a onClick={switchLanguage(ld.name)} className={twMerge("cursor-pointer rounded-lg p-1.5 border border-black/60 text-black/60", isGradient && "border-white/60 text-white/60")}>
+            <span className={twMerge(
+              "px-3 py-1.5 rounded-full transition-all duration-200",
+              isGradient 
+                ? "bg-white/20 text-white" 
+                : "bg-gray-900 text-white"
+            )}>
               {ld.name.toUpperCase()}
-            </a>
+            </span>
+          ) : (
+            <button
+              onClick={switchLanguage(ld.name)}
+              className={twMerge(
+                "px-3 py-1.5 rounded-full transition-all duration-200 hover:bg-opacity-10",
+                isGradient
+                  ? "text-white/70 hover:bg-white/20 hover:text-white"
+                  : "text-gray-600 hover:bg-gray-900/10 hover:text-gray-900"
+              )}
+            >
+              {ld.name.toUpperCase()}
+            </button>
           )}
         </span>
       ))}

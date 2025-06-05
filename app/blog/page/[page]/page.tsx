@@ -1,7 +1,5 @@
 import BlogGrid from "@/src/components/BlogGrid";
-import ContactItems from "@/src/components/ContactItems";
 import Pagination from "@/src/components/Pagination";
-import PinMap from "@/src/components/PinMap";
 import { getGetPostSlugsUrl, getPostSlugsResponse } from "@/src/services/api";
 import customFetch from "@/src/services/custom-fetch";
 import { GetPostSlugs200, GetPostSlugs200DataItem } from "@/src/services/model";
@@ -33,8 +31,8 @@ export async function generateMetadata({
   const { page } = resolvedParams;
   
   return {
-    title: `Tiken - Blog: Página ${page}`,
-    description: 'Acompanhe as últimas tendências e novidades do mundo químico com a Tiken. Inove seu mundo!',
+    title: `Protagonizei - Blog: Página ${page}`,
+    description: 'Acompanhe as últimas notícias e informações sobre a Protagonizei.',
   }
 }
 
@@ -69,13 +67,6 @@ export default async function Page({
           />
         </div>
       </div>
-
-
-
-
-      
-      <ContactItems />
-      <PinMap />
     </>
   );
 }

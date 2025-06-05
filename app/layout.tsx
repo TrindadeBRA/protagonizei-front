@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "toastify-js/src/toastify.css"
-import Navigation from "@/src/components/Navigation";
+import Header from "@/src/components/Header";
 import Script from "next/script";
 import { WhatsAppFloat } from "../src/components/WhatsAppFloat";
 import Footer from "@/src/components/Footer";
@@ -18,12 +18,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://tiken.com.br'),
-  description: 'Tiken é uma empresa que cria soluções para o mundo através da química',
+  metadataBase: new URL('https://thetrinityweb.com.br'),
+  description: 'The Trinity Web é uma empresa que cria soluções para o mundo através da tecnologia',
   openGraph: {
     images: [
       {
-        url: "/assets/images/ogimage.webp",
+        url: "/assets/images/ogimage.jpg",
       },
     ],
   },
@@ -69,7 +69,7 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
       </head>
 
       <body
-        className={`${inter.variable} antialiased !bg-white !text-black pt-[96px] !top-0`}
+        className={`${inter.variable} antialiased !bg-white !text-black !top-0`}
       >
 
         {/* Google Tag Manager */}
@@ -82,7 +82,7 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 
         <WhatsAppFloat whatsAppUrl={whatsAppUrl} />
         <AOS_Init />
-        <Navigation />
+        <Header />
         {children}
         <Footer />
         {

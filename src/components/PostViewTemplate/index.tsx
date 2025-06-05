@@ -1,9 +1,6 @@
 "use client";
 
 import BlogContent from "@/src/components/BlogContent";
-import ContactItems from "@/src/components/ContactItems";
-import PinMap from "@/src/components/PinMap";
-import HeroBlogPost from "@/src/components/HeroBlogPost";
 import LatestPostsSidebar from "@/src/components/LatestPostsSidebar";
 
 interface PostViewTemplateProps {
@@ -20,7 +17,7 @@ export function PostViewTemplate({ postData, relatedPosts, isPreview }: PostView
           Você está visualizando uma versão de preview do post.
         </div>
       )}
-      <HeroBlogPost response={postData} />
+      {/* <HeroBlogPost response={postData} /> */}
       <div className="mx-auto flex flex-col lg:flex-row container gap-x-8">
         <div className="w-full lg:w-3/4 py-16">
           <BlogContent content={postData} />
@@ -31,8 +28,6 @@ export function PostViewTemplate({ postData, relatedPosts, isPreview }: PostView
           </div>
         </div>
       </div>
-      <ContactItems />
-      <PinMap />
     </>
   );
 } 

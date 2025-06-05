@@ -2,7 +2,7 @@ import { getGetPostSlugsUrl, getGetPostSlugUrl, getPostSlugResponse, getPostSlug
 import customFetch from "@/src/services/custom-fetch";
 import { GetPostSlug200Data, GetPostSlugs200 } from "@/src/services/model";
 import { Metadata } from "next";
-import { PostViewTemplate } from "../components/PostViewTemplate";
+import { PostViewTemplate } from "@/src/components/PostViewTemplate";
 
 interface BlogPostProps {
   slug?: string;
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: { params: Promise<BlogPostPro
   }
 
   return {
-    title: `Tiken - ${title}`,
+    title: `Protagonizei - ${title}`,
     description: excerpt || cleanContent,
   }
 }

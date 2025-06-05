@@ -4,7 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import { getGetPostSlugsUrl, getGetPostSlugUrl } from "@/src/services/api";
 import customFetch from "@/src/services/custom-fetch";
 import { useSearchParams } from "next/navigation";
-import { PostViewTemplate } from "../components/PostViewTemplate";
+import { PostViewTemplate } from "@/src/components/PostViewTemplate";
 import NotFoundScreen from "@/src/components/404Screen";
 
 function PreviewContent() {

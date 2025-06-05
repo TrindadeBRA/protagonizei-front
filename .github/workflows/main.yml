@@ -38,7 +38,7 @@ jobs:
           echo "Disallow: */?" >> out/robots.txt
           echo "Allow: /sitemap.xml" >> out/robots.txt
           echo "Allow: /sitemap.xml.gz" >> out/robots.txt
-          echo "Sitemap: https://tiken.com.br/sitemap.xml" >> out/robots.txt
+          echo "Sitemap: https://thetrinityweb.com.br/sitemap.xml" >> out/robots.txt
 
       - name: Create .htaccess for production
         run: |

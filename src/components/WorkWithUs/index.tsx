@@ -31,13 +31,13 @@ export default function WorkWithUs() {
                             </svg>
                         </div>
                         <h2 className="text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">
-                            Seja Tiken!
+                            Faça parte do nosso time!
                         </h2>
                         <p className="mt-6 text-lg/8 text-gray-600 font-semibold">
-                        Preencha o formulário abaixo com suas informações pessoais e envie seu currículo para se candidatar a oportunidades de emprego conosco.
+                            Junte-se a uma equipe inovadora e dinâmica que está transformando o futuro do marketing digital.
                         </p>
                         <p className="mt-6 text-lg/8 text-gray-600 font-normal">
-                        Ao enviar seu nome, e-mail e currículo através deste formulário, você concorda com a coleta, armazenamento e processamento desses dados para fins de recrutamento e seleção. Seus dados serão mantidos em sigilo e não serão compartilhados sem seu consentimento. Após avaliação, seus dados serão excluídos, a menos que você seja selecionado para uma oportunidade de emprego. Você tem direito de solicitar acesso, retificação, exclusão ou portabilidade de seus dados. Entre em contato para mais informações.
+                            Estamos sempre em busca de talentos apaixonados por tecnologia e criatividade. Ao se candidatar, você concorda com o processamento dos seus dados para fins de recrutamento. Suas informações serão tratadas com total confidencialidade e segurança, em conformidade com a LGPD. Caso não seja selecionado, seus dados serão excluídos após 6 meses. Você pode solicitar a exclusão ou atualização dos seus dados a qualquer momento.
                         </p>
                     </div>
                 </div>
