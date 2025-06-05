@@ -63,11 +63,11 @@ export function PostViewTemplate({ postData, relatedPosts, isPreview }: PostView
             </div>
 
             <div className="flex gap-4 mb-8">
-              <Button size="sm" className="bg-pink-500 hover:bg-pink-600">
+              <Button size="sm" className="bg-pink-500 hover:bg-pink-600 text-white">
                 <Heart className="mr-2 h-4 w-4" />
                 Curtir
               </Button>
-              <Button size="sm" variant="outline" className="border-purple-300 text-purple-700 hover:bg-purple-50">
+              <Button size="sm" variant="outline" className="border-purple-300 text-purple-700 hover:bg-purple-50 bg-white">
                 <Share2 className="mr-2 h-4 w-4" />
                 Compartilhar
               </Button>

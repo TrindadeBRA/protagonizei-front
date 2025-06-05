@@ -25,13 +25,15 @@ export default function RecentPostsSection({ posts }: { posts: GetPostSlugs200Da
                         <Card key={post.slug} className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/70 backdrop-blur-sm">
                             <CardHeader className="p-0">
                                 <div className="relative overflow-hidden rounded-t-lg">
-                                    <Image 
-                                        alt={post.title || "Blog post image"} 
-                                        src={post.featured_image_url || ''} 
-                                        width={1000} 
-                                        height={1000} 
-                                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                                    />
+                                    <Link href={`/blog/${post.slug}`}>
+                                        <Image 
+                                            alt={post.title || "Blog post image"} 
+                                            src={post.featured_image_url || ''} 
+                                            width={1000} 
+                                            height={1000} 
+                                            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                                        />
+                                    </Link>
                                 </div>
                             </CardHeader>
                             <CardContent className="p-6">
@@ -73,9 +75,9 @@ export default function RecentPostsSection({ posts }: { posts: GetPostSlugs200Da
                         <Button 
                             variant="outline" 
                             size="lg" 
-                            className="border-2 border-pink-300 text-purple-700 hover:bg-pink-50 font-heading"
+                            className="border-2 border-pink-300 text-purple-700 hover:bg-pink-50 font-heading bg-white"
                         >
-                            Ver Todos os Posts
+                            Ver todos os posts
                             <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>
                     </Link>

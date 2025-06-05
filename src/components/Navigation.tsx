@@ -22,10 +22,10 @@ const Navigation = () => {
 
   const navLinks: NavLink[] = [
     { label: "Início", href: "/#hero" },
-    { label: "Benefícios", href: "/#benefits" },
-    { label: "Como Funciona", href: "/#how-it-works" },
-    { label: "Exemplos", href: "/#examples" },
-    { label: "Depoimentos", href: "/#testimonials" },
+    { label: "Benefícios", href: "/#beneficios" },
+    { label: "Como Funciona", href: "/#como-funciona" },
+    { label: "Exemplos", href: "/#exemplos" },
+    { label: "Depoimentos", href: "/#depoimentos" },
     { label: "FAQ", href: "/#faq" },
     { label: "Blog", href: "/blog" },
   ];

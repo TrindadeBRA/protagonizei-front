@@ -1,5 +1,5 @@
 import BenefitsSection from "@/src/components/BenefitsSection";
-import CTASection from "@/src/components/CTASection";
+import FormSection from "@/src/components/FormSection";
 import ExamplesSection from "@/src/components/ExamplesSection";
 import FAQSection from "@/src/components/FAQSection";
 import HeroSection from "@/src/components/HeroSection";
@@ -47,25 +47,27 @@ export default async function Home() {
       <div id="hero">
         <HeroSection />
       </div>
-      <div id="benefits">
+      <div id="beneficios">
         <BenefitsSection />
       </div>
-      <div id="how-it-works">
+      <div id="como-funciona">
         <HowItWorksSection />
       </div>
-      <div id="examples">
+      <div id="exemplos">
         <ExamplesSection />
       </div>
-      <div id="testimonials">
+      <div id="depoimentos">
         <TestimonialsSection />
       </div>
-      <div id="recent-posts">
+      <div id="posts-recentes">
         <RecentPostsSection posts={recentPosts} />
       </div>
       <div id="faq">
         <FAQSection />
       </div>
-      <CTASection />
+      <div id="form">
+        <FormSection />
+      </div>
     </>
   );
 }
