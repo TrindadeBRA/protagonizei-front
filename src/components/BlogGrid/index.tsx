@@ -3,66 +3,90 @@ import Image from "next/image"
 import Link from "next/link"
 import { format, parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { Calendar, User, ArrowRight } from "lucide-react"
+import { Card, CardContent, CardHeader } from "@/src/components/ui/card"
+import { Button } from "@/src/components/ui/button"
 
-export default function BlogGrid(
-    {
-        posts
-    }: {
-        posts: GetPostSlugs200DataItem[]
-    }
-) {
-
-
+export default function BlogGrid({
+    posts
+}: {
+    posts: GetPostSlugs200DataItem[]
+}) {
     return (
-        <div className="bg-white py-12 relative isolate overflow-hidden overflow-x-hidden">
-            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="">
+            {/* Header */}
+            <section className="bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 py-16">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <h1 className="text-4xl md:text-5xl font-bold font-heading text-purple-700 mb-6">
+                            📖 Blog Protagonizei
+                        </h1>
+                        <p className="text-xl text-purple-600 max-w-2xl mx-auto">
+                            Dicas, estratégias e insights para ajudar seu filho a se tornar o protagonista da própria história
+                        </p>
+                    </div>
+                </div>
+            </section>
 
-                <div className="mx-auto max-w-2xl lg:max-w-4xl">
-                    <h2 className="text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl" data-aos="fade-right">Fique por dentro</h2>
-                    <p className="mt-2 text-lg/8 text-gray-600" data-aos="fade-right">Fique por dentro das tendências e inovações do universo da química.</p>
-                    <div className="mt-16 space-y-20 lg:mt-20 lg:space-y-20">
+            {/* Posts */}
+            <section className="py-16 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+                <div className="container mx-auto px-4">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {posts.map((post) => {
                             const cleanContent = post.content?.replace(/<[^>]*>?/g, '')?.replace(/&nbsp;/g, ' ');
 
                             return (
-                                <article key={post.slug} className="relative isolate flex flex-col gap-8 lg:flex-row" data-aos="fade-right">
-                                    <div className="relative aspect-video sm:aspect-2/1 lg:aspect-square lg:w-64 lg:shrink-0">
+                                <Card key={post.slug} className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/70 backdrop-blur-sm">
+                                    <CardHeader className="p-0">
+                                        <div className="relative overflow-hidden rounded-t-lg">
+                                            <Link href={`/blog/${post.slug}`}>  
+                                                <Image
+                                                    src={post.featured_image_url || '/placeholder.svg'}
+                                                    alt={post.title || 'Post image'}
+                                                    width={400}
+                                                    height={300}
+                                                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                                                />
+                                            </Link>
+                                            <div className="absolute top-4 left-4">
+                                                <span className="bg-pink-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                                    Blog
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </CardHeader>
+                                    <CardContent className="p-6">
                                         <Link href={`/blog/${post.slug}`}>
-                                            <Image
-                                                alt=""
-                                                src={post.featured_image_url || ''}
-                                                className="absolute inset-0 size-full rounded-2xl bg-gray-50 object-cover"
-                                                width={1000}
-                                                height={1000}
-                                            />
-                                            <div className="absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset" />
-                                        </Link>
-                                    </div>
-                                    <div>
-                                        <div className="flex items-center gap-x-4 text-xs">
-                                            <time dateTime={post.created_at || ''} className="text-gray-500">
-                                                {format(parseISO(post.created_at || ''), "dd 'de' MMMM',' yyyy", { locale: ptBR })}
-                                            </time>
-                                        </div>
-                                        <div className="group relative max-w-xl">
-                                            <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
-                                                <Link href={`/blog/${post.slug}`}>
-                                                    <span className="absolute inset-0" />
-                                                    {post.title}
-                                                </Link>
+                                            <h3 className="text-xl font-bold font-heading text-purple-700 mb-3 group-hover:text-pink-600 transition-colors">
+                                                {post.title}
                                             </h3>
-                                            <p className="mt-5 text-sm/6 text-gray-600 line-clamp-3">{post.excerpt || cleanContent}</p>
+                                        </Link>
+                                        <p className="text-purple-600 mb-4 leading-relaxed line-clamp-3">
+                                            {post.excerpt || cleanContent}
+                                        </p>
+                                        <div className="flex items-center justify-between text-sm text-purple-500 mb-4">
+                                            <div className="flex items-center space-x-2">
+                                                <User className="h-4 w-4" />
+                                                <span>Equipe Protagonizei</span>
+                                            </div>
+                                            <div className="flex items-center space-x-2">
+                                                <Calendar className="h-4 w-4" />
+                                                <span>{post.created_at ? format(parseISO(post.created_at), "dd 'de' MMMM',' yyyy", { locale: ptBR }) : ''}</span>
+                                            </div>
                                         </div>
-
-
-                                    </div>
-                                </article>
+                                        <Link href={`/blog/${post.slug}`}>
+                                            <Button className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-heading">
+                                                Ler Mais
+                                                <ArrowRight className="ml-2 h-4 w-4" />
+                                            </Button>
+                                        </Link>
+                                    </CardContent>
+                                </Card>
                             )
                         })}
-
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
     )
 }

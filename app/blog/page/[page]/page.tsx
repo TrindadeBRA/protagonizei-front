@@ -57,9 +57,9 @@ export default async function Page({
 
   return (
     <>
-      <div className="container mx-auto px-4 py-8 overflow-x-hidden">
+      <div className="overflow-x-hidden bg-pink-50">
         <BlogGrid posts={data} />
-        <div className="mx-auto max-w-2xl lg:max-w-4xl">
+        <div className="mx-auto max-w-2xl lg:max-w-4xl ">
           <Pagination
             currentPage={paginationData.current_page || 1}
             totalPages={paginationData.total_pages || 1}
