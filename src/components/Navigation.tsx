@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, Sparkles } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import Link from "next/link";
 import {
