@@ -1,14 +1,14 @@
-name: 🚀 Deploy - TTW (Front End)
+name: 🚀 Deploy - Protagonizei (Front End)
 
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
-  build_and_deploy_main:
+  build_and_deploy_master:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/master'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -84,7 +84,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Deploy to FTP Server (main)
+      - name: Deploy to FTP Server (master)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
             server: ${{secrets.FTP_HOST}}
