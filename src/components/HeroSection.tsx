@@ -1,4 +1,3 @@
-
 import { Button } from "@/src/components/ui/button";
 import { Heart, Sparkles, Star } from "lucide-react";
 
@@ -28,21 +27,21 @@ const HeroSection = () => {
         <div className="lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0">
           <div className="inline-block mb-6">
             <span className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
-              ✨ Crie memórias mágicas ✨
+              ✨ Presente único e mágico ✨
             </span>
           </div>
           
           <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
             <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-              Seu filho é o
+              Seu filho vira
             </span>
             <br />
-            <span className="text-gray-800">herói da história!</span>
+            <span className="text-gray-800">protagonista da história!</span>
           </h1>
           
           <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-xl">
-            Livros infantis personalizados onde seu pequeno se torna o protagonista. 
-            <strong className="text-pink-600"> Nome, rosto e aventuras únicas</strong> em cada página.
+            Uma história personalizada onde seu pequeno se vê como herói. 
+            <strong className="text-pink-600"> Com nome, rosto e magia</strong> em cada página.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -51,7 +50,7 @@ const HeroSection = () => {
               className="magical-border border-4 border-transparent text-white font-bold py-4 px-8 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300"
             >
               <Sparkles className="w-5 h-5 mr-2" />
-              Criar História Agora
+              Criar História Mágica
             </Button>
             <Button 
               variant="outline" 
@@ -65,7 +64,7 @@ const HeroSection = () => {
           <div className="mt-8 flex items-center justify-center lg:justify-start space-x-6 text-sm text-gray-500">
             <div className="flex items-center">
               <Heart className="w-4 h-4 text-red-400 mr-1 fill-current" />
-              <span>Mais de 1000 famílias felizes</span>
+              <span>Mais de 1000 famílias encantadas</span>
             </div>
             <div className="flex items-center">
               <Star className="w-4 h-4 text-yellow-400 mr-1 fill-current" />
@@ -85,7 +84,7 @@ const HeroSection = () => {
                   A Aventura de Sofia
                 </h3>
                 <p className="text-gray-600 text-center text-sm">
-                  Era uma vez uma menina corajosa chamada <strong className="text-pink-600">Sofia</strong> que descobriu um mundo mágico...
+                  Era uma vez uma menina corajosa chamada <strong className="text-pink-600">Sofia</strong> que se tornou a heroína de sua própria história...
                 </p>
               </div>
               <div className="text-center">

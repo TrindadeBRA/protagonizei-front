@@ -1,26 +1,25 @@
-
 import { FileText, Wand2, Mail, Sparkles } from "lucide-react";
 
 const steps = [
   {
     number: "01",
     icon: FileText,
-    title: "Preencha o Formulário",
-    description: "Nome, idade, gênero e uma foto do seu pequeno. Leva apenas 2 minutos!",
+    title: "Crie a Magia",
+    description: "Nome, idade, gênero e uma foto do seu pequeno. Em apenas 2 minutos, a magia começa!",
     color: "from-pink-400 to-rose-400"
   },
   {
     number: "02",
     icon: Wand2,
-    title: "IA Cria a Magia",
-    description: "Nossa inteligência artificial personaliza a história e ilustrações com o rosto do seu filho.",
+    title: "A Magia Acontece",
+    description: "Nossa IA cria uma história única e transforma a foto do seu filho em ilustrações mágicas.",
     color: "from-purple-400 to-indigo-400"
   },
   {
     number: "03",
     icon: Mail,
-    title: "Receba por E-mail",
-    description: "Em até 24h, o PDF personalizado chega no seu e-mail pronto para baixar e imprimir.",
+    title: "Receba a Magia",
+    description: "Em até 24h, o PDF mágico chega no seu e-mail, pronto para baixar e criar memórias.",
     color: "from-blue-400 to-cyan-400"
   }
 ];
@@ -39,13 +38,13 @@ const HowItWorksSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6">
-            Como funciona?
+            Como a magia
             <span className="block bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
-              É simples e rápido!
+              acontece?
             </span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Em apenas 3 passos simples, você cria uma história única e inesquecível para seu filho.
+            Em apenas 3 passos simples, você cria uma história mágica e inesquecível para seu filho.
           </p>
         </div>
         
@@ -86,11 +85,11 @@ const HowItWorksSection = () => {
           <div className="bg-white rounded-2xl p-6 shadow-lg inline-block border-2 border-dashed border-pink-200">
             <div className="flex items-center justify-center space-x-2 text-pink-600 mb-2">
               <Sparkles className="w-5 h-5" />
-              <span className="font-heading font-bold">Garantia de Satisfação</span>
+              <span className="font-heading font-bold">Garantia de Magia</span>
               <Sparkles className="w-5 h-5" />
             </div>
             <p className="text-gray-600 text-sm">
-              Se não ficar satisfeito, devolvemos 100% do seu dinheiro
+              Se a magia não acontecer, devolvemos 100% do seu investimento
             </p>
           </div>
         </div>
