@@ -263,7 +263,7 @@ const FormSection = () => {
                     <Button 
                       onClick={prevStep}
                       variant="outline"
-                      className="flex-1 border-2 border-pink-300 text-pink-600 hover:bg-pink-50 py-4 rounded-xl font-semibold"
+                      className="flex-1 border-2 bg-white border-pink-300 text-pink-600 hover:bg-pink-50 py-4 rounded-xl font-semibold"
                     >
                       Voltar
                     </Button>
@@ -361,7 +361,7 @@ const FormSection = () => {
                     <Button 
                       onClick={prevStep}
                       variant="outline"
-                      className="flex-1 border-2 border-pink-300 text-pink-600 hover:bg-pink-50 py-4 rounded-xl font-semibold"
+                      className="flex-1 border-2 bg-white border-pink-300 text-pink-600 hover:bg-pink-50 py-4 rounded-xl font-semibold"
                     >
                       Voltar
                     </Button>
