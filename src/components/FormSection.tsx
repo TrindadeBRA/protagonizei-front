@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
@@ -9,13 +9,6 @@ import { Sparkles, Heart, Gift, Star, Camera, Mail, QrCode, CheckCircle2 } from 
 import customFetch from "@/src/services/custom-fetch";
 import { PostOrdersBody } from "@/src/services/model";
 import { getPostOrdersUrl } from "@/src/services/api";
-
-interface OrderResponse {
-  success: boolean;
-  data: {
-    order_id: number;
-  };
-}
 
 const FormSection = () => {
   const [step, setStep] = useState(1);
@@ -32,7 +25,7 @@ const FormSection = () => {
   const [orderId, setOrderId] = useState<string | null>(null);
   const [pixCode, setPixCode] = useState<string | null>(null);
   // const [paymentStatus, setPaymentStatus] = useState<'pending' | 'confirmed' | 'failed'>('pending');
-  const [paymentCheckInterval, setPaymentCheckInterval] = useState<NodeJS.Timeout | null>(null);
+  const paymentCheckIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Adicionar estilo global para remover outlines
   useEffect(() => {
@@ -75,38 +68,36 @@ const FormSection = () => {
     if (step > 1) setStep(step - 1);
   };
 
-  // Função para verificar o status do pagamento
-  const checkPaymentStatus = async (orderId: string) => {
-    try {
-      console.log('orderId', orderId);
-      // // Aqui você faria a chamada para sua API que verifica o status no Asaas
-      // const response = await fetch(`/api/payment-status/${orderId}`);
-      // const data = await response.json();
-
-      // if (data.status === 'CONFIRMED') {
-      //   setPaymentStatus('confirmed');
-      //   if (paymentCheckInterval) {
-      //     clearInterval(paymentCheckInterval);
-      //   }
-      //   setStep(5); // Avança para o passo de sucesso
-      // }
-
-      // setPaymentStatus('confirmed');
-      if (paymentCheckInterval) {
-        clearInterval(paymentCheckInterval);
-      }
-      setStep(5); // Avança para o passo de sucesso
-    } catch (error) {
-      console.error('Erro ao verificar status do pagamento:', error);
-    }
-  };
-
   // Iniciar verificação do status do pagamento
   useEffect(() => {
+    const checkPaymentStatus = async () => {
+      try {
+        // // Aqui você faria a chamada para sua API que verifica o status no Asaas
+        // const response = await fetch(`/api/payment-status/${orderId}`);
+        // const data = await response.json();
+
+        // if (data.status === 'CONFIRMED') {
+        //   setPaymentStatus('confirmed');
+        //   if (paymentCheckInterval) {
+        //     clearInterval(paymentCheckInterval);
+        //   }
+        //   setStep(5); // Avança para o passo de sucesso
+        // }
+
+        // setPaymentStatus('confirmed');
+        if (paymentCheckIntervalRef.current) {
+          clearInterval(paymentCheckIntervalRef.current);
+        }
+        setStep(5); // Avança para o passo de sucesso
+      } catch (error) {
+        console.error('Erro ao verificar status do pagamento:', error);
+      }
+    };
+
     if (orderId && step === 4) {
       // Verifica a cada 10 segundos
-      const interval = setInterval(() => checkPaymentStatus(orderId), 10000);
-      setPaymentCheckInterval(interval);
+      const interval = setInterval(checkPaymentStatus, 10000);
+      paymentCheckIntervalRef.current = interval;
 
       // Limpa o intervalo quando o componente é desmontado
       return () => {
@@ -138,13 +129,13 @@ const FormSection = () => {
       formDataToSend.append('phone', orderData.phone);
       formDataToSend.append('photo', orderData.photo);
 
-      const response = await customFetch<OrderResponse>(getPostOrdersUrl(), {
+      const response: any = await customFetch(getPostOrdersUrl(), {
         method: 'POST',
         body: formDataToSend,
       });
       
-      if (response.success && response.data?.order_id) {
-        setOrderId(response.data.order_id.toString());
+      if (response.status === 'created' && response.order_id) {
+        setOrderId(response.order_id.toString());
         // Since the API doesn't return a pixCode, we'll need to handle this differently
         // For now, we'll use a mock pixCode
         setPixCode('00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540599.905802BR5915Protagonizei6008BRASILIA62070503***6304E2CA');
