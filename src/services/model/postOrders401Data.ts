@@ -6,6 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type GetPostSlug401Data = {
+export type PostOrders401Data = {
   status?: number;
 };

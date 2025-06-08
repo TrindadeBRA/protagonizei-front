@@ -6,6 +6,16 @@ import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/src/components/ui/select";
 import { Sparkles, Heart, Gift, Star, Camera, Mail, QrCode, CheckCircle2 } from "lucide-react";
+import customFetch from "@/src/services/custom-fetch";
+import { PostOrdersBody } from "@/src/services/model";
+import { getPostOrdersUrl } from "@/src/services/api";
+
+interface OrderResponse {
+  success: boolean;
+  data: {
+    order_id: number;
+  };
+}
 
 const FormSection = () => {
   const [step, setStep] = useState(1);
@@ -107,15 +117,41 @@ const FormSection = () => {
 
   const handleSubmit = async () => {
     try {
-      // Aqui seria a integração com o backend e Asaas
-      const mockResponse = {
-        orderId: '123456',
-        pixCode: '00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540599.905802BR5915Protagonizei6008BRASILIA62070503***6304E2CA'
+      const orderData: PostOrdersBody = {
+        childName: formData.childName,
+        childAge: parseInt(formData.childAge),
+        childGender: formData.childGender as PostOrdersBody['childGender'],
+        skinTone: formData.skinTone as PostOrdersBody['skinTone'],
+        parentName: formData.parentName,
+        email: formData.email,
+        phone: formData.phone,
+        photo: formData.photo as File
       };
 
-      setOrderId(mockResponse.orderId);
-      setPixCode(mockResponse.pixCode);
-      setStep(4);
+      const formDataToSend = new FormData();
+      formDataToSend.append('childName', orderData.childName);
+      formDataToSend.append('childAge', orderData.childAge.toString());
+      formDataToSend.append('childGender', orderData.childGender);
+      formDataToSend.append('skinTone', orderData.skinTone);
+      formDataToSend.append('parentName', orderData.parentName);
+      formDataToSend.append('email', orderData.email);
+      formDataToSend.append('phone', orderData.phone);
+      formDataToSend.append('photo', orderData.photo);
+
+      const response = await customFetch<OrderResponse>(getPostOrdersUrl(), {
+        method: 'POST',
+        body: formDataToSend,
+      });
+      
+      if (response.success && response.data?.order_id) {
+        setOrderId(response.data.order_id.toString());
+        // Since the API doesn't return a pixCode, we'll need to handle this differently
+        // For now, we'll use a mock pixCode
+        setPixCode('00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540599.905802BR5915Protagonizei6008BRASILIA62070503***6304E2CA');
+        setStep(4);
+      } else {
+        throw new Error('Erro ao criar pedido');
+      }
     } catch (error) {
       console.error('Erro ao criar pedido:', error);
       alert('Ops! Algo deu errado. Por favor, tente novamente.');

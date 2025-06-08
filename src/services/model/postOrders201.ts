@@ -5,7 +5,10 @@
  * API para gerenciamento de posts, pedidos personalizados e formulários de contato no WordPress
  * OpenAPI spec version: 1.0.0
  */
+import type { PostOrders201Data } from './postOrders201Data';
 
-export type GetPostSlug401Data = {
-  status?: number;
+export type PostOrders201 = {
+  success?: boolean;
+  message?: string;
+  data?: PostOrders201Data;
 };

@@ -5,7 +5,7 @@
  * API para gerenciamento de posts, pedidos personalizados e formulários de contato no WordPress
  * OpenAPI spec version: 1.0.0
  */
+import type { PostOrders400OneOf } from './postOrders400OneOf';
+import type { PostOrders400OneOfThree } from './postOrders400OneOfThree';
 
-export type GetPostSlug401Data = {
-  status?: number;
-};
+export type PostOrders400 = PostOrders400OneOf | PostOrders400OneOfThree;
