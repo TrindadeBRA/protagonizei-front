@@ -5,7 +5,7 @@ import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/src/components/ui/select";
-import { Sparkles, Heart, Gift, Star, Camera, Mail } from "lucide-react";
+import { Sparkles, Heart, Gift, Star, Camera, Mail, QrCode, CheckCircle2 } from "lucide-react";
 
 const FormSection = () => {
   const [step, setStep] = useState(1);
@@ -16,8 +16,13 @@ const FormSection = () => {
     skinTone: '',
     parentName: '',
     email: '',
+    phone: '',
     photo: null as File | null
   });
+  const [orderId, setOrderId] = useState<string | null>(null);
+  const [pixCode, setPixCode] = useState<string | null>(null);
+  // const [paymentStatus, setPaymentStatus] = useState<'pending' | 'confirmed' | 'failed'>('pending');
+  const [paymentCheckInterval, setPaymentCheckInterval] = useState<NodeJS.Timeout | null>(null);
 
   // Adicionar estilo global para remover outlines
   useEffect(() => {
@@ -53,17 +58,68 @@ const FormSection = () => {
   };
 
   const nextStep = () => {
-    if (step < 3) setStep(step + 1);
+    if (step < 5) setStep(step + 1);
   };
 
   const prevStep = () => {
     if (step > 1) setStep(step - 1);
   };
 
-  const handleSubmit = () => {
-    console.log('Enviando dados:', formData);
-    // Aqui seria a integração com o backend
-    alert('História personalizada criada! Você receberá o PDF em até 24h no seu e-mail. 📚✨');
+  // Função para verificar o status do pagamento
+  const checkPaymentStatus = async (orderId: string) => {
+    try {
+      console.log('orderId', orderId);
+      // // Aqui você faria a chamada para sua API que verifica o status no Asaas
+      // const response = await fetch(`/api/payment-status/${orderId}`);
+      // const data = await response.json();
+
+      // if (data.status === 'CONFIRMED') {
+      //   setPaymentStatus('confirmed');
+      //   if (paymentCheckInterval) {
+      //     clearInterval(paymentCheckInterval);
+      //   }
+      //   setStep(5); // Avança para o passo de sucesso
+      // }
+
+      // setPaymentStatus('confirmed');
+      if (paymentCheckInterval) {
+        clearInterval(paymentCheckInterval);
+      }
+      setStep(5); // Avança para o passo de sucesso
+    } catch (error) {
+      console.error('Erro ao verificar status do pagamento:', error);
+    }
+  };
+
+  // Iniciar verificação do status do pagamento
+  useEffect(() => {
+    if (orderId && step === 4) {
+      // Verifica a cada 10 segundos
+      const interval = setInterval(() => checkPaymentStatus(orderId), 10000);
+      setPaymentCheckInterval(interval);
+
+      // Limpa o intervalo quando o componente é desmontado
+      return () => {
+        if (interval) clearInterval(interval);
+      };
+    }
+  }, [orderId, step]);
+
+  const handleSubmit = async () => {
+    try {
+      // Aqui seria a integração com o backend e Asaas
+      const mockResponse = {
+        orderId: '123456',
+        pixCode: '00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540599.905802BR5915Protagonizei6008BRASILIA62070503***6304E2CA'
+      };
+
+      setOrderId(mockResponse.orderId);
+      setPixCode(mockResponse.pixCode);
+      setStep(4);
+    } catch (error) {
+      console.error('Erro ao criar pedido:', error);
+      alert('Ops! Algo deu errado. Por favor, tente novamente.');
+    }
   };
 
   const skinTones = [
@@ -98,7 +154,7 @@ const FormSection = () => {
           <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
             Em apenas alguns cliques, você criará uma lembrança que durará para sempre. Vamos começar?
           </p>
-          
+
           {/* Price highlight */}
           <div className="inline-flex items-center bg-white rounded-2xl p-4 shadow-lg border-2 border-dashed border-pink-300 mb-8">
             <Gift className="w-8 h-8 text-pink-500 mr-3" />
@@ -114,9 +170,9 @@ const FormSection = () => {
           <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
             {/* Progress bar */}
             <div className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 h-2">
-              <div 
+              <div
                 className="bg-white h-full transition-all duration-500 ease-out"
-                style={{ width: `${(step / 3) * 100}%` }}
+                style={{ width: `${(step / 5) * 100}%` }}
               ></div>
             </div>
 
@@ -206,7 +262,7 @@ const FormSection = () => {
                     </Select>
                   </div>
 
-                  <Button 
+                  <Button
                     onClick={nextStep}
                     disabled={!formData.childName || !formData.childAge || !formData.childGender || !formData.skinTone}
                     className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg"
@@ -254,20 +310,20 @@ const FormSection = () => {
                   <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
                     <h5 className="font-semibold text-yellow-800 mb-2">💡 Dica importante:</h5>
                     <p className="text-yellow-700 text-sm">
-                      Para melhores resultados, use uma foto onde o rosto da criança esteja bem visível, 
+                      Para melhores resultados, use uma foto onde o rosto da criança esteja bem visível,
                       com boa iluminação e sem óculos escuros.
                     </p>
                   </div>
 
                   <div className="flex space-x-4">
-                    <Button 
+                    <Button
                       onClick={prevStep}
                       variant="outline"
                       className="flex-1 border-2 bg-white border-pink-300 text-pink-600 hover:bg-pink-50 py-4 rounded-xl font-semibold"
                     >
                       Voltar
                     </Button>
-                    <Button 
+                    <Button
                       onClick={nextStep}
                       disabled={!formData.photo}
                       className="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold py-4 rounded-xl"
@@ -304,6 +360,23 @@ const FormSection = () => {
                         placeholder="Como você gostaria de ser chamado(a)?"
                         className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
                       />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="phone" className="text-gray-700 font-semibold mb-2 block">
+                        Telefone *
+                      </Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => handleInputChange('phone', e.target.value)}
+                        placeholder="(00) 00000-0000"
+                        className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
+                      />
+                      <p className="text-sm text-gray-500 mt-1">
+                        📱 Para contato em caso de dúvidas sobre sua história
+                      </p>
                     </div>
 
                     <div>
@@ -358,19 +431,136 @@ const FormSection = () => {
                   </div>
 
                   <div className="flex space-x-4">
-                    <Button 
+                    <Button
                       onClick={prevStep}
                       variant="outline"
                       className="flex-1 border-2 bg-white border-pink-300 text-pink-600 hover:bg-pink-50 py-4 rounded-xl font-semibold"
                     >
                       Voltar
                     </Button>
-                    <Button 
+                    <Button
                       onClick={handleSubmit}
-                      disabled={!formData.parentName || !formData.email}
+                      disabled={!formData.parentName || !formData.email || !formData.phone}
                       className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg"
                     >
                       Criar História! 🎉
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 4: Pix Payment */}
+              {step === 4 && (
+                <div className="space-y-6">
+                  <div className="text-center mb-8">
+                    <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <QrCode className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="font-heading text-2xl font-bold text-gray-800 mb-2">
+                      Último passo: Pagamento
+                    </h3>
+                    <p className="text-gray-600">Escaneie o QR Code do Pix para finalizar sua história mágica</p>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 text-center border-2 border-dashed border-purple-200">
+                    <div className="max-w-xs mx-auto mb-6">
+                      {/* Aqui você colocaria o QR Code real */}
+                      <div className="w-48 h-48 bg-white rounded-xl mx-auto mb-4 flex items-center justify-center">
+                        <QrCode className="w-32 h-32 text-purple-400" />
+                      </div>
+                      <p className="text-sm text-gray-500 mb-4">
+                        Pedido #{orderId}
+                      </p>
+                      <div className="text-2xl font-bold text-green-600 mb-2">
+                        R$ 29,90
+                      </div>
+                      <p className="text-sm text-gray-600">
+                        Após o pagamento, você receberá a confirmação por e-mail
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                    <h5 className="font-semibold text-yellow-800 mb-2">💡 Importante:</h5>
+                    <p className="text-yellow-700 text-sm">
+                      O QR Code expira em 30 minutos. Após o pagamento, você receberá a história em até 24h no seu e-mail.
+                    </p>
+                  </div>
+
+                  <div className="flex space-x-4">
+                    <Button
+                      onClick={() => setStep(3)}
+                      variant="outline"
+                      className="flex-1 border-2 bg-white border-pink-300 text-pink-600 hover:bg-pink-50 py-4 rounded-xl font-semibold"
+                    >
+                      Voltar
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        navigator.clipboard.writeText(pixCode || '');
+                        alert('Código Pix copiado!');
+                      }}
+                      className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg"
+                    >
+                      Copiar Código Pix
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 5: Payment Confirmed */}
+              {step === 5 && (
+                <div className="space-y-6">
+                  <div className="text-center mb-8">
+                    <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <CheckCircle2 className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="font-heading text-2xl font-bold text-gray-800 mb-2">
+                      Pagamento Confirmado!
+                    </h3>
+                    <p className="text-gray-600">Sua história mágica está sendo criada com muito carinho</p>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 text-center border-2 border-dashed border-green-200">
+                    <div className="max-w-xs mx-auto">
+                      <h4 className="font-heading text-xl font-bold text-green-800 mb-4">
+                        Próximos Passos
+                      </h4>
+                      <div className="space-y-4 text-left">
+                        <div className="flex items-start space-x-3">
+                          <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <span className="text-green-600 text-sm">1</span>
+                          </div>
+                          <p className="text-gray-600 text-sm">
+                            Você receberá um e-mail com o PDF da história em até 24h
+                          </p>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                          <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <span className="text-green-600 text-sm">2</span>
+                          </div>
+                          <p className="text-gray-600 text-sm">
+                            Imprima a história e veja a magia acontecer no rosto do seu filho
+                          </p>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                          <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <span className="text-green-600 text-sm">3</span>
+                          </div>
+                          <p className="text-gray-600 text-sm">
+                            Compartilhe esse momento especial com quem você ama
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="text-center">
+                    <Button
+                      onClick={() => window.location.href = '/'}
+                      className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-4 px-8 rounded-xl text-lg shadow-lg"
+                    >
+                      Voltar para Home
                     </Button>
                   </div>
                 </div>
