@@ -5,10 +5,10 @@ import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/src/components/ui/select";
-import { Sparkles, Heart, Gift, Star, Camera, Mail, QrCode, CheckCircle2 } from "lucide-react";
+import { Sparkles, Heart, Gift, Star, Camera, Mail, QrCode, CheckCircle2, Loader2 } from "lucide-react";
 import customFetch from "@/src/services/custom-fetch";
 import { PostOrdersBody } from "@/src/services/model";
-import { getPostOrdersUrl } from "@/src/services/api";
+import { getPostOrdersUrl, getPostOrdersOrderIdPixUrl } from "@/src/services/api";
 
 const FormSection = () => {
   const [step, setStep] = useState(1);
@@ -24,6 +24,8 @@ const FormSection = () => {
   });
   const [orderId, setOrderId] = useState<string | null>(null);
   const [pixCode, setPixCode] = useState<string | null>(null);
+  const [qrCodeImage, setQrCodeImage] = useState<string | null>(null);
+  const [isLoadingPix, setIsLoadingPix] = useState(false);
   // const [paymentStatus, setPaymentStatus] = useState<'pending' | 'confirmed' | 'failed'>('pending');
   const paymentCheckIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -85,10 +87,11 @@ const FormSection = () => {
         // }
 
         // setPaymentStatus('confirmed');
-        if (paymentCheckIntervalRef.current) {
-          clearInterval(paymentCheckIntervalRef.current);
-        }
-        setStep(5); // Avança para o passo de sucesso
+        // if (paymentCheckIntervalRef.current) {
+        //   clearInterval(paymentCheckIntervalRef.current);
+        // }
+        // setStep(5); // Avança para o passo de sucesso
+        console.log('checkPaymentStatus', orderId);
       } catch (error) {
         console.error('Erro ao verificar status do pagamento:', error);
       }
@@ -136,16 +139,36 @@ const FormSection = () => {
       
       if (response.status === 'created' && response.order_id) {
         setOrderId(response.order_id.toString());
-        // Since the API doesn't return a pixCode, we'll need to handle this differently
-        // For now, we'll use a mock pixCode
-        setPixCode('00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540599.905802BR5915Protagonizei6008BRASILIA62070503***6304E2CA');
         setStep(4);
+        // Buscar dados do PIX
+        await fetchPixData(response.order_id);
       } else {
         throw new Error('Erro ao criar pedido');
       }
     } catch (error) {
       console.error('Erro ao criar pedido:', error);
       alert('Ops! Algo deu errado. Por favor, tente novamente.');
+    }
+  };
+
+  const fetchPixData = async (orderId: number) => {
+    try {
+      setIsLoadingPix(true);
+      const response: any = await customFetch(getPostOrdersOrderIdPixUrl(orderId), {
+        method: 'POST'
+      });
+      
+      if (response.message === 'Pix criado com sucesso' && response.qr_code_image) {
+        setPixCode(response.qr_code_copypaste || null);
+        setQrCodeImage(response.qr_code_image || null);
+      } else {
+        throw new Error('Erro ao gerar PIX');
+      }
+    } catch (error) {
+      console.error('Erro ao buscar dados do PIX:', error);
+      alert('Erro ao gerar PIX. Por favor, tente novamente.');
+    } finally {
+      setIsLoadingPix(false);
     }
   };
 
@@ -491,10 +514,21 @@ const FormSection = () => {
 
                   <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 text-center border-2 border-dashed border-purple-200">
                     <div className="max-w-xs mx-auto mb-6">
-                      {/* Aqui você colocaria o QR Code real */}
-                      <div className="w-48 h-48 bg-white rounded-xl mx-auto mb-4 flex items-center justify-center">
-                        <QrCode className="w-32 h-32 text-purple-400" />
-                      </div>
+                      {isLoadingPix ? (
+                        <div className="w-48 h-48 bg-white rounded-xl mx-auto mb-4 flex items-center justify-center">
+                          <Loader2 className="w-12 h-12 text-purple-400 animate-spin" />
+                        </div>
+                      ) : qrCodeImage ? (
+                        <img 
+                          src={`data:image/png;base64,${qrCodeImage}`} 
+                          alt="QR Code PIX" 
+                          className="w-48 h-48 mx-auto mb-4"
+                        />
+                      ) : (
+                        <div className="w-48 h-48 bg-white rounded-xl mx-auto mb-4 flex items-center justify-center">
+                          <QrCode className="w-32 h-32 text-purple-400" />
+                        </div>
+                      )}
                       <p className="text-sm text-gray-500 mb-4">
                         Pedido #{orderId}
                       </p>
@@ -524,12 +558,22 @@ const FormSection = () => {
                     </Button>
                     <Button
                       onClick={() => {
-                        navigator.clipboard.writeText(pixCode || '');
-                        alert('Código Pix copiado!');
+                        if (pixCode) {
+                          navigator.clipboard.writeText(pixCode);
+                          alert('Código Pix copiado!');
+                        }
                       }}
+                      disabled={!pixCode || isLoadingPix}
                       className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg"
                     >
-                      Copiar Código Pix
+                      {isLoadingPix ? (
+                        <>
+                          <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                          Gerando PIX...
+                        </>
+                      ) : (
+                        'Copiar Código Pix'
+                      )}
                     </Button>
                   </div>
                 </div>

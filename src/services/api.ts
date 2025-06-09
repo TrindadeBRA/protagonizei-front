@@ -24,7 +24,9 @@ import type {
   PostOrders400,
   PostOrders401,
   PostOrders500,
-  PostOrdersBody
+  PostOrdersBody,
+  PostOrdersOrderIdPix200,
+  PostOrdersOrderIdPix500
 } from './model';
 
 /**
@@ -318,4 +320,51 @@ formData.append('photo', postOrdersBody.photo)
   const data: postOrdersResponse['data'] = body ? JSON.parse(body) : {}
 
   return { data, status: res.status, headers: res.headers } as postOrdersResponse
+}
+
+
+
+/**
+ * Cria um pagamento PIX para um pedido existente usando a API do Asaas
+ * @summary Criar pagamento PIX para um pedido
+ */
+export type postOrdersOrderIdPixResponse200 = {
+  data: PostOrdersOrderIdPix200
+  status: 200
+}
+
+export type postOrdersOrderIdPixResponse500 = {
+  data: PostOrdersOrderIdPix500
+  status: 500
+}
+    
+export type postOrdersOrderIdPixResponseComposite = postOrdersOrderIdPixResponse200 | postOrdersOrderIdPixResponse500;
+    
+export type postOrdersOrderIdPixResponse = postOrdersOrderIdPixResponseComposite & {
+  headers: Headers;
+}
+
+export const getPostOrdersOrderIdPixUrl = (orderId: number,) => {
+
+
+  
+
+  return `/orders/${orderId}/pix`
+}
+
+export const postOrdersOrderIdPix = async (orderId: number, options?: RequestInit): Promise<postOrdersOrderIdPixResponse> => {
+  
+  const res = await fetch(getPostOrdersOrderIdPixUrl(orderId),
+  {      
+    ...options,
+    method: 'POST'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
+  const data: postOrdersOrderIdPixResponse['data'] = body ? JSON.parse(body) : {}
+
+  return { data, status: res.status, headers: res.headers } as postOrdersOrderIdPixResponse
 }
