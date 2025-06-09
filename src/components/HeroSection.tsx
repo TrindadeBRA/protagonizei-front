@@ -1,12 +1,13 @@
 import { Button } from "@/src/components/ui/button";
 import { Heart, Sparkles, Star } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 overflow-hidden">
       {/* Floating decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none md:opacity-100 opacity-45">
         <div className="absolute top-20 left-10 float-animation">
           <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={32} height={32} />
         </div>
@@ -22,10 +23,23 @@ const HeroSection = () => {
         <div className="absolute bottom-60 right-1/4 float-animation" style={{ animationDelay: '1.5s' }}>
           <Image src="/assets/images/asset-heart-2.png" alt="Protagonizei" width={32} height={32} />
         </div>
+        {/* New floating elements */}
+        <div className="absolute top-1/4 right-1/4 float-animation" style={{ animationDelay: '0.8s' }}>
+          <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={24} height={24} />
+        </div>
+        <div className="absolute bottom-1/3 left-1/4 float-animation" style={{ animationDelay: '1.2s' }}>
+          <Image src="/assets/images/asset-heart.png" alt="Protagonizei" width={28} height={28} />
+        </div>
+        <div className="absolute bottom-1/4 right-1/3 float-animation" style={{ animationDelay: '0.3s' }}>
+          <Image src="/assets/images/asset-star-2.png" alt="Protagonizei" width={24} height={24} />
+        </div>
+        <div className="absolute top-1/2 left-1/2 float-animation" style={{ animationDelay: '1.9s' }}>
+          <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={28} height={28} />
+        </div>
       </div>
 
       <div className="container mx-auto px-4 py-20 flex flex-col lg:flex-row items-center justify-between min-h-screen">
-        <div className="lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0">
+        <div className="lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0 z-[10]">
           {/* <div className="inline-block mb-6">
             <span className="bg-gradient-to-r from-pink-main to-blue-main text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
               ✨ Presente único e mágico ✨
@@ -41,19 +55,20 @@ const HeroSection = () => {
             
           </h1>
           
-          <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-xl">
+          <p className="text-lg md:text-xl text-black mb-8 leading-relaxed max-w-xl">
             Uma história personalizada onde seu pequeno se vê como herói. 
             <strong className="text-pink-600"> Com nome, rosto e magia</strong> em cada página.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            <Button 
-              size="lg" 
-              className="magical-border border-4 border-transparent text-white font-bold py-4 px-8 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300"
+            <Link 
+              href="/#criar-historia"
+              key="/#criar-historia"
+              className="magical-border border-4 border-transparent text-white font-bold py-2 px-6 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert"
             >
-              <Sparkles className="w-5 h-5 mr-2" />
-              Criar História Mágica
-            </Button>
+              {/* <Sparkles className="w-5 h-5 mr-2" /> */}
+              Crie sua história!
+            </Link>
             {/* <Button 
               variant="outline" 
               size="lg"
@@ -65,12 +80,12 @@ const HeroSection = () => {
           
           <div className="mt-8 flex items-center justify-center lg:justify-start space-x-6 text-sm text-gray-500">
             <div className="flex items-center">
-              <Heart className="w-4 h-4 text-red-400 mr-1 fill-current" />
-              <span>Mais de 1000 famílias encantadas</span>
+              <Heart className="w-4 h-4 text-pink-main mr-1 fill-current" />
+              <span className="text-gray-700">Mais de 1000 famílias encantadas</span>
             </div>
             <div className="flex items-center">
-              <Star className="w-4 h-4 text-yellow-400 mr-1 fill-current" />
-              <span>5/5 estrelas</span>
+              <Star className="w-4 h-4 text-blue-main mr-1 fill-current" />
+              <span className="text-gray-700">5/5 estrelas</span>
             </div>
           </div>
         </div>
@@ -85,7 +100,7 @@ const HeroSection = () => {
                 <h3 className="font-heading text-xl text-center font-bold text-gray-800 mb-2">
                   A Aventura de Sofia
                 </h3>
-                <p className="text-gray-600 text-center text-sm">
+                <p className="text-black text-center text-sm">
                   Era uma vez uma menina corajosa chamada <strong className="text-pink-600">Sofia</strong> que se tornou a heroína de sua própria história...
                 </p>
               </div>

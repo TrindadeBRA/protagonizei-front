@@ -46,19 +46,20 @@ const Navigation = () => {
             <span className="text-xl font-bold font-heading text-purple-700">
               Protagonizei
             </span> */}
-            <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="w-full" />
+            <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="w-auto sm:w-auto sm:h-full" />
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8 w-3/5 justify-end">
+          <div className="hidden xl:flex items-center space-x-8 w-3/5 justify-end">
             {navLinks.map((link) => (
               link.cta ? (
-                <Button
-                  size="lg"
+                <Link
+                  href={link.href}
+                  key={link.href}
                   className="magical-border border-4 border-transparent text-white font-bold py-2 px-4 rounded-full text-[1.2rem] shadow-xl hover:scale-105 transition-all duration-300 font-englebert"
                 >
                   {link.label}
-                </Button>
+                </Link>
               ) :
                 <Link
                   key={link.href}
@@ -74,7 +75,7 @@ const Navigation = () => {
 
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="xl:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">

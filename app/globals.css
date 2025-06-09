@@ -11,29 +11,9 @@
   --font-englebert: "Englebert", sans-serif;
 }
 
-
-
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {
@@ -47,13 +27,11 @@ html {
   /* scroll-padding-top: 80px; */
 }
 
-
-
-
 @layer base {
 
   body {
-    @apply bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 text-foreground;
+    /* @apply bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 text-foreground; */
+    /* font-family: 'Englebert', sans-serif; */
     font-family: 'Comic Neue', cursive;
   }
 
