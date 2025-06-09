@@ -1,4 +1,5 @@
 import { FileText, Wand2, Mail, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 const steps = [
   {
@@ -34,24 +35,25 @@ const HowItWorksSection = () => {
       <div className="absolute bottom-10 right-10 opacity-20">
         <Sparkles className="w-16 h-16 text-pink-300" />
       </div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6">
-            Como a magia
-            <span className="block bg-gradient-to-r from-pink-main to-purple-500 bg-clip-text text-transparent">
-              acontece?
+            Como a{" "}
+            <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
+            magia{" "}
             </span>
+            acontece?
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Em apenas 3 passos simples, você cria uma história mágica e inesquecível para seu filho.
           </p>
         </div>
-        
+
         <div className="relative">
           {/* Connection lines */}
           <div className="hidden lg:block absolute top-1/2 left-1/4 right-1/4 h-1 bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 rounded-full transform -translate-y-1/2 z-0"></div>
-          
+
           <div className="grid lg:grid-cols-3 gap-8 lg:gap-4 relative z-10">
             {steps.map((step, index) => (
               <div key={index} className="text-center group">
@@ -62,17 +64,17 @@ const HowItWorksSection = () => {
                       {step.number}
                     </span>
                   </div>
-                  
+
                   {/* Icon container */}
                   <div className={`w-24 h-24 bg-gradient-to-br ${step.color} rounded-3xl flex items-center justify-center mx-auto shadow-xl group-hover:scale-110 transition-transform duration-300`}>
                     <step.icon className="w-12 h-12 text-white" />
                   </div>
                 </div>
-                
+
                 <h3 className="font-heading text-xl font-bold text-gray-800 mb-4">
                   {step.title}
                 </h3>
-                
+
                 <p className="text-gray-600 leading-relaxed max-w-xs mx-auto">
                   {step.description}
                 </p>
@@ -80,18 +82,15 @@ const HowItWorksSection = () => {
             ))}
           </div>
         </div>
-        
-        <div className="text-center mt-16">
-          <div className="bg-white rounded-2xl p-6 shadow-lg inline-block border-2 border-dashed border-pink-200">
-            <div className="flex items-center justify-center space-x-2 text-pink-600 mb-2">
-              <Sparkles className="w-5 h-5" />
-              <span className="font-heading font-bold">Garantia de Magia</span>
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <p className="text-gray-600 text-sm">
-              Se a magia não acontecer, devolvemos 100% do seu investimento
-            </p>
-          </div>
+
+        <div className="flex justify-center mt-16">
+          <Link
+            href="/#criar-historia"
+            key="/#criar-historia"
+            className="magical-border border-4 border-transparent text-white font-bold py-2 px-6 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert"
+          >
+            Crie sua história!
+          </Link>
         </div>
       </div>
     </section>
