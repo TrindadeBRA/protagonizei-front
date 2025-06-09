@@ -35,10 +35,11 @@ const Navigation = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-pink-200 shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
+          
           {/* Logo */}
           <Link 
             href="/"
-            className="flex items-center space-x-2 cursor-pointer w-full relative h-full py-2"
+            className="flex items-center space-x-2 cursor-pointer relative h-full py-2 w-2/5"
           >
             {/* <Sparkles className="h-8 w-8 text-pink-500" />
             <span className="text-xl font-bold font-heading text-purple-700">
@@ -48,12 +49,12 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-8 w-3/5">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-purple-700 hover:text-pink-600 transition-colors duration-200 font-medium"
+                className="text-pink-main hover:text-blue-main transition-colors duration-200 font-bold"
               >
                 {link.label}
               </Link>
@@ -65,14 +66,15 @@ const Navigation = () => {
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
-                  <Menu className="h-6 w-6 text-purple-700" />
+                  <Menu className="h-6 w-6 text-pink-main" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-80">
+              <SheetContent side="right" className="w-80 bg-white">
                 <SheetHeader>
                   <SheetTitle className="flex items-center space-x-2">
-                    <Sparkles className="h-6 w-6 text-pink-500" />
-                    <span className="font-heading text-purple-700">Protagonizei</span>
+                    <Link href="/" className="flex items-center space-x-2 cursor-pointer w-full relative h-full py-2">
+                      <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="w-[200px] h-auto"/>
+                    </Link>
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col space-y-4 mt-8">

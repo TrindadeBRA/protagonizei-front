@@ -1,5 +1,6 @@
 import { Button } from "@/src/components/ui/button";
 import { Heart, Sparkles, Star } from "lucide-react";
+import Image from "next/image";
 
 const HeroSection = () => {
   return (
@@ -7,36 +8,37 @@ const HeroSection = () => {
       {/* Floating decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 float-animation">
-          <Star className="w-8 h-8 text-yellow-400 fill-current" />
+          <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={32} height={32} />
         </div>
         <div className="absolute top-40 right-20 float-animation" style={{ animationDelay: '1s' }}>
-          <Heart className="w-6 h-6 text-pink-400 fill-current" />
+          <Image src="/assets/images/asset-heart.png" alt="Protagonizei" width={32} height={32} />
         </div>
         <div className="absolute bottom-40 left-20 float-animation" style={{ animationDelay: '2s' }}>
-          <Sparkles className="w-10 h-10 text-purple-400 fill-current" />
+          <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={32} height={32} />
         </div>
         <div className="absolute top-60 left-1/3 float-animation" style={{ animationDelay: '0.5s' }}>
-          <Star className="w-5 h-5 text-blue-400 fill-current" />
+          <Image src="/assets/images/asset-star-2.png" alt="Protagonizei" width={32} height={32} />
         </div>
         <div className="absolute bottom-60 right-1/4 float-animation" style={{ animationDelay: '1.5s' }}>
-          <Heart className="w-7 h-7 text-red-300 fill-current" />
+          <Image src="/assets/images/asset-heart-2.png" alt="Protagonizei" width={32} height={32} />
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-20 flex flex-col lg:flex-row items-center justify-between min-h-screen">
         <div className="lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0">
           <div className="inline-block mb-6">
-            <span className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
+            <span className="bg-gradient-to-r from-pink-main to-blue-main text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
               ✨ Presente único e mágico ✨
             </span>
           </div>
           
-          <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-              Seu filho vira
-            </span>
-            <br />
-            <span className="text-gray-800">protagonista da história!</span>
+          <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-none">
+            <p className="text-black leading-tight">
+              Seu filho vira o{' '}
+              <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">protagonista{' '}</span>
+              da história!
+            </p>
+            
           </h1>
           
           <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-xl">
@@ -93,8 +95,9 @@ const HeroSection = () => {
             </div>
             
             <div className="absolute -top-6 -right-6 bounce-slow">
-              <div className="bg-yellow-300 rounded-full p-3 shadow-lg">
-                <Sparkles className="w-6 h-6 text-yellow-600" />
+              <div className="bg-yellow-300 rounded-full p-2 shadow-lg">
+                {/* <Sparkles className="w-6 h-6 text-yellow-600" /> */}
+                <Image src="/assets/images/gold-icon.png" alt="Protagonizei" width={40} height={40} />
               </div>
             </div>
           </div>
