@@ -78,7 +78,7 @@ const Navigation = () => {
             <span className="text-xl font-bold font-heading text-purple-700">
               Protagonizei
             </span> */}
-            <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="w-full sm:w-auto sm:h-auto" />
+            <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="w-full sm:max-w-[200px] sm:h-auto" />
           </Link>
 
           {/* Desktop Menu */}
