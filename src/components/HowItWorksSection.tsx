@@ -62,7 +62,7 @@ const HowItWorksSection = () => {
 
         <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-4">
           {steps.map((step, index) => (
-            <>
+            <div key={index}>
               <div key={index} className="text-center group relative" data-aos="fade-in" data-aos-delay={index * 100}>
                 <div className="relative mb-8">
                   {/* Step number */}
@@ -96,7 +96,7 @@ const HowItWorksSection = () => {
                   <ArrowDown className={twMerge("block lg:hidden w-8 h-8 text-pink-main", index == 1 && "text-blue-main")} />
                 </div>
               )}
-            </>
+            </div>
           ))}
         </div>
 
