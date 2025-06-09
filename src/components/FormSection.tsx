@@ -175,7 +175,7 @@ const FormSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 relative overflow-hidden">
+    <section className="py-20 bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 relative overflow-hidden" id="criar-historia">
       {/* Decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 float-animation">

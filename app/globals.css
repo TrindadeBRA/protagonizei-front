@@ -7,8 +7,11 @@
   --color-pink-light: #fce7f3;
   --color-purple-light: #f3e8ff;
   --color-blue-light: #dbeafe;
-
+  
+  --font-englebert: "Englebert", sans-serif;
 }
+
+
 
 :root {
   --background: #ffffff;

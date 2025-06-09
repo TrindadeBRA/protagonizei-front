@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Comic_Neue, Fredoka, Inter } from "next/font/google";
+import { Comic_Neue, Englebert, Fredoka, Inter } from "next/font/google";
 import "./globals.css";
 import "toastify-js/src/toastify.css"
 import Script from "next/script";
@@ -17,6 +17,11 @@ const inter = Inter({
   subsets: ['latin'],
 });
 
+const englebert = Englebert({
+  variable: '--font-englebert',
+  subsets: ['latin'],
+  weight: ['400'],
+});
 const fredoka = Fredoka({
   variable: '--font-fredoka',
   subsets: ['latin'],
@@ -101,7 +106,7 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
       </head>
 
       <body
-        className={`${inter.variable} ${fredoka.variable} ${comicNeue.variable} antialiased !bg-white !text-black !top-0 !pt-16`}
+        className={`${inter.variable} ${fredoka.variable} ${comicNeue.variable} ${englebert.variable} antialiased !bg-white !text-black !top-0 !pt-16`}
       >
 
         {/* Google Tag Manager */}

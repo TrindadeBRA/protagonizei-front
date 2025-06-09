@@ -16,6 +16,7 @@ import Image from "next/image";
 type NavLink = {
   label: string;
   href: string;
+  cta?: boolean;
 };
 
 const Navigation = () => {
@@ -24,20 +25,20 @@ const Navigation = () => {
   const navLinks: NavLink[] = [
     { label: "Início", href: "/#hero" },
     { label: "Benefícios", href: "/#beneficios" },
-    { label: "Como Funciona", href: "/#como-funciona" },
     { label: "Exemplos", href: "/#exemplos" },
     { label: "Depoimentos", href: "/#depoimentos" },
     { label: "FAQ", href: "/#faq" },
     { label: "Blog", href: "/blog" },
+    { label: "Crie sua história!", href: "/#criar-historia", cta: true },
   ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-pink-200 shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          
+
           {/* Logo */}
-          <Link 
+          <Link
             href="/"
             className="flex items-center space-x-2 cursor-pointer relative h-full py-2 w-2/5"
           >
@@ -45,21 +46,32 @@ const Navigation = () => {
             <span className="text-xl font-bold font-heading text-purple-700">
               Protagonizei
             </span> */}
-            <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="h-full w-auto"/>
+            <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="w-full" />
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8 w-3/5">
+          <div className="hidden md:flex items-center space-x-8 w-3/5 justify-end">
             {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-black hover:text-pink-main transition-colors duration-200 font-semibold"
-              >
-                {link.label}
-              </Link>
+              link.cta ? (
+                <Button
+                  size="lg"
+                  className="magical-border border-4 border-transparent text-white font-bold py-2 px-4 rounded-full text-[1.2rem] shadow-xl hover:scale-105 transition-all duration-300 font-englebert"
+                >
+                  {link.label}
+                </Button>
+              ) :
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-black hover:text-pink-main transition-colors duration-200 font-semibold font-englebert text-[1.2rem]"
+                >
+                  {link.label}
+                </Link>
             ))}
+
+
           </div>
+
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
@@ -73,20 +85,31 @@ const Navigation = () => {
                 <SheetHeader>
                   <SheetTitle className="flex items-center space-x-2">
                     <Link href="/" className="flex items-center space-x-2 cursor-pointer w-full relative h-full py-2">
-                      <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="w-[200px] h-auto"/>
+                      <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="w-[200px] h-auto" />
                     </Link>
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col space-y-4 mt-8">
                   {navLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="text-left py-3 px-4 text-purple-700 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-colors duration-200 font-medium"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {link.label}
-                    </Link>
+                    link.cta ? (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className="magical-border border-4 border-transparent text-white font-bold py-2 px-4 rounded-full text-[1.2rem] shadow-xl hover:scale-105 transition-all duration-300 font-englebert w-fit mx-auto"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className="text-black hover:text-pink-main transition-colors duration-200 font-semibold font-englebert text-[1.2rem]"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {link.label}
+                      </Link>
+                    )
                   ))}
                 </div>
               </SheetContent>
