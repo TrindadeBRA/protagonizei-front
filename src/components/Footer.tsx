@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image";
 import Link from "next/link";
 
 const Footer = () => {
@@ -18,8 +19,16 @@ const Footer = () => {
   return (
     <footer className="bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 border-t-4 border-pink-200 overflow-x-hidden">
       <div className="container mx-auto px-4 py-8">
+
+
         {/* Links de navegação */}
-        <div className="flex flex-wrap justify-center gap-6 mb-8" data-aos="fade-left" id="footer-links">
+        <div className="flex justify-center mb-8" id="footer-logo" data-aos="fade-left">
+          <Link href="/" className="block">
+            <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="w-full sm:max-w-[200px] sm:h-auto" />
+          </Link>
+        </div>
+
+        <div className="flex flex-wrap justify-center gap-6 mb-8" data-aos="fade-left" data-aos-anchor="#footer-logo">
           {footerLinks.map((link) => {
             return (
               <Link 
@@ -37,7 +46,7 @@ const Footer = () => {
         <div className="w-full h-px bg-gradient-to-r from-transparent via-pink-300 to-transparent mb-6"></div>
 
         {/* Copyright */}
-        <div className="text-center space-y-2" data-aos="fade-left" data-aos-delay={100} data-aos-anchor="#footer-links">
+        <div className="text-center space-y-2" data-aos="fade-left" data-aos-delay={100} data-aos-anchor="#footer-logo">
           <p className="text-black font-medium">
             © 2025 Protagonizei - Todos os direitos reservados
           </p>
