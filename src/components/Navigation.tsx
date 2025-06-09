@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import Link from "next/link";
@@ -21,16 +21,48 @@ type NavLink = {
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   const navLinks: NavLink[] = [
     { label: "Início", href: "/#hero" },
     { label: "Benefícios", href: "/#beneficios" },
+    { label: "Como funciona", href: "/#como-funciona" },
     { label: "Exemplos", href: "/#exemplos" },
     { label: "Depoimentos", href: "/#depoimentos" },
-    { label: "FAQ", href: "/#faq" },
     { label: "Blog", href: "/#blog" },
+    { label: "FAQ", href: "/#faq" },
     { label: "Crie sua história!", href: "/#criar-historia", cta: true },
   ];
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.5,
+    };
+
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          setActiveSection(id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, observerOptions);
+
+    // Observe all sections
+    navLinks.forEach((link) => {
+      const sectionId = link.href.replace("/#", "");
+      const element = document.getElementById(sectionId);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-pink-200 shadow-sm">
@@ -40,19 +72,22 @@ const Navigation = () => {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center space-x-2 cursor-pointer relative h-full py-2 w-2/5"
+            className="flex items-center space-x-2 cursor-pointer relative h-full py-2 w-1/2 sm:w-1/5"
           >
             {/* <Sparkles className="h-8 w-8 text-pink-main" />
             <span className="text-xl font-bold font-heading text-purple-700">
               Protagonizei
             </span> */}
-            <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="w-auto sm:w-auto sm:h-full" />
+            <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="w-full sm:w-auto sm:h-auto" />
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden xl:flex items-center space-x-8 w-3/5 justify-end">
-            {navLinks.map((link) => (
-              link.cta ? (
+          <div className="hidden xl:flex items-center gap-x-6 w-4/5 justify-end">
+            {navLinks.map((link) => {
+              const sectionId = link.href.replace("/#", "");
+              const isActive = activeSection === sectionId;
+              
+              return link.cta ? (
                 <Link
                   href={link.href}
                   key={link.href}
@@ -60,19 +95,19 @@ const Navigation = () => {
                 >
                   {link.label}
                 </Link>
-              ) :
+              ) : (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-black hover:text-pink-main transition-colors duration-200 font-semibold font-englebert text-[1.2rem]"
+                  className={`text-black xl:hover:text-pink-main transition-colors duration-200 font-semibold font-englebert text-[1.2rem] ${
+                    isActive ? "text-pink-main border-b-2 border-pink-main" : ""
+                  }`}
                 >
                   {link.label}
                 </Link>
-            ))}
-
-
+              );
+            })}
           </div>
-
 
           {/* Mobile Menu Button */}
           <div className="xl:hidden">
@@ -91,8 +126,11 @@ const Navigation = () => {
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col space-y-4 mt-8">
-                  {navLinks.map((link) => (
-                    link.cta ? (
+                  {navLinks.map((link) => {
+                    const sectionId = link.href.replace("/#", "");
+                    const isActive = activeSection === sectionId;
+                    
+                    return link.cta ? (
                       <Link
                         key={link.href}
                         href={link.href}
@@ -105,13 +143,15 @@ const Navigation = () => {
                       <Link
                         key={link.href}
                         href={link.href}
-                        className="text-black hover:text-pink-main transition-colors duration-200 font-semibold font-englebert text-[1.2rem]"
+                        className={`text-black transition-colors duration-200 font-semibold font-englebert text-[1.2rem] ${
+                          isActive ? "text-pink-main border-b-2 border-pink-main" : ""
+                        }`}
                         onClick={() => setIsOpen(false)}
                       >
                         {link.label}
                       </Link>
-                    )
-                  ))}
+                    );
+                  })}
                 </div>
               </SheetContent>
             </Sheet>

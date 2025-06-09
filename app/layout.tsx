@@ -106,7 +106,7 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
       </head>
 
       <body
-        className={`${inter.variable} ${fredoka.variable} ${comicNeue.variable} ${englebert.variable} antialiased !bg-white !text-black !top-0 !pt-16`}
+        className={`${inter.variable} ${fredoka.variable} ${comicNeue.variable} ${englebert.variable} antialiased !bg-white !text-black !top-0 !pt-16 overflow-x-hidden`}
       >
 
         {/* Google Tag Manager */}
