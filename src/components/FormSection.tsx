@@ -55,7 +55,24 @@ const FormSection = () => {
   }, []);
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    if (field === 'phone') {
+      // Remove all non-numeric characters
+      const numbers = value.replace(/\D/g, '');
+      
+      // Apply mask based on length
+      let maskedValue = '';
+      if (numbers.length <= 2) {
+        maskedValue = numbers;
+      } else if (numbers.length <= 7) {
+        maskedValue = `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
+      } else {
+        maskedValue = `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`;
+      }
+      
+      setFormData(prev => ({ ...prev, [field]: maskedValue }));
+    } else {
+      setFormData(prev => ({ ...prev, [field]: value }));
+    }
   };
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -419,6 +436,7 @@ const FormSection = () => {
                         value={formData.phone}
                         onChange={(e) => handleInputChange('phone', e.target.value)}
                         placeholder="(00) 00000-0000"
+                        maxLength={15}
                         className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
                       />
                       <p className="text-sm text-gray-500 mt-1">
