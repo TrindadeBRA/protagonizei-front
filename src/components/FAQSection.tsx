@@ -1,7 +1,9 @@
 "use client"
 
 import { useState } from "react";
-import { ChevronDown, ChevronUp, HelpCircle } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { twMerge } from "tailwind-merge";
+import Link from "next/link";
 
 const faqs = [
   {
@@ -49,23 +51,23 @@ const FAQSection = () => {
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center bg-gradient-to-r from-pink-100 to-purple-100 rounded-full px-6 py-2 mb-6">
+          {/* <div className="inline-flex items-center bg-gradient-to-r from-pink-100 to-purple-100 rounded-full px-6 py-2 mb-6">
             <HelpCircle className="w-5 h-5 text-purple-600 mr-2" />
             <span className="text-purple-700 font-semibold">Dúvidas Frequentes</span>
-          </div>
-          
+          </div> */}
+
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6">
             Tire suas
-            <span className="bg-gradient-to-r from-pink-main to-purple-500 bg-clip-text text-transparent"> dúvidas</span>
+            <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent"> dúvidas</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Respostas para as perguntas mais comuns dos papais e mamães sobre nossos livros personalizados.
           </p>
         </div>
-        
+
         <div className="space-y-4">
           {faqs.map((faq, index) => (
-            <div 
+            <div
               key={index}
               className="bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50 rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
             >
@@ -78,16 +80,16 @@ const FAQSection = () => {
                 </h3>
                 <div className="flex-shrink-0">
                   {openIndex === index ? (
-                    <ChevronUp className="w-5 h-5 text-purple-600" />
+                    <ChevronUp className="w-5 h-5 text-pink-main" />
                   ) : (
-                    <ChevronDown className="w-5 h-5 text-purple-600" />
+                    <ChevronDown className="w-5 h-5 text-pink-main" />
                   )}
                 </div>
               </button>
-              
+
               {openIndex === index && (
                 <div className="px-6 pb-5">
-                  <div className="bg-white rounded-xl p-4 border-l-4 border-pink-300">
+                  <div className={twMerge("bg-white rounded-xl p-4 border-l-4", index % 2 === 0 ? "border-pink-main" : "border-blue-main")}>
                     <p className="text-gray-700 leading-relaxed">
                       {faq.answer}
                     </p>
@@ -97,8 +99,8 @@ const FAQSection = () => {
             </div>
           ))}
         </div>
-        
-        <div className="text-center mt-12">
+
+        {/* <div className="text-center mt-12">
           <div className="bg-gradient-to-r from-pink-100 to-purple-100 rounded-2xl p-6 max-w-md mx-auto">
             <h4 className="font-heading font-bold text-gray-800 mb-2">Ainda tem dúvidas?</h4>
             <p className="text-gray-600 text-sm mb-4">
@@ -111,6 +113,16 @@ const FAQSection = () => {
               💌 Fale conosco
             </a>
           </div>
+        </div> */}
+
+        <div className="flex justify-center mt-12">
+          <Link
+            href="/#criar-historia"
+            key="/#criar-historia"
+            className="magical-border border-4 border-transparent text-white font-bold py-2 px-6 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert"
+          >
+            Crie sua história!
+          </Link>
         </div>
       </div>
     </section>

@@ -57,7 +57,7 @@ export default async function Page({
 
   return (
     <>
-      <div className="overflow-x-hidden bg-pink-50">
+      <div className="overflow-x-hidden bg-white">
         <BlogGrid posts={data} />
         <div className="mx-auto max-w-2xl lg:max-w-4xl ">
           <Pagination

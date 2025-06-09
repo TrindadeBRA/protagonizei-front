@@ -50,7 +50,7 @@ const BenefitsSection = () => {
         <div className="text-center mb-16">
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6">
             Por que escolher
-            <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent"> Protagonizei</span> ?
+            <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent"> Protagonizei</span>
           </h2>
           <p className="text-lg text-black max-w-2xl mx-auto">
             Mais do que um livro, é uma experiência mágica que transforma a infância do seu filho para sempre.

@@ -176,25 +176,25 @@ const FormSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 relative overflow-hidden" id="criar-historia">
+    <section className="py-20 bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 relative overflow-hidden" id="criar-historia">
       {/* Decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 float-animation">
-          <Star className="w-12 h-12 text-yellow-400 fill-current opacity-30" />
+          <Image src="/assets/images/asset-star.png" alt="Star" width={100} height={100} className="w-12 h-12 opacity-30" />
         </div>
         <div className="absolute bottom-40 right-20 float-animation" style={{ animationDelay: '1s' }}>
-          <Heart className="w-10 h-10 text-pink-400 fill-current opacity-30" />
+          <Image src="/assets/images/asset-heart-2.png" alt="Heart" width={100} height={100} className="w-10 h-10 opacity-30" />
         </div>
         <div className="absolute top-1/2 right-10 float-animation" style={{ animationDelay: '2s' }}>
-          <Sparkles className="w-8 h-8 text-purple-400 fill-current opacity-30" />
+          <Image src="/assets/images/asset-star-2.png" alt="Star" width={100} height={100} className="w-8 h-8 opacity-30" />
         </div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6">
-            Crie agora a história
-            <span className="block bg-gradient-to-r from-pink-main to-purple-500 bg-clip-text text-transparent">
+            Crie agora a história{" "}
+            <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
               do seu pequeno herói!
             </span>
           </h2>
@@ -203,22 +203,23 @@ const FormSection = () => {
           </p>
 
           {/* Price highlight */}
-          <div className="inline-flex items-center bg-white rounded-2xl p-4 shadow-lg border-2 border-dashed border-pink-300 mb-8">
+          {/* <div className="inline-flex items-center bg-white rounded-2xl p-4 shadow-lg border-2 border-dashed border-pink-300 mb-8">
             <Gift className="w-8 h-8 text-pink-main mr-3" />
             <div className="text-left">
               <div className="text-sm text-gray-500 line-through">De R$ 49,90</div>
               <div className="text-2xl font-bold text-green-600">R$ 29,90</div>
               <div className="text-xs text-pink-600 font-semibold">Promoção por tempo limitado!</div>
             </div>
-          </div>
+          </div> */}
+
         </div>
 
         <div className="max-w-2xl mx-auto">
           <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
             {/* Progress bar */}
-            <div className="bg-gradient-to-r from-pink-main via-purple-500 to-blue-main h-2">
+            <div className="bg-gray-300 h-3">
               <div
-                className="bg-white h-full transition-all duration-500 ease-out"
+                className="bg-gradient-to-r from-pink-main  to-blue-main h-full transition-all duration-500 ease-out"
                 style={{ width: `${(step / 5) * 100}%` }}
               ></div>
             </div>
@@ -228,7 +229,7 @@ const FormSection = () => {
               {step === 1 && (
                 <div className="space-y-6">
                   <div className="text-center mb-8">
-                    <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-purple-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-gradient-to-br from-pink-main to-blue-main rounded-full flex items-center justify-center mx-auto mb-4">
                       <Sparkles className="w-8 h-8 text-white" />
                     </div>
                     <h3 className="font-heading text-2xl font-bold text-gray-800 mb-2">
@@ -315,7 +316,6 @@ const FormSection = () => {
                     className="w-full bg-gradient-to-r from-pink-main to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg"
                   >
                     Continuar
-                    <Sparkles className="w-5 h-5 ml-2" />
                   </Button>
                 </div>
               )}

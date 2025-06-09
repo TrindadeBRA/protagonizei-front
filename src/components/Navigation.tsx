@@ -28,7 +28,7 @@ const Navigation = () => {
     { label: "Exemplos", href: "/#exemplos" },
     { label: "Depoimentos", href: "/#depoimentos" },
     { label: "FAQ", href: "/#faq" },
-    { label: "Blog", href: "/blog" },
+    { label: "Blog", href: "/#blog" },
     { label: "Crie sua história!", href: "/#criar-historia", cta: true },
   ];
 

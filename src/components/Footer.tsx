@@ -1,6 +1,7 @@
 "use client"
 
 import { Heart, Star, Gift, Users, HelpCircle, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 const Footer = () => {
   const scrollToSection = (sectionId: string) => {
@@ -11,12 +12,13 @@ const Footer = () => {
   };
 
   const footerLinks = [
-    { label: "Início", id: "hero", icon: Star },
-    { label: "Benefícios", id: "benefits", icon: Heart },
-    { label: "Como Funciona", id: "how-it-works", icon: Sparkles },
-    { label: "Exemplos", id: "examples", icon: Gift },
-    { label: "Depoimentos", id: "testimonials", icon: Users },
-    { label: "FAQ", id: "faq", icon: HelpCircle },
+    { label: "Início", href: "/#hero" },
+    { label: "Benefícios", href: "/#beneficios" },
+    { label: "Exemplos", href: "/#exemplos" },
+    { label: "Depoimentos", href: "/#depoimentos" },
+    { label: "FAQ", href: "/#faq" },
+    { label: "Blog", href: "/#blog" },
+    { label: "Crie sua história!", href: "/#criar-historia", cta: true },
   ];
 
   return (
@@ -25,16 +27,14 @@ const Footer = () => {
         {/* Links de navegação */}
         <div className="flex flex-wrap justify-center gap-6 mb-8">
           {footerLinks.map((link) => {
-            const IconComponent = link.icon;
             return (
-              <button
-                key={link.id}
-                onClick={() => scrollToSection(link.id)}
-                className="flex items-center space-x-2 text-purple-700 hover:text-pink-600 transition-colors duration-200 font-medium"
+              <Link 
+                key={link.href}
+                href={link.href}
+                className="flex items-center space-x-2 text-black hover:text-pink-main transition-colors duration-200 font-semibold font-englebert text-lg cursor-pointer"
               >
-                <IconComponent className="h-4 w-4" />
                 <span>{link.label}</span>
-              </button>
+              </Link>
             );
           })}
         </div>
@@ -44,19 +44,19 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="text-center space-y-2">
-          <p className="text-purple-700 font-medium">
+          <p className="text-black font-medium">
             © 2025 Protagonizei - Todos os direitos reservados
           </p>
-          <p className="text-sm text-purple-600">
+          <p className="text-black">
             Desenvolvido por{" "}
-            <a 
+            <Link
               href="https://thetrinityweb.com.br" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="font-semibold hover:text-pink-600 transition-colors duration-200"
+              className="font-semibold hover:text-pink-main transition-colors duration-200"
             >
-              thetrinityweb.com.br
-            </a>
+              The Trinity Web
+            </Link>
           </p>
         </div>
       </div>

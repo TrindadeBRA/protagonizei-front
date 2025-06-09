@@ -1,5 +1,7 @@
-import { FileText, Wand2, Mail, Sparkles } from "lucide-react";
+import { FileText, Wand2, Mail, Sparkles, ArrowRight, ArrowDown } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { twMerge } from "tailwind-merge";
 
 const steps = [
   {
@@ -29,12 +31,20 @@ const HowItWorksSection = () => {
   return (
     <section className="py-20 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-10 left-10 opacity-20">
-        <Sparkles className="w-20 h-20 text-purple-300" />
+      <div className="absolute top-10 left-10 opacity-15">
+        <Image src="/assets/images/asset-star-2.png" alt="Protagonizei" width={80} height={80} />
       </div>
-      <div className="absolute bottom-10 right-10 opacity-20">
-        <Sparkles className="w-16 h-16 text-pink-300" />
+      <div className="absolute top-10 right-10 opacity-15">
+        <Image src="/assets/images/asset-heart-2.png" alt="Protagonizei" width={80} height={80} />
       </div>
+      {/* <div className="absolute bottom-10 right-10 opacity-20">
+        <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={80} height={80} />
+      </div>
+      <div className="absolute bottom-10 left-10 opacity-15">
+        <Image src="/assets/images/asset-heart.png" alt="Protagonizei" width={80} height={80} />
+      </div> */}
+
+
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
@@ -50,23 +60,20 @@ const HowItWorksSection = () => {
           </p>
         </div>
 
-        <div className="relative">
-          {/* Connection lines */}
-          <div className="hidden lg:block absolute top-1/2 left-1/4 right-1/4 h-1 bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 rounded-full transform -translate-y-1/2 z-0"></div>
-
-          <div className="grid lg:grid-cols-3 gap-8 lg:gap-4 relative z-10">
-            {steps.map((step, index) => (
-              <div key={index} className="text-center group">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-4">
+          {steps.map((step, index) => (
+            <>
+              <div key={index} className="text-center group relative">
                 <div className="relative mb-8">
                   {/* Step number */}
-                  <div className="absolute -top-4 -left-4 bg-white border-4 border-gray-100 rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
+                  <div className="absolute -top-4 -left-4 bg-white border-4 border-gray-100 rounded-full w-12 h-12 flex items-center justify-center shadow-lg z-20">
                     <span className="font-heading text-sm font-bold text-gray-600">
                       {step.number}
                     </span>
                   </div>
 
                   {/* Icon container */}
-                  <div className={`w-24 h-24 bg-gradient-to-br ${step.color} rounded-3xl flex items-center justify-center mx-auto shadow-xl group-hover:scale-110 transition-transform duration-300`}>
+                  <div className={`w-24 h-24 bg-gradient-to-br ${step.color} rounded-3xl flex items-center justify-center mx-auto shadow-xl group-hover:scale-110 transition-transform duration-300 relative z-10`}>
                     <step.icon className="w-12 h-12 text-white" />
                   </div>
                 </div>
@@ -79,8 +86,14 @@ const HowItWorksSection = () => {
                   {step.description}
                 </p>
               </div>
-            ))}
-          </div>
+              {index < steps.length - 1 && (
+                <div className="flex items-center justify-center">
+                  <ArrowRight className={twMerge("hidden lg:block w-8 h-8 text-pink-main", index == 1 && "text-blue-main")} />
+                  <ArrowDown className={twMerge("block lg:hidden w-8 h-8 text-pink-main", index == 1 && "text-blue-main")} />
+                </div>
+              )}
+            </>
+          ))}
         </div>
 
         <div className="flex justify-center mt-16">

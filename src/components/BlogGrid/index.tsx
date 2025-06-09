@@ -15,21 +15,24 @@ export default function BlogGrid({
     return (
         <div className="">
             {/* Header */}
-            <section className="bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 py-16">
+            <section className="py-16">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="text-4xl md:text-5xl font-bold font-heading text-purple-700 mb-6">
-                            📖 Blog Protagonizei
-                        </h1>
-                        <p className="text-xl text-purple-600 max-w-2xl mx-auto">
-                            Dicas, estratégias e insights para ajudar seu filho a se tornar o protagonista da própria história
-                        </p>
+                    <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6">
+                        Conheça nosso{" "}
+                        <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
+                            blog
+                        </span>
+                    </h2>
+                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                        Conheça todos os posts do blog e fique por dentro das novidades do Protagonizei!
+                    </p>
                     </div>
                 </div>
             </section>
 
             {/* Posts */}
-            <section className="py-16 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+            <section className="py-16">
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {posts.map((post) => {
@@ -57,14 +60,14 @@ export default function BlogGrid({
                                     </CardHeader>
                                     <CardContent className="p-6">
                                         <Link href={`/blog/${post.slug}`}>
-                                            <h3 className="text-xl font-bold font-heading text-purple-700 mb-3 group-hover:text-pink-600 transition-colors">
+                                            <h3 className="text-xl font-bold font-heading text-black mb-3 group-hover:text-pink-main transition-colors">
                                                 {post.title}
                                             </h3>
                                         </Link>
-                                        <p className="text-purple-600 mb-4 leading-relaxed line-clamp-3">
+                                        <p className="text-black mb-4 leading-relaxed line-clamp-3">
                                             {post.excerpt || cleanContent}
                                         </p>
-                                        <div className="flex items-center justify-between text-sm text-purple-500 mb-4">
+                                        <div className="flex items-center justify-between text-sm text-black mb-4">
                                             <div className="flex items-center space-x-2">
                                                 <User className="h-4 w-4" />
                                                 <span>Equipe Protagonizei</span>
@@ -75,7 +78,7 @@ export default function BlogGrid({
                                             </div>
                                         </div>
                                         <Link href={`/blog/${post.slug}`}>
-                                            <Button className="w-full bg-gradient-to-r from-pink-main to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-heading">
+                                            <Button className="w-full bg-gradient-to-r from-pink-main to-blue-main hover:from-pink-main hover:to-purple-700 text-white font-heading">
                                                 Ler Mais
                                                 <ArrowRight className="ml-2 h-4 w-4" />
                                             </Button>
