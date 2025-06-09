@@ -11,8 +11,8 @@ import customFetch from "@/src/services/custom-fetch";
 import { GetPostSlugs200DataItem } from "@/src/services/model";
 
 export const metadata = {
-  title: 'TTW - Home',
-  description: 'TTW - Home',
+  title: 'Protagonizei: Livros Infantis Personalizados com IA | Seu Filho Vira o Herói da História!',
+  description: 'Crie um livro infantil digital personalizado onde seu filho é o protagonista com nome, rosto e magia. Desenvolvido com Inteligência Artificial (IA) para o face swap e adaptação do texto, este é um presente único, emocional e educativo. Desfrute de uma experiência simples e de baixo custo, com entrega 100% digital (PDF enviado por e-mail). Sem a necessidade de login ou e-commerce tradicional, transforme a leitura em uma aventura inesquecível e veja a criança se reconhecer como protagonista.',
 }
 
 async function getPostsPagination(): Promise<getPostSlugsResponse> {

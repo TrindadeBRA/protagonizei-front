@@ -31,8 +31,8 @@ export async function generateMetadata({
   const { page } = resolvedParams;
   
   return {
-    title: `TTW - Blog: Página ${page}`,
-    description: 'Acompanhe as últimas notícias e informações sobre a TTW.',
+    title: `Protagonizei - Blog: Página ${page}`,
+    description: 'No Blog Protagonizei, descubra dicas, estratégias e insights para ajudar seu filho a se tornar o protagonista da própria história. Explore artigos sobre como estimular o amor pela leitura, desenvolver a autoconfiança e criar momentos mágicos e emocionais com nossos livros infantis personalizados. Um presente único e educativo para pais e responsáveis que buscam uma experiência inesquecível. Conteúdo produzido pela Equipe Protagonizei.',
   }
 }
 

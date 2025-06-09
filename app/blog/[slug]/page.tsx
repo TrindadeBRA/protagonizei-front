@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: { params: Promise<BlogPostPro
   }
 
   return {
-    title: `TTW - ${title}`,
+    title: `Protagonizei - ${title}`,
     description: excerpt || cleanContent,
   }
 }

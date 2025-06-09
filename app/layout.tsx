@@ -31,8 +31,8 @@ const comicNeue = Comic_Neue({
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://thetrinityweb.com.br'),
-  description: 'The Trinity Web é uma empresa que cria soluções para o mundo através da tecnologia',
+  metadataBase: new URL('https://protagonizei.com'),
+  description: 'Crie um livro infantil digital personalizado onde seu filho é o protagonista com nome, rosto e magia. Este é um presente único, emocional e educativo, com entrega 100% digital (PDF enviado por e-mail). Oferecemos uma experiência simples e de baixo custo, sem a necessidade de login ou e-commerce tradicional. Transforme a leitura em uma aventura inesquecível e veja a criança se reconhecer como protagonista.',
   openGraph: {
     images: [
       {
