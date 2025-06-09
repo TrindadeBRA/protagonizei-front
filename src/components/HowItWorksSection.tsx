@@ -1,4 +1,4 @@
-import { FileText, Wand2, Mail, Sparkles, ArrowRight, ArrowDown } from "lucide-react";
+import { FileText, Wand2, Mail, ArrowRight, ArrowDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";

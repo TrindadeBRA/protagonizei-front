@@ -1,5 +1,5 @@
 
-import { Quote, Star } from "lucide-react";
+import { Quote } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";

@@ -5,7 +5,7 @@ import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/src/components/ui/select";
-import { Sparkles, Heart, Gift, Star, Camera, Mail, QrCode, CheckCircle2, Loader2 } from "lucide-react";
+import { Sparkles, Heart, Camera, Mail, QrCode, CheckCircle2, Loader2 } from "lucide-react";
 import customFetch from "@/src/services/custom-fetch";
 import { PostOrdersBody } from "@/src/services/model";
 import { getPostOrdersUrl, getPostOrdersOrderIdPixUrl, getGetOrdersOrderIdPaymentStatusUrl } from "@/src/services/api";

@@ -1,15 +1,8 @@
 "use client"
 
-import { Heart, Star, Gift, Users, HelpCircle, Sparkles } from "lucide-react";
 import Link from "next/link";
 
 const Footer = () => {
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   const footerLinks = [
     { label: "Início", href: "/#hero" },
