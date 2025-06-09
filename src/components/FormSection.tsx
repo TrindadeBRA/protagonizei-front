@@ -192,13 +192,13 @@ const FormSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
-          <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6">
+          <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">
             Crie agora a história{" "}
             <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
               do seu pequeno herói!
             </span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8" data-aos="fade-up">
             Em apenas alguns cliques, você criará uma lembrança que durará para sempre. Vamos começar?
           </p>
 
@@ -215,7 +215,7 @@ const FormSection = () => {
         </div>
 
         <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden" data-aos="fade-up">
             {/* Progress bar */}
             <div className="bg-gray-300 h-3">
               <div
@@ -639,7 +639,7 @@ const FormSection = () => {
           </div>
 
           {/* Security badges */}
-          <div className="text-center mt-8">
+          <div className="text-center mt-8" data-aos="fade-left"> 
             <div className="flex flex-wrap items-center justify-center space-x-6 text-sm text-gray-500">
               <div className="flex items-center">
                 <span className="text-green-500 mr-1">🔒</span>

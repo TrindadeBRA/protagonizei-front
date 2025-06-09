@@ -39,13 +39,13 @@ const ExamplesSection = () => {
     <section className="py-20 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="font-heading text-3xl md:text-5xl font-bold text-black mb-6">
+          <h2 className="font-heading text-3xl md:text-5xl font-bold text-black mb-6" data-aos="fade-up">
             Conheça alguns de nossos{" "}
             <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
               Protagonistas
             </span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto" data-aos="fade-up">
             Cada história é única, com o nome e características da sua criança em cada página.
           </p>
         </div>
@@ -54,7 +54,7 @@ const ExamplesSection = () => {
           {examples.map((example, index) => (
             <div
               key={index}
-              className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:-translate-y-2"
+              className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:-translate-y-2" data-aos="fade-in" data-aos-delay={index * 100}
             >
               {/* Header */}
               <div className={`bg-gradient-to-br ${example.color} p-6 text-black relative`}>
@@ -123,6 +123,7 @@ const ExamplesSection = () => {
             href="/#criar-historia"
             key="/#criar-historia"
             className="magical-border border-4 border-transparent text-white font-bold py-2 px-6 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert"
+            data-aos="fade-up"
           >
             Crie sua história!
           </Link>

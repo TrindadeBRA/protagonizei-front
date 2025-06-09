@@ -56,11 +56,11 @@ const FAQSection = () => {
             <span className="text-purple-700 font-semibold">Dúvidas Frequentes</span>
           </div> */}
 
-          <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6">
+          <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">
             Tire suas
             <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent"> dúvidas</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto" data-aos="fade-up">
             Respostas para as perguntas mais comuns dos papais e mamães sobre nossos livros personalizados.
           </p>
         </div>
@@ -70,6 +70,8 @@ const FAQSection = () => {
             <div
               key={index}
               className="bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50 rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+              data-aos="fade-in"
+              data-aos-delay={index * 100}
             >
               <button
                 onClick={() => toggleFAQ(index)}
@@ -120,6 +122,7 @@ const FAQSection = () => {
             href="/#criar-historia"
             key="/#criar-historia"
             className="magical-border border-4 border-transparent text-white font-bold py-2 px-6 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert"
+            data-aos="fade-up"
           >
             Crie sua história!
           </Link>

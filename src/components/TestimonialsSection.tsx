@@ -58,17 +58,17 @@ const TestimonialsSection = () => {
     <section className="py-20 bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6">
+          <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">
             O que dizem os{" "}
             <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
               pais dos protagonistas
             </span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto" data-aos="fade-up">
             Mais de 1000 famílias já criaram momentos mágicos com nossos livros personalizados.
           </p>
 
-          <div className="flex items-center justify-center mt-6 space-x-1">
+          <div className="flex items-center justify-center mt-6 space-x-1" data-aos="fade-up">
             {[...Array(5)].map((_, i) => (
               <Star key={i} className="w-6 h-6 text-yellow-400 fill-current" />
             ))}
@@ -80,7 +80,7 @@ const TestimonialsSection = () => {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="bg-white rounded-3xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 relative group hover:-translate-y-1"
+              className="bg-white rounded-3xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 relative group hover:-translate-y-1" data-aos="fade-in" data-aos-delay={index * 100}
             >
               {/* Quote icon */}
               <div className="absolute -top-3 -left-3 bg-gradient-to-br from-pink-400 to-purple-400 rounded-full p-2">
@@ -95,7 +95,7 @@ const TestimonialsSection = () => {
               </div>
 
               {/* Testimonial text */}
-              <p className="text-gray-700 leading-relaxed mb-6 italic">
+              <p className="text-gray-700 leading-relaxed mb-6 italic" data-aos="fade-up" data-aos-delay={index * 100}>
                 `&ldquo;`{testimonial.text}`&ldquo;`
               </p>
 
@@ -138,6 +138,7 @@ const TestimonialsSection = () => {
             href="/#criar-historia"
             key="/#criar-historia"
             className="magical-border border-4 border-transparent text-white font-bold py-2 px-6 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert"
+            data-aos="fade-up"
           >
             Crie sua história!
           </Link>

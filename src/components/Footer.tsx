@@ -18,7 +18,7 @@ const Footer = () => {
     <footer className="bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 border-t-4 border-pink-200">
       <div className="container mx-auto px-4 py-8">
         {/* Links de navegação */}
-        <div className="flex flex-wrap justify-center gap-6 mb-8">
+        <div className="flex flex-wrap justify-center gap-6 mb-8" data-aos="fade-left" id="footer-links">
           {footerLinks.map((link) => {
             return (
               <Link 
@@ -36,7 +36,7 @@ const Footer = () => {
         <div className="w-full h-px bg-gradient-to-r from-transparent via-pink-300 to-transparent mb-6"></div>
 
         {/* Copyright */}
-        <div className="text-center space-y-2">
+        <div className="text-center space-y-2" data-aos="fade-left" data-aos-delay={100} data-aos-anchor="#footer-links">
           <p className="text-black font-medium">
             © 2025 Protagonizei - Todos os direitos reservados
           </p>

@@ -47,11 +47,11 @@ const BenefitsSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6">
+          <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">
             Por que escolher
             <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent"> Protagonizei</span>
           </h2>
-          <p className="text-lg text-black max-w-2xl mx-auto">
+          <p className="text-lg text-black max-w-2xl mx-auto" data-aos="fade-up">
             Mais do que um livro, é uma experiência mágica que transforma a infância do seu filho para sempre.
           </p>
         </div>
@@ -60,7 +60,7 @@ const BenefitsSection = () => {
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className="group bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100"
+              className="group bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100" data-aos="fade-in" data-aos-delay={index * 100}
             >
               <div className={`w-16 h-16 bg-gradient-to-br ${benefit.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
                 <benefit.icon className="w-8 h-8 text-white" />
@@ -83,6 +83,7 @@ const BenefitsSection = () => {
             href="/#criar-historia"
             key="/#criar-historia"
             className="magical-border border-4 border-transparent text-white font-bold py-2 px-6 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert"
+            data-aos="fade-up"
           >
             Crie sua história!
           </Link>

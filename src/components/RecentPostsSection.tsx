@@ -12,21 +12,21 @@ export default function RecentPostsSection({ posts }: { posts: GetPostSlugs200Da
         <section className="py-16 bg-gradient-to-b from-white via-purple-50 to-blue-50" id="blog">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
-                    <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6">
+                    <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">
                         Conheça nosso{" "}
                         <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
                             blog
                         </span>
                     </h2>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                    <p className="text-lg text-gray-600 max-w-2xl mx-auto" data-aos="fade-up">
                         Conheça todos os posts do blog e fique por dentro das novidades do Protagonizei!
                     </p>
 
                 </div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {posts.map((post) => (
-                        <Card key={post.slug} className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/70 backdrop-blur-sm">
+                    {posts.map((post, index) => (
+                        <Card key={post.slug} className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/70 backdrop-blur-sm" data-aos="fade-in" data-aos-delay={index * 100}>
                             <CardHeader className="p-0">
                                 <div className="relative overflow-hidden rounded-t-lg">
                                     <Link href={`/blog/${post.slug}`}>

@@ -48,14 +48,14 @@ const HowItWorksSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6">
+          <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">
             Como a{" "}
             <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
             magia{" "}
             </span>
             acontece?
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto" data-aos="fade-up">
             Em apenas 3 passos simples, você cria uma história mágica e inesquecível para seu filho.
           </p>
         </div>
@@ -63,7 +63,7 @@ const HowItWorksSection = () => {
         <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-4">
           {steps.map((step, index) => (
             <>
-              <div key={index} className="text-center group relative">
+              <div key={index} className="text-center group relative" data-aos="fade-in" data-aos-delay={index * 100}>
                 <div className="relative mb-8">
                   {/* Step number */}
                   <div className="absolute -top-4 -left-4 bg-white border-4 border-gray-100 rounded-full w-12 h-12 flex items-center justify-center shadow-lg z-20">
@@ -73,7 +73,11 @@ const HowItWorksSection = () => {
                   </div>
 
                   {/* Icon container */}
-                  <div className={`w-24 h-24 bg-gradient-to-br ${step.color} rounded-3xl flex items-center justify-center mx-auto shadow-xl group-hover:scale-110 transition-transform duration-300 relative z-10`}>
+                  <div
+                    className={`w-24 h-24 bg-gradient-to-br ${step.color} rounded-3xl flex items-center justify-center mx-auto shadow-xl group-hover:scale-110 transition-transform duration-300 relative z-10`}
+                    data-aos="fade-in"
+                    data-aos-delay={index * 100}
+                  >
                     <step.icon className="w-12 h-12 text-white" />
                   </div>
                 </div>
@@ -101,6 +105,7 @@ const HowItWorksSection = () => {
             href="/#criar-historia"
             key="/#criar-historia"
             className="magical-border border-4 border-transparent text-white font-bold py-2 px-6 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert"
+            data-aos="fade-up"
           >
             Crie sua história!
           </Link>
