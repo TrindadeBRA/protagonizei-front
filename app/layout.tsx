@@ -40,8 +40,8 @@ export const metadata: Metadata = {
   description: 'Crie um livro infantil digital personalizado onde seu filho é o protagonista com nome, rosto e magia. Este é um presente único, emocional e educativo, com entrega 100% digital (PDF enviado por e-mail). Oferecemos uma experiência simples e de baixo custo, sem a necessidade de login ou e-commerce tradicional. Transforme a leitura em uma aventura inesquecível e veja a criança se reconhecer como protagonista.',
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/icon.png', type: 'image/png', sizes: '32x32' },
+      { url: '/favicon.ico?v=2', sizes: 'any' },
+      { url: '/icon-64.png', type: 'image/png', sizes: '32x32' },
       { url: '/icon-192.png', type: 'image/png', sizes: '192x192' },
       { url: '/icon-512.png', type: 'image/png', sizes: '512x512' },
     ],
