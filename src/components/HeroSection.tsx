@@ -1,5 +1,4 @@
-import { Button } from "@/src/components/ui/button";
-import { Heart, Sparkles, Star } from "lucide-react";
+import { Heart, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 

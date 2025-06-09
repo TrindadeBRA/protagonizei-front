@@ -9,6 +9,7 @@ import { Sparkles, Heart, Gift, Star, Camera, Mail, QrCode, CheckCircle2, Loader
 import customFetch from "@/src/services/custom-fetch";
 import { PostOrdersBody } from "@/src/services/model";
 import { getPostOrdersUrl, getPostOrdersOrderIdPixUrl, getGetOrdersOrderIdPaymentStatusUrl } from "@/src/services/api";
+import Image from "next/image";
 
 const FormSection = () => {
   const [step, setStep] = useState(1);
@@ -515,10 +516,12 @@ const FormSection = () => {
                           <Loader2 className="w-12 h-12 text-purple-400 animate-spin" />
                         </div>
                       ) : qrCodeImage ? (
-                        <img 
+                        <Image 
                           src={`data:image/png;base64,${qrCodeImage}`} 
                           alt="QR Code PIX" 
                           className="w-48 h-48 mx-auto mb-4"
+                          width={192}
+                          height={192}
                         />
                       ) : (
                         <div className="w-48 h-48 bg-white rounded-xl mx-auto mb-4 flex items-center justify-center">
