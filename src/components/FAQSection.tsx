@@ -71,7 +71,7 @@ const FAQSection = () => {
               key={index}
               className="bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50 rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
               data-aos="fade-in"
-              data-aos-delay={index * 100}
+              data-aos-delay={index * 50}
             >
               <button
                 onClick={() => toggleFAQ(index)}
