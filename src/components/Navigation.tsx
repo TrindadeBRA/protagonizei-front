@@ -11,6 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/src/components/ui/sheet";
+import Image from "next/image";
 
 type NavLink = {
   label: string;
@@ -37,12 +38,13 @@ const Navigation = () => {
           {/* Logo */}
           <Link 
             href="/"
-            className="flex items-center space-x-2 cursor-pointer"
+            className="flex items-center space-x-2 cursor-pointer w-full relative h-full py-2"
           >
-            <Sparkles className="h-8 w-8 text-pink-500" />
+            {/* <Sparkles className="h-8 w-8 text-pink-500" />
             <span className="text-xl font-bold font-heading text-purple-700">
               Protagonizei
-            </span>
+            </span> */}
+            <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="h-full w-auto"/>
           </Link>
 
           {/* Desktop Menu */}
