@@ -8,6 +8,8 @@
 import type {
   GetConfigs200,
   GetConfigs401,
+  GetOrdersOrderIdPaymentStatus200,
+  GetOrdersOrderIdPaymentStatus404,
   GetPostSlug200,
   GetPostSlug400,
   GetPostSlug401,
@@ -26,7 +28,11 @@ import type {
   PostOrders500,
   PostOrdersBody,
   PostOrdersOrderIdPix200,
-  PostOrdersOrderIdPix500
+  PostOrdersOrderIdPix500,
+  PostWebhookPaymentConfirm200,
+  PostWebhookPaymentConfirm400,
+  PostWebhookPaymentConfirm404,
+  PostWebhookPaymentConfirmBody
 } from './model';
 
 /**
@@ -367,4 +373,104 @@ export const postOrdersOrderIdPix = async (orderId: number, options?: RequestIni
   const data: postOrdersOrderIdPixResponse['data'] = body ? JSON.parse(body) : {}
 
   return { data, status: res.status, headers: res.headers } as postOrdersOrderIdPixResponse
+}
+
+
+
+/**
+ * Endpoint para receber notificações de confirmação de pagamento do Asaas. Atualiza o status do pedido para pago e registra os dados da transação.
+ * @summary Webhook de confirmação de pagamento
+ */
+export type postWebhookPaymentConfirmResponse200 = {
+  data: PostWebhookPaymentConfirm200
+  status: 200
+}
+
+export type postWebhookPaymentConfirmResponse400 = {
+  data: PostWebhookPaymentConfirm400
+  status: 400
+}
+
+export type postWebhookPaymentConfirmResponse404 = {
+  data: PostWebhookPaymentConfirm404
+  status: 404
+}
+    
+export type postWebhookPaymentConfirmResponseComposite = postWebhookPaymentConfirmResponse200 | postWebhookPaymentConfirmResponse400 | postWebhookPaymentConfirmResponse404;
+    
+export type postWebhookPaymentConfirmResponse = postWebhookPaymentConfirmResponseComposite & {
+  headers: Headers;
+}
+
+export const getPostWebhookPaymentConfirmUrl = () => {
+
+
+  
+
+  return `/webhook/payment-confirm`
+}
+
+export const postWebhookPaymentConfirm = async (postWebhookPaymentConfirmBody: PostWebhookPaymentConfirmBody, options?: RequestInit): Promise<postWebhookPaymentConfirmResponse> => {
+  
+  const res = await fetch(getPostWebhookPaymentConfirmUrl(),
+  {      
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      postWebhookPaymentConfirmBody,)
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
+  const data: postWebhookPaymentConfirmResponse['data'] = body ? JSON.parse(body) : {}
+
+  return { data, status: res.status, headers: res.headers } as postWebhookPaymentConfirmResponse
+}
+
+
+
+/**
+ * Verifica se um pedido específico já foi pago
+ * @summary Verificar status do pagamento
+ */
+export type getOrdersOrderIdPaymentStatusResponse200 = {
+  data: GetOrdersOrderIdPaymentStatus200
+  status: 200
+}
+
+export type getOrdersOrderIdPaymentStatusResponse404 = {
+  data: GetOrdersOrderIdPaymentStatus404
+  status: 404
+}
+    
+export type getOrdersOrderIdPaymentStatusResponseComposite = getOrdersOrderIdPaymentStatusResponse200 | getOrdersOrderIdPaymentStatusResponse404;
+    
+export type getOrdersOrderIdPaymentStatusResponse = getOrdersOrderIdPaymentStatusResponseComposite & {
+  headers: Headers;
+}
+
+export const getGetOrdersOrderIdPaymentStatusUrl = (orderId: number,) => {
+
+
+  
+
+  return `/orders/${orderId}/payment-status`
+}
+
+export const getOrdersOrderIdPaymentStatus = async (orderId: number, options?: RequestInit): Promise<getOrdersOrderIdPaymentStatusResponse> => {
+  
+  const res = await fetch(getGetOrdersOrderIdPaymentStatusUrl(orderId),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
+  const data: getOrdersOrderIdPaymentStatusResponse['data'] = body ? JSON.parse(body) : {}
+
+  return { data, status: res.status, headers: res.headers } as getOrdersOrderIdPaymentStatusResponse
 }

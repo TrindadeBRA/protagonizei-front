@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Sparkles, Heart, Gift, Star, Camera, Mail, QrCode, CheckCircle2, Loader2 } from "lucide-react";
 import customFetch from "@/src/services/custom-fetch";
 import { PostOrdersBody } from "@/src/services/model";
-import { getPostOrdersUrl, getPostOrdersOrderIdPixUrl } from "@/src/services/api";
+import { getPostOrdersUrl, getPostOrdersOrderIdPixUrl, getGetOrdersOrderIdPaymentStatusUrl } from "@/src/services/api";
 
 const FormSection = () => {
   const [step, setStep] = useState(1);
@@ -26,6 +26,7 @@ const FormSection = () => {
   const [pixCode, setPixCode] = useState<string | null>(null);
   const [qrCodeImage, setQrCodeImage] = useState<string | null>(null);
   const [isLoadingPix, setIsLoadingPix] = useState(false);
+  const [isPixGenerated, setIsPixGenerated] = useState(false);
   // const [paymentStatus, setPaymentStatus] = useState<'pending' | 'confirmed' | 'failed'>('pending');
   const paymentCheckIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -74,32 +75,26 @@ const FormSection = () => {
   useEffect(() => {
     const checkPaymentStatus = async () => {
       try {
-        // // Aqui você faria a chamada para sua API que verifica o status no Asaas
-        // const response = await fetch(`/api/payment-status/${orderId}`);
-        // const data = await response.json();
-
-        // if (data.status === 'CONFIRMED') {
-        //   setPaymentStatus('confirmed');
-        //   if (paymentCheckInterval) {
-        //     clearInterval(paymentCheckInterval);
-        //   }
-        //   setStep(5); // Avança para o passo de sucesso
-        // }
-
-        // setPaymentStatus('confirmed');
-        // if (paymentCheckIntervalRef.current) {
-        //   clearInterval(paymentCheckIntervalRef.current);
-        // }
-        // setStep(5); // Avança para o passo de sucesso
-        console.log('checkPaymentStatus', orderId);
+        const response: any = await customFetch(getGetOrdersOrderIdPaymentStatusUrl(Number(orderId)), {
+          method: 'GET'
+        });
+        
+        console.log('checkPaymentStatus', response);
+        
+        if (response.status === 'paid') {
+          if (paymentCheckIntervalRef.current) {
+            clearInterval(paymentCheckIntervalRef.current);
+          }
+          setStep(5); // Avança para o passo de sucesso
+        }
       } catch (error) {
         console.error('Erro ao verificar status do pagamento:', error);
       }
     };
 
-    if (orderId && step === 4) {
-      // Verifica a cada 10 segundos
-      const interval = setInterval(checkPaymentStatus, 10000);
+    if (orderId && step === 4 && isPixGenerated) {
+      // Verifica a cada 5 segundos
+      const interval = setInterval(checkPaymentStatus, 5000);
       paymentCheckIntervalRef.current = interval;
 
       // Limpa o intervalo quando o componente é desmontado
@@ -107,7 +102,7 @@ const FormSection = () => {
         if (interval) clearInterval(interval);
       };
     }
-  }, [orderId, step]);
+  }, [orderId, step, isPixGenerated]);
 
   const handleSubmit = async () => {
     try {
@@ -141,7 +136,7 @@ const FormSection = () => {
         setOrderId(response.order_id.toString());
         setStep(4);
         // Buscar dados do PIX
-        await fetchPixData(response.order_id);
+        await fetchPixData(Number(response.order_id));
       } else {
         throw new Error('Erro ao criar pedido');
       }
@@ -161,6 +156,7 @@ const FormSection = () => {
       if (response.message === 'Pix criado com sucesso' && response.qr_code_image) {
         setPixCode(response.qr_code_copypaste || null);
         setQrCodeImage(response.qr_code_image || null);
+        setIsPixGenerated(true); // Marca que o PIX foi gerado com sucesso
       } else {
         throw new Error('Erro ao gerar PIX');
       }
