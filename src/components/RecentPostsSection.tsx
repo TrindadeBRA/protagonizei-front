@@ -60,7 +60,7 @@ export default function RecentPostsSection({ posts }: { posts: GetPostSlugs200Da
                                     </div>
                                 </div>
                                 <Link href={`/blog/${post.slug}`}>
-                                    <Button className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-heading">
+                                    <Button className="w-full bg-gradient-to-r from-pink-main to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-heading">
                                         Ler Mais
                                         <ArrowRight className="ml-2 h-4 w-4" />
                                     </Button>

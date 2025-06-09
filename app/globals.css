@@ -60,8 +60,8 @@ html {
 }
 
 .magical-border {
-  background: linear-gradient(45deg, #ff9a9e, #fecfef, #fecfef, #a8edea);
-  background-size: 400% 400%;
+  background: linear-gradient(45deg, var(--color-pink-main), var(--color-blue-main), var(--color-pink-main), var(--color-blue-main));
+  background-size: 600% 600%;
   animation: gradientShift 4s ease-in-out infinite;
 }
 

@@ -193,7 +193,7 @@ const FormSection = () => {
         <div className="text-center mb-12">
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6">
             Crie agora a história
-            <span className="block bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-pink-main to-purple-500 bg-clip-text text-transparent">
               do seu pequeno herói!
             </span>
           </h2>
@@ -203,7 +203,7 @@ const FormSection = () => {
 
           {/* Price highlight */}
           <div className="inline-flex items-center bg-white rounded-2xl p-4 shadow-lg border-2 border-dashed border-pink-300 mb-8">
-            <Gift className="w-8 h-8 text-pink-500 mr-3" />
+            <Gift className="w-8 h-8 text-pink-main mr-3" />
             <div className="text-left">
               <div className="text-sm text-gray-500 line-through">De R$ 49,90</div>
               <div className="text-2xl font-bold text-green-600">R$ 29,90</div>
@@ -215,7 +215,7 @@ const FormSection = () => {
         <div className="max-w-2xl mx-auto">
           <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
             {/* Progress bar */}
-            <div className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 h-2">
+            <div className="bg-gradient-to-r from-pink-main via-purple-500 to-blue-main h-2">
               <div
                 className="bg-white h-full transition-all duration-500 ease-out"
                 style={{ width: `${(step / 5) * 100}%` }}
@@ -311,7 +311,7 @@ const FormSection = () => {
                   <Button
                     onClick={nextStep}
                     disabled={!formData.childName || !formData.childAge || !formData.childGender || !formData.skinTone}
-                    className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg"
+                    className="w-full bg-gradient-to-r from-pink-main to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg"
                   >
                     Continuar
                     <Sparkles className="w-5 h-5 ml-2" />
@@ -372,7 +372,7 @@ const FormSection = () => {
                     <Button
                       onClick={nextStep}
                       disabled={!formData.photo}
-                      className="flex-1 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold py-4 rounded-xl"
+                      className="flex-1 bg-gradient-to-r from-blue-main to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold py-4 rounded-xl"
                     >
                       Continuar
                       <Camera className="w-5 h-5 ml-2" />
@@ -560,7 +560,7 @@ const FormSection = () => {
                         }
                       }}
                       disabled={!pixCode || isLoadingPix}
-                      className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg"
+                      className="flex-1 bg-gradient-to-r from-purple-500 to-pink-main hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg"
                     >
                       {isLoadingPix ? (
                         <>
@@ -643,7 +643,7 @@ const FormSection = () => {
                 Pagamento Seguro
               </div>
               <div className="flex items-center">
-                <span className="text-blue-500 mr-1">📧</span>
+                <span className="text-blue-main mr-1">📧</span>
                 Entrega Garantida
               </div>
               <div className="flex items-center">

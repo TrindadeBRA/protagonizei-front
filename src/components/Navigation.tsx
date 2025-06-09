@@ -41,7 +41,7 @@ const Navigation = () => {
             href="/"
             className="flex items-center space-x-2 cursor-pointer relative h-full py-2 w-2/5"
           >
-            {/* <Sparkles className="h-8 w-8 text-pink-500" />
+            {/* <Sparkles className="h-8 w-8 text-pink-main" />
             <span className="text-xl font-bold font-heading text-purple-700">
               Protagonizei
             </span> */}
@@ -54,7 +54,7 @@ const Navigation = () => {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-pink-main hover:text-blue-main transition-colors duration-200 font-bold"
+                className="text-black hover:text-pink-main transition-colors duration-200 font-semibold"
               >
                 {link.label}
               </Link>

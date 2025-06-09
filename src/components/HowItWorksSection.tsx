@@ -39,7 +39,7 @@ const HowItWorksSection = () => {
         <div className="text-center mb-16">
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6">
             Como a magia
-            <span className="block bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-pink-main to-purple-500 bg-clip-text text-transparent">
               acontece?
             </span>
           </h2>

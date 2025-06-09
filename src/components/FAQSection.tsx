@@ -56,7 +56,7 @@ const FAQSection = () => {
           
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6">
             Tire suas
-            <span className="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent"> dúvidas</span>
+            <span className="bg-gradient-to-r from-pink-main to-purple-500 bg-clip-text text-transparent"> dúvidas</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Respostas para as perguntas mais comuns dos papais e mamães sobre nossos livros personalizados.
@@ -106,7 +106,7 @@ const FAQSection = () => {
             </p>
             <a 
               href="mailto:contato@historiaspersonalizadas.com"
-              className="inline-flex items-center bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-2 rounded-full font-semibold hover:scale-105 transition-transform duration-200"
+              className="inline-flex items-center bg-gradient-to-r from-pink-main to-purple-500 text-white px-6 py-2 rounded-full font-semibold hover:scale-105 transition-transform duration-200"
             >
               💌 Fale conosco
             </a>

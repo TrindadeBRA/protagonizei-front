@@ -66,7 +66,7 @@ export default function Pagination({ currentPage, totalPages, basePath }: Pagina
               href={`${basePath}/${page}`}
               className={`flex items-center justify-center w-10 h-10 rounded-full text-sm font-medium transition-colors ${
                 page === currentPage
-                  ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white'
+                  ? 'bg-gradient-to-r from-pink-main to-purple-600 text-white'
                   : 'bg-white/50 backdrop-blur-sm border border-purple-100 text-purple-600 hover:bg-purple-50'
               }`}
               aria-label={`Ir para página ${page}`}

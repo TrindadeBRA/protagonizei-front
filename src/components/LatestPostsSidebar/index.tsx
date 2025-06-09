@@ -9,7 +9,7 @@ export default function LatestPostsSidebar({ posts }: { posts: GetPostSlugs200 }
         <div className="bg-white rounded-2xl p-6 shadow-lg border border-purple-100">
             <div className="mb-6">
                 <h2 className="text-2xl font-bold text-purple-700 font-heading">Últimos Posts</h2>
-                <div className="w-20 h-1 bg-gradient-to-r from-pink-500 to-purple-600 mt-2 rounded-full"></div>
+                <div className="w-20 h-1 bg-gradient-to-r from-pink-main to-purple-600 mt-2 rounded-full"></div>
             </div>
             <div className="flex flex-col gap-y-6">
                 {posts.data?.map((post: GetPostSlugs200DataItem) => (

@@ -39,7 +39,7 @@ export function PostViewTemplate({ postData, relatedPosts, isPreview }: PostView
             </Link>
             
             <div className="mb-6">
-              <span className="bg-pink-500 text-white px-4 py-2 rounded-full text-sm font-medium">
+              <span className="bg-pink-main text-white px-4 py-2 rounded-full text-sm font-medium">
                 Blog
               </span>
             </div>
@@ -63,7 +63,7 @@ export function PostViewTemplate({ postData, relatedPosts, isPreview }: PostView
             </div>
 
             <div className="flex gap-4 mb-8">
-              <Button size="sm" className="bg-pink-500 hover:bg-pink-600 text-white">
+              <Button size="sm" className="bg-pink-main hover:bg-pink-600 text-white">
                 <Heart className="mr-2 h-4 w-4" />
                 Curtir
               </Button>
@@ -107,7 +107,7 @@ export function PostViewTemplate({ postData, relatedPosts, isPreview }: PostView
                     <Link href="/">
                       <Button 
                         size="lg" 
-                        className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-heading"
+                        className="bg-gradient-to-r from-pink-main to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-heading"
                       >
                         <ArrowLeft className="mr-2 h-5 w-5" />
                         Voltar para Home

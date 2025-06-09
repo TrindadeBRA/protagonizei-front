@@ -104,7 +104,7 @@ export function WhatsAppForm({ setIsOpen, whatsAppUrl }: WhatsAppFormProps) {
                     {isSubmitting ? "Enviando..." : "Chamar no WhatsApp!"}
                 </button>
                 <div className="w-full leading-3">
-                    <span className="text-[11px] font-medium text-gray-600">Ao enviar, você concorda com nossa <Link href="/politica-de-privacidade" className="text-blue-500 hover:text-blue-700 underline">Política de Privacidade</Link> e autoriza o recebimento de comunicações da TTW.</span>
+                    <span className="text-[11px] font-medium text-gray-600">Ao enviar, você concorda com nossa <Link href="/politica-de-privacidade" className="text-blue-main hover:text-blue-700 underline">Política de Privacidade</Link> e autoriza o recebimento de comunicações da TTW.</span>
                 </div>
             </div>
         </form>

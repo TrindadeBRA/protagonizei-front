@@ -26,11 +26,11 @@ const HeroSection = () => {
 
       <div className="container mx-auto px-4 py-20 flex flex-col lg:flex-row items-center justify-between min-h-screen">
         <div className="lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0">
-          <div className="inline-block mb-6">
+          {/* <div className="inline-block mb-6">
             <span className="bg-gradient-to-r from-pink-main to-blue-main text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
               ✨ Presente único e mágico ✨
             </span>
-          </div>
+          </div> */}
           
           <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-none">
             <p className="text-black leading-tight">
@@ -54,13 +54,13 @@ const HeroSection = () => {
               <Sparkles className="w-5 h-5 mr-2" />
               Criar História Mágica
             </Button>
-            <Button 
+            {/* <Button 
               variant="outline" 
               size="lg"
               className="bg-white border-2 border-pink-300 text-pink-600 hover:bg-pink-50 py-4 px-8 rounded-full text-lg font-semibold"
             >
               Ver Exemplos
-            </Button>
+            </Button> */}
           </div>
           
           <div className="mt-8 flex items-center justify-center lg:justify-start space-x-6 text-sm text-gray-500">
