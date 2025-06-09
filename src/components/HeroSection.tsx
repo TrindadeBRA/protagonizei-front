@@ -8,32 +8,32 @@ const HeroSection = () => {
       {/* Floating decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none md:opacity-100 opacity-45">
         <div className="absolute top-20 left-10 float-animation">
-          <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={32} height={32} />
+          <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={32} height={32} data-aos="fade-in" data-aos-delay={100} />
         </div>
         <div className="absolute top-40 right-20 float-animation" style={{ animationDelay: '1s' }}>
-          <Image src="/assets/images/asset-heart.png" alt="Protagonizei" width={32} height={32} />
+          <Image src="/assets/images/asset-heart.png" alt="Protagonizei" width={32} height={32} data-aos="fade-in" data-aos-delay={200} />
         </div>
         <div className="absolute bottom-40 left-20 float-animation" style={{ animationDelay: '2s' }}>
-          <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={32} height={32} />
+          <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={32} height={32} data-aos="fade-in" data-aos-delay={300} />
         </div>
         <div className="absolute top-60 left-1/3 float-animation" style={{ animationDelay: '0.5s' }}>
-          <Image src="/assets/images/asset-star-2.png" alt="Protagonizei" width={32} height={32} />
+          <Image src="/assets/images/asset-star-2.png" alt="Protagonizei" width={32} height={32} data-aos="fade-in" data-aos-delay={400} />
         </div>
         <div className="absolute bottom-60 right-1/4 float-animation" style={{ animationDelay: '1.5s' }}>
-          <Image src="/assets/images/asset-heart-2.png" alt="Protagonizei" width={32} height={32} />
+          <Image src="/assets/images/asset-heart-2.png" alt="Protagonizei" width={32} height={32} data-aos="fade-in" data-aos-delay={500} />
         </div>
         {/* New floating elements */}
         <div className="absolute top-1/4 right-1/4 float-animation" style={{ animationDelay: '0.8s' }}>
-          <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={24} height={24} />
+          <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={24} height={24} data-aos="fade-in" data-aos-delay={600} />
         </div>
         <div className="absolute bottom-1/3 left-1/4 float-animation" style={{ animationDelay: '1.2s' }}>
-          <Image src="/assets/images/asset-heart.png" alt="Protagonizei" width={28} height={28} />
+          <Image src="/assets/images/asset-heart.png" alt="Protagonizei" width={28} height={28} data-aos="fade-in" data-aos-delay={700} />
         </div>
         <div className="absolute bottom-1/4 right-1/3 float-animation" style={{ animationDelay: '0.3s' }}>
-          <Image src="/assets/images/asset-star-2.png" alt="Protagonizei" width={24} height={24} />
+          <Image src="/assets/images/asset-star-2.png" alt="Protagonizei" width={24} height={24} data-aos="fade-in" data-aos-delay={800} />
         </div>
         <div className="absolute top-1/2 left-1/2 float-animation" style={{ animationDelay: '1.9s' }}>
-          <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={28} height={28} />
+          <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={28} height={28} data-aos="fade-in" data-aos-delay={900} />
         </div>
       </div>
 
