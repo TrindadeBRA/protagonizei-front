@@ -103,7 +103,6 @@ export function PostViewTemplate({ postData, relatedPosts, isPreview }: PostView
                       href="/#criar-historia"
                       key="/#criar-historia"
                       className="magical-border border-4 border-transparent text-white font-bold py-2 px-6 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert"
-                      data-aos="fade-up"
                     >
                       Crie sua história!
                     </Link>
