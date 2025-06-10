@@ -334,7 +334,7 @@ const FormSection = () => {
                   <Button
                     onClick={nextStep}
                     disabled={!formData.childName || !formData.childAge || !formData.childGender || !formData.skinTone}
-                    className="w-full bg-gradient-to-r from-pink-main to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg"
+                    className="w-full bg-gradient-to-r from-pink-main to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg disabled:cursor-not-allowed"
                   >
                     Continuar
                   </Button>
@@ -394,7 +394,7 @@ const FormSection = () => {
                     <Button
                       onClick={nextStep}
                       disabled={!formData.photo}
-                      className="flex-1 bg-gradient-to-r from-blue-main to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold py-4 rounded-xl"
+                      className="flex-1 bg-gradient-to-r from-blue-main to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold py-4 rounded-xl disabled:cursor-not-allowed"
                     >
                       Continuar
                       <Camera className="w-5 h-5 ml-2" />
@@ -510,7 +510,7 @@ const FormSection = () => {
                     <Button
                       onClick={handleSubmit}
                       disabled={!formData.parentName || !formData.email || !formData.phone || isSubmitting}
-                      className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg relative"
+                      className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg relative disabled:cursor-not-allowed"
                     >
                       {isSubmitting ? (
                         <>
@@ -592,7 +592,7 @@ const FormSection = () => {
                         }
                       }}
                       disabled={!pixCode || isLoadingPix}
-                      className="flex-1 bg-gradient-to-r from-purple-500 to-pink-main hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg relative"
+                      className="flex-1 bg-gradient-to-r from-purple-500 to-pink-main hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg relative disabled:cursor-not-allowed"
                     >
                       {isLoadingPix ? (
                         <>
