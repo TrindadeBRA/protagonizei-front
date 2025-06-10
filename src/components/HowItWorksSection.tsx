@@ -34,7 +34,7 @@ const HowItWorksSection = () => {
       <div className="absolute top-10 left-10 opacity-15">
         <Image src="/assets/images/asset-star-2.png" alt="Protagonizei" width={80} height={80} />
       </div>
-      <div className="absolute top-10 right-10 opacity-15">
+      <div className="hidden lg:block absolute top-10 right-10 opacity-15">
         <Image src="/assets/images/asset-heart-2.png" alt="Protagonizei" width={80} height={80} />
       </div>
       {/* <div className="absolute bottom-10 right-10 opacity-20">
@@ -62,8 +62,8 @@ const HowItWorksSection = () => {
 
         <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-4">
           {steps.map((step, index) => (
-            <div key={index}>
-              <div key={index} className="text-center group relative" data-aos="fade-in" data-aos-delay={index * 100}>
+            <div key={index} className="flex flex-col lg:flex-row items-center">
+              <div className="text-center group relative" data-aos="fade-in" data-aos-delay={index * 100}>
                 <div className="relative mb-8">
                   {/* Step number */}
                   <div className="absolute -top-4 -left-4 bg-white border-4 border-gray-100 rounded-full w-12 h-12 flex items-center justify-center shadow-lg z-20">
@@ -91,10 +91,14 @@ const HowItWorksSection = () => {
                 </p>
               </div>
               {index < steps.length - 1 && (
-                <div className="flex items-center justify-center">
-                  <ArrowRight className={twMerge("hidden lg:block w-8 h-8 text-pink-main", index == 1 && "text-blue-main")} />
-                  <ArrowDown className={twMerge("block lg:hidden w-8 h-8 text-pink-main", index == 1 && "text-blue-main")} />
-                </div>
+                <>
+                  <div className="hidden lg:flex items-center px-4">
+                    <ArrowRight className={twMerge("w-8 h-8 text-pink-main", index == 1 && "text-blue-main")} />
+                  </div>
+                  <div className="flex lg:hidden items-center justify-center w-full my-6">
+                    <ArrowDown className={twMerge("w-8 h-8 text-pink-main", index == 1 && "text-blue-main")} />
+                  </div>
+                </>
               )}
             </div>
           ))}

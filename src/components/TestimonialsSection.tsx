@@ -76,11 +76,11 @@ const TestimonialsSection = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" data-aos="fade-up">
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="bg-white rounded-3xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 relative group hover:-translate-y-1" data-aos="fade-in" data-aos-delay={index * 100}
+              className="bg-white rounded-3xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 relative group hover:-translate-y-1"
             >
               {/* Quote icon */}
               <div className="absolute -top-3 -left-3 bg-gradient-to-br from-pink-400 to-purple-400 rounded-full p-2">
