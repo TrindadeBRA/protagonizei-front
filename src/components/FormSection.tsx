@@ -28,6 +28,7 @@ const FormSection = () => {
   const [qrCodeImage, setQrCodeImage] = useState<string | null>(null);
   const [isLoadingPix, setIsLoadingPix] = useState(false);
   const [isPixGenerated, setIsPixGenerated] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   // const [paymentStatus, setPaymentStatus] = useState<'pending' | 'confirmed' | 'failed'>('pending');
   const paymentCheckIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -124,6 +125,7 @@ const FormSection = () => {
 
   const handleSubmit = async () => {
     try {
+      setIsSubmitting(true);
       const orderData: PostOrdersBody = {
         childName: formData.childName,
         childAge: parseInt(formData.childAge),
@@ -161,6 +163,8 @@ const FormSection = () => {
     } catch (error) {
       console.error('Erro ao criar pedido:', error);
       alert('Ops! Algo deu errado. Por favor, tente novamente.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -505,10 +509,17 @@ const FormSection = () => {
                     </Button>
                     <Button
                       onClick={handleSubmit}
-                      disabled={!formData.parentName || !formData.email || !formData.phone}
-                      className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg"
+                      disabled={!formData.parentName || !formData.email || !formData.phone || isSubmitting}
+                      className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg relative"
                     >
-                      Criar História! 🎉
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-5 h-5 mr-2 animate-spin inline-block" />
+                          Criando sua história...
+                        </>
+                      ) : (
+                        'Criar História! 🎉'
+                      )}
                     </Button>
                   </div>
                 </div>
@@ -581,11 +592,11 @@ const FormSection = () => {
                         }
                       }}
                       disabled={!pixCode || isLoadingPix}
-                      className="flex-1 bg-gradient-to-r from-purple-500 to-pink-main hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg"
+                      className="flex-1 bg-gradient-to-r from-purple-500 to-pink-main hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg relative"
                     >
                       {isLoadingPix ? (
                         <>
-                          <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                          <Loader2 className="w-5 h-5 mr-2 animate-spin inline-block" />
                           Gerando PIX...
                         </>
                       ) : (
