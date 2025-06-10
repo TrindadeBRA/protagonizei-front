@@ -58,7 +58,7 @@ const Footer = () => {
               rel="noopener noreferrer"
               className="font-semibold hover:text-pink-main transition-colors duration-200"
             >
-              The Trinity Web
+              Trinity Web
             </Link>
           </p>
         </div>
