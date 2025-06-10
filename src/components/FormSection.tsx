@@ -228,7 +228,7 @@ const FormSection = () => {
             <Gift className="w-8 h-8 text-pink-main mr-3" />
             <div className="text-left">
               <div className="text-sm text-gray-500 line-through">De R$ 49,90</div>
-              <div className="text-2xl font-bold text-green-600">R$ 29,90</div>
+              <div className="text-2xl font-bold text-green-600">R$ 49,99</div>
               <div className="text-xs text-pink-600 font-semibold">Promoção por tempo limitado!</div>
             </div>
           </div> */}
@@ -493,7 +493,7 @@ const FormSection = () => {
                       <div className="border-t border-green-200 pt-2 mt-3">
                         <div className="flex justify-between items-center">
                           <span className="font-bold text-gray-800">Total:</span>
-                          <span className="text-2xl font-bold text-green-600">R$ 29,90</span>
+                          <span className="text-2xl font-bold text-green-600">R$ 49,99</span>
                         </div>
                       </div>
                     </div>
@@ -561,7 +561,7 @@ const FormSection = () => {
                         Pedido #{orderId}
                       </p>
                       <div className="text-2xl font-bold text-green-600 mb-2">
-                        R$ 29,90
+                        R$ 49,99
                       </div>
                       <p className="text-sm text-gray-600">
                         Após o pagamento, você receberá a confirmação por e-mail
