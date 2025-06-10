@@ -8,8 +8,8 @@ export default function LatestPostsSidebar({ posts }: { posts: GetPostSlugs200 }
     return (
         <div className="bg-white rounded-2xl p-6 shadow-lg border border-purple-100">
             <div className="mb-6">
-                <h2 className="text-2xl font-bold text-purple-700 font-heading">Últimos Posts</h2>
-                <div className="w-20 h-1 bg-gradient-to-r from-pink-main to-purple-600 mt-2 rounded-full"></div>
+                <h2 className="text-2xl font-bold text-black font-heading">Últimos Posts</h2>
+                <div className="w-20 h-1 bg-gradient-to-r from-pink-main to-blue-main mt-2 rounded-full"></div>
             </div>
             <div className="flex flex-col gap-y-6">
                 {posts.data?.map((post: GetPostSlugs200DataItem) => (
@@ -26,10 +26,10 @@ export default function LatestPostsSidebar({ posts }: { posts: GetPostSlugs200 }
                                 </div>
                             )}
                             <div className="flex flex-col gap-y-1">
-                                <h3 className="font-semibold text-purple-700 group-hover:text-pink-600 transition-colors line-clamp-2 text-sm">
+                                <h3 className="font-semibold text-black group-hover:text-pink-600 transition-colors line-clamp-2 text-sm">
                                     {post.title}
                                 </h3>
-                                <time className="text-xs text-purple-500">
+                                <time className="text-xs text-black">
                                     {post.created_at ? format(parseISO(post.created_at), "dd 'de' MMMM',' yyyy", { locale: ptBR }) : ''}
                                 </time>
                             </div>

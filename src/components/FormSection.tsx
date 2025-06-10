@@ -10,6 +10,7 @@ import customFetch from "@/src/services/custom-fetch";
 import { PostOrdersBody } from "@/src/services/model";
 import { getPostOrdersUrl, getPostOrdersOrderIdPixUrl, getGetOrdersOrderIdPaymentStatusUrl } from "@/src/services/api";
 import Image from "next/image";
+import { twMerge } from "tailwind-merge";
 
 const FormSection = () => {
   const [step, setStep] = useState(1);
@@ -334,8 +335,7 @@ const FormSection = () => {
                   <Button
                     onClick={nextStep}
                     disabled={!formData.childName || !formData.childAge || !formData.childGender || !formData.skinTone}
-                    className="w-full bg-gradient-to-r from-pink-main to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg disabled:cursor-not-allowed"
-                  >
+                    className={twMerge("w-full bg-gradient-to-r from-pink-main to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg", (!formData.childName || !formData.childAge || !formData.childGender || !formData.skinTone) ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : "")}                  >
                     Continuar
                   </Button>
                 </div>
@@ -394,7 +394,7 @@ const FormSection = () => {
                     <Button
                       onClick={nextStep}
                       disabled={!formData.photo}
-                      className="flex-1 bg-gradient-to-r from-blue-main to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold py-4 rounded-xl disabled:cursor-not-allowed"
+                      className={twMerge("flex-1 bg-gradient-to-r from-blue-main to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold py-4 rounded-xl", (!formData.photo) ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : "")}
                     >
                       Continuar
                       <Camera className="w-5 h-5 ml-2" />
@@ -510,7 +510,7 @@ const FormSection = () => {
                     <Button
                       onClick={handleSubmit}
                       disabled={!formData.parentName || !formData.email || !formData.phone || isSubmitting}
-                      className="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg relative disabled:cursor-not-allowed"
+                      className={twMerge("flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg relative", (!formData.parentName || !formData.email || !formData.phone || isSubmitting) ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : "")}
                     >
                       {isSubmitting ? (
                         <>

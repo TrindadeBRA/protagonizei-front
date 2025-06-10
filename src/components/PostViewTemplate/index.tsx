@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, User, ArrowLeft, Share2, Heart } from "lucide-react";
+import { Calendar, User, ArrowLeft } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
@@ -26,29 +26,23 @@ export function PostViewTemplate({ postData, relatedPosts, isPreview }: PostView
           Você está visualizando uma versão de preview do post.
         </div>
       )}
-      
+
       {/* Header do Post */}
-      <section className="bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 py-12">
+      <section className="bg-gradient-to-b from-pink-100 via-purple-100 via-blue-100 to-white py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <Link href="/">
-              <Button variant="ghost" className="mb-6 text-purple-700 hover:text-pink-600">
+              <Button variant="ghost" className="mb-6 bg-gradient-to-r from-pink-main to-blue-main text-white px-4 py-2 rounded-full text-sm font-medium">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Voltar para Home
               </Button>
             </Link>
-            
-            <div className="mb-6">
-              <span className="bg-pink-main text-white px-4 py-2 rounded-full text-sm font-medium">
-                Blog
-              </span>
-            </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold font-heading text-purple-700 mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold font-heading mb-6 leading-tight text-black">
               {post.title}
             </h1>
 
-            <div className="flex flex-wrap items-center gap-6 text-purple-600 mb-8">
+            <div className="flex flex-wrap items-center gap-6 text-black mb-8">
               <div className="flex items-center space-x-2">
                 <User className="h-5 w-5" />
                 <span className="font-medium">Equipe Protagonizei</span>
@@ -57,12 +51,12 @@ export function PostViewTemplate({ postData, relatedPosts, isPreview }: PostView
                 <Calendar className="h-5 w-5" />
                 <span>{formattedDate}</span>
               </div>
-              <span className="text-sm bg-purple-100 px-3 py-1 rounded-full">
+              {/* <span className="text-sm bg-purple-100 px-3 py-1 rounded-full">
                 5 min de leitura
-              </span>
+              </span> */}
             </div>
 
-            <div className="flex gap-4 mb-8">
+            {/* <div className="flex gap-4 mb-8">
               <Button size="sm" className="bg-pink-main hover:bg-pink-600 text-white">
                 <Heart className="mr-2 h-4 w-4" />
                 Curtir
@@ -71,7 +65,7 @@ export function PostViewTemplate({ postData, relatedPosts, isPreview }: PostView
                 <Share2 className="mr-2 h-4 w-4" />
                 Compartilhar
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -81,8 +75,8 @@ export function PostViewTemplate({ postData, relatedPosts, isPreview }: PostView
         <section className="py-8">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <Image 
-                src={post.featured_image_url} 
+              <Image
+                src={post.featured_image_url}
                 alt={post.title || ""}
                 width={1000}
                 height={600}
@@ -101,19 +95,20 @@ export function PostViewTemplate({ postData, relatedPosts, isPreview }: PostView
             <div className="w-full lg:w-3/4">
               <div className="max-w-3xl mx-auto">
                 <BlogContent content={postData} />
-                
+
                 <div className="mt-12 pt-8 border-t border-gray-200">
+
                   <div className="flex justify-center">
-                    <Link href="/">
-                      <Button 
-                        size="lg" 
-                        className="bg-gradient-to-r from-pink-main to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-heading"
-                      >
-                        <ArrowLeft className="mr-2 h-5 w-5" />
-                        Voltar para Home
-                      </Button>
+                    <Link
+                      href="/#criar-historia"
+                      key="/#criar-historia"
+                      className="magical-border border-4 border-transparent text-white font-bold py-2 px-6 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert"
+                      data-aos="fade-up"
+                    >
+                      Crie sua história!
                     </Link>
                   </div>
+                  
                 </div>
               </div>
             </div>

@@ -47,7 +47,7 @@ export default function RecentPostsSection({ posts }: { posts: GetPostSlugs200Da
                                     </Link>
                                 </h3>
                                 {post.excerpt && (
-                                    <p className="text-blue-main mb-4 leading-relaxed">
+                                    <p className="text-black mb-4 leading-relaxed line-clamp-3">
                                         {post.excerpt}
                                     </p>
                                 )}
@@ -73,19 +73,17 @@ export default function RecentPostsSection({ posts }: { posts: GetPostSlugs200Da
                         </Card>
                     ))}
                 </div>
-{/* 
-                <div className="text-center">
-                    <Link href="/blog">
-                        <Button
-                            variant="outline"
-                            size="lg"
-                            className="border-2 border-pink-300 text-purple-700 hover:bg-pink-50 font-heading bg-white"
-                        >
-                            Ver todos os posts
-                            <ArrowRight className="ml-2 h-5 w-5" />
-                        </Button>
+
+                <div className="text-center mt-8">
+                    <Link href="/blog" className="flex items-center justify-center w-fit mx-auto text-pink-main font-heading px-4 py-2 rounded-lg">
+                        
+                        <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent flex items-center">
+                            Veja todos
+                            <ArrowRight className="ml-2 h-5 w-5 text-blue-main" />
+                        </span>
+                        
                     </Link>
-                </div> */}
+                </div>
             </div>
         </section>
     )
