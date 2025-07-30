@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react";
-import { useSearchParams } from "next/navigation";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
@@ -14,8 +13,8 @@ import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 
 const FormSection = () => {
-  const searchParams = useSearchParams();
   const [step, setStep] = useState(1);
+  const [isFormEnabled, setIsFormEnabled] = useState(false);
   const [formData, setFormData] = useState({
     childName: '',
     childAge: '',
@@ -36,7 +35,12 @@ const FormSection = () => {
   const paymentCheckIntervalRef = useRef<NodeJS.Timeout | null>(null);
   
   // Verifica se o formulário deve estar habilitado baseado no parâmetro da URL
-  const isFormEnabled = searchParams.get('enable') === 'true';
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      setIsFormEnabled(urlParams.get('enable') === 'true');
+    }
+  }, []);
 
   // Adicionar estilo global para remover outlines
   useEffect(() => {
