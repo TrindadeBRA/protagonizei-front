@@ -1,11 +1,12 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/src/components/ui/select";
-import { Sparkles, Heart, Camera, Mail, QrCode, CheckCircle2, Loader2 } from "lucide-react";
+import { Sparkles, Heart, Camera, Mail, QrCode, CheckCircle2, Loader2, Settings } from "lucide-react";
 import customFetch from "@/src/services/custom-fetch";
 import { PostOrdersBody } from "@/src/services/model";
 import { getPostOrdersUrl, getPostOrdersOrderIdPixUrl, getGetOrdersOrderIdPaymentStatusUrl } from "@/src/services/api";
@@ -13,6 +14,7 @@ import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 
 const FormSection = () => {
+  const searchParams = useSearchParams();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     childName: '',
@@ -32,6 +34,9 @@ const FormSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   // const [paymentStatus, setPaymentStatus] = useState<'pending' | 'confirmed' | 'failed'>('pending');
   const paymentCheckIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Verifica se o formulário deve estar habilitado baseado no parâmetro da URL
+  const isFormEnabled = searchParams.get('enable') === 'true';
 
   // Adicionar estilo global para remover outlines
   useEffect(() => {
@@ -237,7 +242,25 @@ const FormSection = () => {
         </div>
 
         <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden" data-aos="fade-up">
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden relative" data-aos="fade-up">
+            {/* Overlay de desenvolvimento */}
+            {!isFormEnabled && (
+              <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center rounded-3xl">
+                <div className="bg-white rounded-2xl p-8 mx-4 text-center shadow-2xl max-w-md">
+                  <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Settings className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="font-heading text-2xl font-bold text-gray-800 mb-4">
+                    Em Desenvolvimento
+                  </h3>
+                  <p className="text-gray-600 mb-6 text-sm leading-relaxed">
+                    Estamos trabalhando para trazer a melhor experiência para você! 
+                    Em breve, você poderá criar histórias mágicas e personalizadas para seu pequeno herói.
+                  </p>
+                </div>
+              </div>
+            )}
+            
             {/* Progress bar */}
             <div className="bg-gray-300 h-3">
               <div
