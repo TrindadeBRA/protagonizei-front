@@ -193,7 +193,7 @@ const FormSection = () => {
 
   const skinTones = [
     { value: 'claro', label: 'Claro', color: '#EDBD88' },
-    { value: 'medio', label: 'Médio', color: '#C4956A' },
+    // { value: 'medio', label: 'Médio', color: '#C4956A' },
     { value: 'escuro', label: 'Escuro', color: '#8D5524' }
   ];
 
