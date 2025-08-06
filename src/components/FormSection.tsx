@@ -283,7 +283,7 @@ const FormSection = () => {
                           <SelectValue placeholder="Selecione" />
                         </SelectTrigger>
                         <SelectContent className="bg-white border-2 border-pink-200 rounded-xl">
-                          {[2, 3, 4, 5, 6, 7, 8].map(age => (
+                          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(age => (
                             <SelectItem key={age} value={age.toString()} className="hover:bg-pink-50 cursor-pointer">
                               {age} anos
                             </SelectItem>
