@@ -10,7 +10,7 @@ export const childInfoSchema = z.object({
     const n = Number(v);
     return Number.isInteger(n) && n >= 1 && n <= 14;
   }, "Idade deve ser entre 1 e 14"),
-  childGender: z.enum(["menina", "menino"], { message: "Selecione o gênero" }),
+  childGender: z.enum(["boy", "girl"], { message: "Selecione o gênero" }),
   skinTone: z.enum(allowedSkinTones, { message: "Selecione o tom de pele" }),
 });
 

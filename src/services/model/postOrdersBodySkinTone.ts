@@ -14,7 +14,6 @@ export type PostOrdersBodySkinTone = typeof PostOrdersBodySkinTone[keyof typeof 
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PostOrdersBodySkinTone = {
-  claro: 'claro',
-  medio: 'medio',
-  escuro: 'escuro',
+  light: 'light',
+  dark: 'dark',
 } as const;

@@ -75,10 +75,10 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
             <SelectValue placeholder="Selecione o gênero" />
           </SelectTrigger>
           <SelectContent className="bg-white border-2 border-pink-200 rounded-xl">
-            <SelectItem value="menina" className="hover:bg-pink-50 cursor-pointer">
+            <SelectItem value="girl" className="hover:bg-pink-50 cursor-pointer">
               Menina
             </SelectItem>
-            <SelectItem value="menino" className="hover:bg-pink-50 cursor-pointer">
+            <SelectItem value="boy" className="hover:bg-pink-50 cursor-pointer">
               Menino
             </SelectItem>
           </SelectContent>

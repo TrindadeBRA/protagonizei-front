@@ -14,6 +14,6 @@ export type PostOrdersBodyChildGender = typeof PostOrdersBodyChildGender[keyof t
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const PostOrdersBodyChildGender = {
-  menino: 'menino',
-  menina: 'menina',
+  boy: 'boy',
+  girl: 'girl',
 } as const;
