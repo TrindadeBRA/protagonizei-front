@@ -11,6 +11,7 @@ import { PostOrdersBody } from "@/src/services/model";
 import { getPostOrdersUrl, getPostOrdersOrderIdPixUrl, getGetOrdersOrderIdPaymentStatusUrl } from "@/src/services/api";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
+import Cropper from "react-easy-crop";
 
 const FormSection = () => {
   const [step, setStep] = useState(1);
@@ -33,22 +34,19 @@ const FormSection = () => {
   // const [paymentStatus, setPaymentStatus] = useState<'pending' | 'confirmed' | 'failed'>('pending');
   const paymentCheckIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Editor de imagem (recorte)
+  const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | null>(null);
+  const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState<number>(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
+  const [croppedPreviewUrl, setCroppedPreviewUrl] = useState<string | null>(null);
+  const editorRef = useRef<HTMLDivElement | null>(null);
+
   // Adicionar estilo global para remover outlines
   useEffect(() => {
     const style = document.createElement('style');
     style.textContent = `
-      *:focus {
-        outline: none !important;
-        box-shadow: none !important;
-        -webkit-box-shadow: none !important;
-        -moz-box-shadow: none !important;
-      }
-      *:focus-visible {
-        outline: none !important;
-        box-shadow: none !important;
-        -webkit-box-shadow: none !important;
-        -moz-box-shadow: none !important;
-      }
+
     `;
     document.head.appendChild(style);
     return () => {
@@ -56,11 +54,13 @@ const FormSection = () => {
     };
   }, []);
 
+
+
   const handleInputChange = (field: string, value: string) => {
     if (field === 'phone') {
       // Remove all non-numeric characters
       const numbers = value.replace(/\D/g, '');
-      
+
       // Apply mask based on length
       let maskedValue = '';
       if (numbers.length <= 2) {
@@ -70,7 +70,7 @@ const FormSection = () => {
       } else {
         maskedValue = `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`;
       }
-      
+
       setFormData(prev => ({ ...prev, [field]: maskedValue }));
     } else {
       setFormData(prev => ({ ...prev, [field]: value }));
@@ -79,8 +79,60 @@ const FormSection = () => {
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFormData(prev => ({ ...prev, photo: e.target.files![0] }));
+      // Limpa previews antigos
+      if (photoPreviewUrl) URL.revokeObjectURL(photoPreviewUrl);
+      if (croppedPreviewUrl) URL.revokeObjectURL(croppedPreviewUrl);
+
+      const fileSelected = e.target.files[0];
+      const objectUrl = URL.createObjectURL(fileSelected);
+      setPhotoPreviewUrl(objectUrl);
+      setCroppedPreviewUrl(null);
+      setCrop({ x: 0, y: 0 });
+      setZoom(1);
+      setCroppedAreaPixels(null);
+      setFormData(prev => ({ ...prev, photo: fileSelected }));
     }
+  };
+
+  // Utilitários de recorte
+  const createImageElement = (url: string): Promise<HTMLImageElement> => {
+    return new Promise((resolve, reject) => {
+      const image: HTMLImageElement = document.createElement('img');
+      image.addEventListener('load', () => resolve(image));
+      image.addEventListener('error', (err: Event) => reject(err));
+      image.crossOrigin = 'anonymous';
+      image.src = url;
+    });
+  };
+
+  const getCroppedImageBlob = async (
+    imageSrc: string,
+    pixelCrop: { x: number; y: number; width: number; height: number }
+  ): Promise<{ blob: Blob; url: string }> => {
+    const image = await createImageElement(imageSrc);
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(pixelCrop.width);
+    canvas.height = Math.round(pixelCrop.height);
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('Canvas context not available');
+
+    ctx.drawImage(
+      image,
+      pixelCrop.x,
+      pixelCrop.y,
+      pixelCrop.width,
+      pixelCrop.height,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    const blob: Blob = await new Promise((resolve) =>
+      canvas.toBlob((b) => resolve(b as Blob), 'image/jpeg', 0.92)
+    );
+    const url = URL.createObjectURL(blob);
+    return { blob, url };
   };
 
   const nextStep = () => {
@@ -98,21 +150,21 @@ const FormSection = () => {
         const response: any = await customFetch(getGetOrdersOrderIdPaymentStatusUrl(Number(orderId)), {
           method: 'GET'
         });
-        
+
         console.log('checkPaymentStatus', response);
-        
+
         if (response.status === 'paid') {
           if (paymentCheckIntervalRef.current) {
             clearInterval(paymentCheckIntervalRef.current);
           }
-          setStep(5); // Avança para o passo de sucesso
+          setStep(6); // Avança para o passo de sucesso (após PIX)
         }
       } catch (error) {
         console.error('Erro ao verificar status do pagamento:', error);
       }
     };
 
-    if (orderId && step === 4 && isPixGenerated) {
+    if (orderId && step === 5 && isPixGenerated) {
       // Verifica a cada 5 segundos
       const interval = setInterval(checkPaymentStatus, 5000);
       paymentCheckIntervalRef.current = interval;
@@ -152,10 +204,10 @@ const FormSection = () => {
         method: 'POST',
         body: formDataToSend,
       });
-      
+
       if (response.status === 'created' && response.order_id) {
         setOrderId(response.order_id.toString());
-        setStep(4);
+        setStep(5);
         // Buscar dados do PIX
         await fetchPixData(Number(response.order_id));
       } else {
@@ -175,7 +227,7 @@ const FormSection = () => {
       const response: any = await customFetch(getPostOrdersOrderIdPixUrl(orderId), {
         method: 'POST'
       });
-      
+
       if (response.message === 'Pix criado com sucesso' && response.qr_code_image) {
         setPixCode(response.qr_code_copypaste || null);
         setQrCodeImage(response.qr_code_image || null);
@@ -196,6 +248,14 @@ const FormSection = () => {
     // { value: 'medio', label: 'Médio', color: '#C4956A' },
     { value: 'escuro', label: 'Escuro', color: '#8D5524' }
   ];
+
+  // Cleanup URLs em desmontagem
+  useEffect(() => {
+    return () => {
+      if (photoPreviewUrl) URL.revokeObjectURL(photoPreviewUrl);
+      if (croppedPreviewUrl) URL.revokeObjectURL(croppedPreviewUrl);
+    };
+  }, [photoPreviewUrl, croppedPreviewUrl]);
 
   return (
     <section className="py-20 bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 relative overflow-hidden" id="criar-historia">
@@ -242,7 +302,7 @@ const FormSection = () => {
             <div className="bg-gray-300 h-3">
               <div
                 className="bg-gradient-to-r from-pink-main  to-blue-main h-full transition-all duration-500 ease-out"
-                style={{ width: `${(step / 5) * 100}%` }}
+                style={{ width: `${(step / 6) * 100}%` }}
               ></div>
             </div>
 
@@ -403,8 +463,92 @@ const FormSection = () => {
                 </div>
               )}
 
-              {/* Step 3: Contact Information */}
+              {/* Step 3: Image Editor (crop) */}
               {step === 3 && (
+                 <div className="space-y-6">
+                  <div className="text-center mb-4">
+                    <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Camera className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="font-heading text-2xl font-bold text-gray-800 mb-2">
+                      Ajuste o rosto dentro do guia
+                    </h3>
+                    <p className="text-gray-600">Posicione e ajuste o zoom para que o rosto fique dentro dos traços. Isso melhora a precisão do FaceSwap.</p>
+                  </div>
+
+                  <div ref={editorRef} className="relative w-full h-[350px] md:h-[500px] bg-black rounded-xl overflow-hidden">
+                    {photoPreviewUrl && (
+                      <div className="">
+                        <Cropper
+                          image={photoPreviewUrl}
+                          crop={crop}
+                          zoom={zoom}
+                          aspect={1}
+                          cropShape="round"
+                          onCropChange={setCrop}
+                          onZoomChange={setZoom}
+                          onCropComplete={(_, croppedPixels) => setCroppedAreaPixels(croppedPixels)}
+                          showGrid={true}
+                          // maxZoom={2}
+                          objectFit="contain"
+                          zoomSpeed={0.4}
+                        />
+
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="px-2">
+                    <label className="text-sm text-gray-600 block mb-1">Zoom</label>
+                    <input
+                      type="range"
+                      min={1}
+                      max={3}
+                      step={0.01}
+                      value={zoom}
+                      onChange={(e) => setZoom(Number(e.target.value))}
+                      className="w-full"
+                    />
+                  </div>
+
+                  <div className="flex space-x-4">
+                    <Button
+                      onClick={prevStep}
+                      variant="outline"
+                      className="flex-1 border-2 bg-white border-pink-300 text-pink-600 hover:bg-pink-50 py-4 rounded-xl font-semibold"
+                    >
+                      Voltar
+                    </Button>
+                    <Button
+                      onClick={async () => {
+                        if (!photoPreviewUrl || !croppedAreaPixels) return;
+                        const { blob, url } = await getCroppedImageBlob(photoPreviewUrl, croppedAreaPixels);
+                        const fileName = formData.photo?.name || 'photo.jpg';
+                        const croppedFile = new File([blob], fileName.replace(/\.(png|jpg|jpeg|webp)$/i, '') + '_cropped.jpg', { type: 'image/jpeg' });
+                        setFormData(prev => ({ ...prev, photo: croppedFile }));
+                        if (croppedPreviewUrl) URL.revokeObjectURL(croppedPreviewUrl);
+                        setCroppedPreviewUrl(url);
+                        nextStep();
+                      }}
+                      disabled={!croppedAreaPixels}
+                      className={twMerge("flex-1 bg-gradient-to-r from-purple-500 to-pink-main hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg relative", (!croppedAreaPixels) ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : "")}
+                    >
+                      Confirmar recorte
+                    </Button>
+                  </div>
+
+                  {croppedPreviewUrl && (
+                    <div className="text-center">
+                      <p className="text-sm text-gray-500 mb-2">Pré-visualização do recorte</p>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={croppedPreviewUrl} alt="Pré-visualização do recorte" className="w-32 h-32 rounded-lg mx-auto border" />
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Step 4: Contact Information */}
+              {step === 4 && (
                 <div className="space-y-6">
                   <div className="text-center mb-8">
                     <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-400 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -525,8 +669,8 @@ const FormSection = () => {
                 </div>
               )}
 
-              {/* Step 4: Pix Payment */}
-              {step === 4 && (
+              {/* Step 5: Pix Payment */}
+              {step === 5 && (
                 <div className="space-y-6">
                   <div className="text-center mb-8">
                     <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -545,9 +689,9 @@ const FormSection = () => {
                           <Loader2 className="w-12 h-12 text-purple-400 animate-spin" />
                         </div>
                       ) : qrCodeImage ? (
-                        <Image 
-                          src={`data:image/png;base64,${qrCodeImage}`} 
-                          alt="QR Code PIX" 
+                        <Image
+                          src={`data:image/png;base64,${qrCodeImage}`}
+                          alt="QR Code PIX"
                           className="w-48 h-48 mx-auto mb-4"
                           width={192}
                           height={192}
@@ -578,7 +722,7 @@ const FormSection = () => {
 
                   <div className="flex space-x-4">
                     <Button
-                      onClick={() => setStep(3)}
+                      onClick={() => setStep(4)}
                       variant="outline"
                       className="flex-1 border-2 bg-white border-pink-300 text-pink-600 hover:bg-pink-50 py-4 rounded-xl font-semibold"
                     >
@@ -607,8 +751,8 @@ const FormSection = () => {
                 </div>
               )}
 
-              {/* Step 5: Payment Confirmed */}
-              {step === 5 && (
+              {/* Step 6: Payment Confirmed */}
+              {step === 6 && (
                 <div className="space-y-6">
                   <div className="text-center mb-8">
                     <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-400 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -668,7 +812,7 @@ const FormSection = () => {
           </div>
 
           {/* Security badges */}
-          <div className="text-center mt-8" data-aos="fade-left"> 
+          <div className="text-center mt-8" data-aos="fade-left">
             <div className="flex flex-wrap items-center justify-center space-x-6 text-sm text-gray-500">
               <div className="flex items-center">
                 <span className="text-green-500 mr-1">🔒</span>
