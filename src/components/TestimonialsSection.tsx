@@ -6,9 +6,9 @@ const testimonials = [
   {
     name: "Ana Carolina",
     location: "São Paulo, SP",
-    child: "Mãe da Sofia (4 anos)",
+    child: "Mãe da Luna (4 anos)",
     rating: 5,
-    text: "Minha filha ficou encantada! Ela se reconheceu nas ilustrações e agora pede para ler 'o livro da Sofia' toda noite. Foi o presente mais especial que já dei para ela.",
+    text: "Minha filha ficou encantada! Ela se reconheceu nas ilustrações e agora pede para ler 'o livro da Luna' toda noite. Foi o presente mais especial que já dei para ela.",
     avatar: "👩‍💼"
   },
   {

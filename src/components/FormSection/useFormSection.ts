@@ -44,17 +44,40 @@ export const useFormSection = () => {
   const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | null>(null);
   const [croppedPreviewUrl, setCroppedPreviewUrl] = useState<string | null>(null);
 
+  // Controle de campos tocados para exibir erros apenas quando necessário
+  const [touched, setTouched] = useState<Partial<Record<keyof FormDataState, boolean>>>({});
+
+  const setFieldTouched = (field: keyof FormDataState) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+  };
+
+  const markTouched = (fields: Array<keyof FormDataState>) => {
+    setTouched((prev) => {
+      const updated = { ...prev };
+      fields.forEach((f) => {
+        updated[f] = true;
+      });
+      return updated;
+    });
+  };
+
   // Schemas importados por arquivo (zod)
 
-  const isStep1Valid = useMemo(() => {
-    const result = childInfoSchema.safeParse({
+  const step1Validation = useMemo(() => {
+    return childInfoSchema.safeParse({
       childName: formData.childName,
       childAge: formData.childAge,
       childGender: formData.childGender,
       skinTone: formData.skinTone,
     });
-    return result.success;
-  }, [formData.childName, formData.childAge, formData.childGender, formData.skinTone, childInfoSchema]);
+  }, [formData.childName, formData.childAge, formData.childGender, formData.skinTone]);
+
+  const isStep1Valid = step1Validation.success;
+
+  const step1Errors = useMemo(() => {
+    if (step1Validation.success) return {} as Record<string, string[]>;
+    return step1Validation.error.flatten().fieldErrors;
+  }, [step1Validation]);
 
   const isStep2Valid = useMemo(() => {
     const result = photoSchema.safeParse({ photo: formData.photo });
@@ -241,6 +264,10 @@ export const useFormSection = () => {
     isStep2Valid,
     isStep4Valid,
     validatePhotoFile,
+    step1Errors,
+    touched,
+    setFieldTouched,
+    markTouched,
   };
 };
 

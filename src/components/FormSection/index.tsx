@@ -34,6 +34,10 @@ const FormSection = () => {
     isStep2Valid,
     isStep4Valid,
     validatePhotoFile,
+    step1Errors,
+    touched,
+    setFieldTouched,
+    markTouched,
   } = useFormSection();
 
   return (
@@ -82,6 +86,9 @@ const FormSection = () => {
                   skinTones={skinTones}
                   nextStep={nextStep}
                   isValid={isStep1Valid}
+                  errors={step1Errors}
+                  onBlurField={setFieldTouched}
+                  touched={touched}
                 />
               )}
 

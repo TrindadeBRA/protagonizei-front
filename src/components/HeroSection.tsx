@@ -97,10 +97,10 @@ const HeroSection = () => {
                   <span className="text-2xl">👧</span>
                 </div>
                 <h3 className="font-heading text-xl text-center font-bold text-gray-800 mb-2">
-                  A Aventura de Sofia
+                  A Aventura de Luna
                 </h3>
                 <p className="text-black text-center text-sm">
-                  Era uma vez uma menina corajosa chamada <strong className="text-pink-600">Sofia</strong> que se tornou a heroína de sua própria história...
+                  Era uma vez uma menina corajosa chamada <strong className="text-pink-600">Luna</strong> que se tornou a heroína de sua própria história...
                 </p>
               </div>
               <div className="text-center">

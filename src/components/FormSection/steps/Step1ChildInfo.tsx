@@ -1,5 +1,6 @@
 "use client";
 
+import type { FC } from "react";
 import { Sparkles } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -8,15 +9,18 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { twMerge } from "tailwind-merge";
 import { FormDataState } from "../useFormSection";
 
-type Props = {
+export type Step1ChildInfoProps = {
   formData: FormDataState;
   skinTones: { value: string; label: string; color: string }[];
   handleInputChange: (field: keyof FormDataState, value: string) => void;
   nextStep: () => void;
   isValid: boolean;
+  errors: Record<string, string[] | undefined>;
+  onBlurField: (field: keyof FormDataState) => void;
+  touched: Partial<Record<keyof FormDataState, boolean>>;
 };
 
-const Step1ChildInfo = ({ formData, handleInputChange, skinTones, nextStep, isValid }: Props) => {
+const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, skinTones, nextStep, isValid, errors, onBlurField, touched }) => {
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
@@ -36,9 +40,13 @@ const Step1ChildInfo = ({ formData, handleInputChange, skinTones, nextStep, isVa
             id="childName"
             value={formData.childName}
             onChange={(e) => handleInputChange("childName", e.target.value)}
-            placeholder="Ex: Sofia"
+            onBlur={() => onBlurField("childName")}
+            placeholder="Ex: Luna"
             className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
           />
+          {!!touched.childName && !!errors.childName?.length && (
+            <p className="text-xs text-red-500 mt-1">{errors.childName[0]}</p>
+          )}
         </div>
 
         <div>

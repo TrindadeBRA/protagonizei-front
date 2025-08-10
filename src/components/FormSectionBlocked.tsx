@@ -296,7 +296,7 @@ const FormSection = () => {
                         id="childName"
                         value={formData.childName}
                         onChange={(e) => handleInputChange('childName', e.target.value)}
-                        placeholder="Ex: Sofia"
+                        placeholder="Ex: Luna"
                         className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
                       />
                     </div>

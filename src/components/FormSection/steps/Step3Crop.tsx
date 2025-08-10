@@ -81,7 +81,15 @@ const Step3Crop = ({ photoPreviewUrl, croppedPreviewUrl, setCroppedPreviewUrl, o
 
       <div className="px-2">
         <label className="text-sm text-gray-600 block mb-1">Zoom</label>
-        <input type="range" min={1} max={3} step={0.01} value={zoom} onChange={(e) => setZoom(Number(e.target.value))} className="w-full" />
+        <input
+          type="range"
+          min={1}
+          max={3}
+          step={0.01}
+          value={zoom}
+          onChange={(e) => setZoom(Number(e.target.value))}
+          className="!w-full"
+        />
       </div>
 
       <div className="flex space-x-4">
