@@ -138,6 +138,8 @@ const FormSection = () => {
                   errors={step4Errors}
                   onBlurField={setFieldTouched}
                   touched={touched}
+                  photoPreviewUrl={photoPreviewUrl}
+                  croppedPreviewUrl={croppedPreviewUrl}
                 />
               )}
 

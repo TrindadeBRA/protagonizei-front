@@ -18,9 +18,11 @@ type Props = {
   errors?: Record<string, string[] | undefined>;
   onBlurField?: (field: keyof FormDataState) => void;
   touched?: Partial<Record<keyof FormDataState, boolean>>;
+  photoPreviewUrl?: string | null;
+  croppedPreviewUrl?: string | null;
 };
 
-const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {} }: Props) => {
+const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl }: Props) => {
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
@@ -89,9 +91,9 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-6">
-        <h4 className="font-heading font-bold text-green-800 mb-3 flex items-center">
-          <Heart className="w-5 h-5 mr-2 fill-current" /> Resumo do seu pedido
+      <div className="bg-gradient-to-r from-pink-50 to-blue-50 border border-pink-200 rounded-xl p-6">
+        <h4 className="font-heading font-bold text-pink-main mb-3 flex items-center">
+          <Heart className="w-5 h-5 mr-2 fill-current text-pink-main" /> Resumo do seu pedido
         </h4>
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
@@ -108,14 +110,24 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
             <span className="text-gray-600">Tom de pele:</span>
             <span className="font-semibold">{skinTones.find((tone) => tone.value === formData.skinTone)?.label || "Selecionado"}</span>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <span className="text-gray-600">Foto:</span>
-            <span className="font-semibold text-green-600">✓ Enviada</span>
+            <div className="flex items-center gap-3">
+              {croppedPreviewUrl || photoPreviewUrl ? (
+                <img
+                  src={croppedPreviewUrl || photoPreviewUrl || ""}
+                  alt={`Foto de ${formData.childName || "criança"}`}
+                  className="w-12 h-12 rounded-lg object-cover ring-2 ring-pink-200 shadow-sm"
+                />
+              ) : (
+                <span className="font-semibold text-pink-main">✓ Enviada</span>
+              )}
+            </div>
           </div>
-          <div className="border-t border-green-200 pt-2 mt-3">
+          <div className="border-t border-gray-200 pt-2 mt-3">
             <div className="flex justify-between items-center">
               <span className="font-bold text-gray-800">Total:</span>
-              <span className="text-2xl font-bold text-green-600">R$ 49,99</span>
+              <span className="text-2xl font-bold text-pink-main">R$ 49,99</span>
             </div>
           </div>
         </div>
