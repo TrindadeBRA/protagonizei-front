@@ -6,7 +6,6 @@ import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import { twMerge } from "tailwind-merge";
 import { FormDataState } from "../useFormSection";
-import { getGenderTheme } from "../theme";
 
 type Props = {
   formData: FormDataState;
@@ -24,12 +23,10 @@ type Props = {
 };
 
 const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl }: Props) => {
-  const theme = getGenderTheme(formData.childGender);
-
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <div className={`w-16 h-16 ${theme.iconBg} rounded-full flex items-center justify-center mx-auto mb-4`}>
+        <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-400 rounded-full flex items-center justify-center mx-auto mb-4">
           <Mail className="w-8 h-8 text-white" />
         </div>
         <h3 className="font-heading text-2xl font-bold text-gray-800 mb-2">Quase pronto!</h3>
@@ -47,7 +44,7 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
             onChange={(e) => handleInputChange("parentName", e.target.value)}
             onBlur={() => onBlurField && onBlurField("parentName")}
             placeholder="Como você gostaria de ser chamado(a)?"
-            className={twMerge("border-2 rounded-xl bg-white transition-colors", theme.borderBase)}
+            className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
           />
           {!!touched.parentName && !!errors.parentName?.length && (
             <p className="text-xs text-red-500 mt-1">{errors.parentName[0]}</p>
@@ -66,7 +63,7 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
             onBlur={() => onBlurField && onBlurField("phone")}
             placeholder="(00) 00000-0000"
             maxLength={15}
-            className={twMerge("border-2 rounded-xl bg-white transition-colors", theme.borderBase)}
+            className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
           />
           {!!touched.phone && !!errors.phone?.length && (
             <p className="text-xs text-red-500 mt-1">{errors.phone[0]}</p>
@@ -85,7 +82,7 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
             onChange={(e) => handleInputChange("email", e.target.value)}
             onBlur={() => onBlurField && onBlurField("email")}
             placeholder="seu@email.com"
-            className={twMerge("border-2 rounded-xl bg-white transition-colors", theme.borderBase)}
+            className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
           />
           {!!touched.email && !!errors.email?.length && (
             <p className="text-xs text-red-500 mt-1">{errors.email[0]}</p>
@@ -94,9 +91,9 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
         </div>
       </div>
 
-      <div className={twMerge("border rounded-xl p-6", theme.summaryBox)}>
-        <h4 className={twMerge("font-heading font-bold mb-3 flex items-center", theme.summaryTitle)}>
-          <Heart className={twMerge("w-5 h-5 mr-2 fill-current", theme.summaryTitle)} /> Resumo do seu pedido
+      <div className="bg-gradient-to-r from-pink-50 to-blue-50 border border-pink-200 rounded-xl p-6">
+        <h4 className="font-heading font-bold text-pink-main mb-3 flex items-center">
+          <Heart className="w-5 h-5 mr-2 fill-current text-pink-main" /> Resumo do seu pedido
         </h4>
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
@@ -120,24 +117,24 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
                 <img
                   src={croppedPreviewUrl || photoPreviewUrl || ""}
                   alt={`Foto de ${formData.childName || "criança"}`}
-                  className={twMerge("w-12 h-12 rounded-lg object-cover ring-2 shadow-sm", theme.ringClass)}
+                  className="w-12 h-12 rounded-lg object-cover ring-2 ring-pink-200 shadow-sm"
                 />
               ) : (
-                <span className={twMerge("font-semibold", theme.summaryTitle)}>✓ Enviada</span>
+                <span className="font-semibold text-pink-main">✓ Enviada</span>
               )}
             </div>
           </div>
           <div className="border-t border-gray-200 pt-2 mt-3">
             <div className="flex justify-between items-center">
               <span className="font-bold text-gray-800">Total:</span>
-              <span className={twMerge("text-2xl font-bold", theme.summaryTitle)}>R$ 49,99</span>
+              <span className="text-2xl font-bold text-pink-main">R$ 49,99</span>
             </div>
           </div>
         </div>
       </div>
 
       <div className="flex space-x-4">
-        <Button onClick={prevStep} variant="outline" className={twMerge("flex-1 border-2 bg-white py-4 rounded-xl font-semibold", theme.backBtn)}>
+        <Button onClick={prevStep} variant="outline" className="flex-1 border-2 bg-white border-pink-300 text-pink-600 hover:bg-pink-50 py-4 rounded-xl font-semibold">
           Voltar
         </Button>
         <Button

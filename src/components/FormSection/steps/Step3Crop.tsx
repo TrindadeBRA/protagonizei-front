@@ -61,7 +61,7 @@ const Step3Crop = ({ photoPreviewUrl, croppedPreviewUrl, setCroppedPreviewUrl, o
         <p className="text-gray-600">Posicione e ajuste o zoom para que o rosto fique dentro dos traços. Isso melhora a precisão do FaceSwap.</p>
       </div>
 
-      <div ref={editorRef} className="relative w-full h-[300px] md:h-[400px] bg-black rounded-xl overflow-hidden">
+      <div ref={editorRef} className="relative w-full h-[250px] bg-black rounded-xl overflow-hidden">
         {photoPreviewUrl && (
           <Cropper
             image={photoPreviewUrl}

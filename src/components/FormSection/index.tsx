@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useFormSection } from "./useFormSection";
 import { skinTones } from "./constants";
-import { getGenderTheme } from "./theme";
 
 import Step1ChildInfo from "./steps/Step1ChildInfo";
 import Step2PhotoUpload from "./steps/Step2PhotoUpload";
@@ -41,8 +40,6 @@ const FormSection = () => {
     setFieldTouched,
   } = useFormSection();
 
-  const theme = getGenderTheme(formData.childGender);
-
   return (
     <section className="py-20 bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 relative overflow-hidden" id="criar-historia">
       {/* Decorative elements */}
@@ -62,7 +59,7 @@ const FormSection = () => {
         <div className="text-center mb-12">
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">
             Crie agora a história{" "}
-            <span className={theme.titleClass}>
+            <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
               do seu pequeno herói!
             </span>
           </h2>
@@ -76,7 +73,7 @@ const FormSection = () => {
             {/* Progress bar */}
             <div className="bg-gray-300 h-3">
               <div
-                className={`${theme.progressBarClass} h-full transition-all duration-500 ease-out`}
+                className="bg-gradient-to-r from-pink-main  to-blue-main h-full transition-all duration-500 ease-out"
                 style={{ width: `${(step / 6) * 100}%` }}
               ></div>
             </div>

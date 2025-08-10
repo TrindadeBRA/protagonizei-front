@@ -8,7 +8,6 @@ import { Label } from "@/src/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/src/components/ui/select";
 import { twMerge } from "tailwind-merge";
 import { FormDataState } from "../useFormSection";
-import { getGenderTheme } from "../theme";
 
 export type Step1ChildInfoProps = {
   formData: FormDataState;
@@ -22,12 +21,10 @@ export type Step1ChildInfoProps = {
 };
 
 const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, skinTones, nextStep, isValid, errors, onBlurField, touched }) => {
-  const theme = getGenderTheme(formData.childGender);
-
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <div className={`w-16 h-16 ${theme.headerBg} rounded-full flex items-center justify-center mx-auto mb-4`}>
+        <div className="w-16 h-16 bg-gradient-to-br from-pink-main to-blue-main rounded-full flex items-center justify-center mx-auto mb-4">
           <Sparkles className="w-8 h-8 text-white" />
         </div>
         <h3 className="font-heading text-2xl font-bold text-gray-800 mb-2">Conte sobre seu pequeno</h3>
@@ -45,7 +42,7 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
             onChange={(e) => handleInputChange("childName", e.target.value)}
             onBlur={() => onBlurField("childName")}
             placeholder="Ex: Luna"
-            className={twMerge("border-2 rounded-xl bg-white transition-colors", theme.borderBase)}
+            className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
           />
           {!!touched.childName && !!errors.childName?.length && (
             <p className="text-xs text-red-500 mt-1">{errors.childName[0]}</p>
@@ -57,13 +54,12 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
             Idade *
           </Label>
           <Select onValueChange={(value) => handleInputChange("childAge", value)}>
-            <SelectTrigger className={twMerge("border-2 rounded-xl bg-white transition-colors", theme.borderBase)}>
+            <SelectTrigger className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors">
               <SelectValue placeholder="Selecione" />
             </SelectTrigger>
-            <SelectContent className={theme.dropdownBorder}>
+            <SelectContent className="bg-white border-2 border-pink-200 rounded-xl">
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((age) => (
-                <SelectItem key={age} value={age.toString()} className={twMerge(theme.itemHover, "cursor-pointer")}
-                >
+                <SelectItem key={age} value={age.toString()} className="hover:bg-pink-50 cursor-pointer">
                   {age} anos
                 </SelectItem>
               ))}
@@ -75,14 +71,14 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
       <div>
         <Label className="text-gray-700 font-semibold mb-2 block">Gênero *</Label>
         <Select onValueChange={(value) => handleInputChange("childGender", value)}>
-          <SelectTrigger className={twMerge("border-2 rounded-xl bg-white transition-colors", theme.borderBase)}>
+          <SelectTrigger className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors">
             <SelectValue placeholder="Selecione o gênero" />
           </SelectTrigger>
-          <SelectContent className={theme.dropdownBorder}>
-            <SelectItem value="menina" className={twMerge(theme.itemHover, "cursor-pointer")}>
+          <SelectContent className="bg-white border-2 border-pink-200 rounded-xl">
+            <SelectItem value="menina" className="hover:bg-pink-50 cursor-pointer">
               Menina
             </SelectItem>
-            <SelectItem value="menino" className={twMerge(theme.itemHover, "cursor-pointer")}>
+            <SelectItem value="menino" className="hover:bg-pink-50 cursor-pointer">
               Menino
             </SelectItem>
           </SelectContent>
@@ -92,12 +88,12 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
       <div>
         <Label className="text-gray-700 font-semibold mb-2 block">Tom de pele *</Label>
         <Select onValueChange={(value) => handleInputChange("skinTone", value)}>
-          <SelectTrigger className={twMerge("border-2 rounded-xl bg-white transition-colors", theme.borderBase)}>
+          <SelectTrigger className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors">
             <SelectValue placeholder="Selecione o tom de pele" />
           </SelectTrigger>
-          <SelectContent className={theme.dropdownBorder}>
+          <SelectContent className="bg-white border-2 border-pink-200 rounded-xl">
             {skinTones.map((tone) => (
-              <SelectItem key={tone.value} value={tone.value} className={twMerge(theme.itemHover, "cursor-pointer")}>
+              <SelectItem key={tone.value} value={tone.value} className="hover:bg-pink-50 cursor-pointer">
                 <div className="flex items-center space-x-3">
                   <div className="w-5 h-5 rounded-full border border-gray-200" style={{ backgroundColor: tone.color }} />
                   <span>{tone.label}</span>
@@ -112,8 +108,7 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
         onClick={nextStep}
         disabled={!isValid}
         className={twMerge(
-          "w-full text-white font-bold py-4 rounded-xl shadow-lg",
-          theme.continueBtn,
+          "w-full bg-gradient-to-r from-pink-main to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl shadow-lg",
           !isValid ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : ""
         )}
       >

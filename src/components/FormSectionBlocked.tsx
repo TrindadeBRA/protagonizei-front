@@ -488,7 +488,7 @@ const FormSection = () => {
                         className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
                       />
                       <p className="text-sm text-gray-500 mt-1">
-                        📧 O PDF será enviado para este e-mail em até 24h
+                        📧 O PDF será enviado para este e-mail em até 1 hora!
                       </p>
                     </div>
                   </div>
