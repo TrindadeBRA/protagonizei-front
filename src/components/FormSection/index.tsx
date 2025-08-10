@@ -35,9 +35,9 @@ const FormSection = () => {
     isStep4Valid,
     validatePhotoFile,
     step1Errors,
+    step4Errors,
     touched,
     setFieldTouched,
-    markTouched,
   } = useFormSection();
 
   return (
@@ -135,6 +135,9 @@ const FormSection = () => {
                   prevStep={prevStep}
                   handleSubmit={handleSubmit}
                   isValid={isStep4Valid}
+                  errors={step4Errors}
+                  onBlurField={setFieldTouched}
+                  touched={touched}
                 />
               )}
 

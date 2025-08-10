@@ -82,7 +82,7 @@ export const useFormSection = () => {
   const isStep2Valid = useMemo(() => {
     const result = photoSchema.safeParse({ photo: formData.photo });
     return result.success;
-  }, [formData.photo, photoSchema]);
+  }, [formData.photo]);
 
   const isStep4Valid = useMemo(() => {
     const result = contactSchema.safeParse({
@@ -91,7 +91,17 @@ export const useFormSection = () => {
       email: formData.email,
     });
     return result.success;
-  }, [formData.parentName, formData.phone, formData.email, contactSchema]);
+  }, [formData.parentName, formData.phone, formData.email]);
+
+  const step4Errors = useMemo(() => {
+    const result = contactSchema.safeParse({
+      parentName: formData.parentName,
+      phone: formData.phone,
+      email: formData.email,
+    });
+    if (result.success) return {} as Record<string, string[]>;
+    return result.error.flatten().fieldErrors;
+  }, [formData.parentName, formData.phone, formData.email]);
 
   const validatePhotoFile = (file: File): boolean => {
     const result = photoSchema.safeParse({ photo: file });
@@ -263,6 +273,7 @@ export const useFormSection = () => {
     isStep1Valid,
     isStep2Valid,
     isStep4Valid,
+    step4Errors,
     validatePhotoFile,
     step1Errors,
     touched,

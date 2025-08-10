@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Menu } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import Link from "next/link";
@@ -23,7 +23,7 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
-  const navLinks: NavLink[] = [
+  const navLinks: NavLink[] = useMemo(() => ([
     { label: "Início", href: "/#hero" },
     { label: "Benefícios", href: "/#beneficios" },
     { label: "Como funciona", href: "/#como-funciona" },
@@ -32,7 +32,7 @@ const Navigation = () => {
     { label: "Blog", href: "/#blog" },
     { label: "FAQ", href: "/#faq" },
     { label: "Crie sua história!", href: "/#criar-historia", cta: true },
-  ];
+  ]), []);
 
   useEffect(() => {
     const observerOptions = {
@@ -62,7 +62,7 @@ const Navigation = () => {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [navLinks]);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-pink-200 shadow-sm">

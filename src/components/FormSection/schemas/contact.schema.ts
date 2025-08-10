@@ -1,7 +1,10 @@
 import { z } from "zod";
 
 export const contactSchema = z.object({
-  parentName: z.string().min(2, "Informe seu nome"),
+  parentName: z
+    .string()
+    .min(2, "Informe seu nome")
+    .refine((v) => !/\d/.test(v), "Não é possível usar números no nome"),
   phone: z
     .string()
     .min(14, "Telefone inválido")

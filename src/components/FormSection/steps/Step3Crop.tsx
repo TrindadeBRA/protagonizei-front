@@ -1,7 +1,7 @@
 "use client";
 
 import Cropper from "react-easy-crop";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState, type CSSProperties } from "react";
 import { Camera } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { twMerge } from "tailwind-merge";
@@ -88,6 +88,7 @@ const Step3Crop = ({ photoPreviewUrl, croppedPreviewUrl, setCroppedPreviewUrl, o
           step={0.01}
           value={zoom}
           onChange={(e) => setZoom(Number(e.target.value))}
+          style={{ "--range-min": 1, "--range-max": 3, "--range-value": zoom } as CSSProperties}
           className="!w-full"
         />
       </div>
@@ -108,7 +109,7 @@ const Step3Crop = ({ photoPreviewUrl, croppedPreviewUrl, setCroppedPreviewUrl, o
           }}
           disabled={!croppedAreaPixels}
           className={twMerge(
-            "flex-1 bg-gradient-to-r from-purple-500 to-pink-main hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg relative",
+            "flex-1 bg-gradient-to-r from-purple-500 to-pink-main hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-xl shadow-lg relative",
             !croppedAreaPixels ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : ""
           )}
         >

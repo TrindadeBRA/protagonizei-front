@@ -15,9 +15,12 @@ type Props = {
   prevStep: () => void;
   handleSubmit: () => Promise<void> | void;
   isValid: boolean;
+  errors?: Record<string, string[] | undefined>;
+  onBlurField?: (field: keyof FormDataState) => void;
+  touched?: Partial<Record<keyof FormDataState, boolean>>;
 };
 
-const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid }: Props) => {
+const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {} }: Props) => {
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
@@ -37,9 +40,13 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
             id="parentName"
             value={formData.parentName}
             onChange={(e) => handleInputChange("parentName", e.target.value)}
+            onBlur={() => onBlurField && onBlurField("parentName")}
             placeholder="Como você gostaria de ser chamado(a)?"
             className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
           />
+          {!!touched.parentName && !!errors.parentName?.length && (
+            <p className="text-xs text-red-500 mt-1">{errors.parentName[0]}</p>
+          )}
         </div>
 
         <div>
@@ -51,10 +58,14 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
             type="tel"
             value={formData.phone}
             onChange={(e) => handleInputChange("phone", e.target.value)}
+            onBlur={() => onBlurField && onBlurField("phone")}
             placeholder="(00) 00000-0000"
             maxLength={15}
             className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
           />
+          {!!touched.phone && !!errors.phone?.length && (
+            <p className="text-xs text-red-500 mt-1">{errors.phone[0]}</p>
+          )}
           <p className="text-sm text-gray-500 mt-1">📱 Para contato em caso de dúvidas sobre sua história</p>
         </div>
 
@@ -67,9 +78,13 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
             type="email"
             value={formData.email}
             onChange={(e) => handleInputChange("email", e.target.value)}
+            onBlur={() => onBlurField && onBlurField("email")}
             placeholder="seu@email.com"
             className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
           />
+          {!!touched.email && !!errors.email?.length && (
+            <p className="text-xs text-red-500 mt-1">{errors.email[0]}</p>
+          )}
           <p className="text-sm text-gray-500 mt-1">📧 O PDF será enviado para este e-mail em até 24h</p>
         </div>
       </div>
@@ -114,7 +129,7 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
           onClick={handleSubmit}
           disabled={!isValid || isSubmitting}
           className={twMerge(
-            "flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg relative",
+            "flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-4 rounded-xl shadow-lg relative",
             !isValid || isSubmitting ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : ""
           )}
         >

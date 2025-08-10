@@ -95,8 +95,8 @@ const TestimonialsSection = () => {
               </div>
 
               {/* Testimonial text */}
-              <p className="text-gray-700 leading-relaxed mb-6 italic" data-aos="fade-up" data-aos-delay={index * 100}>
-                "{testimonial.text}"
+              <p className="text-gray-700 leading-relaxed mb-6 italic">
+                &ldquo;{testimonial.text}&rdquo;
               </p>
 
               {/* Author info */}

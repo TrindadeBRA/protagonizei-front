@@ -108,7 +108,7 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
         onClick={nextStep}
         disabled={!isValid}
         className={twMerge(
-          "w-full bg-gradient-to-r from-pink-main to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg",
+          "w-full bg-gradient-to-r from-pink-main to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl shadow-lg",
           !isValid ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : ""
         )}
       >
