@@ -1,8 +1,9 @@
 "use client";
 
-import { QrCode, Loader2 } from "lucide-react";
+import { QrCode, Loader2, Copy, Check } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/src/components/ui/button";
+import { useState, useEffect } from "react";
 
 type Props = {
   orderId: string | null;
@@ -13,6 +14,37 @@ type Props = {
 };
 
 const Step5Pix = ({ orderId, isLoadingPix, qrCodeImage, pixCode, onBack }: Props) => {
+  const [timeLeft, setTimeLeft] = useState(10 * 60);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timer = setInterval(() => {
+        setTimeLeft((prev) => prev - 1);
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [timeLeft]);
+
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
+
+  const handleCopyPix = async () => {
+    if (pixCode) {
+      try {
+        await navigator.clipboard.writeText(pixCode);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        console.error('Erro ao copiar código PIX:', err);
+      }
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
@@ -24,7 +56,20 @@ const Step5Pix = ({ orderId, isLoadingPix, qrCodeImage, pixCode, onBack }: Props
       </div>
 
       <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 text-center border-2 border-dashed border-purple-200">
-        <div className="max-w-xs mx-auto mb-6">
+        {/* Timer */}
+        <div className="mb-6">
+          <p className="text-sm font-semibold text-red-600 mb-2">Validade do pagamento</p>
+          <div className="inline-flex items-center justify-center px-4 py-2 bg-red-100 border border-red-300 rounded-full">
+            <div className="w-3 h-3 bg-red-500 rounded-full mr-2 animate-pulse"></div>
+            <span className="text-red-700 font-mono font-bold text-lg">
+              {formatTime(timeLeft)}
+            </span>
+          </div>
+        </div>
+
+
+
+        <div className="max-w-2xs mx-auto">
           {isLoadingPix ? (
             <div className="w-48 h-48 bg-white rounded-xl mx-auto mb-4 flex items-center justify-center">
               <Loader2 className="w-12 h-12 text-purple-400 animate-spin" />
@@ -36,15 +81,35 @@ const Step5Pix = ({ orderId, isLoadingPix, qrCodeImage, pixCode, onBack }: Props
               <QrCode className="w-32 h-32 text-purple-400" />
             </div>
           )}
-          <p className="text-sm text-gray-500 mb-4">Pedido #{orderId}</p>
-          <div className="text-2xl font-bold text-green-600 mb-2">R$ 49,99</div>
-          <p className="text-sm text-gray-600">Após o pagamento, você receberá a confirmação por e-mail</p>
-        </div>
-      </div>
 
-      <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
-        <h5 className="font-semibold text-yellow-800 mb-2">💡 Importante:</h5>
-        <p className="text-yellow-700 text-sm">O QR Code expira em 30 minutos. Após o pagamento, você receberá a história em até 24h no seu e-mail.</p>
+          {/* Botão Copiar PIX */}
+          {pixCode && !isLoadingPix && (
+            <Button
+              onClick={handleCopyPix}
+              variant="outline"
+              className="w-full mb-4 border-2 border-green-300 bg-green-50 text-green-700 hover:bg-green-100 py-3 rounded-xl font-semibold transition-colors"
+            >
+              {copied ? (
+                <>
+                  <Check className="w-4 h-4 mr-2" />
+                  Código PIX copiado!
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4 mr-2" />
+                  Copiar código PIX
+                </>
+              )}
+            </Button>
+          )}
+          
+          <div className="text-center mb-4">
+            <p className="text-sm text-gray-500 mb-1">Valor do pagamento</p>
+            <div className="text-2xl font-bold text-green-600">R$ 49,99</div>
+          </div>
+          
+        </div>
+          <p className="text-sm font-bold text-black">Após o pagamento, você receberá a confirmação por e-mail.</p>
       </div>
 
       <div className="flex space-x-4">
@@ -52,14 +117,9 @@ const Step5Pix = ({ orderId, isLoadingPix, qrCodeImage, pixCode, onBack }: Props
           Voltar
         </Button>
         <Button
-          onClick={() => {
-            if (pixCode) {
-              navigator.clipboard.writeText(pixCode);
-              alert("Código Pix copiado!");
-            }
-          }}
+          onClick={handleCopyPix}
           disabled={!pixCode || isLoadingPix}
-          className="flex-1 bg-gradient-to-r from-purple-500 to-pink-main hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-xl text-lg shadow-lg relative disabled:cursor-not-allowed"
+          className="flex-1 bg-gradient-to-r from-purple-500 to-pink-main hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-xl shadow-lg relative disabled:cursor-not-allowed"
         >
           {isLoadingPix ? (
             <>
