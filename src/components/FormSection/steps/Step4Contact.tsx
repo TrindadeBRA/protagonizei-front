@@ -127,7 +127,9 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
           <div className="border-t border-gray-200 pt-2 mt-3">
             <div className="flex justify-between items-center">
               <span className="font-bold text-gray-800">Total:</span>
-              <span className="text-2xl font-bold text-pink-main">R$ 49,99</span>
+              {/* <span className="text-2xl font-bold text-pink-main">R$ 49,99</span> */}
+              <span className="text-2xl font-bold text-pink-main">R$ 5,00</span>
+
             </div>
           </div>
         </div>

@@ -105,7 +105,9 @@ const Step5Pix = ({ orderId, isLoadingPix, qrCodeImage, pixCode, onBack }: Props
           
           <div className="text-center mb-4">
             <p className="text-sm text-gray-500 mb-1">Valor do pagamento</p>
-            <div className="text-2xl font-bold text-green-600">R$ 49,99</div>
+            {/* <div className="text-2xl font-bold text-green-600">R$ 49,99</div> */}
+            <div className="text-2xl font-bold text-green-600">R$ 5,00</div>
+
           </div>
           
         </div>
