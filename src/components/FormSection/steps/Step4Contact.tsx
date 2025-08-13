@@ -104,7 +104,7 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
           </div>
           <div className="flex justify-between">
             <span className="text-gray-600">Gênero:</span>
-            <span className="font-semibold">{formData.childGender}</span>
+            <span className="font-semibold">{formData.childGender === "girl" ? "Menina" : "Menino"}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-600">Tom de pele:</span>
