@@ -13,7 +13,7 @@ type Props = {
   onBack: () => void;
 };
 
-const Step5Pix = ({ orderId, isLoadingPix, qrCodeImage, pixCode, onBack }: Props) => {
+const Step5Pix = ({ isLoadingPix, qrCodeImage, pixCode, onBack }: Props) => {
   const [timeLeft, setTimeLeft] = useState(10 * 60);
   const [copied, setCopied] = useState(false);
 
