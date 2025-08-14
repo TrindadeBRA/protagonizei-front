@@ -25,7 +25,9 @@ const FormSection = () => {
     qrCodeImage,
     isLoadingPix,
     isSubmitting,
+    bookId,
     bookPrice,
+    setBookPrice,
     isLoadingBookDetails,
     photoPreviewUrl,
     setPhotoPreviewUrl,
@@ -40,6 +42,8 @@ const FormSection = () => {
     step4Errors,
     touched,
     setFieldTouched,
+    couponCode,
+    setCouponCode,
   } = useFormSection();
 
   return (
@@ -144,6 +148,11 @@ const FormSection = () => {
                   croppedPreviewUrl={croppedPreviewUrl}
                   price={bookPrice}
                   isLoadingPrice={isLoadingBookDetails}
+                  orderId={orderId}
+                  bookId={bookId}
+                  onUpdatePrice={(p) => setBookPrice(p)}
+                  couponCode={couponCode}
+                  setCouponCode={setCouponCode}
                 />
               )}
 

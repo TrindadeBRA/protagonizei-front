@@ -6,6 +6,7 @@ import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import { twMerge } from "tailwind-merge";
 import { FormDataState } from "../useFormSection";
+import CouponDiscount from "../CouponDiscount";
 
 type Props = {
   formData: FormDataState;
@@ -22,9 +23,14 @@ type Props = {
   croppedPreviewUrl?: string | null;
   price?: number | null;
   isLoadingPrice?: boolean;
+  orderId?: string | null;
+  bookId?: number | null;
+  onUpdatePrice?: (newPrice: number) => void;
+  couponCode?: string;
+  setCouponCode?: (value: string) => void;
 };
 
-const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl, price, isLoadingPrice }: Props) => {
+const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl, price, isLoadingPrice, orderId, bookId, onUpdatePrice, couponCode, setCouponCode }: Props) => {
   const formatPrice = (value?: number | null) => {
     if (typeof value !== "number") return null;
     try {
@@ -103,7 +109,8 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
 
       <div className="bg-gradient-to-r from-pink-50 to-blue-50 border border-pink-200 rounded-xl p-6">
         <h4 className="font-heading font-bold text-pink-main mb-3 flex items-center">
-          <Heart className="w-5 h-5 mr-2 fill-current text-pink-main" /> Resumo do seu pedido
+          {/* <Heart className="w-5 h-5 mr-2 fill-current text-pink-main" /> */}
+          Resumo do seu pedido
         </h4>
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
@@ -145,6 +152,18 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
                 <span className="text-2xl font-bold text-pink-main">{formatPrice(price) ?? "-"}</span>
               )}
 
+            </div>
+            {/* Cupom de desconto */}
+            <div className="mt-4">
+              <CouponDiscount
+                orderId={orderId || null}
+                bookId={bookId || null}
+                currentPrice={price ?? null}
+                onPriceUpdate={(newPrice) => onUpdatePrice && onUpdatePrice(newPrice)}
+                couponValue={couponCode || ""}
+                onCouponChange={(v) => setCouponCode && setCouponCode(v)}
+                disabled={isSubmitting}
+              />
             </div>
           </div>
         </div>

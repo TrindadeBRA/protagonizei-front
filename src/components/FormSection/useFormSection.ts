@@ -48,8 +48,11 @@ export const useFormSection = () => {
   const [touched, setTouched] = useState<Partial<Record<keyof FormDataState, boolean>>>({});
 
   // Detalhes do livro
+  const [bookId, setBookId] = useState<number | null>(null);
   const [bookPrice, setBookPrice] = useState<number | null>(null);
   const [isLoadingBookDetails, setIsLoadingBookDetails] = useState<boolean>(false);
+  // Cupom (UI)
+  const [couponCode, setCouponCode] = useState<string>("");
 
   const setFieldTouched = (field: keyof FormDataState) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
@@ -198,7 +201,11 @@ export const useFormSection = () => {
       try {
         setIsLoadingBookDetails(true);
         const response: any = await customFetch(getGetOrdersBookDetailsUrl(), { method: "GET" });
+        const id = response?.data?.id ?? null;
         const price = response?.data?.preco ?? response?.data?.price ?? null;
+        if (id !== null && id !== undefined) {
+          setBookId(Number(id));
+        }
         if (price !== null && price !== undefined) {
           setBookPrice(Number(price));
         }
@@ -295,7 +302,9 @@ export const useFormSection = () => {
     isLoadingPix,
     isPixGenerated,
     isSubmitting,
+    bookId,
     bookPrice,
+    setBookPrice,
     isLoadingBookDetails,
     photoPreviewUrl,
     setPhotoPreviewUrl,
@@ -311,6 +320,8 @@ export const useFormSection = () => {
     touched,
     setFieldTouched,
     markTouched,
+    couponCode,
+    setCouponCode,
   };
 };
 

@@ -11,6 +11,10 @@ import type {
   GetOrdersBookDetails200,
   GetOrdersBookDetails404,
   GetOrdersBookDetails500,
+  GetOrdersCheckCoupon200,
+  GetOrdersCheckCoupon400,
+  GetOrdersCheckCoupon404,
+  GetOrdersCheckCouponParams,
   GetOrdersOrderIdPaymentStatus200,
   GetOrdersOrderIdPaymentStatus404,
   GetPostSlug200,
@@ -442,6 +446,65 @@ export const postOrdersOrderIdPix = async (orderId: number, options?: RequestIni
   const data: postOrdersOrderIdPixResponse['data'] = body ? JSON.parse(body) : {}
 
   return { data, status: res.status, headers: res.headers } as postOrdersOrderIdPixResponse
+}
+
+
+
+/**
+ * Valida um cupom para um pedido e retorna o preço atualizado
+ * @summary Validar cupom e retornar preço atualizado
+ */
+export type getOrdersCheckCouponResponse200 = {
+  data: GetOrdersCheckCoupon200
+  status: 200
+}
+
+export type getOrdersCheckCouponResponse400 = {
+  data: GetOrdersCheckCoupon400
+  status: 400
+}
+
+export type getOrdersCheckCouponResponse404 = {
+  data: GetOrdersCheckCoupon404
+  status: 404
+}
+    
+export type getOrdersCheckCouponResponseComposite = getOrdersCheckCouponResponse200 | getOrdersCheckCouponResponse400 | getOrdersCheckCouponResponse404;
+    
+export type getOrdersCheckCouponResponse = getOrdersCheckCouponResponseComposite & {
+  headers: Headers;
+}
+
+export const getGetOrdersCheckCouponUrl = (params: GetOrdersCheckCouponParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+    
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : value.toString())
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/orders/check-coupon?${stringifiedParams}` : `/orders/check-coupon`
+}
+
+export const getOrdersCheckCoupon = async (params: GetOrdersCheckCouponParams, options?: RequestInit): Promise<getOrdersCheckCouponResponse> => {
+  
+  const res = await fetch(getGetOrdersCheckCouponUrl(params),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text()
+  const data: getOrdersCheckCouponResponse['data'] = body ? JSON.parse(body) : {}
+
+  return { data, status: res.status, headers: res.headers } as getOrdersCheckCouponResponse
 }
 
 
