@@ -176,6 +176,10 @@ export const useFormSection = () => {
       if (response.message === "Pix criado com sucesso" && response.qr_code_image) {
         setPixCode(response.qr_code_copypaste || null);
         setQrCodeImage(response.qr_code_image || null);
+        // Atualizar o preço se disponível na resposta
+        if (response.price !== undefined && response.price !== null) {
+          setBookPrice(Number(response.price));
+        }
         setIsPixGenerated(true);
       } else {
         throw new Error("Erro ao gerar PIX");

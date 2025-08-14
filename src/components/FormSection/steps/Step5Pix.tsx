@@ -11,10 +11,11 @@ type Props = {
   isLoadingPix: boolean;
   qrCodeImage: string | null;
   pixCode: string | null;
+  price: number | null;
   onBack: () => void;
 };
 
-const Step5Pix = ({ orderId, isLoadingPix, qrCodeImage, pixCode, onBack }: Props) => {
+const Step5Pix = ({ orderId, isLoadingPix, qrCodeImage, pixCode, price, onBack }: Props) => {
   const [copied, setCopied] = useState(false);
   console.log("orderId", orderId);
   const handleCopyPix = async () => {
@@ -81,9 +82,9 @@ const Step5Pix = ({ orderId, isLoadingPix, qrCodeImage, pixCode, onBack }: Props
           
           <div className="text-center mb-4">
             <p className="text-sm text-gray-500 mb-1">Valor do pagamento</p>
-            {/* <div className="text-2xl font-bold text-green-600">R$ 49,99</div> */}
-            <div className="text-2xl font-bold text-green-600">R$ 5,00</div>
-
+            <div className="text-2xl font-bold text-green-600">
+              {price ? `R$ ${price.toFixed(2).replace('.', ',')}` : 'Carregando...'}
+            </div>
           </div>
           
         </div>

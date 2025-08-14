@@ -153,6 +153,7 @@ const FormSection = () => {
                   isLoadingPix={isLoadingPix}
                   qrCodeImage={qrCodeImage}
                   pixCode={pixCode}
+                  price={bookPrice}
                   onBack={() => prevStep()}
                 />
               )}

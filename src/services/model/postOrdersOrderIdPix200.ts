@@ -14,4 +14,6 @@ export type PostOrdersOrderIdPix200 = {
   qr_code_image?: string;
   /** Código PIX para copiar e colar */
   qr_code_copypaste?: string;
+  /** Preço do livro em reais (R$) */
+  price?: number;
 };
