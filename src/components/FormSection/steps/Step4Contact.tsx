@@ -151,6 +151,7 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
                 orderId={orderId || null}
                 bookId={bookId || null}
                 currentPrice={price ?? null}
+                originalPrice={originalPrice ?? null}
                 onPriceUpdate={(newPrice) => onUpdatePrice && onUpdatePrice(newPrice)}
                 couponValue={couponCode || ""}
                 onCouponChange={(v) => setCouponCode && setCouponCode(v)}

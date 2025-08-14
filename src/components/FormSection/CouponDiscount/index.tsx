@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { CheckCircle, XCircle, Loader2, Tag } from "lucide-react";
@@ -12,6 +12,7 @@ interface CouponDiscountProps {
     orderId: string | null;
     bookId?: number | null;
     currentPrice: number | null;
+    originalPrice?: number | null;
     onPriceUpdate: (newPrice: number) => void;
     couponValue: string;
     onCouponChange: (value: string) => void;
@@ -30,6 +31,7 @@ const CouponDiscount = ({
     orderId,
     bookId,
     currentPrice,
+    originalPrice,
     onPriceUpdate,
     couponValue,
     onCouponChange,
@@ -110,18 +112,27 @@ const CouponDiscount = ({
             setCouponState({ status: "idle", message: "", appliedCoupon: null });
             onCouponChange("");
             // Reverter o preço original, se tivermos guardado
-            if (originalPriceRef.current !== null) {
-                onPriceUpdate(originalPriceRef.current);
-                originalPriceRef.current = null;
+            const basePrice = originalPriceRef.current ?? (typeof originalPrice === 'number' ? originalPrice : null);
+            if (basePrice !== null) {
+                onPriceUpdate(basePrice);
             }
+            originalPriceRef.current = null;
         }
     };
 
-    const isInputDisabled = disabled || couponState.status === "success" || !hasBookId;
+    // Desabilita input se cupom já estiver aplicado (estado local) ou se detectarmos desconto via preços
+    const isAppliedByPrice = typeof originalPrice === 'number' && typeof currentPrice === 'number' && currentPrice < originalPrice;
+    useEffect(() => {
+        if (isAppliedByPrice && couponValue && couponState.status !== 'success') {
+            setCouponState({ status: 'success', message: '', appliedCoupon: couponValue });
+        }
+    }, [isAppliedByPrice, couponValue]);
+
+    const isInputDisabled = disabled || couponState.status === "success" || isAppliedByPrice || !hasBookId;
     const showRemoveButton = couponState.status === "success" && couponState.appliedCoupon;
 
     return (
-        <div className="space-y-3">
+        <div className="space-y-2">
             <div className="flex items-center gap-2">
                 <Tag className="w-4 h-4 text-purple-600" />
                 <span className="text-sm font-medium text-gray-700">Cupom de desconto</span>

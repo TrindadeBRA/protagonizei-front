@@ -15,9 +15,8 @@ type Props = {
   onBack: () => void;
 };
 
-const Step5Pix = ({ orderId, isLoadingPix, qrCodeImage, pixCode, price, onBack }: Props) => {
+const Step5Pix = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack }: Props) => {
   const [copied, setCopied] = useState(false);
-  console.log("orderId", orderId);
   const handleCopyPix = async () => {
     if (pixCode) {
       try {
