@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, Mail, Loader2 } from "lucide-react";
+import { Mail, Loader2 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
@@ -111,7 +111,6 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
 
       <div className="bg-gradient-to-r from-pink-50 to-blue-50 border border-pink-200 rounded-xl p-6">
         <h4 className="font-heading font-bold text-pink-main mb-3 flex items-center">
-          {/* <Heart className="w-5 h-5 mr-2 fill-current text-pink-main" /> */}
           Resumo do seu pedido
         </h4>
         <div className="space-y-2 text-sm">

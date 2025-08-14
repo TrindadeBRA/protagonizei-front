@@ -14,7 +14,12 @@ const eslintConfig = [
   {
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
-      "eslint-comments/no-unused-disable": "off"
+      "eslint-comments/no-unused-disable": "off",
+      "@typescript-eslint/no-redeclare": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/no-empty-interface": "off",
+      "@typescript-eslint/no-empty-object-type": "off",
     }
   }
 ];
