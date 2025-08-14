@@ -25,6 +25,8 @@ const FormSection = () => {
     qrCodeImage,
     isLoadingPix,
     isSubmitting,
+    bookPrice,
+    isLoadingBookDetails,
     photoPreviewUrl,
     setPhotoPreviewUrl,
     croppedPreviewUrl,
@@ -140,6 +142,8 @@ const FormSection = () => {
                   touched={touched}
                   photoPreviewUrl={photoPreviewUrl}
                   croppedPreviewUrl={croppedPreviewUrl}
+                  price={bookPrice}
+                  isLoadingPrice={isLoadingBookDetails}
                 />
               )}
 

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import customFetch from "@/src/services/custom-fetch";
 import { PostOrdersBody } from "@/src/services/model";
-import { getGetOrdersOrderIdPaymentStatusUrl, getPostOrdersOrderIdPixUrl, getPostOrdersUrl } from "@/src/services/api";
+import { getGetOrdersOrderIdPaymentStatusUrl, getGetOrdersBookDetailsUrl, getPostOrdersOrderIdPixUrl, getPostOrdersUrl } from "@/src/services/api";
 import { childInfoSchema } from "./schemas/childInfo.schema";
 import { contactSchema } from "./schemas/contact.schema";
 import { photoSchema } from "./schemas/photo.schema";
@@ -46,6 +46,10 @@ export const useFormSection = () => {
 
   // Controle de campos tocados para exibir erros apenas quando necessário
   const [touched, setTouched] = useState<Partial<Record<keyof FormDataState, boolean>>>({});
+
+  // Detalhes do livro
+  const [bookPrice, setBookPrice] = useState<number | null>(null);
+  const [isLoadingBookDetails, setIsLoadingBookDetails] = useState<boolean>(false);
 
   const setFieldTouched = (field: keyof FormDataState) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
@@ -184,6 +188,28 @@ export const useFormSection = () => {
     }
   };
 
+  // Buscar detalhes do livro ao entrar no passo 4
+  useEffect(() => {
+    const fetchBookDetails = async () => {
+      try {
+        setIsLoadingBookDetails(true);
+        const response: any = await customFetch(getGetOrdersBookDetailsUrl(), { method: "GET" });
+        const price = response?.data?.preco ?? response?.data?.price ?? null;
+        if (price !== null && price !== undefined) {
+          setBookPrice(Number(price));
+        }
+      } catch (error) {
+        console.error("Erro ao buscar detalhes do livro:", error);
+      } finally {
+        setIsLoadingBookDetails(false);
+      }
+    };
+
+    if (step === 4 && bookPrice === null && !isLoadingBookDetails) {
+      fetchBookDetails();
+    }
+  }, [step, bookPrice, isLoadingBookDetails]);
+
   const handleSubmit = async () => {
     try {
       setIsSubmitting(true);
@@ -265,6 +291,8 @@ export const useFormSection = () => {
     isLoadingPix,
     isPixGenerated,
     isSubmitting,
+    bookPrice,
+    isLoadingBookDetails,
     photoPreviewUrl,
     setPhotoPreviewUrl,
     croppedPreviewUrl,

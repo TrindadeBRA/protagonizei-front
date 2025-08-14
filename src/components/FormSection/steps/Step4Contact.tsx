@@ -20,9 +20,19 @@ type Props = {
   touched?: Partial<Record<keyof FormDataState, boolean>>;
   photoPreviewUrl?: string | null;
   croppedPreviewUrl?: string | null;
+  price?: number | null;
+  isLoadingPrice?: boolean;
 };
 
-const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl }: Props) => {
+const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl, price, isLoadingPrice }: Props) => {
+  const formatPrice = (value?: number | null) => {
+    if (typeof value !== "number") return null;
+    try {
+      return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
+    } catch {
+      return `R$ ${value.toFixed(2).replace('.', ',')}`;
+    }
+  };
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
@@ -127,8 +137,13 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
           <div className="border-t border-gray-200 pt-2 mt-3">
             <div className="flex justify-between items-center">
               <span className="font-bold text-gray-800">Total:</span>
-              {/* <span className="text-2xl font-bold text-pink-main">R$ 49,99</span> */}
-              <span className="text-2xl font-bold text-pink-main">R$ 5,00</span>
+              {isLoadingPrice ? (
+                <span className="text-sm text-gray-500 flex items-center">
+                  <Loader2 className="w-4 h-4 mr-1 animate-spin" /> Buscando preço...
+                </span>
+              ) : (
+                <span className="text-2xl font-bold text-pink-main">{formatPrice(price) ?? "-"}</span>
+              )}
 
             </div>
           </div>
