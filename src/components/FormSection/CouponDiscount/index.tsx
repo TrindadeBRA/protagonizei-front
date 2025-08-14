@@ -139,7 +139,7 @@ const CouponDiscount = ({
                         type="text"
                         placeholder="Digite o código do cupom"
                         value={couponValue}
-                        onChange={(e) => onCouponChange(e.target.value)}
+                        onChange={(e) => onCouponChange(e.target.value.toUpperCase())}
                         disabled={isInputDisabled}
                         className={`pr-10 border-2 rounded-xl bg-white transition-colors h-11 disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200 ${couponState.status === "success"
                                 ? "border-green-300 bg-green-50 text-green-700 focus:border-green-400"
