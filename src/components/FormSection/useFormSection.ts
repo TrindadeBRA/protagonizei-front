@@ -258,7 +258,13 @@ export const useFormSection = () => {
       };
 
       const formDataToSend = new FormData();
-      if (couponCode && couponCode.trim()) {
+      // Só enviar cupom se estiver aplicado com sucesso (preço atual menor que o preço original)
+      if (
+        couponCode && couponCode.trim() &&
+        originalBookPrice !== null &&
+        bookPrice !== null &&
+        bookPrice < originalBookPrice
+      ) {
         formDataToSend.append("coupon", couponCode.trim());
       }
       formDataToSend.append("childName", orderData.childName);
