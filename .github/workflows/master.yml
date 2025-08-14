@@ -33,11 +33,22 @@ jobs:
 
       - name: Create robots.txt for production
         run: |
-          echo "User-agent: *" > out/robots.txt
-          echo "Disallow: */?*" >> out/robots.txt
-          echo "Disallow: */?" >> out/robots.txt
-          echo "Allow: /sitemap.xml" >> out/robots.txt
-          echo "Allow: /sitemap.xml.gz" >> out/robots.txt
+          echo "# Allow all crawlers to read the site (including AI crawlers)" > out/robots.txt
+          echo "User-agent: GPTBot" >> out/robots.txt
+          echo "Allow: /" >> out/robots.txt
+          echo "" >> out/robots.txt
+          echo "User-agent: Google-Extended" >> out/robots.txt
+          echo "Allow: /" >> out/robots.txt
+          echo "" >> out/robots.txt
+          echo "User-agent: CCBot" >> out/robots.txt
+          echo "Allow: /" >> out/robots.txt
+          echo "" >> out/robots.txt
+          echo "User-agent: anthropic-ai" >> out/robots.txt
+          echo "Allow: /" >> out/robots.txt
+          echo "" >> out/robots.txt
+          echo "User-agent: *" >> out/robots.txt
+          echo "Disallow:" >> out/robots.txt
+          echo "" >> out/robots.txt
           echo "Sitemap: https://protagonizei.com/sitemap.xml" >> out/robots.txt
 
       - name: Create .htaccess for production
