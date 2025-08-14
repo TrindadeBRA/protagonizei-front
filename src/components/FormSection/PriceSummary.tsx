@@ -20,18 +20,18 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({ originalPrice, currentPrice
 	const discountPct = hasDiscount ? Math.round(((originalPrice as number - (currentPrice as number)) / (originalPrice as number)) * 100) : 0;
 
 	return (
-		<div className="flex items-baseline gap-3">
-			<span className="font-bold text-gray-800">Total:</span>
+		<div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-3 w-full">
+			<span className="font-bold text-gray-800 mb-1 sm:mb-0">Total:</span>
 			{isLoading ? (
 				<span className="text-sm text-gray-500 flex items-center">Carregando preço...</span>
 			) : (
-				<div className="flex items-baseline gap-3">
+				<div className="flex flex-wrap items-center gap-x-2 gap-y-1">
 					{hasDiscount && (
-						<span className="text-gray-500 line-through text-lg">{formatPrice(originalPrice)}</span>
+						<span className="text-gray-500 line-through text-base sm:text-lg">{formatPrice(originalPrice)}</span>
 					)}
-					<span className="text-2xl font-bold text-pink-main">{formatPrice(currentPrice) ?? '-'}</span>
+					<span className="text-xl sm:text-2xl font-bold text-pink-main">{formatPrice(currentPrice) ?? '-'}</span>
 					{hasDiscount && (
-						<span className="text-xs font-semibold bg-green-100 text-green-700 px-2 py-1 rounded-full">-{discountPct}%</span>
+						<span className="text-[10px] sm:text-xs font-semibold bg-green-100 text-green-700 px-2 py-0.5 sm:py-1 rounded-full">-{discountPct}%</span>
 					)}
 				</div>
 			)}
