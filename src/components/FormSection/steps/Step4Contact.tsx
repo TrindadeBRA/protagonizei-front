@@ -7,6 +7,7 @@ import { Label } from "@/src/components/ui/label";
 import { twMerge } from "tailwind-merge";
 import { FormDataState } from "../useFormSection";
 import CouponDiscount from "../CouponDiscount";
+import PriceSummary from "../PriceSummary";
 
 type Props = {
   formData: FormDataState;
@@ -23,6 +24,7 @@ type Props = {
   croppedPreviewUrl?: string | null;
   price?: number | null;
   isLoadingPrice?: boolean;
+  originalPrice?: number | null;
   orderId?: string | null;
   bookId?: number | null;
   onUpdatePrice?: (newPrice: number) => void;
@@ -30,7 +32,7 @@ type Props = {
   setCouponCode?: (value: string) => void;
 };
 
-const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl, price, isLoadingPrice, orderId, bookId, onUpdatePrice, couponCode, setCouponCode }: Props) => {
+const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl, price, isLoadingPrice, orderId, bookId, onUpdatePrice, couponCode, setCouponCode, originalPrice }: Props) => {
   const formatPrice = (value?: number | null) => {
     if (typeof value !== "number") return null;
     try {
@@ -142,17 +144,7 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
             </div>
           </div>
           <div className="border-t border-gray-200 pt-2 mt-3">
-            <div className="flex justify-between items-center">
-              <span className="font-bold text-gray-800">Total:</span>
-              {isLoadingPrice ? (
-                <span className="text-sm text-gray-500 flex items-center">
-                  <Loader2 className="w-4 h-4 mr-1 animate-spin" /> Buscando preço...
-                </span>
-              ) : (
-                <span className="text-2xl font-bold text-pink-main">{formatPrice(price) ?? "-"}</span>
-              )}
-
-            </div>
+            <PriceSummary originalPrice={originalPrice ?? null} currentPrice={price ?? null} isLoading={!!isLoadingPrice} />
             {/* Cupom de desconto */}
             <div className="mt-4">
               <CouponDiscount

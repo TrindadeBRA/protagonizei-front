@@ -26,6 +26,7 @@ const FormSection = () => {
     isLoadingPix,
     isSubmitting,
     bookId,
+    originalBookPrice,
     bookPrice,
     setBookPrice,
     isLoadingBookDetails,
@@ -153,6 +154,7 @@ const FormSection = () => {
                   onUpdatePrice={(p) => setBookPrice(p)}
                   couponCode={couponCode}
                   setCouponCode={setCouponCode}
+                  originalPrice={originalBookPrice}
                 />
               )}
 

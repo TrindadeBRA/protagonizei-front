@@ -49,6 +49,7 @@ export const useFormSection = () => {
 
   // Detalhes do livro
   const [bookId, setBookId] = useState<number | null>(null);
+  const [originalBookPrice, setOriginalBookPrice] = useState<number | null>(null);
   const [bookPrice, setBookPrice] = useState<number | null>(null);
   const [isLoadingBookDetails, setIsLoadingBookDetails] = useState<boolean>(false);
   // Cupom (UI)
@@ -207,6 +208,9 @@ export const useFormSection = () => {
           setBookId(Number(id));
         }
         if (price !== null && price !== undefined) {
+          if (originalBookPrice === null) {
+            setOriginalBookPrice(Number(price));
+          }
           setBookPrice(Number(price));
         }
       } catch (error) {
@@ -219,7 +223,7 @@ export const useFormSection = () => {
     if (step === 4 && bookPrice === null && !isLoadingBookDetails) {
       fetchBookDetails();
     }
-  }, [step, bookPrice, isLoadingBookDetails]);
+  }, [step, bookPrice, isLoadingBookDetails, originalBookPrice]);
 
   const handleSubmit = async () => {
     try {
@@ -303,6 +307,7 @@ export const useFormSection = () => {
     isPixGenerated,
     isSubmitting,
     bookId,
+    originalBookPrice,
     bookPrice,
     setBookPrice,
     isLoadingBookDetails,
