@@ -324,6 +324,9 @@ export const getPostOrdersUrl = () => {
 
 export const postOrders = async (postOrdersBody: PostOrdersBody, options?: RequestInit): Promise<postOrdersResponse> => {
     const formData = new FormData();
+if(postOrdersBody.coupon !== undefined) {
+ formData.append('coupon', postOrdersBody.coupon)
+ }
 formData.append('childName', postOrdersBody.childName)
 formData.append('childAge', postOrdersBody.childAge.toString())
 formData.append('childGender', postOrdersBody.childGender)

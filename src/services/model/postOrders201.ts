@@ -5,10 +5,12 @@
  * API para gerenciamento de posts, pedidos personalizados e formulários de contato no WordPress
  * OpenAPI spec version: 1.0.0
  */
-import type { PostOrders201Data } from './postOrders201Data';
+import type { PostOrders201AppliedCoupon } from './postOrders201AppliedCoupon';
 
 export type PostOrders201 = {
-  success?: boolean;
   message?: string;
-  data?: PostOrders201Data;
+  order_id?: number;
+  status?: string;
+  /** Cupom aplicado no pedido, se informado */
+  applied_coupon?: PostOrders201AppliedCoupon;
 };

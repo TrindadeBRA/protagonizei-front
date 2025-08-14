@@ -77,6 +77,7 @@ export * from './postContactFormSubmit500';
 export * from './postContactFormSubmit500Data';
 export * from './postContactFormSubmitBody';
 export * from './postOrders201';
+export * from './postOrders201AppliedCoupon';
 export * from './postOrders201Data';
 export * from './postOrders400';
 export * from './postOrders400OneOf';

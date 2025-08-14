@@ -258,6 +258,9 @@ export const useFormSection = () => {
       };
 
       const formDataToSend = new FormData();
+      if (couponCode && couponCode.trim()) {
+        formDataToSend.append("coupon", couponCode.trim());
+      }
       formDataToSend.append("childName", orderData.childName);
       formDataToSend.append("childAge", orderData.childAge.toString());
       formDataToSend.append("childGender", orderData.childGender);

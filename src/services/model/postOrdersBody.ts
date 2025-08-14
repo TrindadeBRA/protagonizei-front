@@ -9,6 +9,8 @@ import type { PostOrdersBodyChildGender } from './postOrdersBodyChildGender';
 import type { PostOrdersBodySkinTone } from './postOrdersBodySkinTone';
 
 export type PostOrdersBody = {
+  /** Código de cupom opcional a ser aplicado ao pedido */
+  coupon?: string;
   /** Nome da criança */
   childName: string;
   /**
