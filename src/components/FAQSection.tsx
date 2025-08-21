@@ -21,22 +21,6 @@ const faqs = [
   {
     question: "A foto do meu filho fica igual nas ilustrações?",
     answer: "Nossa IA cria ilustrações artísticas baseadas na foto, mantendo as características principais da criança de forma encantadora e respeitosa."
-  },
-  {
-    question: "Posso fazer histórias para irmãos gêmeos?",
-    answer: "Claro! Cada criança receberá uma história única e personalizada. Para gêmeos, recomendamos histórias diferentes para cada um se sentir especial."
-  },
-  {
-    question: "E se meu filho não gostar da história?",
-    answer: "Oferecemos garantia de 30 dias. Se não ficarem satisfeitos, devolvemos 100% do valor pago, sem questionamentos."
-  },
-  {
-    question: "As histórias são adequadas para que idade?",
-    answer: "Nossas histórias são perfeitas para crianças de 2 a 8 anos, com linguagem e aventuras apropriadas para cada faixa etária."
-  },
-  {
-    question: "Posso personalizar o nome e gênero?",
-    answer: "Sim! Personalizamos nome, gênero, pronomes e até características físicas básicas. Cada história é única para sua criança."
   }
 ];
 

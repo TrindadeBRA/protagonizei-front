@@ -12,16 +12,16 @@ import { GetPostSlugs200DataItem } from "@/src/services/model";
 import Script from 'next/script';
 
 export const metadata = {
-  title: 'Protagonizei: Seu Filho Vira o Protagonista da História!',
-  description: 'Crie um livro infantil digital personalizado onde seu filho é o protagonista com nome, rosto e magia. Desenvolvido com Inteligência Artificial (IA) para o face swap e adaptação do texto, este é um presente único, emocional e educativo. Desfrute de uma experiência simples e de baixo custo, com entrega 100% digital (PDF enviado por e-mail). Sem a necessidade de login ou e-commerce tradicional, transforme a leitura em uma aventura inesquecível e veja a criança se reconhecer como protagonista.',
+  title: 'Protagonizei: Aqui seu filho é o protagonista da própria história!',
+  description: 'Transformamos seu filho no protagonista da narrativa: com nome, rosto e magia em cada página, gerados por nossa IA. É mais que um livro, é uma experiência que encanta e inspira.',
 }
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Product",
-  "name": "Livro Infantil Personalizado com IA - Protagonizei",
+  "name": "Protagonizei: Aqui seu filho é o protagonista da própria história!",
   "image": "https://protagonizei.com/og-image.jpg",
-  "description": "Livro infantil digital personalizado onde seu filho é o protagonista, com nome, rosto e magia. Desenvolvido com Inteligência Artificial para face swap e adaptação do texto.",
+  "description": "Transformamos seu filho no protagonista da narrativa: com nome, rosto e magia em cada página, gerados por nossa IA. É mais que um livro, é uma experiência que encanta e inspira.",
   "brand": {
     "@type": "Brand",
     "name": "Protagonizei"
@@ -49,7 +49,7 @@ const jsonLd = {
       "@type": "Person",
       "name": "Cliente Satisfeito"
     },
-    "reviewBody": "Um presente incrível! Meu filho ficou encantado ao se ver como protagonista da história."
+    "reviewBody": "Um presente incrível! Meu filho ficou encantado ao se ver como protagonista da história. A IA transformou a foto em uma narrativa única e mágica."
   }
 };
 
@@ -103,9 +103,9 @@ export default async function Home() {
       <div id="depoimentos">
         <TestimonialsSection />
       </div>
-      <div id="posts-recentes">
+      {/* <div id="posts-recentes">
         <RecentPostsSection posts={recentPosts} />
-      </div>
+      </div> */}
       <div id="faq">
         <FAQSection />
       </div>

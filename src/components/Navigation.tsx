@@ -29,7 +29,7 @@ const Navigation = () => {
     { label: "Como funciona", href: "/#como-funciona" },
     { label: "Exemplos", href: "/#exemplos" },
     { label: "Depoimentos", href: "/#depoimentos" },
-    { label: "Blog", href: "/#blog" },
+    { label: "Blog", href: "/blog" },
     { label: "FAQ", href: "/#faq" },
     { label: "Crie sua história!", href: "/#criar-historia", cta: true },
   ]), []);

@@ -1,41 +1,41 @@
-import { Heart, BookOpen, Camera, Gift, Users, Star } from "lucide-react";
+import { Heart, BookOpen, Camera, Gift, PartyPopper, Star } from "lucide-react";
 import Link from "next/link";
 
 const benefits = [
   {
     icon: Heart,
-    title: "Vínculos Afetivos",
-    description: "Momentos mágicos de leitura que unem famílias e criam memórias inesquecíveis para toda a vida.",
+    title: "Laços que duram",
+    description: "Momentos de leitura emocionantes que unem famílias e criam memórias inesquecíveis para sempre.",
     color: "from-pink-main to-blue-main"
   },
   {
     icon: BookOpen,
     title: "Amor pela Leitura",
-    description: "Quando a criança se vê como protagonista, o interesse pelos livros cresce naturalmente e com alegria.",
+    description: "Crianças que se veem como protagonistas desenvolvem naturalmente o prazer pela leitura com alegria.",
     color: "from-pink-main to-blue-main"
   },
   {
     icon: Camera,
-    title: "Rosto na História",
-    description: "Nossa IA transforma a foto do seu filho em ilustrações mágicas, fazendo-o se reconhecer na aventura.",
+    title: "Reconhecimento que encanta",
+    description: "Nossa IA transforma a foto do seu filho em ilustrações mágicas, fazendo com que ele se reconheça na história.",
     color: "from-pink-main to-blue-main"
   },
   {
     icon: Gift,
-    title: "Presente Especial",
-    description: "O presente mais mágico que existe: uma história onde seu filho é o herói principal da aventura.",
-    color: "from-pink-main to-blue-main"
-  },
-  {
-    icon: Users,
-    title: "Para Quem Ama",
-    description: "Avós, tios e padrinhos se emocionam ao ver a criança protagonista de uma história única e especial.",
+    title: "Presente especialmente mágico",
+    description: "Uma história única onde o seu filho é o herói principal, ideal para impressionar avós, tios e padrinhos.",
     color: "from-pink-main to-blue-main"
   },
   {
     icon: Star,
-    title: "Confiança e Magia",
-    description: "Ver-se como protagonista desenvolve autoconfiança e faz a criança se sentir especial e importante.",
+    title: "Autoconfiança e exclusividade",
+    description: "Sentir-se protagonista desenvolve autoestima e alegria de ser especial.",
+    color: "from-pink-main to-blue-main"
+  },
+  {
+    icon: PartyPopper,
+    title: "Diversão educativa",
+    description: "Além da magia, cada página incentiva aprendizado, imaginação e criatividade de forma lúdica.",
     color: "from-pink-main to-blue-main"
   }
 ];
@@ -48,8 +48,8 @@ const BenefitsSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">
-            Por que escolher
-            <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent"> Protagonizei</span>
+            Por que escolher essa aventura
+            <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent"> personalizada</span>?
           </h2>
           <p className="text-lg text-black max-w-2xl mx-auto" data-aos="fade-up">
             Mais do que um livro, é uma experiência mágica que transforma a infância do seu filho para sempre.

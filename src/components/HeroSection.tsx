@@ -44,23 +44,23 @@ const HeroSection = () => {
               ✨ Presente único e mágico ✨
             </span>
           </div> */}
-          
-          <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-none" data-aos="fade-up">
+
+          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-none" data-aos="fade-up">
             <p className="text-black leading-tight">
-              Seu filho vira o{' '}
+              Aqui seu filho é o{' '}
               <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">protagonista{' '}</span>
-              da história!
+              da própria história!
             </p>
-            
+
           </h1>
-          
+
           <p className="text-lg md:text-xl text-black mb-8 leading-relaxed max-w-xl" data-aos="fade-up">
-            Uma história personalizada onde seu pequeno se vê como herói. 
+            Uma história personalizada onde seu pequeno se vê como herói.
             <strong className="text-pink-600"> Com nome, rosto e magia</strong> em cada página.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start" data-aos="fade-up">
-            <Link 
+            <Link
               href="/#criar-historia"
               key="/#criar-historia"
               className="magical-border border-4 border-transparent text-white font-bold py-2 px-6 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert"
@@ -76,7 +76,7 @@ const HeroSection = () => {
               Ver Exemplos
             </Button> */}
           </div>
-          
+
           <div className="mt-8 flex items-center justify-center lg:justify-start space-x-6 text-sm text-gray-500" data-aos="fade-right">
             <div className="flex items-center">
               <Heart className="w-4 h-4 text-pink-main mr-1 fill-current" />
@@ -88,7 +88,7 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="lg:w-1/2 relative">
           <div className="relative max-w-md mx-auto" data-aos="fade-left">
             <div className="bg-white rounded-3xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-all duration-500">
@@ -107,7 +107,7 @@ const HeroSection = () => {
                 <span className="text-xs text-gray-400 uppercase tracking-wide">Livro Personalizado</span>
               </div>
             </div>
-            
+
             <div className="absolute -top-6 -right-6 bounce-slow">
               <div className="bg-yellow-300 rounded-full p-2 shadow-lg">
                 {/* <Sparkles className="w-6 h-6 text-yellow-600" /> */}

@@ -9,7 +9,7 @@ const examples = [
     name: "Lucas",
     age: 5,
     story: "A Grande Aventura de Lucas",
-    excerpt: "Era uma vez um menino corajoso chamado **Lucas** que vivia em uma casa azul com seu cachorro Rex. Um dia, **ele** descobriu um mapa misterioso no sótão...",
+    excerpt: "Era uma vez um menino corajoso chamado **Lucas**... descobriu um mapa misterioso no sótão.",
     image: "👦",
     color: "from-pink-light via-purple-light to-blue-light",
     gender: "male"
@@ -18,7 +18,7 @@ const examples = [
     name: "Maria",
     age: 4,
     story: "Maria e o Reino Encantado",
-    excerpt: "**Maria** era uma princesa muito especial que morava em um castelo colorido. **Ela** tinha o poder de conversar com os animais da floresta...",
+    excerpt: "**Maria** era uma princesa muito especial que morava em um castelo colorido e falava com os animais da floresta",
     image: "👸",
     color: "from-pink-light via-purple-light to-blue-light",
     gender: "female"
@@ -27,7 +27,7 @@ const examples = [
     name: "Pedro",
     age: 6,
     story: "Pedro, o Super-Herói",
-    excerpt: "Na cidade de Aventura vivia **Pedro**, um menino que descobriu ter poderes especiais. **Ele** podia voar mais alto que as nuvens...",
+    excerpt: "**Pedro** descobriu que tinha poderes especiais e podia voar mais alto que as nuvens...",
     image: "🦸‍♂️",
     color: "from-pink-light via-purple-light to-blue-light",
     gender: "male"
@@ -40,13 +40,13 @@ const ExamplesSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-black mb-6" data-aos="fade-up">
-            Conheça alguns de nossos{" "}
+            Exemplos que{" "}
             <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
-              Protagonistas
-            </span>
+              inspiram
+            </span>!
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto" data-aos="fade-up">
-            Cada história é única, com o nome e características da sua criança em cada página.
+            Conheça nossos protagonistas
           </p>
         </div>
 

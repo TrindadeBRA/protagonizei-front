@@ -4,47 +4,26 @@ import Link from "next/link";
 
 const testimonials = [
   {
-    name: "Ana Carolina",
+    name: "Ana Beatriz",
+    gender_child: "male",
     location: "São Paulo, SP",
-    child: "Mãe da Luna (4 anos)",
+    child: "Mãe do João (4 anos)",
     rating: 5,
-    text: "Minha filha ficou encantada! Ela se reconheceu nas ilustrações e agora pede para ler 'o livro da Luna' toda noite. Foi o presente mais especial que já dei para ela.",
+    text: "Meu filho não desgruda do livro! Agora ele mesmo conta a história pros amiguinhos. É leitura divertida garantida.",
     avatar: "👩‍💼"
   },
   {
     name: "Ricardo Santos",
+    gender_child: "female",
     location: "Rio de Janeiro, RJ",
-    child: "Pai do Gabriel (6 anos)",
+    child: "Pai do HELENA (6 anos)",
     rating: 5,
-    text: "O Gabriel não largava mais o tablet, mas depois que recebeu o livro personalizado, virou um pequeno leitor! Agora ele mesmo conta a história para os amiguinhos.",
+    text: "É nosso ritual de dormir favorito. Como pai solteiro, ter algo tão especial só fortalece nossa conexão.",
     avatar: "👨‍💻"
   },
   {
-    name: "Mariana Lima",
-    location: "Belo Horizonte, MG",
-    child: "Mãe dos gêmeos João e Pedro (5 anos)",
-    rating: 5,
-    text: "Encomendei para os dois gêmeos e cada um ganhou sua própria aventura. Eles adoraram ver que eram heróis diferentes em histórias únicas. Recomendo muito!",
-    avatar: "👩‍🎓"
-  },
-  {
-    name: "Carlos Mendes",
-    location: "Porto Alegre, RS",
-    child: "Pai da Laura (3 anos)",
-    rating: 5,
-    text: "A Laura ainda é pequena, mas já adora ver as figuras dela no livro. É emocionante ver o rostinho dela iluminando quando reconhece que é ela na história.",
-    avatar: "👨‍🔧"
-  },
-  {
-    name: "Fernanda Costa",
-    location: "Fortaleza, CE",
-    child: "Mãe do Theo (7 anos)",
-    rating: 5,
-    text: "Presente de aniversário perfeito! O Theo se sentiu especial demais. Já encomendei para dar de presente para os primos também. Qualidade excepcional!",
-    avatar: "👩‍⚕️"
-  },
-  {
     name: "Bruno Oliveira",
+    gender_child: "male",
     location: "Salvador, BA",
     child: "Pai da Helena (4 anos)",
     rating: 5,
@@ -59,10 +38,10 @@ const TestimonialsSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">
-            O que dizem os{" "}
+            Confira nossos{" "}
             <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
-              pais dos protagonistas
-            </span>
+              depoimentos
+            </span>!
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto" data-aos="fade-up">
             Mais de 1000 famílias já criaram momentos mágicos com nossos livros personalizados.
@@ -106,7 +85,7 @@ const TestimonialsSection = () => {
                 </div>
                 <div>
                   <h4 className="font-heading font-bold text-gray-800">{testimonial.name}</h4>
-                  <p className="text-sm text-pink-600 font-semibold">{testimonial.child}</p>
+                  <p className={`text-sm font-semibold ${testimonial.gender_child === "male" ? "text-blue-main" : "text-pink-main"}`}>{testimonial.child}</p>
                   <p className="text-xs text-gray-500">{testimonial.location}</p>
                 </div>
               </div>

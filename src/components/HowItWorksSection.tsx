@@ -7,22 +7,22 @@ const steps = [
   {
     number: "01",
     icon: FileText,
-    title: "Crie a Magia",
-    description: "Nome, idade, gênero e uma foto do seu pequeno. Em apenas 2 minutos, a magia começa!",
+    title: "Conte sobre seu pequeno",
+    description: "Informe nome, idade, gênero e envie uma foto. Em 2 minutos, a magia começa!",
     color: "from-pink-400 to-rose-400"
   },
   {
     number: "02",
     icon: Wand2,
-    title: "A Magia Acontece",
-    description: "Nossa IA cria uma história única e transforma a foto do seu filho em ilustrações mágicas.",
+    title: "Nossa IA transforma tudo",
+    description: "Receba um PDF encantado com ilustrações únicas e história sob medida.",
     color: "from-purple-400 to-indigo-400"
   },
   {
     number: "03",
     icon: Mail,
-    title: "Receba a Magia",
-    description: "Em até 24h, o PDF mágico chega no seu e-mail, pronto para baixar e criar memórias.",
+    title: "A magia é entregue",
+    description: "Em até 24h, o livro chega por e-mail, pronto para baixar e criar memórias para sempre.",
     color: "from-blue-400 to-cyan-400"
   }
 ];
@@ -49,14 +49,15 @@ const HowItWorksSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">
-            Como a{" "}
+            Simples como{" "}
             <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
-            magia{" "}
+              mágica
             </span>
-            acontece?
+            !
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto" data-aos="fade-up">
-            Em apenas 3 passos simples, você cria uma história mágica e inesquecível para seu filho.
+            Crie em 3 cliques e receba em{" "}
+            <b>até 24h</b>
           </p>
         </div>
 

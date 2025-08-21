@@ -5,16 +5,16 @@ import Link from "next/link";
 
 const Footer = () => {
 
-  const footerLinks = [
-    { label: "Início", href: "/#hero" },
-    { label: "Benefícios", href: "/#beneficios" },
-    { label: "Como funciona", href: "/#como-funciona" },
-    { label: "Exemplos", href: "/#exemplos" },
-    { label: "Depoimentos", href: "/#depoimentos" },
-    { label: "Blog", href: "/#blog" },
-    { label: "FAQ", href: "/#faq" },
-    { label: "Crie sua história!", href: "/#criar-historia", cta: true },
-  ];
+  // const footerLinks = [
+  //   { label: "Início", href: "/#hero" },
+  //   { label: "Benefícios", href: "/#beneficios" },
+  //   { label: "Como funciona", href: "/#como-funciona" },
+  //   { label: "Exemplos", href: "/#exemplos" },
+  //   { label: "Depoimentos", href: "/#depoimentos" },
+  //   { label: "Blog", href: "/blog" },
+  //   { label: "FAQ", href: "/#faq" },
+  //   { label: "Crie sua história!", href: "/#criar-historia", cta: true },
+  // ];
 
   return (
     <footer className="bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 border-t-4 border-pink-200 overflow-x-hidden">
@@ -28,7 +28,7 @@ const Footer = () => {
           </Link>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-6 mb-8" data-aos="fade-left" data-aos-anchor="#footer-logo">
+        {/* <div className="flex flex-wrap justify-center gap-6 mb-8" data-aos="fade-left" data-aos-anchor="#footer-logo">
           {footerLinks.map((link) => {
             return (
               <Link 
@@ -40,7 +40,7 @@ const Footer = () => {
               </Link>
             );
           })}
-        </div>
+        </div> */}
 
         {/* Separador */}
         <div className="w-full h-px bg-gradient-to-r from-transparent via-pink-300 to-transparent mb-6"></div>
