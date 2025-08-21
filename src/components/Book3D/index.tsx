@@ -93,7 +93,7 @@ export default function Book3D({ className }: Book3DProps) {
 				</Page>
 				<Page>
 					<img
-						src="/assets/images/book/page02.webp"
+						src="/assets/images/book/page02-1.webp"
 						alt="Página interna esquerda"
 						className="w-full h-full object-cover object-left select-none"
 						draggable={false}
@@ -102,7 +102,7 @@ export default function Book3D({ className }: Book3DProps) {
 				</Page>
 				<Page>
 					<img
-						src="/assets/images/book/page02.webp"
+						src="/assets/images/book/page02-1.webp"
 						alt="Página interna direita"
 						className="w-full h-full object-cover object-right select-none"
 						draggable={false}
