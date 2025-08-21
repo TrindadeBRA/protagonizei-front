@@ -91,7 +91,7 @@ const HeroSection = () => {
 
         <div className="lg:w-1/2 relative">
           <div className="relative max-w-md mx-auto" data-aos="fade-left">
-            <div className="bg-white rounded-3xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-all duration-500">
+            {/* <div className="bg-white rounded-3xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-all duration-500">
               <div className="bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl p-6 mb-4">
                 <div className="w-20 h-20 bg-gradient-to-br from-pink-300 to-purple-300 rounded-full mx-auto mb-4 flex items-center justify-center">
                   <span className="text-2xl">👧</span>
@@ -106,6 +106,10 @@ const HeroSection = () => {
               <div className="text-center">
                 <span className="text-xs text-gray-400 uppercase tracking-wide">Livro Personalizado</span>
               </div>
+            </div> */}
+
+            <div className="bg-white rounded-3xl shadow-2xl p-4 transform rotate-3 hover:rotate-0 transition-all duration-500 animate-float">
+              <Image src="/assets/images/mockup.jpg" alt="Protagonizei" width={500} height={500} />
             </div>
 
             <div className="absolute -top-6 -right-6 bounce-slow">

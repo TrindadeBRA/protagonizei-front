@@ -16,7 +16,7 @@ const testimonials = [
     name: "Ricardo Santos",
     gender_child: "female",
     location: "Rio de Janeiro, RJ",
-    child: "Pai do HELENA (6 anos)",
+    child: "Pai do Fernanda (6 anos)",
     rating: 5,
     text: "É nosso ritual de dormir favorito. Como pai solteiro, ter algo tão especial só fortalece nossa conexão.",
     avatar: "👨‍💻"

@@ -74,6 +74,10 @@ html {
   }
 }
 
+.animate-float {
+  animation: float 1.5s ease-in-out infinite;
+}
+
 .bounce-slow {
   animation: bounce 2s infinite;
 }
