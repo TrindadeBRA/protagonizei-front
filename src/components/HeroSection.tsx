@@ -38,7 +38,7 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-20 flex flex-col lg:flex-row items-center justify-between min-h-screen">
+      <div className="container mx-auto px-4 py-20 flex flex-col lg:flex-row items-center lg:justify-between min-h-screen">
         <div className="lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0 z-[10]">
           {/* <div className="inline-block mb-6">
             <span className="bg-gradient-to-r from-pink-main to-blue-main text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
@@ -90,8 +90,10 @@ const HeroSection = () => {
           </div>
         </div>
 
-        <div className="lg:w-1/2">
-          <Book3D />
+        <div className="w-full lg:w-1/2">
+          <Book3D 
+            className="w-full"
+          />
         </div>
       </div>
     </section>
