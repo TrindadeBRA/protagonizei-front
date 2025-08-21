@@ -1,8 +1,18 @@
 
 import { Star, Heart, Quote } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 const testimonials = [
+  {
+    name: "Ricardo Ohara",
+    gender_child: "female",
+    location: "Rio de Janeiro, RJ",
+    child: "Pai do Fernanda (5 anos)",
+    rating: 3,
+    text: "É nosso ritual de dormir favorito. Ter algo tão especial só fortalece nossa conexão.",
+    avatar: "/assets/images/testimonials/ricardo.jpeg"
+  },
   {
     name: "Ana Beatriz",
     gender_child: "male",
@@ -10,25 +20,16 @@ const testimonials = [
     child: "Mãe do João (4 anos)",
     rating: 5,
     text: "Meu filho não desgruda do livro! Agora ele mesmo conta a história pros amiguinhos. É leitura divertida garantida.",
-    avatar: "👩‍💼"
+    avatar: "/assets/images/testimonials/ana-beatriz.jpeg"
   },
   {
-    name: "Ricardo Santos",
+    name: "Juliana Silva",
     gender_child: "female",
-    location: "Rio de Janeiro, RJ",
-    child: "Pai do Fernanda (6 anos)",
+    location: "Curitiba, PR",
+    child: "Mãe da Sofia (5 anos)",
     rating: 5,
-    text: "É nosso ritual de dormir favorito. Como pai solteiro, ter algo tão especial só fortalece nossa conexão.",
-    avatar: "👨‍💻"
-  },
-  {
-    name: "Bruno Oliveira",
-    gender_child: "male",
-    location: "Salvador, BA",
-    child: "Pai da Helena (4 anos)",
-    rating: 5,
-    text: "Como pai solteiro, sempre busco maneiras de criar momentos especiais com minha filha. Esse livro virou nosso ritual de dormir favorito!",
-    avatar: "👨‍🍳"
+    text: "A Sofia ficou encantada ao ver seu rostinho nas páginas! Agora ela sempre pede para ler 'sua história' antes de dormir. Valeu cada centavo!",
+    avatar: "/assets/images/testimonials/juliana.jpeg"
   }
 ];
 
@@ -81,7 +82,7 @@ const TestimonialsSection = () => {
               {/* Author info */}
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-gradient-to-br from-pink-100 to-purple-100 rounded-full flex items-center justify-center text-xl mr-4">
-                  {testimonial.avatar}
+                  <Image src={testimonial.avatar} alt={testimonial.name} width={48} height={48} className="rounded-full" />
                 </div>
                 <div>
                   <h4 className="font-heading font-bold text-gray-800">{testimonial.name}</h4>
