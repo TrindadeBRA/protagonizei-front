@@ -3,14 +3,16 @@ import type { PageFlipEventObject, FlipBookRef } from '../types/pageflip';
 
 interface UseAutoFlipOptions {
 	maxFlips?: number; // Número máximo de flips automáticos (default: 3)
-	interval?: number; // Intervalo entre flips em ms (default: 800)
+	initialDelay?: number; // Delay antes do primeiro flip em ms (default: 2000)
+	interval?: number; // Intervalo entre flips subsequentes em ms (default: 1500)
 	enabled?: boolean; // Se o auto-flip está habilitado (default: true)
 }
 
 export const useAutoFlip = (options: UseAutoFlipOptions = {}) => {
 	const {
 		maxFlips = 3,
-		interval = 800,
+		initialDelay = 2000,
+		interval = 1500,
 		enabled = true
 	} = options;
 
@@ -56,7 +58,9 @@ export const useAutoFlip = (options: UseAutoFlipOptions = {}) => {
 			return;
 		}
 
-		// Loop com intervalo configurável
+		// Usa initialDelay para o primeiro flip, interval para os subsequentes
+		const currentDelay = flipCount === 0 ? initialDelay : interval;
+
 		timerRef.current = setTimeout(() => {
 			try {
 				// Marca que está fazendo um flip automático
@@ -72,14 +76,14 @@ export const useAutoFlip = (options: UseAutoFlipOptions = {}) => {
 				isAutoFlippingRef.current = false;
 				stopAutoFlip();
 			}
-		}, interval);
+		}, currentDelay);
 
 		return () => {
 			if (timerRef.current) {
 				clearTimeout(timerRef.current);
 			}
 		};
-	}, [autoFlipActive, flipCount, maxFlips, interval, enabled]);
+	}, [autoFlipActive, flipCount, maxFlips, initialDelay, interval, enabled]);
 
 	// Cleanup ao desmontar
 	useEffect(() => {
