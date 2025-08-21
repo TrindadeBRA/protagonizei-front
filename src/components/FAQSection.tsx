@@ -12,7 +12,7 @@ const faqs = [
   },
   {
     question: "Quanto tempo demora para receber o livro?",
-    answer: "Normalmente em até 24 horas você recebe o PDF personalizado no seu e-mail. Em períodos de alta demanda, pode levar até 48 horas."
+    answer: "Normalmente em até 2 horas você recebe o PDF personalizado no seu e-mail. Em períodos de alta demanda, pode levar até 48 horas."
   },
   {
     question: "Posso imprimir o livro em casa?",

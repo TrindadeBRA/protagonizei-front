@@ -105,7 +105,7 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
           {!!touched.email && !!errors.email?.length && (
             <p className="text-xs text-red-500 mt-1">{errors.email[0]}</p>
           )}
-          <p className="text-sm text-gray-500 mt-1">📧 O PDF será enviado para este e-mail em até 24h</p>
+          <p className="text-sm text-gray-500 mt-1">📧 O PDF será enviado para este e-mail em até 2h</p>
         </div>
       </div>
 

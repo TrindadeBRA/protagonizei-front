@@ -22,7 +22,7 @@ const steps = [
     number: "03",
     icon: Mail,
     title: "A magia é entregue",
-    description: "Em até 24h, o livro chega por e-mail, pronto para baixar e criar memórias para sempre.",
+    description: "Em até 2h, o livro chega por e-mail, pronto para baixar e criar memórias para sempre.",
     color: "from-blue-400 to-cyan-400"
   }
 ];
@@ -57,7 +57,7 @@ const HowItWorksSection = () => {
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto" data-aos="fade-up">
             Crie em 3 cliques e receba em{" "}
-            <b>até 24h</b>
+            <b>até 2h</b>
           </p>
         </div>
 

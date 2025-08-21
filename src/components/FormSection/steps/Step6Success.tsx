@@ -22,7 +22,7 @@ const Step6Success = () => {
               <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                 <span className="text-green-600 text-sm">1</span>
               </div>
-              <p className="text-gray-600 text-sm">Você receberá um e-mail com o PDF da história em até 24h</p>
+              <p className="text-gray-600 text-sm">Você receberá um e-mail com o PDF da história em até 2h</p>
             </div>
             <div className="flex items-start space-x-3">
               <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
