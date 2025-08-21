@@ -67,8 +67,8 @@ const FormSection = () => {
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">
             Crie agora a história{" "}
             <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
-              do seu pequeno herói!
-            </span>
+              do seu pequeno herói
+            </span>!
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8" data-aos="fade-up">
             Em apenas alguns cliques, você criará uma lembrança que durará para sempre. Vamos começar?
