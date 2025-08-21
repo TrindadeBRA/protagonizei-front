@@ -9,7 +9,7 @@ const examples = [
     name: "Lucas",
     age: 5,
     story: "A Grande Aventura de Lucas",
-    excerpt: "Era uma vez um menino corajoso chamado **Lucas**... descobriu um mapa misterioso no sótão.",
+    excerpt: "Era uma vez um menino corajoso chamado **Lucas**. descobriu um mapa misterioso no sótão.",
     image: "👦",
     color: "from-pink-light via-purple-light to-blue-light",
     gender: "male"
