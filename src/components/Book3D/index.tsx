@@ -125,7 +125,7 @@ export default function Book3D({ className }: Book3DProps) {
 			} catch (error) {
 				console.log('Erro ao abrir página automaticamente:', error);
 			}
-		}, 1500);
+		}, 800);
 
 		return () => clearTimeout(timer);
 	}, []);
