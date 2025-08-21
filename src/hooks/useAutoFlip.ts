@@ -39,13 +39,12 @@ export const useAutoFlip = (options: UseAutoFlipOptions = {}) => {
 
 	// Event handlers para detectar interação manual
 	const handleFlip = (e: PageFlipEventObject) => {
-		// Event handler sem ação - apenas para compatibilidade
-		// A detecção de interação manual é feita apenas no handleChangeState
+		// Event handler sem logs - apenas para compatibilidade
 	};
 
 	const handleChangeState = (e: PageFlipEventObject) => {
-		// Para o auto-flip apenas com interação real (arrasto), não com hover
-		if (e.data === 'user_fold') {
+		// Para o auto-flip se detectar interação manual (arrastar, clicar, etc.)
+		if (e.data === 'user_fold' || e.data === 'fold_corner') {
 			console.log('🤚 Usuário interrompeu o auto-flip - navegação manual detectada');
 			stopAutoFlip();
 		}
@@ -65,7 +64,7 @@ export const useAutoFlip = (options: UseAutoFlipOptions = {}) => {
 				flipBookRef.current?.pageFlip()?.flipNext();
 				setFlipCount(prev => prev + 1);
 				
-				// Reset após delay para permitir que o evento seja processado
+				// Reset após um pequeno delay para permitir que o evento seja processado
 				setTimeout(() => {
 					isAutoFlippingRef.current = false;
 				}, 100);

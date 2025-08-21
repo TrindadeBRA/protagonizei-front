@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import React, { forwardRef } from 'react';
 import { useAutoFlip } from '../../hooks/useAutoFlip';
 import type { FlipBookProps, FlipBookRef } from '../../types/pageflip';
+import Link from 'next/link';
 
 const FlipBook = dynamic(
 	() => import('react-pageflip').then((m) => m.default),
@@ -51,18 +52,18 @@ export default function Book3D({ className }: Book3DProps) {
 				width={500}
 				height={500}
 				size="stretch"
-                drawShadow={false}
+				drawShadow={false}
 				showCover={true}
 				mobileScrollSupport={true}
-                flippingTime={1200}
-                autoSize={true}
+				flippingTime={1200}
+				autoSize={true}
 				onFlip={handleFlip}
 				onChangeState={handleChangeState}
 			>
 				<Page>
 					<div className="w-full h-full bg-white flex items-center justify-center">
 						<img
-							src="https://cms.protagonizei.com/wp-content/uploads/2025/08/merged-pedido-372-Felipe-pagina-1-2025-08-14_05-05-05.jpg"
+							src="/assets/images/book/cover.webp"
 							alt="Capa"
 							className="max-w-full max-h-full object-contain select-none"
 							draggable={false}
@@ -73,7 +74,7 @@ export default function Book3D({ className }: Book3DProps) {
 
 				<Page>
 					<img
-						src="https://cms.protagonizei.com/wp-content/uploads/2025/08/merged-pedido-306-Luna-Trindade-pagina-1-2025-08-17_08-55-38.jpg"
+						src="/assets/images/book/page01.webp"
 						alt="Página interna esquerda"
 						className="w-full h-full object-cover object-left select-none"
 						draggable={false}
@@ -82,7 +83,7 @@ export default function Book3D({ className }: Book3DProps) {
 				</Page>
 				<Page>
 					<img
-						src="https://cms.protagonizei.com/wp-content/uploads/2025/08/merged-pedido-306-Luna-Trindade-pagina-1-2025-08-17_08-55-38.jpg"
+						src="/assets/images/book/page01.webp"
 						alt="Página interna direita"
 						className="w-full h-full object-cover object-right select-none"
 						draggable={false}
@@ -91,7 +92,7 @@ export default function Book3D({ className }: Book3DProps) {
 				</Page>
 				<Page>
 					<img
-						src="https://cms.protagonizei.com/wp-content/uploads/2025/08/merged-pedido-372-Felipe-pagina-3-2025-08-14_05-05-13.jpg"
+						src="/assets/images/book/page02.webp"
 						alt="Página interna esquerda"
 						className="w-full h-full object-cover object-left select-none"
 						draggable={false}
@@ -100,7 +101,7 @@ export default function Book3D({ className }: Book3DProps) {
 				</Page>
 				<Page>
 					<img
-						src="https://cms.protagonizei.com/wp-content/uploads/2025/08/merged-pedido-372-Felipe-pagina-3-2025-08-14_05-05-13.jpg"
+						src="/assets/images/book/page02.webp"
 						alt="Página interna direita"
 						className="w-full h-full object-cover object-right select-none"
 						draggable={false}
@@ -108,22 +109,27 @@ export default function Book3D({ className }: Book3DProps) {
 					/>
 				</Page>
 				<Page>
-					<img
-						src="https://placehold.co/5976x2024?text=Quer+saber+mais%3F"
-						alt="Página interna esquerda"
-						className="w-full h-full object-cover object-left select-none"
-						draggable={false}
-						loading="lazy"
-					/>
+					<Link href="/#criar-historia">
+						<img
+							src="/assets/images/book/page03.webp"
+							alt="Página interna esquerda"
+							className="w-full h-full object-cover object-left select-none"
+							draggable={false}
+							loading="lazy"
+						/>
+					</Link>
+
 				</Page>
 				<Page>
-					<img
-						src="https://placehold.co/5976x2024?text=Quer+saber+mais%3F"
-						alt="Página interna direita"
-						className="w-full h-full object-cover object-right select-none"
-						draggable={false}
-						loading="lazy"
-					/>
+					<Link href="/#criar-historia">
+						<img
+							src="/assets/images/book/page03.webp"
+							alt="Página interna direita"
+							className="w-full h-full object-cover object-right select-none"
+							draggable={false}
+							loading="lazy"
+						/>
+					</Link>
 				</Page>
 			</TypedFlipBook>
 		</div>
