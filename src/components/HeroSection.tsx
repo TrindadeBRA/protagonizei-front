@@ -109,7 +109,7 @@ const HeroSection = () => {
             </div> */}
 
             <div className="bg-white rounded-3xl shadow-2xl p-4 transform rotate-3 hover:rotate-0 transition-all duration-500 animate-float">
-              <Image src="/assets/images/mockup.jpg" alt="Protagonizei" width={500} height={500} />
+              <Image src="/assets/images/mockup.jpg" alt="Protagonizei" width={500} height={500} className="rounded-xl"/>
             </div>
 
             <div className="absolute -top-6 -right-6 bounce-slow">
