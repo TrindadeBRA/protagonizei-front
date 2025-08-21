@@ -41,7 +41,7 @@ export default function Book3D({ className }: Book3DProps) {
 		handleChangeState,
 	} = useAutoFlip({
 		maxFlips: 3,
-		interval: 1500,
+		interval: 2000,
 		enabled: true
 	});
 
@@ -55,7 +55,7 @@ export default function Book3D({ className }: Book3DProps) {
 				drawShadow={false}
 				showCover={true}
 				mobileScrollSupport={true}
-				flippingTime={1200}
+				flippingTime={1500}
 				autoSize={true}
 				onFlip={handleFlip}
 				onChangeState={handleChangeState}
