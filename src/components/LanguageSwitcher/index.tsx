@@ -34,6 +34,7 @@ export const LanguageSwitcher = ({ context, isGradient }: { context?: NextPageCo
                   ? "text-white/70 hover:bg-white/20 hover:text-white"
                   : "text-gray-600 hover:bg-gray-900/10 hover:text-gray-900"
               )}
+              aria-label={`Trocar idioma para ${ld.name}`}
             >
               {ld.name.toUpperCase()}
             </button>

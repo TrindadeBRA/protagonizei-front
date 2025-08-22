@@ -22,6 +22,7 @@ export function WhatsAppFloat({ whatsAppUrl }: WhatsAppFloatProps) {
                             type="button"
                             onClick={() => setIsOpen(false)}
                             className="h-6 w-6 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer"
+                            aria-label="Fechar chat WhatsApp"
                         >
                             <X className="h-4 w-4" />
                             <span className="sr-only">Fechar</span>
@@ -38,6 +39,7 @@ export function WhatsAppFloat({ whatsAppUrl }: WhatsAppFloatProps) {
                     type="button"
                     onClick={() => setIsOpen(true)}
                     className="h-14 w-14 rounded-full bg-green-500 hover:bg-green-600 text-white shadow-lg flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 cursor-pointer animate-bounce"
+                    aria-label="Abrir chat WhatsApp"
                 >
                     <svg fill="#fff" height="28px" width="28px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
                         viewBox="0 0 308 308" xmlSpace="preserve">

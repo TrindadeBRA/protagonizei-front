@@ -199,6 +199,7 @@ export function WorkWithUsForm() {
             type="submit"
             disabled={isSubmitting}
             className="flex items-center gap-x-2 rounded-md bg-indigo-600 text-white px-4 py-2.5 font-bold font-inter w-fit hover:bg-indigo-600/80 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label={isSubmitting ? 'Enviando formulário...' : 'Enviar formulário de trabalho'}
           >
             {isSubmitting ? 'Enviando...' : 'enviar'} <ArrowRightIcon className="size-4" />
           </button>

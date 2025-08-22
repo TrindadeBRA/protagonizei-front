@@ -58,6 +58,8 @@ const FAQSection = () => {
               <button
                 onClick={() => toggleFAQ(index)}
                 className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-white/50 transition-colors duration-200"
+                aria-label={`${openIndex === index ? 'Fechar' : 'Abrir'} pergunta: ${faq.question}`}
+                aria-expanded={openIndex === index}
               >
                 <h3 className="font-heading font-semibold text-gray-800 pr-4">
                   {faq.question}
