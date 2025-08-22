@@ -100,6 +100,7 @@ export function WhatsAppForm({ setIsOpen, whatsAppUrl }: WhatsAppFormProps) {
                     className={twMerge(
                         "w-full px-4 py-2 rounded-md font-medium text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors",
                     )}
+                    aria-label={isSubmitting ? "Enviando formulário..." : "Chamar no WhatsApp"}
                 >
                     {isSubmitting ? "Enviando..." : "Chamar no WhatsApp!"}
                 </button>

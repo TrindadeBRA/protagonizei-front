@@ -32,7 +32,7 @@ export function PostViewTemplate({ postData, relatedPosts, isPreview }: PostView
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <Link href="/">
-              <Button variant="ghost" className="mb-6 bg-gradient-to-r from-pink-main to-blue-main text-white px-4 py-2 rounded-full text-sm font-medium">
+              <Button variant="ghost" className="mb-6 bg-gradient-to-r from-pink-main to-blue-main text-white px-4 py-2 rounded-full text-sm font-medium" aria-label="Voltar para página inicial">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Voltar para Home
               </Button>

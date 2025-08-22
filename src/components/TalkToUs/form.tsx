@@ -151,6 +151,7 @@ export function TalkToUsForm() {
             type="submit"
             disabled={isSubmitting}
             className="flex items-center gap-x-2 rounded-md bg-[#f5d22c] text-black px-4 py-2.5 font-bold font-inter text-sm hover:bg-[#f5d22c]/80 transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label={isSubmitting ? 'Enviando mensagem...' : 'Enviar mensagem'}
           >
             {isSubmitting ? 'Enviando...' : 'Enviar'}
             <ArrowRightIcon className="size-4" />
