@@ -47,7 +47,7 @@ const HeroSection = () => {
             </span>
           </div> */}
 
-          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-none" data-aos="fade-up">
+          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-none" data-aos="fade-up" id="hero-title">
             <p className="text-black leading-tight">
               Aqui seu filho é o{' '}
               <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">protagonista{' '}</span>
@@ -95,7 +95,7 @@ const HeroSection = () => {
           </div>
         </div>
 
-        <div className="w-full lg:w-1/2 float-animation" data-aos="fade-left">
+        <div className="w-full lg:w-1/2 float-animation" data-aos="fade-left" data-aos-anchor="#hero-title">
           <Book3D
             className="w-full"
           />
