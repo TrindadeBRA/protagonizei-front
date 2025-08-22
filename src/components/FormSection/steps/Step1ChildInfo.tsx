@@ -54,7 +54,10 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
             Idade *
           </Label>
           <Select onValueChange={(value) => handleInputChange("childAge", value)}>
-            <SelectTrigger className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors">
+            <SelectTrigger 
+              className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
+              aria-label="Selecione a idade da criança"
+            >
               <SelectValue placeholder="Selecione" />
             </SelectTrigger>
             <SelectContent className="bg-white border-2 border-pink-200 rounded-xl">
@@ -71,7 +74,10 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
       <div>
         <Label className="text-gray-700 font-semibold mb-2 block">Gênero *</Label>
         <Select onValueChange={(value) => handleInputChange("childGender", value)}>
-          <SelectTrigger className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors">
+          <SelectTrigger 
+            className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
+            aria-label="Selecione o gênero da criança"
+          >
             <SelectValue placeholder="Selecione o gênero" />
           </SelectTrigger>
           <SelectContent className="bg-white border-2 border-pink-200 rounded-xl">
@@ -88,7 +94,10 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
       <div>
         <Label className="text-gray-700 font-semibold mb-2 block">Tom de pele *</Label>
         <Select onValueChange={(value) => handleInputChange("skinTone", value)}>
-          <SelectTrigger className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors">
+          <SelectTrigger 
+            className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
+            aria-label="Selecione o tom de pele da criança"
+          >
             <SelectValue placeholder="Selecione o tom de pele" />
           </SelectTrigger>
           <SelectContent className="bg-white border-2 border-pink-200 rounded-xl">
