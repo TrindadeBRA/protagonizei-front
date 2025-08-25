@@ -5,6 +5,7 @@ import React, { forwardRef } from 'react';
 import { useAutoFlip } from '../../hooks/useAutoFlip';
 import type { FlipBookProps, FlipBookRef } from '../../types/pageflip';
 import Link from 'next/link';
+import { Lock } from 'lucide-react';
 
 const FlipBook = dynamic(
 	() => import('react-pageflip').then((m) => m.default),
@@ -112,24 +113,41 @@ export default function Book3D({ className }: Book3DProps) {
 				<Page>
 					<Link href="/#criar-historia">
 						<img
-							src="/assets/images/book/page03.webp"
+							src="/assets/images/book/page03-1.webp"
 							alt="Página interna esquerda"
-							className="w-full h-full object-cover object-left select-none"
+							className="w-full h-full object-cover object-left select-none cursor-pointer blur-xs"
 							draggable={false}
 							loading="lazy"
 						/>
+						<div className="absolute inset-0 bg-black/50 flex items-center justify-center flex-col gap-2 p-6 text-center">
+							<Link
+								href="/#criar-historia"
+								key="/#criar-historia"
+								className="magical-border border-4 border-transparent text-white font-bold w-16 h-16 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert flex items-center justify-center"
+							>
+								<Lock className="size-8 text-white" />
+							</Link>
+						</div>
 					</Link>
-
 				</Page>
 				<Page>
 					<Link href="/#criar-historia">
 						<img
-							src="/assets/images/book/page03.webp"
+							src="/assets/images/book/page03-1.webp"
 							alt="Página interna direita"
-							className="w-full h-full object-cover object-right select-none"
+							className="w-full h-full object-cover object-right select-none cursor-pointer blur-xs"
 							draggable={false}
 							loading="lazy"
 						/>
+						<div className="absolute inset-0 bg-black/50 flex items-center justify-center flex-col gap-2 p-6 text-center">
+							<Link
+								href="/#criar-historia"
+								key="/#criar-historia"
+								className="magical-border border-4 border-transparent text-white font-bold w-16 h-16 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert flex items-center justify-center"
+							>
+								<Lock className="size-8 text-white" />
+							</Link>
+						</div>
 					</Link>
 				</Page>
 			</TypedFlipBook>
