@@ -120,13 +120,11 @@ export default function Book3D({ className }: Book3DProps) {
 							loading="lazy"
 						/>
 						<div className="absolute inset-0 bg-black/50 flex items-center justify-center flex-col gap-2 p-6 text-center">
-							<Link
-								href="/#criar-historia"
-								key="/#criar-historia"
+							<div
 								className="magical-border border-4 border-transparent text-white font-bold w-16 h-16 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert flex items-center justify-center"
 							>
 								<Lock className="size-8 text-white" />
-							</Link>
+							</div>
 						</div>
 					</Link>
 				</Page>
@@ -140,13 +138,11 @@ export default function Book3D({ className }: Book3DProps) {
 							loading="lazy"
 						/>
 						<div className="absolute inset-0 bg-black/50 flex items-center justify-center flex-col gap-2 p-6 text-center">
-							<Link
-								href="/#criar-historia"
-								key="/#criar-historia"
+							<div
 								className="magical-border border-4 border-transparent text-white font-bold w-16 h-16 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert flex items-center justify-center"
 							>
 								<Lock className="size-8 text-white" />
-							</Link>
+							</div>
 						</div>
 					</Link>
 				</Page>
