@@ -47,6 +47,19 @@ const FormSection = () => {
     setCouponCode,
   } = useFormSection();
 
+  const getShadowAnimationClass = () => {
+    if (!formData.childGender) {
+      return "animate-shadow-pulse-gradient";
+    }
+    if (formData.childGender === "girl") {
+      return "animate-shadow-pulse-pink";
+    }
+    if (formData.childGender === "boy") {
+      return "animate-shadow-pulse-blue";
+    }
+    return "animate-shadow-pulse-gradient";
+  };
+
   return (
     <section className="py-20 bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 relative overflow-hidden" id="criar-historia">
       {/* Decorative elements */}
@@ -76,7 +89,9 @@ const FormSection = () => {
         </div>
 
         <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden" data-aos="fade-up">
+          <div 
+            className={`bg-white rounded-3xl overflow-hidden ${getShadowAnimationClass()}`}
+          >
             {/* Progress bar */}
             <div className="bg-gray-300 h-3">
               <div

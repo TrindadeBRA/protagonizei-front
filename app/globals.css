@@ -82,6 +82,68 @@ html {
   animation: bounce 2s infinite;
 }
 
+@keyframes shadowPulseGradient {
+  0%, 100% {
+    box-shadow: 
+      0 0 20px 8px rgba(245, 52, 155, 0.3),
+      0 0 30px 17px rgba(53, 126, 255, 0.3),
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  50% {
+    box-shadow: 
+      0 0 25px 10px rgba(245, 52, 155, 0.4),
+      0 0 35px 18px rgba(53, 126, 255, 0.4),
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+}
+
+@keyframes shadowPulsePink {
+  0%, 100% {
+    box-shadow: 
+      0 0 30px 17px rgba(245, 52, 155, 0.3),
+      0 20px 25px -5px rgba(245, 52, 155, 0.2),
+      0 10px 10px -5px rgba(245, 52, 155, 0.15);
+  }
+  50% {
+    box-shadow: 
+      0 0 35px 18px rgba(245, 52, 155, 0.4),
+      0 20px 25px -5px rgba(245, 52, 155, 0.3),
+      0 10px 10px -5px rgba(245, 52, 155, 0.25);
+  }
+}
+
+@keyframes shadowPulseBlue {
+  0%, 100% {
+    box-shadow: 
+      0 0 30px 17px rgba(53, 126, 255, 0.3),
+      0 20px 25px -5px rgba(53, 126, 255, 0.2),
+      0 10px 10px -5px rgba(53, 126, 255, 0.15);
+  }
+  50% {
+    box-shadow: 
+      0 0 35px 18px rgba(53, 126, 255, 0.4),
+      0 20px 25px -5px rgba(53, 126, 255, 0.3),
+      0 10px 10px -5px rgba(53, 126, 255, 0.25);
+  }
+}
+
+.animate-shadow-pulse-gradient {
+  animation: shadowPulseGradient 2s ease-in-out infinite;
+  animation-fill-mode: both;
+}
+
+.animate-shadow-pulse-pink {
+  animation: shadowPulsePink 2s ease-in-out infinite;
+  animation-fill-mode: both;
+}
+
+.animate-shadow-pulse-blue {
+  animation: shadowPulseBlue 2s ease-in-out infinite;
+  animation-fill-mode: both;
+}
+
 *:focus {
   outline: none !important;
   box-shadow: none !important;
