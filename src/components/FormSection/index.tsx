@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useFormSection } from "./useFormSection";
 import { skinTones } from "./constants";
 
+import Step0GenderSelection from "./steps/Step0GenderSelection";
 import Step1ChildInfo from "./steps/Step1ChildInfo";
 import Step2PhotoUpload from "./steps/Step2PhotoUpload";
 import Step3Crop from "./steps/Step3Crop";
@@ -96,17 +97,26 @@ const FormSection = () => {
             <div className="bg-gray-300 h-3">
               <div
                 className="bg-gradient-to-r from-pink-main  to-blue-main h-full transition-all duration-500 ease-out"
-                style={{ width: `${(step / 6) * 100}%` }}
+                style={{ width: `${((step + 1) / 7) * 100}%` }}
               ></div>
             </div>
 
             <div className="p-8">
+              {step === 0 && (
+                <Step0GenderSelection
+                  formData={formData}
+                  handleInputChange={handleInputChange}
+                  nextStep={nextStep}
+                />
+              )}
+
               {step === 1 && (
                 <Step1ChildInfo
                   formData={formData}
                   handleInputChange={handleInputChange}
                   skinTones={skinTones}
                   nextStep={nextStep}
+                  prevStep={prevStep}
                   isValid={isStep1Valid}
                   errors={step1Errors}
                   onBlurField={setFieldTouched}

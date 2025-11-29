@@ -20,7 +20,7 @@ export type FormDataState = {
 };
 
 export const useFormSection = () => {
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(0);
   const [formData, setFormData] = useState<FormDataState>({
     childName: "",
     childAge: "",
@@ -117,7 +117,7 @@ export const useFormSection = () => {
   };
 
   const nextStep = () => setStep((s) => (s < 6 ? s + 1 : s));
-  const prevStep = () => setStep((s) => (s > 1 ? s - 1 : s));
+  const prevStep = () => setStep((s) => (s > 0 ? s - 1 : s));
 
   const handleInputChange = (field: keyof FormDataState, value: string) => {
     if (field === "phone") {

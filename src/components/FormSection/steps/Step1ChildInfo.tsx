@@ -15,13 +15,14 @@ export type Step1ChildInfoProps = {
   skinTones: { value: string; label: string; color: string }[];
   handleInputChange: (field: keyof FormDataState, value: string) => void;
   nextStep: () => void;
+  prevStep: () => void;
   isValid: boolean;
   errors: Record<string, string[] | undefined>;
   onBlurField: (field: keyof FormDataState) => void;
   touched: Partial<Record<keyof FormDataState, boolean>>;
 };
 
-const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, skinTones, nextStep, isValid, errors, onBlurField, touched }) => {
+const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, skinTones, nextStep, prevStep, isValid, errors, onBlurField, touched }) => {
   const colors = useFormColors(formData.childGender);
 
   return (
@@ -31,7 +32,9 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
           <Sparkles className="w-8 h-8 text-white" />
         </div>
         <h3 className="font-heading text-2xl font-bold text-gray-800 mb-2">Conte sobre seu pequeno</h3>
-        <p className="text-gray-600">Essas informações nos ajudam a personalizar a história</p>
+        <p className="text-gray-600">
+          Vamos usar o nome, idade e tom de pele da criança para criar ilustrações ainda mais parecidas e textos totalmente personalizados na sua história.
+        </p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
@@ -77,27 +80,6 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
       </div>
 
       <div>
-        <Label className="text-gray-700 font-semibold mb-2 block">Gênero *</Label>
-        <Select onValueChange={(value) => handleInputChange("childGender", value)}>
-          <SelectTrigger 
-            className={twMerge(colors.selectTriggerBorderClass, colors.selectTriggerFocusBorderClass)}
-            style={colors.selectTriggerBorderStyle}
-            aria-label="Selecione o gênero da criança"
-          >
-            <SelectValue placeholder="Selecione o gênero" />
-          </SelectTrigger>
-          <SelectContent className={twMerge("bg-white", colors.selectContentBorderClass)} style={colors.selectContentBorderStyle}>
-            <SelectItem value="girl" className="hover:bg-pink-50 cursor-pointer">
-              Menina
-            </SelectItem>
-            <SelectItem value="boy" className="hover:bg-pink-50 cursor-pointer">
-              Menino
-            </SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div>
         <Label className="text-gray-700 font-semibold mb-2 block">Tom de pele *</Label>
         <Select onValueChange={(value) => handleInputChange("skinTone", value)}>
           <SelectTrigger 
@@ -120,16 +102,21 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
         </Select>
       </div>
 
-      <Button
-        onClick={nextStep}
-        disabled={!isValid}
-        className={twMerge(
-          "w-full bg-gradient-to-r from-pink-main to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl shadow-lg",
-          !isValid ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : ""
-        )}
-      >
-        Continuar
-      </Button>
+      <div className="flex space-x-4">
+        <Button onClick={prevStep} variant="outline" className="flex-1 border-2 bg-white border-pink-300 text-pink-600 hover:bg-pink-50 py-4 rounded-xl font-semibold">
+          Voltar
+        </Button>
+        <Button
+          onClick={nextStep}
+          disabled={!isValid}
+          className={twMerge(
+            "flex-1 bg-gradient-to-r from-pink-main to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl shadow-lg",
+            !isValid ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : ""
+          )}
+        >
+          Continuar
+        </Button>
+      </div>
     </div>
   );
 };
