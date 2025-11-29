@@ -144,6 +144,19 @@ html {
   animation-fill-mode: both;
 }
 
+.select-gradient-open[data-state=open] {
+  border: 2px solid rgba(245, 52, 155, 0.6) !important;
+  background: white !important;
+}
+
+[data-state=open].border-pink-300 {
+  border-color: rgb(244, 114, 182) !important; /* pink-400 */
+}
+
+[data-state=open].border-blue-300 {
+  border-color: rgb(96, 165, 250) !important; /* blue-400 */
+}
+
 *:focus {
   outline: none !important;
   box-shadow: none !important;
