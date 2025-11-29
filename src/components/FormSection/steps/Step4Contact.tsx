@@ -8,6 +8,7 @@ import { twMerge } from "tailwind-merge";
 import { FormDataState } from "../useFormSection";
 import CouponDiscount from "../CouponDiscount";
 import PriceSummary from "../PriceSummary";
+import { useFormColors } from "../useFormColors";
 
 type Props = {
   formData: FormDataState;
@@ -33,6 +34,8 @@ type Props = {
 };
 
 const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl, price, isLoadingPrice, orderId, bookId, onUpdatePrice, couponCode, setCouponCode, originalPrice }: Props) => {
+  const colors = useFormColors(formData.childGender);
+
   const formatPrice = (value?: number | null) => {
     if (typeof value !== "number") return null;
     try {
@@ -62,7 +65,8 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
             onChange={(e) => handleInputChange("parentName", e.target.value)}
             onBlur={() => onBlurField && onBlurField("parentName")}
             placeholder="Como você gostaria de ser chamado(a)?"
-            className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
+            className={twMerge(colors.inputBorderClass, colors.inputFocusBorderClass)}
+            style={colors.inputBorderStyle}
           />
           {!!touched.parentName && !!errors.parentName?.length && (
             <p className="text-xs text-red-500 mt-1">{errors.parentName[0]}</p>
@@ -81,7 +85,8 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
             onBlur={() => onBlurField && onBlurField("phone")}
             placeholder="(00) 00000-0000"
             maxLength={15}
-            className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
+            className={twMerge(colors.inputBorderClass, colors.inputFocusBorderClass)}
+            style={colors.inputBorderStyle}
           />
           {!!touched.phone && !!errors.phone?.length && (
             <p className="text-xs text-red-500 mt-1">{errors.phone[0]}</p>
@@ -100,7 +105,8 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
             onChange={(e) => handleInputChange("email", e.target.value)}
             onBlur={() => onBlurField && onBlurField("email")}
             placeholder="seu@email.com"
-            className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
+            className={twMerge(colors.inputBorderClass, colors.inputFocusBorderClass)}
+            style={colors.inputBorderStyle}
           />
           {!!touched.email && !!errors.email?.length && (
             <p className="text-xs text-red-500 mt-1">{errors.email[0]}</p>
@@ -155,6 +161,7 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
                 couponValue={couponCode || ""}
                 onCouponChange={(v) => setCouponCode && setCouponCode(v)}
                 disabled={isSubmitting}
+                childGender={formData.childGender}
               />
             </div>
           </div>

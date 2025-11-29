@@ -8,6 +8,7 @@ import { Label } from "@/src/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/src/components/ui/select";
 import { twMerge } from "tailwind-merge";
 import { FormDataState } from "../useFormSection";
+import { useFormColors } from "../useFormColors";
 
 export type Step1ChildInfoProps = {
   formData: FormDataState;
@@ -21,6 +22,8 @@ export type Step1ChildInfoProps = {
 };
 
 const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, skinTones, nextStep, isValid, errors, onBlurField, touched }) => {
+  const colors = useFormColors(formData.childGender);
+
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
@@ -42,7 +45,8 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
             onChange={(e) => handleInputChange("childName", e.target.value)}
             onBlur={() => onBlurField("childName")}
             placeholder="Ex: Luna"
-            className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
+            className={twMerge(colors.inputBorderClass, colors.inputFocusBorderClass)}
+            style={colors.inputBorderStyle}
           />
           {!!touched.childName && !!errors.childName?.length && (
             <p className="text-xs text-red-500 mt-1">{errors.childName[0]}</p>
@@ -55,12 +59,13 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
           </Label>
           <Select onValueChange={(value) => handleInputChange("childAge", value)}>
             <SelectTrigger 
-              className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
+              className={twMerge(colors.selectTriggerBorderClass, colors.selectTriggerFocusBorderClass)}
+              style={colors.selectTriggerBorderStyle}
               aria-label="Selecione a idade da criança"
             >
               <SelectValue placeholder="Selecione" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-2 border-pink-200 rounded-xl">
+            <SelectContent className={twMerge("bg-white", colors.selectContentBorderClass)} style={colors.selectContentBorderStyle}>
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((age) => (
                 <SelectItem key={age} value={age.toString()} className="hover:bg-pink-50 cursor-pointer">
                   {age} anos
@@ -75,12 +80,13 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
         <Label className="text-gray-700 font-semibold mb-2 block">Gênero *</Label>
         <Select onValueChange={(value) => handleInputChange("childGender", value)}>
           <SelectTrigger 
-            className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
+            className={twMerge(colors.selectTriggerBorderClass, colors.selectTriggerFocusBorderClass)}
+            style={colors.selectTriggerBorderStyle}
             aria-label="Selecione o gênero da criança"
           >
             <SelectValue placeholder="Selecione o gênero" />
           </SelectTrigger>
-          <SelectContent className="bg-white border-2 border-pink-200 rounded-xl">
+          <SelectContent className={twMerge("bg-white", colors.selectContentBorderClass)} style={colors.selectContentBorderStyle}>
             <SelectItem value="girl" className="hover:bg-pink-50 cursor-pointer">
               Menina
             </SelectItem>
@@ -95,12 +101,13 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
         <Label className="text-gray-700 font-semibold mb-2 block">Tom de pele *</Label>
         <Select onValueChange={(value) => handleInputChange("skinTone", value)}>
           <SelectTrigger 
-            className="border-2 border-pink-200 rounded-xl focus:border-pink-400 bg-white transition-colors"
+            className={twMerge(colors.selectTriggerBorderClass, colors.selectTriggerFocusBorderClass)}
+            style={colors.selectTriggerBorderStyle}
             aria-label="Selecione o tom de pele da criança"
           >
             <SelectValue placeholder="Selecione o tom de pele" />
           </SelectTrigger>
-          <SelectContent className="bg-white border-2 border-pink-200 rounded-xl">
+          <SelectContent className={twMerge("bg-white", colors.selectContentBorderClass)} style={colors.selectContentBorderStyle}>
             {skinTones.map((tone) => (
               <SelectItem key={tone.value} value={tone.value} className="hover:bg-pink-50 cursor-pointer">
                 <div className="flex items-center space-x-3">

@@ -7,6 +7,8 @@ import { CheckCircle, XCircle, Loader2, Tag } from "lucide-react";
 import { GetOrdersCheckCouponParams } from "@/src/services/model";
 import customFetch from "@/src/services/custom-fetch";
 import { getGetOrdersCheckCouponUrl } from "@/src/services/api";
+import { useFormColors } from "../useFormColors";
+import { twMerge } from "tailwind-merge";
 
 interface CouponDiscountProps {
     orderId: string | null;
@@ -17,6 +19,7 @@ interface CouponDiscountProps {
     couponValue: string;
     onCouponChange: (value: string) => void;
     disabled?: boolean;
+    childGender?: string;
 }
 
 type CouponStatus = "idle" | "loading" | "success" | "error";
@@ -36,7 +39,9 @@ const CouponDiscount = ({
     couponValue,
     onCouponChange,
     disabled = false,
+    childGender = "",
 }: CouponDiscountProps) => {
+    const colors = useFormColors(childGender);
     const [couponState, setCouponState] = useState<CouponState>({
         status: "idle",
         message: "",
@@ -152,12 +157,15 @@ const CouponDiscount = ({
                         value={couponValue}
                         onChange={(e) => onCouponChange(e.target.value.toUpperCase())}
                         disabled={isInputDisabled}
-                        className={`pr-10 border-2 rounded-xl bg-white transition-colors h-11 disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200 ${couponState.status === "success"
-                                ? "border-green-300 bg-green-50 text-green-700 focus:border-green-400"
+                        className={twMerge(
+                            "pr-10 rounded-xl bg-white transition-colors h-11 disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200",
+                            couponState.status === "success"
+                                ? "border-2 border-green-300 bg-green-50 text-green-700 focus:border-green-400"
                                 : couponState.status === "error"
-                                    ? "border-red-300 bg-red-50 text-red-700 focus:border-red-400"
-                                    : "border-pink-200 text-gray-700 focus:border-pink-400"
-                            }`}
+                                    ? "border-2 border-red-300 bg-red-50 text-red-700 focus:border-red-400"
+                                    : twMerge(colors.inputBorderClass, colors.inputFocusBorderClass)
+                        )}
+                        style={(couponState.status === "idle" || couponState.status === "loading") && colors.inputBorderStyle ? colors.inputBorderStyle : undefined}
                         onKeyDown={(e) => {
                             if (e.key === "Enter" && !isInputDisabled) {
                                 handleCouponCheck();
