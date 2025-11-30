@@ -190,6 +190,7 @@ const FormSection = () => {
                   couponCode={couponCode}
                   setCouponCode={setCouponCode}
                   originalPrice={originalBookPrice}
+                  onChangePhoto={() => goToStep(3)}
                 />
               )}
 

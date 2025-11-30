@@ -31,9 +31,10 @@ type Props = {
   onUpdatePrice?: (newPrice: number) => void;
   couponCode?: string;
   setCouponCode?: (value: string) => void;
+  onChangePhoto?: () => void;
 };
 
-const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl, price, isLoadingPrice, orderId, bookId, onUpdatePrice, couponCode, setCouponCode, originalPrice }: Props) => {
+const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl, price, isLoadingPrice, orderId, bookId, onUpdatePrice, couponCode, setCouponCode, originalPrice, onChangePhoto }: Props) => {
   const colors = useFormColors(formData.childGender);
 
   const formatPrice = (value?: number | null) => {
@@ -141,7 +142,12 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
                 <img
                   src={croppedPreviewUrl || photoPreviewUrl || ""}
                   alt={`Foto de ${formData.childName || "criança"}`}
-                  className="w-12 h-12 rounded-lg object-cover ring-2 ring-pink-200 shadow-sm"
+                  onClick={onChangePhoto}
+                  className={twMerge(
+                    "w-12 h-12 rounded-lg object-cover ring-2 ring-pink-200 shadow-sm",
+                    onChangePhoto ? "cursor-pointer hover:ring-4 hover:ring-pink-300 transition-all" : ""
+                  )}
+                  title={onChangePhoto ? "Clique para alterar a foto" : ""}
                 />
               ) : (
                 <span className="font-semibold text-pink-main">✓ Enviada</span>
