@@ -155,6 +155,7 @@ const FormSection = () => {
                     nextStep();
                   }}
                   prevStep={prevStep}
+                  childGender={formData.childGender}
                 />
               )}
 
@@ -191,6 +192,7 @@ const FormSection = () => {
                   pixCode={pixCode}
                   price={bookPrice}
                   onBack={() => prevStep()}
+                  childGender={formData.childGender}
                 />
               )}
 

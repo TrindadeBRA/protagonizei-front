@@ -1,9 +1,11 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
 type PriceSummaryProps = {
 	originalPrice?: number | null;
 	currentPrice?: number | null;
 	isLoading?: boolean;
+	priceColorClass?: string;
 };
 
 const formatPrice = (value?: number | null): string | null => {
@@ -15,7 +17,7 @@ const formatPrice = (value?: number | null): string | null => {
 	}
 };
 
-const PriceSummary: React.FC<PriceSummaryProps> = ({ originalPrice, currentPrice, isLoading }) => {
+const PriceSummary: React.FC<PriceSummaryProps> = ({ originalPrice, currentPrice, isLoading, priceColorClass = "text-pink-main" }) => {
 	const hasDiscount = typeof originalPrice === 'number' && typeof currentPrice === 'number' && currentPrice < originalPrice;
 	const discountPct = hasDiscount ? Math.round(((originalPrice as number - (currentPrice as number)) / (originalPrice as number)) * 100) : 0;
 
@@ -29,7 +31,7 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({ originalPrice, currentPrice
 					{hasDiscount && (
 						<span className="text-gray-500 line-through text-base sm:text-lg">{formatPrice(originalPrice)}</span>
 					)}
-					<span className="text-xl sm:text-2xl font-bold text-pink-main">{formatPrice(currentPrice) ?? '-'}</span>
+					<span className={twMerge("text-xl sm:text-2xl font-bold", priceColorClass)}>{formatPrice(currentPrice) ?? '-'}</span>
 					{hasDiscount && (
 						<span className="text-[10px] sm:text-xs font-semibold bg-green-100 text-green-700 px-2 py-0.5 sm:py-1 rounded-full">-{discountPct}%</span>
 					)}

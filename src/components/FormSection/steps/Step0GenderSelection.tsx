@@ -116,7 +116,7 @@ const Step0GenderSelection: FC<Step0GenderSelectionProps> = ({ formData, handleI
         onClick={nextStep}
         disabled={!isValid}
         className={twMerge(
-          "w-full bg-gradient-to-r from-pink-main to-blue-main hover:from-pink-600 hover:to-blue-600 text-white font-bold py-4 rounded-xl shadow-lg",
+          `w-full ${colors.buttonPrimaryClass} font-bold py-4 rounded-xl shadow-lg`,
           !isValid ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : ""
         )}
       >

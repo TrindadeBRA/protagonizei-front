@@ -139,7 +139,7 @@ const CouponDiscount = ({
     return (
         <div className="space-y-2">
             <div className="flex items-center gap-2">
-                <Tag className="w-4 h-4 text-purple-600" />
+                <Tag className={twMerge("w-4 h-4", colors.couponIconColorClass)} />
                 <span className="text-sm font-medium text-gray-700">Cupom de desconto</span>
             </div>
 
