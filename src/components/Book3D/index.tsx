@@ -42,7 +42,7 @@ export default function Book3D({ className }: Book3DProps) {
 		handleChangeState,
 	} = useAutoFlip({
 		maxFlips: 3,
-		initialDelay: 500,
+		initialDelay: 1000,
 		interval: 2500,
 		enabled: true
 	});
@@ -57,7 +57,7 @@ export default function Book3D({ className }: Book3DProps) {
 				drawShadow={false}
 				showCover={true}
 				mobileScrollSupport={true}
-				flippingTime={1500}
+				flippingTime={2000}
 				autoSize={true}
 				onFlip={handleFlip}
 				onChangeState={handleChangeState}
@@ -65,7 +65,7 @@ export default function Book3D({ className }: Book3DProps) {
 				<Page>
 					<div className="w-full h-full bg-white flex items-center justify-center">
 						<img
-							src="/assets/images/book/cover.webp"
+							src="/assets/images/book/cover01.webp"
 							alt="Capa"
 							className="max-w-full max-h-full object-contain select-none"
 							draggable={false}
