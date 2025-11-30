@@ -67,7 +67,7 @@ export default function Book3D({ className }: Book3DProps) {
 						<img
 							src="/assets/images/book/cover01.webp"
 							alt="Capa"
-							className="max-w-full max-h-full object-contain select-none"
+							className="w-full h-full select-none"
 							draggable={false}
 							loading="eager"
 						/>
