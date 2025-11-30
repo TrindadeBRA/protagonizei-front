@@ -118,6 +118,7 @@ export const useFormSection = () => {
 
   const nextStep = () => setStep((s) => (s < 6 ? s + 1 : s));
   const prevStep = () => setStep((s) => (s > 0 ? s - 1 : s));
+  const goToStep = (targetStep: number) => setStep(targetStep);
 
   const handleInputChange = (field: keyof FormDataState, value: string) => {
     if (field === "phone") {
@@ -148,6 +149,17 @@ export const useFormSection = () => {
 
   const setPhotoFile = (file: File) => {
     setFormData((prev) => ({ ...prev, photo: file }));
+  };
+
+  const clearPhoto = () => {
+    // Revogar URLs de objeto se existirem
+    if (photoPreviewUrl) URL.revokeObjectURL(photoPreviewUrl);
+    if (croppedPreviewUrl) URL.revokeObjectURL(croppedPreviewUrl);
+    
+    // Limpar todos os estados relacionados à foto
+    setFormData((prev) => ({ ...prev, photo: null }));
+    setPhotoPreviewUrl(null);
+    setCroppedPreviewUrl(null);
   };
 
   // Verificação do status do pagamento
@@ -305,10 +317,12 @@ export const useFormSection = () => {
     step,
     nextStep,
     prevStep,
+    goToStep,
     formData,
     handleInputChange,
     handlePhotoChange,
     setPhotoFile,
+    clearPhoto,
     orderId,
     pixCode,
     qrCodeImage,

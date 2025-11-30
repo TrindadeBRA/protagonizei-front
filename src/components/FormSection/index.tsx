@@ -17,10 +17,12 @@ const FormSection = () => {
     step,
     nextStep,
     prevStep,
+    goToStep,
     formData,
     handleInputChange,
     handlePhotoChange,
     setPhotoFile,
+    clearPhoto,
     orderId,
     pixCode,
     qrCodeImage,
@@ -155,6 +157,13 @@ const FormSection = () => {
                     nextStep();
                   }}
                   prevStep={prevStep}
+                  onChangePhoto={() => {
+                    goToStep(2);
+                  }}
+                  onClearPhoto={() => {
+                    clearPhoto();
+                    goToStep(2);
+                  }}
                   childGender={formData.childGender}
                 />
               )}

@@ -2,7 +2,7 @@
 
 import Cropper from "react-easy-crop";
 import { useCallback, useRef, useState, type CSSProperties } from "react";
-import { Camera } from "lucide-react";
+import { Camera, RefreshCw, X } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { twMerge } from "tailwind-merge";
 import { useFormColors } from "../useFormColors";
@@ -13,6 +13,8 @@ type Props = {
   setCroppedPreviewUrl: (url: string | null) => void;
   onCropDone: (file: File, previewUrl: string) => void;
   prevStep: () => void;
+  onChangePhoto: () => void;
+  onClearPhoto: () => void;
   childGender: string;
 };
 
@@ -43,12 +45,20 @@ const getCroppedImageBlob = async (
   return { blob, url };
 };
 
-const Step3Crop = ({ photoPreviewUrl, croppedPreviewUrl, setCroppedPreviewUrl, onCropDone, prevStep, childGender }: Props) => {
+const Step3Crop = ({ photoPreviewUrl, croppedPreviewUrl, setCroppedPreviewUrl, onCropDone, prevStep, onChangePhoto, onClearPhoto, childGender }: Props) => {
   const colors = useFormColors(childGender);
   const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState<number>(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
   const editorRef = useRef<HTMLDivElement | null>(null);
+
+  const handleClearPhoto = () => {
+    onClearPhoto();
+    // Resetar estados locais
+    setCrop({ x: 0, y: 0 });
+    setZoom(1);
+    setCroppedAreaPixels(null);
+  };
 
   const onCropComplete = useCallback((_: any, area: any) => {
     setCroppedAreaPixels(area);
@@ -61,24 +71,40 @@ const Step3Crop = ({ photoPreviewUrl, croppedPreviewUrl, setCroppedPreviewUrl, o
           <Camera className="w-8 h-8 text-white" />
         </div>
         <h3 className="font-heading text-2xl font-bold text-gray-800 mb-2">Ajuste o rosto dentro do guia</h3>
-        <p className="text-gray-600">Posicione e ajuste o zoom para que o rosto fique dentro dos traços. Isso melhora a precisão do FaceSwap.</p>
+        <p className="text-gray-600 mb-3">Posicione e ajuste o zoom para que o rosto fique dentro dos traços. Isso melhora a precisão do FaceSwap.</p>
+        <button
+          onClick={onChangePhoto}
+          className="text-sm text-gray-600 hover:text-gray-800 underline flex items-center gap-1 mx-auto transition-colors"
+        >
+          <RefreshCw className="w-4 h-4" />
+          Trocar foto
+        </button>
       </div>
 
       <div ref={editorRef} className="relative w-full h-[250px] bg-black rounded-xl overflow-hidden">
         {photoPreviewUrl && (
-          <Cropper
-            image={photoPreviewUrl}
-            crop={crop}
-            zoom={zoom}
-            aspect={1}
-            cropShape="round"
-            onCropChange={setCrop}
-            onZoomChange={setZoom}
-            onCropComplete={onCropComplete}
-            showGrid={true}
-            objectFit="contain"
-            zoomSpeed={0.4}
-          />
+          <>
+            <Cropper
+              image={photoPreviewUrl}
+              crop={crop}
+              zoom={zoom}
+              aspect={1}
+              cropShape="round"
+              onCropChange={setCrop}
+              onZoomChange={setZoom}
+              onCropComplete={onCropComplete}
+              showGrid={true}
+              objectFit="contain"
+              zoomSpeed={0.4}
+            />
+            <button
+              onClick={handleClearPhoto}
+              className="absolute top-2 right-2 w-8 h-8 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center shadow-lg transition-colors z-10"
+              aria-label="Remover foto"
+            >
+              <X className="w-5 h-5 text-white" />
+            </button>
+          </>
         )}
       </div>
 
@@ -120,13 +146,6 @@ const Step3Crop = ({ photoPreviewUrl, croppedPreviewUrl, setCroppedPreviewUrl, o
         </Button>
       </div>
 
-      {croppedPreviewUrl && (
-        <div className="text-center">
-          <p className="text-sm text-gray-500 mb-2">Pré-visualização do recorte</p>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={croppedPreviewUrl} alt="Pré-visualização do recorte" className="w-32 h-32 rounded-lg mx-auto border" />
-        </div>
-      )}
     </div>
   );
 };
