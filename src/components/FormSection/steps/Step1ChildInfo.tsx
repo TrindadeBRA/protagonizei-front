@@ -60,7 +60,7 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
           <Label htmlFor="childAge" className="text-gray-700 font-semibold mb-2 block">
             Idade *
           </Label>
-          <Select onValueChange={(value) => handleInputChange("childAge", value)}>
+          <Select value={formData.childAge} onValueChange={(value) => handleInputChange("childAge", value)}>
             <SelectTrigger 
               className={twMerge(colors.selectTriggerBorderClass, colors.selectTriggerFocusBorderClass)}
               style={colors.selectTriggerBorderStyle}
@@ -81,7 +81,7 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
 
       <div>
         <Label className="text-gray-700 font-semibold mb-2 block">Tom de pele *</Label>
-        <Select onValueChange={(value) => handleInputChange("skinTone", value)}>
+        <Select value={formData.skinTone} onValueChange={(value) => handleInputChange("skinTone", value)}>
           <SelectTrigger 
             className={twMerge(colors.selectTriggerBorderClass, colors.selectTriggerFocusBorderClass)}
             style={colors.selectTriggerBorderStyle}
