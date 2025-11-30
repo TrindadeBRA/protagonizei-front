@@ -4,6 +4,7 @@ import { Camera } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { FormDataState } from "../useFormSection";
 import { twMerge } from "tailwind-merge";
+import { useFormColors } from "../useFormColors";
 
 type Props = {
   formData: FormDataState;
@@ -14,6 +15,8 @@ type Props = {
 };
 
 const Step2PhotoUpload = ({ formData, handlePhotoChange, nextStep, prevStep, isValid }: Props) => {
+  const colors = useFormColors(formData.childGender);
+  
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
@@ -53,14 +56,14 @@ const Step2PhotoUpload = ({ formData, handlePhotoChange, nextStep, prevStep, isV
       </div>
 
       <div className="flex space-x-4">
-        <Button onClick={prevStep} variant="outline" className="flex-1 border-2 bg-white border-pink-300 text-pink-600 hover:bg-pink-50 py-4 rounded-xl font-semibold">
+        <Button onClick={prevStep} variant="outline" className={twMerge("flex-1", colors.buttonSecondaryClass, "py-4 rounded-xl font-semibold")}>
           Voltar
         </Button>
         <Button
           onClick={nextStep}
           disabled={!isValid}
           className={twMerge(
-            "flex-1 bg-gradient-to-r from-blue-main to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold py-4 rounded-xl",
+            `flex-1 ${colors.buttonPrimaryClass} font-bold py-4 rounded-xl`,
             !isValid ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : ""
           )}
         >

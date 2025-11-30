@@ -5,6 +5,7 @@ import { useCallback, useRef, useState, type CSSProperties } from "react";
 import { Camera } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { twMerge } from "tailwind-merge";
+import { useFormColors } from "../useFormColors";
 
 type Props = {
   photoPreviewUrl: string | null;
@@ -12,6 +13,7 @@ type Props = {
   setCroppedPreviewUrl: (url: string | null) => void;
   onCropDone: (file: File, previewUrl: string) => void;
   prevStep: () => void;
+  childGender: string;
 };
 
 const createImageElement = (url: string): Promise<HTMLImageElement> => {
@@ -41,7 +43,8 @@ const getCroppedImageBlob = async (
   return { blob, url };
 };
 
-const Step3Crop = ({ photoPreviewUrl, croppedPreviewUrl, setCroppedPreviewUrl, onCropDone, prevStep }: Props) => {
+const Step3Crop = ({ photoPreviewUrl, croppedPreviewUrl, setCroppedPreviewUrl, onCropDone, prevStep, childGender }: Props) => {
+  const colors = useFormColors(childGender);
   const [crop, setCrop] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState<number>(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
@@ -94,7 +97,7 @@ const Step3Crop = ({ photoPreviewUrl, croppedPreviewUrl, setCroppedPreviewUrl, o
       </div>
 
       <div className="flex space-x-4">
-        <Button onClick={prevStep} variant="outline" className="flex-1 border-2 bg-white border-pink-300 text-pink-600 hover:bg-pink-50 py-4 rounded-xl font-semibold">
+        <Button onClick={prevStep} variant="outline" className={twMerge("flex-1", colors.buttonSecondaryClass, "py-4 rounded-xl font-semibold")}>
           Voltar
         </Button>
         <Button
@@ -109,7 +112,7 @@ const Step3Crop = ({ photoPreviewUrl, croppedPreviewUrl, setCroppedPreviewUrl, o
           }}
           disabled={!croppedAreaPixels}
           className={twMerge(
-            "flex-1 bg-gradient-to-r from-purple-500 to-pink-main hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-xl shadow-lg relative",
+            `flex-1 ${colors.buttonPrimaryClass} font-bold py-4 rounded-xl shadow-lg relative`,
             !croppedAreaPixels ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : ""
           )}
         >

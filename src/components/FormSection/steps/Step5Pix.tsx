@@ -5,6 +5,8 @@ import Image from "next/image";
 import { Button } from "@/src/components/ui/button";
 import { useState } from "react";
 import Timer from "@/src/components/Timer";
+import { twMerge } from "tailwind-merge";
+import { useFormColors } from "../useFormColors";
 
 type Props = {
   orderId: string | null;
@@ -13,9 +15,11 @@ type Props = {
   pixCode: string | null;
   price: number | null;
   onBack: () => void;
+  childGender: string;
 };
 
-const Step5Pix = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack }: Props) => {
+const Step5Pix = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack, childGender }: Props) => {
+  const colors = useFormColors(childGender);
   const [copied, setCopied] = useState(false);
   const handleCopyPix = async () => {
     if (pixCode) {
@@ -91,13 +95,16 @@ const Step5Pix = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack }: Props) 
       </div>
 
       <div className="flex space-x-4">
-        <Button onClick={onBack} variant="outline" className="flex-1 border-2 bg-white border-pink-300 text-pink-600 hover:bg-pink-50 py-4 rounded-xl font-semibold">
+        <Button onClick={onBack} variant="outline" className={twMerge("flex-1", colors.buttonSecondaryClass, "py-4 rounded-xl font-semibold")}>
           Voltar
         </Button>
         <Button
           onClick={handleCopyPix}
           disabled={!pixCode || isLoadingPix}
-          className="flex-1 bg-gradient-to-r from-purple-500 to-pink-main hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 rounded-xl shadow-lg relative disabled:cursor-not-allowed"
+          className={twMerge(
+            `flex-1 ${colors.buttonPrimaryClass} font-bold py-4 rounded-xl shadow-lg relative`,
+            !pixCode || isLoadingPix ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : ""
+          )}
         >
           {isLoadingPix ? (
             <>

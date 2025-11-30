@@ -70,7 +70,7 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
             </SelectTrigger>
             <SelectContent className={twMerge("bg-white", colors.selectContentBorderClass)} style={colors.selectContentBorderStyle}>
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((age) => (
-                <SelectItem key={age} value={age.toString()} className="hover:bg-pink-50 cursor-pointer">
+                <SelectItem key={age} value={age.toString()} className={twMerge(colors.selectItemHoverClass, "cursor-pointer")}>
                   {age} anos
                 </SelectItem>
               ))}
@@ -91,7 +91,7 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
           </SelectTrigger>
           <SelectContent className={twMerge("bg-white", colors.selectContentBorderClass)} style={colors.selectContentBorderStyle}>
             {skinTones.map((tone) => (
-              <SelectItem key={tone.value} value={tone.value} className="hover:bg-pink-50 cursor-pointer">
+              <SelectItem key={tone.value} value={tone.value} className={twMerge(colors.selectItemHoverClass, "cursor-pointer")}>
                 <div className="flex items-center space-x-3">
                   <div className="w-5 h-5 rounded-full border border-gray-200" style={{ backgroundColor: tone.color }} />
                   <span>{tone.label}</span>
@@ -103,14 +103,14 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
       </div>
 
       <div className="flex space-x-4">
-        <Button onClick={prevStep} variant="outline" className="flex-1 border-2 bg-white border-pink-300 text-pink-600 hover:bg-pink-50 py-4 rounded-xl font-semibold">
+        <Button onClick={prevStep} variant="outline" className={twMerge("flex-1", colors.buttonSecondaryClass, "py-4 rounded-xl font-semibold")}>
           Voltar
         </Button>
         <Button
           onClick={nextStep}
           disabled={!isValid}
           className={twMerge(
-            "flex-1 bg-gradient-to-r from-pink-main to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 rounded-xl shadow-lg",
+            `flex-1 ${colors.buttonPrimaryClass} font-bold py-4 rounded-xl shadow-lg`,
             !isValid ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : ""
           )}
         >

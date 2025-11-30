@@ -115,8 +115,8 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-pink-50 to-blue-50 border border-pink-200 rounded-xl p-6">
-        <h4 className="font-heading font-bold text-pink-main mb-3 flex items-center">
+      <div className={twMerge(colors.summaryBackgroundClass, "rounded-xl p-6")}>
+        <h4 className={twMerge("font-heading font-bold mb-3 flex items-center", colors.summaryTitleColorClass)}>
           Resumo do seu pedido
         </h4>
         <div className="space-y-2 text-sm">
@@ -149,7 +149,7 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
             </div>
           </div>
           <div className="border-t border-gray-200 pt-2 mt-3">
-            <PriceSummary originalPrice={originalPrice ?? null} currentPrice={price ?? null} isLoading={!!isLoadingPrice} />
+            <PriceSummary originalPrice={originalPrice ?? null} currentPrice={price ?? null} isLoading={!!isLoadingPrice} priceColorClass={colors.priceColorClass} />
             {/* Cupom de desconto */}
             <div className="mt-4">
               <CouponDiscount
@@ -169,14 +169,14 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
       </div>
 
       <div className="flex space-x-4">
-        <Button onClick={prevStep} variant="outline" className="flex-1 border-2 bg-white border-pink-300 text-pink-600 hover:bg-pink-50 py-4 rounded-xl font-semibold">
+        <Button onClick={prevStep} variant="outline" className={twMerge("flex-1", colors.buttonSecondaryClass, "py-4 rounded-xl font-semibold")}>
           Voltar
         </Button>
         <Button
           onClick={handleSubmit}
           disabled={!isValid || isSubmitting}
           className={twMerge(
-            "flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-4 rounded-xl shadow-lg relative",
+            `flex-1 ${colors.buttonPrimaryClass} font-bold py-4 rounded-xl shadow-lg relative`,
             !isValid || isSubmitting ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : ""
           )}
         >
