@@ -32,13 +32,29 @@ type Props = {
   couponCode?: string;
   setCouponCode?: (value: string) => void;
   onChangePhoto?: () => void;
+  apiDebugResponse?: any;
 };
 
-const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl, price, isLoadingPrice, orderId, bookId, onUpdatePrice, couponCode, setCouponCode, originalPrice, onChangePhoto }: Props) => {
+const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl, price, isLoadingPrice, orderId, bookId, onUpdatePrice, couponCode, setCouponCode, originalPrice, onChangePhoto, apiDebugResponse }: Props) => {
   const colors = useFormColors(formData.childGender);
 
   return (
     <div className="space-y-6">
+      {/* DEBUG: Exibir JSON da resposta da API */}
+      {apiDebugResponse && (
+        <div className="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-4 text-xs overflow-auto max-h-96">
+          <h4 className="font-bold text-yellow-800 mb-2">🔍 DEBUG - Resposta da API:</h4>
+          <pre className="whitespace-pre-wrap break-words text-yellow-900">
+            {JSON.stringify(apiDebugResponse, null, 2)}
+          </pre>
+          <div className="mt-3 pt-3 border-t border-yellow-300">
+            <p className="font-semibold text-yellow-800">Valores extraídos:</p>
+            <p className="text-yellow-900">bookId: {bookId ?? 'null'}</p>
+            <p className="text-yellow-900">originalPrice: {originalPrice ?? 'null'}</p>
+            <p className="text-yellow-900">price: {price ?? 'null'}</p>
+          </div>
+        </div>
+      )}
       <div className="text-center mb-8">
         <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-400 rounded-full flex items-center justify-center mx-auto mb-4">
           <Mail className="w-8 h-8 text-white" />

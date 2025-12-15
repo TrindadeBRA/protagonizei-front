@@ -48,6 +48,7 @@ const FormSection = () => {
     setFieldTouched,
     couponCode,
     setCouponCode,
+    apiDebugResponse,
   } = useFormSection();
 
   const getShadowAnimationClass = () => {
@@ -191,6 +192,7 @@ const FormSection = () => {
                   setCouponCode={setCouponCode}
                   originalPrice={originalBookPrice}
                   onChangePhoto={() => goToStep(3)}
+                  apiDebugResponse={apiDebugResponse}
                 />
               )}
 
