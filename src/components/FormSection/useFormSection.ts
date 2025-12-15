@@ -55,8 +55,6 @@ export const useFormSection = () => {
   const bookDetailsFetchedRef = useRef<boolean>(false);
   // Cupom (UI)
   const [couponCode, setCouponCode] = useState<string>("");
-  // Debug - JSON da resposta da API
-  const [apiDebugResponse, setApiDebugResponse] = useState<any>(null);
 
   const setFieldTouched = (field: keyof FormDataState) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
@@ -222,15 +220,6 @@ export const useFormSection = () => {
         bookDetailsFetchedRef.current = true;
         setIsLoadingBookDetails(true);
         const response: any = await customFetch(getGetOrdersBookDetailsUrl(), { method: "GET" });
-        
-        // Salvar resposta completa para debug
-        setApiDebugResponse({
-          timestamp: new Date().toISOString(),
-          url: getGetOrdersBookDetailsUrl(),
-          response: response,
-          rawResponse: JSON.stringify(response, null, 2)
-        });
-        
         const id = response?.data?.id ?? null;
         const price = response?.data?.preco ?? response?.data?.price ?? null;
         if (id !== null && id !== undefined) {
@@ -242,12 +231,6 @@ export const useFormSection = () => {
         }
       } catch (error) {
         console.error("Erro ao buscar detalhes do livro:", error);
-        setApiDebugResponse({
-          timestamp: new Date().toISOString(),
-          url: getGetOrdersBookDetailsUrl(),
-          error: error instanceof Error ? error.message : String(error),
-          errorStack: error instanceof Error ? error.stack : null
-        });
         bookDetailsFetchedRef.current = false; // Permite tentar novamente em caso de erro
       } finally {
         setIsLoadingBookDetails(false);
@@ -372,7 +355,6 @@ export const useFormSection = () => {
     markTouched,
     couponCode,
     setCouponCode,
-    apiDebugResponse,
   };
 };
 
