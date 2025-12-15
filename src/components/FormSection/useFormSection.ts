@@ -52,6 +52,7 @@ export const useFormSection = () => {
   const [originalBookPrice, setOriginalBookPrice] = useState<number | null>(null);
   const [bookPrice, setBookPrice] = useState<number | null>(null);
   const [isLoadingBookDetails, setIsLoadingBookDetails] = useState<boolean>(false);
+  const bookDetailsFetchedRef = useRef<boolean>(false);
   // Cupom (UI)
   const [couponCode, setCouponCode] = useState<string>("");
 
@@ -211,7 +212,12 @@ export const useFormSection = () => {
   // Buscar detalhes do livro ao entrar no passo 4
   useEffect(() => {
     const fetchBookDetails = async () => {
+      if (bookDetailsFetchedRef.current || isLoadingBookDetails) {
+        return;
+      }
+
       try {
+        bookDetailsFetchedRef.current = true;
         setIsLoadingBookDetails(true);
         const response: any = await customFetch(getGetOrdersBookDetailsUrl(), { method: "GET" });
         const id = response?.data?.id ?? null;
@@ -220,22 +226,21 @@ export const useFormSection = () => {
           setBookId(Number(id));
         }
         if (price !== null && price !== undefined) {
-          if (originalBookPrice === null) {
-            setOriginalBookPrice(Number(price));
-          }
+          setOriginalBookPrice(Number(price));
           setBookPrice(Number(price));
         }
       } catch (error) {
         console.error("Erro ao buscar detalhes do livro:", error);
+        bookDetailsFetchedRef.current = false; // Permite tentar novamente em caso de erro
       } finally {
         setIsLoadingBookDetails(false);
       }
     };
 
-    if (step === 4 && bookPrice === null && !isLoadingBookDetails) {
+    if (step === 4 && !bookDetailsFetchedRef.current) {
       fetchBookDetails();
     }
-  }, [step, bookPrice, isLoadingBookDetails, originalBookPrice]);
+  }, [step]);
 
   const handleSubmit = async () => {
     try {

@@ -37,14 +37,6 @@ type Props = {
 const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl, price, isLoadingPrice, orderId, bookId, onUpdatePrice, couponCode, setCouponCode, originalPrice, onChangePhoto }: Props) => {
   const colors = useFormColors(formData.childGender);
 
-  const formatPrice = (value?: number | null) => {
-    if (typeof value !== "number") return null;
-    try {
-      return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
-    } catch {
-      return `R$ ${value.toFixed(2).replace('.', ',')}`;
-    }
-  };
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
