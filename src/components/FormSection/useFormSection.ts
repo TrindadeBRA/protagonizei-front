@@ -7,6 +7,7 @@ import { getGetOrdersOrderIdPaymentStatusUrl, getGetOrdersBookDetailsUrl, getPos
 import { childInfoSchema } from "./schemas/childInfo.schema";
 import { contactSchema } from "./schemas/contact.schema";
 import { photoSchema } from "./schemas/photo.schema";
+import { useTracking } from "@/src/hooks/useTracking";
 
 export type FormDataState = {
   childName: string;
@@ -20,6 +21,7 @@ export type FormDataState = {
 };
 
 export const useFormSection = () => {
+  const { track } = useTracking();
   const [step, setStep] = useState<number>(0);
   const [formData, setFormData] = useState<FormDataState>({
     childName: "",
@@ -39,6 +41,7 @@ export const useFormSection = () => {
   const [isPixGenerated, setIsPixGenerated] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const paymentCheckIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const hasTrackedPurchaseRef = useRef<boolean>(false);
 
   // Editor de imagem (previews)
   const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | null>(null);
@@ -170,6 +173,21 @@ export const useFormSection = () => {
         const response: any = await customFetch(getGetOrdersOrderIdPaymentStatusUrl(Number(orderId)), { method: "GET" });
         if (response.status === "paid") {
           if (paymentCheckIntervalRef.current) clearInterval(paymentCheckIntervalRef.current);
+          
+          // 🎯 TRACKING: Purchase (apenas uma vez)
+          if (!hasTrackedPurchaseRef.current && orderId && bookPrice) {
+            track('Purchase', {
+              value: bookPrice,
+              currency: 'BRL',
+              transaction_id: orderId,
+              content_name: 'Personalized Book',
+              payment_method: 'pix'
+            }, {
+              eventID: `purchase_${orderId}`
+            });
+            hasTrackedPurchaseRef.current = true;
+          }
+          
           setStep(6);
         }
       } catch (error) {
@@ -184,7 +202,7 @@ export const useFormSection = () => {
         if (interval) clearInterval(interval);
       };
     }
-  }, [orderId, step, isPixGenerated]);
+  }, [orderId, step, isPixGenerated, track, bookPrice]);
 
   const fetchPixData = async (orderIdNum: number) => {
     try {
@@ -198,6 +216,18 @@ export const useFormSection = () => {
           setBookPrice(Number(response.price));
         }
         setIsPixGenerated(true);
+        
+        // 🎯 TRACKING: InitiateCheckout
+        const finalPrice = response.price !== undefined ? Number(response.price) : bookPrice;
+        track('InitiateCheckout', {
+          value: finalPrice || 49.99,
+          currency: 'BRL',
+          content_name: 'Pix Payment',
+          payment_method: 'pix',
+          order_id: String(orderIdNum)
+        }, {
+          eventID: `checkout_${orderIdNum}`
+        });
       } else {
         throw new Error("Erro ao gerar PIX");
       }
@@ -208,6 +238,16 @@ export const useFormSection = () => {
       setIsLoadingPix(false);
     }
   };
+
+  // Dispara ViewContent quando chega no step 1
+  useEffect(() => {
+    if (step === 1) {
+      track('ViewContent', {
+        content_name: 'Book Creation Form',
+        content_category: 'form_step_1'
+      });
+    }
+  }, [step, track]);
 
   // Buscar detalhes do livro ao entrar no passo 4
   useEffect(() => {
@@ -296,7 +336,19 @@ export const useFormSection = () => {
       const response: any = await customFetch(getPostOrdersUrl(), { method: "POST", body: formDataToSend });
 
       if (response.status === "created" && response.order_id) {
-        setOrderId(response.order_id.toString());
+        const newOrderId = response.order_id.toString();
+        setOrderId(newOrderId);
+        
+        // 🎯 TRACKING: Lead
+        track('Lead', {
+          content_name: 'Order Created',
+          value: bookPrice || 49.99,
+          currency: 'BRL',
+          order_id: newOrderId
+        }, {
+          eventID: `lead_${newOrderId}`
+        });
+        
         setStep(5);
         await fetchPixData(Number(response.order_id));
       } else {
