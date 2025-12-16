@@ -72,7 +72,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const { gaId, whatsAppUrl, gtmId } = await getSiteConfig();
+  const { gaId, whatsAppUrl, gtmId, metaPixelId } = await getSiteConfig();
 
   return (
     <html lang="pt-BR">
@@ -90,6 +90,21 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           </Script>
         )}
 
+        {/* Meta Pixel Code */}
+        {metaPixelId && (
+          <Script id="meta-pixel" strategy="afterInteractive">
+            {`!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '${metaPixelId}');
+fbq('track', 'PageView');`}
+          </Script>
+        )}
 
         {/* Google Translate scripts */}
         <Script
@@ -117,6 +132,15 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           </noscript>
         )}
 
+        {/* Meta Pixel noscript */}
+        {metaPixelId && (
+          <noscript>
+            <img height="1" width="1" style={{ display: "none" }}
+              src={`https://www.facebook.com/tr?id=${metaPixelId}&ev=PageView&noscript=1`}
+            />
+          </noscript>
+        )}
+
         <WhatsAppFloat whatsAppUrl={whatsAppUrl} />
         <AOS_Init />
         <Navigation />
@@ -138,6 +162,7 @@ export async function getSiteConfig() {
   return {
     gaId: data?.google_analytics_id || "",
     whatsAppUrl: data?.whatsapp_url || "",
-    gtmId: data?.google_tag_manager_id || ""
+    gtmId: data?.google_tag_manager_id || "",
+    metaPixelId: data?.meta_pixel_id || ""
   };
 }
