@@ -6,6 +6,8 @@ import { useAutoFlip } from '../../hooks/useAutoFlip';
 import type { FlipBookProps, FlipBookRef } from '../../types/pageflip';
 import Link from 'next/link';
 import { Lock } from 'lucide-react';
+import Image from 'next/image';
+import { cn } from '@/src/lib/utils';
 
 const FlipBook = dynamic(
 	() => import('react-pageflip').then((m) => m.default),
@@ -49,6 +51,17 @@ export default function Book3D({ className }: Book3DProps) {
 
 	return (
 		<div className={className}>
+			<Image
+				src="/assets/images/book/avatar.png"
+				alt="Protagonizei"
+				width={284}
+				height={355}
+				className={cn(
+					"absolute -top-[0px] left-[0] w-[100px] rotate-[20deg] animate-avatar-move",
+					"min-md:w-[150px] min-md:h-[187px] min-md:rotate-[20deg] min-md:animate-avatar-move"
+				)}
+			/>
+
 			<TypedFlipBook
 				ref={flipBookRef}
 				width={500}
@@ -61,6 +74,10 @@ export default function Book3D({ className }: Book3DProps) {
 				autoSize={true}
 				onFlip={handleFlip}
 				onChangeState={handleChangeState}
+				className={cn(
+					"mt-[135px]",
+					"min-md:mt-[200px]"
+				)}
 			>
 				<Page>
 					<div className="w-full h-full bg-white flex items-center justify-center">

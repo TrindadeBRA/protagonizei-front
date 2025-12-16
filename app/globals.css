@@ -241,3 +241,16 @@ input[type="range"]:focus::-moz-range-thumb{
   outline: 3px solid #f5349b;
   outline-offset: 0.125rem;
 }
+
+@keyframes moveLeftToRightAvatar {
+  0% {
+    left: 190px;
+  }
+  100% {
+    left: 0px;
+  }
+}
+
+.animate-avatar-move {
+  animation: moveLeftToRightAvatar 2.5s cubic-bezier(0.7, 0.3, 0.3, 1) forwards;
+}
