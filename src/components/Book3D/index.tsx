@@ -57,7 +57,7 @@ export default function Book3D({ className }: Book3DProps) {
 				width={284}
 				height={355}
 				className={cn(
-					"absolute -top-[0px] left-[0] h-[100px] w-auto animate-avatar-move z-10",
+					"absolute -top-[20px] left-[0] h-[150px] w-auto animate-avatar-move z-10",
 					"min-md:h-[250px] min-md:-top-[35px] min-md:animate-avatar-move"
 				)}
 			/>
@@ -67,7 +67,10 @@ export default function Book3D({ className }: Book3DProps) {
 				alt="Protagonizei"
 				width={420}
 				height={420}
-				className="absolute top-[0px] left-[150px] w-[300px] z-10 animate-arrow-appear"
+				className={cn(
+					"absolute top-[0px] left-[110px] w-[150px] z-10 animate-arrow-appear",
+					"min-md:top-[0px] min-md:left-[150px] min-md:w-[300px]"
+				)}
 			/>
 
 
@@ -84,7 +87,7 @@ export default function Book3D({ className }: Book3DProps) {
 				onFlip={handleFlip}
 				onChangeState={handleChangeState}
 				className={cn(
-					"mt-[135px]",
+					"mt-[150px] float-animation",
 					"min-md:mt-[230px]"
 				)}
 			>

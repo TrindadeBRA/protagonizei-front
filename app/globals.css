@@ -59,7 +59,7 @@ html {
 }
 
 .float-animation {
-  animation: float 3s ease-in-out infinite;
+  animation: float 2s ease-in-out infinite;
 }
 
 @keyframes float {
@@ -255,6 +255,19 @@ input[type="range"]:focus::-moz-range-thumb{
   animation: moveLeftToRightAvatar 2.5s cubic-bezier(0.7, 0.3, 0.3, 1) forwards;
 }
 
+@keyframes floatAvatar {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-avatar-float {
+  animation: floatAvatar 2.8s ease-in-out 2.5s infinite;
+}
+
 @keyframes arrowAppear {
   0% {
     opacity: 0;
@@ -266,7 +279,16 @@ input[type="range"]:focus::-moz-range-thumb{
   }
 }
 
+@keyframes floatArrow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
 .animate-arrow-appear {
   opacity: 0;
-  animation: arrowAppear 0.6s ease-out 2.5s forwards;
+  animation: arrowAppear 0.6s ease-out 2s forwards, floatArrow 1.8s ease-in-out 2.6s infinite;
 }
