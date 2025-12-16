@@ -48,6 +48,8 @@ const FormSection = () => {
     setFieldTouched,
     couponCode,
     setCouponCode,
+    isCouponFromUrl,
+    setIsCouponFromUrl,
   } = useFormSection();
 
   const getShadowAnimationClass = () => {
@@ -191,6 +193,8 @@ const FormSection = () => {
                   setCouponCode={setCouponCode}
                   originalPrice={originalBookPrice}
                   onChangePhoto={() => goToStep(3)}
+                  isCouponFromUrl={isCouponFromUrl}
+                  setIsCouponFromUrl={setIsCouponFromUrl}
                 />
               )}
 

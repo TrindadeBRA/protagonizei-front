@@ -32,9 +32,11 @@ type Props = {
   couponCode?: string;
   setCouponCode?: (value: string) => void;
   onChangePhoto?: () => void;
+  isCouponFromUrl?: boolean;
+  setIsCouponFromUrl?: (value: boolean) => void;
 };
 
-const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl, price, isLoadingPrice, orderId, bookId, onUpdatePrice, couponCode, setCouponCode, originalPrice, onChangePhoto }: Props) => {
+const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl, price, isLoadingPrice, orderId, bookId, onUpdatePrice, couponCode, setCouponCode, originalPrice, onChangePhoto, isCouponFromUrl, setIsCouponFromUrl }: Props) => {
   const colors = useFormColors(formData.childGender);
 
   return (
@@ -160,6 +162,8 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
                 onCouponChange={(v) => setCouponCode && setCouponCode(v)}
                 disabled={isSubmitting}
                 childGender={formData.childGender}
+                isCouponFromUrl={isCouponFromUrl}
+                setIsCouponFromUrl={setIsCouponFromUrl}
               />
             </div>
           </div>

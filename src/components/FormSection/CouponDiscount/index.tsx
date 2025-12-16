@@ -20,6 +20,8 @@ interface CouponDiscountProps {
     onCouponChange: (value: string) => void;
     disabled?: boolean;
     childGender?: string;
+    isCouponFromUrl?: boolean;
+    setIsCouponFromUrl?: (value: boolean) => void;
 }
 
 type CouponStatus = "idle" | "loading" | "success" | "error";
@@ -40,6 +42,8 @@ const CouponDiscount = ({
     onCouponChange,
     disabled = false,
     childGender = "",
+    isCouponFromUrl = false,
+    setIsCouponFromUrl,
 }: CouponDiscountProps) => {
     const colors = useFormColors(childGender);
     const [couponState, setCouponState] = useState<CouponState>({
@@ -51,6 +55,7 @@ const CouponDiscount = ({
     // Usaremos o bookId para o novo endpoint `/orders/check-coupon`
     const hasBookId = bookId !== null && bookId !== undefined;
     const originalPriceRef = useRef<number | null>(null);
+    const autoApplyAttemptedRef = useRef<boolean>(false);
 
     const handleCouponCheck = async () => {
         if (!couponValue.trim()) {
@@ -124,6 +129,24 @@ const CouponDiscount = ({
             originalPriceRef.current = null;
         }
     };
+
+    // Aplicar automaticamente o cupom da URL quando o bookId estiver disponível
+    useEffect(() => {
+        if (
+            isCouponFromUrl && 
+            !autoApplyAttemptedRef.current && 
+            hasBookId && 
+            couponValue.trim() && 
+            couponState.status === 'idle'
+        ) {
+            autoApplyAttemptedRef.current = true;
+            handleCouponCheck();
+            // Marcar como não vindo mais da URL para não tentar novamente
+            if (setIsCouponFromUrl) {
+                setIsCouponFromUrl(false);
+            }
+        }
+    }, [isCouponFromUrl, hasBookId, couponValue, couponState.status]);
 
     // Desabilita input se cupom já estiver aplicado (estado local) ou se detectarmos desconto via preços
     const isAppliedByPrice = typeof originalPrice === 'number' && typeof currentPrice === 'number' && currentPrice < originalPrice;

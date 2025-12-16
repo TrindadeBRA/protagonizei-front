@@ -58,6 +58,20 @@ export const useFormSection = () => {
   const bookDetailsFetchedRef = useRef<boolean>(false);
   // Cupom (UI)
   const [couponCode, setCouponCode] = useState<string>("");
+  const [isCouponFromUrl, setIsCouponFromUrl] = useState<boolean>(false);
+
+  // Ler cupom da URL ao carregar o componente
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const urlCoupon = params.get('coupon');
+      
+      if (urlCoupon && urlCoupon.trim()) {
+        setCouponCode(urlCoupon.toUpperCase().trim());
+        setIsCouponFromUrl(true);
+      }
+    }
+  }, []);
 
   const setFieldTouched = (field: keyof FormDataState) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
@@ -401,6 +415,8 @@ export const useFormSection = () => {
     markTouched,
     couponCode,
     setCouponCode,
+    isCouponFromUrl,
+    setIsCouponFromUrl,
   };
 };
 
