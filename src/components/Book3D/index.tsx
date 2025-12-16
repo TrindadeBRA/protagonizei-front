@@ -57,10 +57,19 @@ export default function Book3D({ className }: Book3DProps) {
 				width={284}
 				height={355}
 				className={cn(
-					"absolute -top-[0px] left-[0] w-[100px] rotate-[20deg] animate-avatar-move",
-					"min-md:w-[150px] min-md:h-[187px] min-md:rotate-[20deg] min-md:animate-avatar-move"
+					"absolute -top-[0px] left-[0] h-[100px] w-auto animate-avatar-move z-10",
+					"min-md:h-[250px] min-md:-top-[35px] min-md:animate-avatar-move"
 				)}
 			/>
+
+			<Image
+				src="/assets/images/book/arrow.png"
+				alt="Protagonizei"
+				width={420}
+				height={420}
+				className="absolute top-[0px] left-[150px] w-[300px] z-10 animate-arrow-appear"
+			/>
+
 
 			<TypedFlipBook
 				ref={flipBookRef}
@@ -76,7 +85,7 @@ export default function Book3D({ className }: Book3DProps) {
 				onChangeState={handleChangeState}
 				className={cn(
 					"mt-[135px]",
-					"min-md:mt-[200px]"
+					"min-md:mt-[230px]"
 				)}
 			>
 				<Page>
