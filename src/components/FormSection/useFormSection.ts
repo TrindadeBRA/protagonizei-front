@@ -166,7 +166,6 @@ export const useFormSection = () => {
     setCroppedPreviewUrl(null);
   };
 
-  // Verificação do status do pagamento
   useEffect(() => {
     const checkPaymentStatus = async () => {
       try {
@@ -174,7 +173,6 @@ export const useFormSection = () => {
         if (response.status === "paid") {
           if (paymentCheckIntervalRef.current) clearInterval(paymentCheckIntervalRef.current);
           
-          // 🎯 TRACKING: Purchase (apenas uma vez)
           if (!hasTrackedPurchaseRef.current && orderId && bookPrice) {
             track('Purchase', {
               value: bookPrice,
@@ -217,7 +215,6 @@ export const useFormSection = () => {
         }
         setIsPixGenerated(true);
         
-        // 🎯 TRACKING: InitiateCheckout
         const finalPrice = response.price !== undefined ? Number(response.price) : bookPrice;
         track('InitiateCheckout', {
           value: finalPrice || 49.99,
@@ -239,7 +236,6 @@ export const useFormSection = () => {
     }
   };
 
-  // Dispara ViewContent quando chega no step 1
   useEffect(() => {
     if (step === 1) {
       track('ViewContent', {
@@ -249,7 +245,6 @@ export const useFormSection = () => {
     }
   }, [step, track]);
 
-  // Buscar detalhes do livro ao entrar no passo 4
   useEffect(() => {
     const fetchBookDetails = async () => {
       if (bookDetailsFetchedRef.current || isLoadingBookDetails) {
@@ -339,7 +334,6 @@ export const useFormSection = () => {
         const newOrderId = response.order_id.toString();
         setOrderId(newOrderId);
         
-        // 🎯 TRACKING: Lead
         track('Lead', {
           content_name: 'Order Created',
           value: bookPrice || 49.99,
