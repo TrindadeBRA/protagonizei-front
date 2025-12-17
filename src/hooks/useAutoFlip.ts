@@ -47,7 +47,7 @@ export const useAutoFlip = (options: UseAutoFlipOptions = {}) => {
 	const handleChangeState = (e: PageFlipEventObject) => {
 		// Para o auto-flip se detectar interação manual (arrastar, clicar, etc.)
 		if (e.data === 'user_fold' || e.data === 'fold_corner') {
-			console.log('🤚 Usuário interrompeu o auto-flip - navegação manual detectada');
+			console.warn('🤚 Usuário interrompeu o auto-flip - navegação manual detectada');
 			stopAutoFlip();
 		}
 	};
