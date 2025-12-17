@@ -8,6 +8,7 @@ import { childInfoSchema } from "./schemas/childInfo.schema";
 import { contactSchema } from "./schemas/contact.schema";
 import { photoSchema } from "./schemas/photo.schema";
 import { useTracking } from "@/src/hooks/useTracking";
+import { getCouponFromStorage } from "@/src/hooks/useCouponFromUrl";
 
 export type FormDataState = {
   childName: string;
@@ -60,14 +61,13 @@ export const useFormSection = () => {
   const [couponCode, setCouponCode] = useState<string>("");
   const [isCouponFromUrl, setIsCouponFromUrl] = useState<boolean>(false);
 
-  // Ler cupom da URL ao carregar o componente
+  // Ler cupom do sessionStorage ao carregar o componente
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const urlCoupon = params.get('coupon');
+      const storedCoupon = getCouponFromStorage();
       
-      if (urlCoupon && urlCoupon.trim()) {
-        setCouponCode(urlCoupon.toUpperCase().trim());
+      if (storedCoupon && storedCoupon.trim()) {
+        setCouponCode(storedCoupon);
         setIsCouponFromUrl(true);
       }
     }

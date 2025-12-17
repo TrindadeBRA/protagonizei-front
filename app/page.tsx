@@ -6,6 +6,7 @@ import HeroSection from "@/src/components/HeroSection";
 import HowItWorksSection from "@/src/components/HowItWorksSection";
 import RecentPostsSection from "@/src/components/RecentPostsSection";
 import TestimonialsSection from "@/src/components/TestimonialsSection";
+import CouponHandler from "@/src/components/CouponHandler";
 import { getGetPostSlugsUrl, getPostSlugsResponse } from "@/src/services/api";
 import customFetch from "@/src/services/custom-fetch";
 import { GetPostSlugs200DataItem } from "@/src/services/model";
@@ -82,6 +83,7 @@ export default async function Home() {
 
   return (
     <>
+      <CouponHandler />
       <Script
         id="product-schema"
         type="application/ld+json"
