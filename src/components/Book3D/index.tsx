@@ -11,7 +11,7 @@ import { cn } from '@/src/lib/utils';
 
 const FlipBook = dynamic(
 	() => import('react-pageflip').then((m) => m.default),
-	{ ssr: false }
+	{ ssr: true }
 ) as React.ComponentType<any>;
 
 const Page = forwardRef<HTMLDivElement, { children?: React.ReactNode }>(
