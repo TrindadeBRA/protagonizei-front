@@ -20,8 +20,6 @@ export const useCouponFromUrl = () => {
       
       // Salvar no sessionStorage
       sessionStorage.setItem(COUPON_STORAGE_KEY, couponCode);
-      
-      console.log('[useCouponFromUrl] Cupom detectado na URL e salvo:', couponCode);
     }
   }, []);
 };
