@@ -12,6 +12,7 @@ import {
   SheetTrigger,
 } from "@/src/components/ui/sheet";
 import Image from "next/image";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
 
 type NavLink = {
   label: string;
@@ -107,6 +108,27 @@ const Navigation = () => {
                 </Link>
               );
             })}
+            {/* Social Media Links */}
+            <div className="flex items-center gap-x-4 ml-4">
+              <Link
+                href="https://www.facebook.com/profile.php?id=61584693167182"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-black hover:text-blue-600 transition-colors duration-200"
+                aria-label="Facebook"
+              >
+                <FaFacebook className="h-6 w-6" />
+              </Link>
+              <Link
+                href="https://www.instagram.com/protagonizei.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-black hover:text-pink-600 transition-colors duration-200"
+                aria-label="Instagram"
+              >
+                <FaInstagram className="h-6 w-6" />
+              </Link>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -152,6 +174,29 @@ const Navigation = () => {
                       </Link>
                     );
                   })}
+                  {/* Social Media Links - Mobile */}
+                  <div className="flex items-center justify-center gap-x-6 mt-4 pt-4 border-t border-gray-200">
+                    <Link
+                      href="https://www.facebook.com/profile.php?id=61584693167182"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-black hover:text-blue-600 transition-colors duration-200"
+                      aria-label="Facebook"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <FaFacebook className="h-7 w-7" />
+                    </Link>
+                    <Link
+                      href="https://www.instagram.com/protagonizei.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-black hover:text-pink-600 transition-colors duration-200"
+                      aria-label="Instagram"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <FaInstagram className="h-7 w-7" />
+                    </Link>
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>

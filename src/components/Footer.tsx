@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
 
 const Footer = () => {
 
@@ -41,6 +42,28 @@ const Footer = () => {
             );
           })}
         </div> */}
+
+        {/* Social Media Links */}
+        <div className="flex items-center justify-center gap-x-6 mb-6" data-aos="fade-up" data-aos-delay={50} data-aos-anchor="#footer-logo">
+          <Link
+            href="https://www.facebook.com/profile.php?id=61584693167182"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-black hover:text-blue-600 transition-colors duration-200"
+            aria-label="Facebook"
+          >
+            <FaFacebook className="h-6 w-6" />
+          </Link>
+          <Link
+            href="https://www.instagram.com/protagonizei.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-black hover:text-pink-600 transition-colors duration-200"
+            aria-label="Instagram"
+          >
+            <FaInstagram className="h-6 w-6" />
+          </Link>
+        </div>
 
         {/* Separador */}
         <div className="w-full h-px bg-gradient-to-r from-transparent via-pink-300 to-transparent mb-6"></div>
