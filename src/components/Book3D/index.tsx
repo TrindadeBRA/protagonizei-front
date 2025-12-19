@@ -96,7 +96,7 @@ export default function Book3D({ className }: Book3DProps) {
 		handleFlip,
 		handleChangeState,
 	} = useAutoFlip({
-		maxFlips:11,
+		maxFlips:7,
 		initialDelay: 1000,
 		interval: 2500,
 		enabled: true
@@ -176,18 +176,6 @@ export default function Book3D({ className }: Book3DProps) {
 				
 				<LockedBookPage src="/assets/images/book/page5.webp" alt="Página 5 esquerda" side="left" />
 				<LockedBookPage src="/assets/images/book/page5.webp" alt="Página 5 direita" side="right" />
-				
-				<LockedBookPage src="/assets/images/book/page6.webp" alt="Página 6 esquerda" side="left" />
-				<LockedBookPage src="/assets/images/book/page6.webp" alt="Página 6 direita" side="right" />
-				
-				<LockedBookPage src="/assets/images/book/page7.webp" alt="Página 7 esquerda" side="left" />
-				<LockedBookPage src="/assets/images/book/page7.webp" alt="Página 7 direita" side="right" />
-				
-				<LockedBookPage src="/assets/images/book/page8.webp" alt="Página 8 esquerda" side="left" />
-				<LockedBookPage src="/assets/images/book/page8.webp" alt="Página 8 direita" side="right" />
-				
-				<LockedBookPage src="/assets/images/book/page9.webp" alt="Página 9 esquerda" side="left" />
-				<LockedBookPage src="/assets/images/book/page9.webp" alt="Página 9 direita" side="right" />
 			</TypedFlipBook>
 		</div>
 	);

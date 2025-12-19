@@ -46,7 +46,7 @@ export const useAutoFlip = (options: UseAutoFlipOptions = {}) => {
 
 	const handleChangeState = (e: PageFlipEventObject) => {
 		// Para o auto-flip se detectar interação manual (arrastar, clicar, etc.)
-		console.log('🔄 handleChangeState disparado - estado:', e.data);
+		// console.log('🔄 handleChangeState disparado - estado:', e.data);
 		if (e.data === 'user_fold' || e.data === 'fold_corner') {
 			console.warn('🤚 Usuário interrompeu o auto-flip - navegação manual detectada');
 			stopAutoFlip();
