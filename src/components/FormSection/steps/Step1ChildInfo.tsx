@@ -47,7 +47,7 @@ const Step1ChildInfo: FC<Step1ChildInfoProps> = ({ formData, handleInputChange, 
             value={formData.childName}
             onChange={(e) => handleInputChange("childName", e.target.value)}
             onBlur={() => onBlurField("childName")}
-            placeholder="Ex: Luna"
+            placeholder={formData.childGender === "girl" ? "Ex: Luna" : "Ex: Henry"}
             className={twMerge(colors.inputBorderClass, colors.inputFocusBorderClass)}
             style={colors.inputBorderStyle}
           />
