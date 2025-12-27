@@ -129,8 +129,8 @@ export default function Book3D({ className }: Book3DProps) {
 
 			<TypedFlipBook
 				ref={flipBookRef}
-				width={500}
-				height={500}
+				width={538}
+				height={600}
 				size="stretch"
 				drawShadow={false}
 				showCover={true}
@@ -145,37 +145,29 @@ export default function Book3D({ className }: Book3DProps) {
 				)}
 			>
 				{/* Capa */}
-				<Page>
-					<div className="w-full h-full bg-white flex items-center justify-center">
-						<img
-							src="/assets/images/book/cover.webp"
-							alt="Capa"
-							className={PAGE_CLASSES.base}
-							draggable={false}
-							loading="eager"
-						/>
-					</div>
-				</Page>
+				<BookPage src="/assets/images/book/cover-1.webp" alt="Capa" side="left" />
+
 
 				{/* Páginas 0-3 (sem blur) */}
-				<BookPage src="/assets/images/book/page0.webp" alt="Página 0 esquerda" side="left" />
-				<BookPage src="/assets/images/book/page0.webp" alt="Página 0 direita" side="right" />
+				<BookPage src="/assets/images/book/page1-1.webp" alt="Página 0 esquerda" side="left" />
+				<BookPage src="/assets/images/book/page1-1.webp" alt="Página 0 direita" side="right" />
+								
+				<BookPage src="/assets/images/book/page2-1.webp" alt="Página 2 esquerda" side="left" />
+				<BookPage src="/assets/images/book/page2-1.webp" alt="Página 2 direita" side="right" />
 				
-				<BookPage src="/assets/images/book/page1.webp" alt="Página 1 esquerda" side="left" />
-				<BookPage src="/assets/images/book/page1.webp" alt="Página 1 direita" side="right" />
-				
-				<BookPage src="/assets/images/book/page2.webp" alt="Página 2 esquerda" side="left" />
-				<BookPage src="/assets/images/book/page2.webp" alt="Página 2 direita" side="right" />
-				
-				<BookPage src="/assets/images/book/page3.webp" alt="Página 3 esquerda" side="left" />
-				<BookPage src="/assets/images/book/page3.webp" alt="Página 3 direita" side="right" />
+				<BookPage src="/assets/images/book/page3-1.webp" alt="Página 3 esquerda" side="left" />
+				<BookPage src="/assets/images/book/page3-1.webp" alt="Página 3 direita" side="right" />
 
 				{/* Páginas 4-9 (com blur e cadeado) */}
-				<LockedBookPage src="/assets/images/book/page4.webp" alt="Página 4 esquerda" side="left" />
-				<LockedBookPage src="/assets/images/book/page4.webp" alt="Página 4 direita" side="right" />
+				<LockedBookPage src="/assets/images/book/page4-1.webp" alt="Página 4 esquerda" side="left" />
+				<LockedBookPage src="/assets/images/book/page4-1.webp" alt="Página 4 direita" side="right" />
 				
-				<LockedBookPage src="/assets/images/book/page5.webp" alt="Página 5 esquerda" side="left" />
-				<LockedBookPage src="/assets/images/book/page5.webp" alt="Página 5 direita" side="right" />
+				<LockedBookPage src="/assets/images/book/page5-1.webp" alt="Página 5 esquerda" side="left" />
+				<LockedBookPage src="/assets/images/book/page5-1.webp" alt="Página 5 direita" side="right" />	
+
+				<LockedBookPage src="/assets/images/book/page6-1.webp" alt="Página 6 esquerda" side="left" />
+				<LockedBookPage src="/assets/images/book/page6-1.webp" alt="Página 6 direita" side="right" />
+							
 			</TypedFlipBook>
 		</div>
 	);
