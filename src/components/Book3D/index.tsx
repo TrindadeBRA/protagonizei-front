@@ -105,7 +105,7 @@ export default function Book3D({ className }: Book3DProps) {
 	return (
 		<div className={className}>
 			<Image
-				src="/assets/images/book/avatar.png"
+				src="/assets/images/book/avatar.webp"
 				alt="Protagonizei"
 				width={284}
 				height={355}
