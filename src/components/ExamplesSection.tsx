@@ -3,16 +3,18 @@ import { Quote } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
+import Book3D from "./Book3D";
 
 const examples = [
   {
     name: "Lucas",
-    age: 5,
+    age: 3,
     story: "A Grande Aventura de Lucas",
     excerpt: "Era uma vez um menino corajoso chamado **Lucas**. descobriu um mapa misterioso no sótão.",
     image: "👦",
     color: "from-pink-light via-purple-light to-blue-light",
-    gender: "male"
+    gender: "male",
+    avatar: "/assets/images/examples/social2.jpg"
   },
   {
     name: "Maria",
@@ -21,17 +23,9 @@ const examples = [
     excerpt: "**Maria** era uma princesa muito especial que morava em um castelo colorido e falava com os animais da floresta",
     image: "👸",
     color: "from-pink-light via-purple-light to-blue-light",
-    gender: "female"
+    gender: "female",
+    avatar: "/assets/images/examples/social1.jpg"
   },
-  {
-    name: "Pedro",
-    age: 6,
-    story: "Pedro, o Super-Herói",
-    excerpt: "**Pedro** descobriu que tinha poderes especiais e podia voar mais alto que as nuvens...",
-    image: "🦸‍♂️",
-    color: "from-pink-light via-purple-light to-blue-light",
-    gender: "male"
-  }
 ];
 
 const ExamplesSection = () => {
@@ -50,7 +44,7 @@ const ExamplesSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 gap-8">
           {examples.map((example, index) => (
             <div
               key={index}
@@ -58,15 +52,17 @@ const ExamplesSection = () => {
             >
               {/* Header */}
               <div className={`bg-gradient-to-br ${example.color} p-6 text-black relative`}>
-                <div className="absolute top-4 right-4 opacity-20">
+                {/* <div className="absolute top-4 right-4 opacity-20">
                   {example.gender === "male" ? (
-                    <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={32} height={32} />
+                    <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={32} height={32} className="animate-pulse" />
                   ) : (
-                    <Image src="/assets/images/asset-star-2.png" alt="Protagonizei" width={32} height={32} />
+                    <Image src="/assets/images/asset-star-2.png" alt="Protagonizei" width={32} height={32} className="animate-pulse" />
                   )}
-                </div>
+                </div> */}
                 <div className="text-center">
-                  <div className="text-4xl mb-3">{example.image}</div>
+                  <div className="text-4xl mb-3">
+                    <Image src={example.avatar} alt={example.name} width={150} height={150} className="rounded-full mx-auto" />
+                  </div>
                   <h3 className="font-heading text-xl font-bold">{example.story}</h3>
                   <p className="text-sm opacity-90">Protagonista: {example.name}, {example.age} anos</p>
                 </div>
@@ -88,6 +84,8 @@ const ExamplesSection = () => {
                     )}
                   </p>
                 </div>
+
+                <Book3D />
 
                 {/* <div className="bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl p-4">
                   <div className="flex items-center justify-between text-sm">
