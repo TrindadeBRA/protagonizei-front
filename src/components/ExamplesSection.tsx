@@ -2,29 +2,44 @@
 import { Quote } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { twMerge } from "tailwind-merge";
-import Book3D from "./Book3D";
+import Book3DExample from "./Book3DExample";
 
 const examples = [
   {
-    name: "Lucas",
+    name: "João",
     age: 3,
-    story: "A Grande Aventura de Lucas",
-    excerpt: "Era uma vez um menino corajoso chamado **Lucas**. descobriu um mapa misterioso no sótão.",
-    image: "👦",
+    excerpt: "Ver o João se ver como protagonista da própria história foi mágico! Ele agora pede para ler 'o livro do João' toda noite e está muito mais confiante.",
     color: "from-pink-light via-purple-light to-blue-light",
-    gender: "male",
-    avatar: "/assets/images/examples/social2.jpg"
+    avatar: "/assets/images/examples/social2.jpg",
+    pages: {
+      coverImage: "/assets/images/examples/book-joao/cover.webp",
+      page1Left: "/assets/images/examples/book-joao/page1.webp",
+      page1Right: "/assets/images/examples/book-joao/page1.webp",
+      page2Left: "/assets/images/examples/book-joao/page2.webp",
+      page2Right: "/assets/images/examples/book-joao/page2.webp",
+      page3Left: "/assets/images/examples/book-joao/page3.webp",
+      page3Right: "/assets/images/examples/book-joao/page3.webp",
+      page4Left: "/assets/images/examples/book-joao/page4.webp",
+      page4Right: "/assets/images/examples/book-joao/page4.webp",
+    }
   },
   {
     name: "Maria",
     age: 4,
-    story: "Maria e o Reino Encantado",
-    excerpt: "**Maria** era uma princesa muito especial que morava em um castelo colorido e falava com os animais da floresta",
-    image: "👸",
+    excerpt: "A Maria ficou encantada ao se ver na história! Ela sorriu do início ao fim e agora se sente uma verdadeira super-heroína. Foi o presente mais especial que já demos a ela.",
     color: "from-pink-light via-purple-light to-blue-light",
-    gender: "female",
-    avatar: "/assets/images/examples/social1.jpg"
+    avatar: "/assets/images/examples/social1.jpg",
+    pages: {
+      coverImage: "/assets/images/examples/book-maria/cover.webp",
+      page1Left: "/assets/images/examples/book-maria/page1.webp",
+      page1Right: "/assets/images/examples/book-maria/page1.webp",
+      page2Left: "/assets/images/examples/book-maria/page2.webp",
+      page2Right: "/assets/images/examples/book-maria/page2.webp",
+      page3Left: "/assets/images/examples/book-maria/page3.webp",
+      page3Right: "/assets/images/examples/book-maria/page3.webp",
+      page4Left: "/assets/images/examples/book-maria/page4.webp",
+      page4Right: "/assets/images/examples/book-maria/page4.webp",
+    }
   },
 ];
 
@@ -34,87 +49,59 @@ const ExamplesSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-black mb-6" data-aos="fade-up">
-            Exemplos que{" "}
+            Histórias reais de{" "}
             <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
-              inspiram
-            </span>!
+              famílias felizes
+            </span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto" data-aos="fade-up">
-            Conheça nossos protagonistas
+            Veja como outras famílias estão transformando momentos de leitura em memórias inesquecíveis e fortalecendo a autoestima dos seus pequenos
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
           {examples.map((example, index) => (
             <div
               key={index}
-              className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:-translate-y-2" data-aos="fade-in" data-aos-delay={index * 100}
+              className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:-translate-y-2 animate-subtle-float" 
+              style={{ animationDelay: `${index * 0.3}s` }}
+              data-aos="fade-in" 
+              data-aos-delay={index * 100}
             >
-              {/* Header */}
-              <div className={`bg-gradient-to-br ${example.color} p-6 text-black relative`}>
-                {/* <div className="absolute top-4 right-4 opacity-20">
-                  {example.gender === "male" ? (
-                    <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={32} height={32} className="animate-pulse" />
-                  ) : (
-                    <Image src="/assets/images/asset-star-2.png" alt="Protagonizei" width={32} height={32} className="animate-pulse" />
-                  )}
-                </div> */}
-                <div className="text-center">
-                  <div className="text-4xl mb-3">
-                    <Image src={example.avatar} alt={example.name} width={150} height={150} className="rounded-full mx-auto" />
+              <div className={`bg-gradient-to-br ${example.color} p-4 md:p-6 text-black relative`}>
+                <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+                  <div className="flex-shrink-0 animate-avatar-pulse" style={{ animationDelay: `${index * 0.2}s` }}>
+                    <Image src={example.avatar} alt={example.name} width={120} height={120} className="rounded-full" />
                   </div>
-                  <h3 className="font-heading text-xl font-bold">{example.story}</h3>
-                  <p className="text-sm opacity-90">Protagonista: {example.name}, {example.age} anos</p>
+                  <div className="flex-1 text-center md:text-left">
+                    <p className="text-sm md:text-base opacity-90 mb-2"><b>{example.name}</b>, {example.age} anos</p>
+                    <p className="text-xs md:text-sm opacity-70 italic flex items-start gap-2">
+                      <Quote className="w-4 h-4 text-gray-300 flex-shrink-0 mt-1" />
+                      <span>&ldquo;{example.excerpt}&rdquo;</span>
+                    </p> 
+                  </div>
                 </div>
               </div>
 
-              {/* Content */}
-              <div className="p-6">
-                <div className="flex items-start mb-4">
-                  <Quote className="w-6 h-6 text-gray-300 mr-2 flex-shrink-0 mt-1" />
-                  <p className="text-gray-700 leading-relaxed italic">
-                    {example.excerpt.split('**').map((part, i) =>
-                      i % 2 === 1 ? (
-                        <strong key={i} className={twMerge("not-italic font-bold", example.gender === "male" ? "text-blue-main" : "text-pink-main")}>
-                          {part}
-                        </strong>
-                      ) : (
-                        <span key={i}>{part}</span>
-                      )
-                    )}
-                  </p>
-                </div>
-
-                <Book3D />
-
-                {/* <div className="bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl p-4">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Personalização:</span>
-                    <div className="flex space-x-2">
-                      <span className="bg-pink-200 text-pink-700 px-2 py-1 rounded-full text-xs font-semibold">Nome</span>
-                      <span className="bg-purple-200 text-purple-700 px-2 py-1 rounded-full text-xs font-semibold">Rosto</span>
-                      <span className="bg-blue-200 text-blue-700 px-2 py-1 rounded-full text-xs font-semibold">Pronomes</span>
-                    </div>
+              <div className="px-2 md:px-6 py-2 md:py-4">
+                  <div className="max-w-md mx-auto">
+                    <Book3DExample 
+                      coverImage={example.pages.coverImage}
+                      page1Left={example.pages.page1Left}
+                      page1Right={example.pages.page1Right}
+                      page2Left={example.pages.page2Left}
+                      page2Right={example.pages.page2Right}
+                      page3Left={example.pages.page3Left}
+                      page3Right={example.pages.page3Right}
+                      page4Left={example.pages.page4Left}
+                      page4Right={example.pages.page4Right}
+                    />
                   </div>
-                </div> */}
-
-
               </div>
 
             </div>
           ))}
         </div>
-
-        {/* <div className="text-center mt-12">
-          <div className="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl p-6 max-w-md mx-auto border-2 border-yellow-200">
-            <div className="text-2xl mb-3">🎨</div>
-            <h4 className="font-heading font-bold text-gray-800 mb-2">Ilustrações Únicas</h4>
-            <p className="text-gray-600 text-sm">
-              Cada história tem ilustrações feitas especialmente para seu filho, com o rostinho dele nas páginas!
-            </p>
-          </div>
-        </div> */}
-
 
         <div className="flex justify-center mt-12">
           <Link

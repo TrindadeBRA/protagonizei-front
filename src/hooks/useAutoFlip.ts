@@ -22,6 +22,21 @@ export const useAutoFlip = (options: UseAutoFlipOptions = {}) => {
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 	const isAutoFlippingRef = useRef<boolean>(false);
 
+	// Sincroniza autoFlipActive com enabled e reseta quando habilitado
+	useEffect(() => {
+		if (enabled) {
+			setAutoFlipActive(true);
+			setFlipCount(0); // Reseta o contador quando habilitado
+		} else {
+			setAutoFlipActive(false);
+			// Limpa o timer quando desabilitado
+			if (timerRef.current) {
+				clearTimeout(timerRef.current);
+				timerRef.current = null;
+			}
+		}
+	}, [enabled]);
+
 	// Função para parar o auto-flip quando há interação manual
 	const stopAutoFlip = () => {
 		setAutoFlipActive(false);
@@ -59,11 +74,32 @@ export const useAutoFlip = (options: UseAutoFlipOptions = {}) => {
 			return;
 		}
 
+		// Verifica se o pageFlip está disponível
+		const checkPageFlip = () => {
+			return flipBookRef.current?.pageFlip() !== null && flipBookRef.current?.pageFlip() !== undefined;
+		};
+
 		// Usa initialDelay para o primeiro flip, interval para os subsequentes
 		const currentDelay = flipCount === 0 ? initialDelay : interval;
 
 		timerRef.current = setTimeout(() => {
 			try {
+				// Verifica se o pageFlip está pronto antes de tentar fazer o flip
+				if (!checkPageFlip()) {
+					// Se não estiver pronto, tenta novamente após um pequeno delay
+					setTimeout(() => {
+						if (checkPageFlip()) {
+							isAutoFlippingRef.current = true;
+							flipBookRef.current?.pageFlip()?.flipNext();
+							setFlipCount(prev => prev + 1);
+							setTimeout(() => {
+								isAutoFlippingRef.current = false;
+							}, 100);
+						}
+					}, 200);
+					return;
+				}
+
 				// Marca que está fazendo um flip automático
 				isAutoFlippingRef.current = true;
 				flipBookRef.current?.pageFlip()?.flipNext();

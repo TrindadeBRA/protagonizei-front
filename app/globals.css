@@ -292,3 +292,29 @@ input[type="range"]:focus::-moz-range-thumb{
   opacity: 0;
   animation: arrowAppear 0.6s ease-out 2s forwards, floatArrow 1.8s ease-in-out 2.6s infinite;
 }
+
+@keyframes subtleFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-subtle-float {
+  animation: subtleFloat 3s ease-in-out infinite;
+}
+
+@keyframes avatarPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.animate-avatar-pulse {
+  animation: avatarPulse 4s ease-in-out infinite;
+}
