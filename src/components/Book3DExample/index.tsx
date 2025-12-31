@@ -25,7 +25,6 @@ const TypedFlipBook = React.forwardRef<FlipBookRef, TypedFlipBookProps>((props, 
 });
 TypedFlipBook.displayName = 'TypedFlipBook';
 
-// Constantes para classes reutilizáveis
 const PAGE_CLASSES = {
 	left: "w-full h-full object-cover object-left select-none",
 	right: "w-full h-full object-cover object-right select-none",
@@ -35,7 +34,6 @@ const PAGE_CLASSES = {
 const LOCK_OVERLAY_CLASSES = "absolute inset-0 bg-black/50 flex items-center justify-center flex-col gap-2 p-6 text-center";
 const LOCK_ICON_CLASSES = "magical-border border-4 border-transparent text-white font-bold w-16 h-16 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert flex items-center justify-center";
 
-// Componente para páginas normais
 const BookPage = forwardRef<HTMLDivElement, { src: string; alt: string; side: 'left' | 'right' }>(
 	({ src, alt, side }, ref) => (
 		<div ref={ref} className="w-full h-full bg-white rounded-xl shadow-md overflow-hidden">
@@ -51,7 +49,6 @@ const BookPage = forwardRef<HTMLDivElement, { src: string; alt: string; side: 'l
 );
 BookPage.displayName = 'BookPage';
 
-// Componente para páginas bloqueadas
 const LockedBookPage = forwardRef<HTMLDivElement, { src: string; alt: string; side: 'left' | 'right' }>(
 	({ src, alt, side }, ref) => (
 		<div ref={ref} className="w-full h-full bg-white rounded-xl shadow-md overflow-hidden">
@@ -107,18 +104,13 @@ export default function Book3DExample({
 	const { ref, isInView } = useInView({
 		threshold: 0.1,
 		rootMargin: '100px',
-		triggerOnce: true, // Só anima uma vez quando ficar visível
+		triggerOnce: true,
 	});
 
 	const [currentPage, setCurrentPage] = useState(0);
-	// No react-pageflip: Capa (índice 0) + cada par de páginas (left+right) = 1 índice
-	// Temos: Capa (0) + Página 1 (1) + Página 2 (2) + Página 3 (3) + Página 4 (4) = 5 páginas
-	// Mas o getPageCount() retorna o número correto, então vamos usar dinamicamente
 	const [totalPages, setTotalPages] = useState(5);
-	
 	const isBlue = arrowColor === 'blue';
 
-	// Atualiza o total de páginas quando o livro for inicializado
 	useEffect(() => {
 		const checkPages = setInterval(() => {
 			if (flipBookRef.current?.pageFlip()) {
@@ -139,23 +131,20 @@ export default function Book3DExample({
 		handleChangeState,
 		stopAutoFlip,
 	} = useAutoFlip({
-		maxFlips: 1, // Apenas a primeira página (capa -> primeira página)
-		initialDelay: 1000, // Aumentei o delay para dar tempo do livro estar pronto
+		maxFlips: 1,
+		initialDelay: 1000,
 		interval: 2500,
-		enabled: isInView // Só habilita quando estiver visível
+		enabled: isInView
 	});
 
-	// Atualiza a página atual quando o livro vira
 	const handlePageFlip = (e: any) => {
 		handleFlip(e);
-		// Usa um pequeno delay para garantir que o flip foi completado
 		setTimeout(() => {
 			const newPage = flipBookRef.current?.pageFlip()?.getCurrentPageIndex() || 0;
 			setCurrentPage(newPage);
 		}, 100);
 	};
 
-	// Função para ir para a página anterior
 	const handlePrevPage = () => {
 		if (currentPage > 0) {
 			stopAutoFlip();
@@ -163,7 +152,6 @@ export default function Book3DExample({
 		}
 	};
 
-	// Função para ir para a próxima página
 	const handleNextPage = () => {
 		if (currentPage < totalPages - 1) {
 			stopAutoFlip();
@@ -171,16 +159,9 @@ export default function Book3DExample({
 		}
 	};
 
-	// Debug temporário - remover depois
-	useEffect(() => {
-		if (isInView) {
-			console.log('📖 Book3DExample está visível, iniciando animação...');
-		}
-	}, [isInView]);
 
 	return (
 		<div ref={ref} className={cn("min-h-[200px] md:min-h-[50px] flex items-center justify-center relative w-full", className)}>
-			{/* Seta anterior */}
 			<button
 				onClick={handlePrevPage}
 				disabled={currentPage === 0}
@@ -213,27 +194,21 @@ export default function Book3DExample({
 				onChangeState={handleChangeState}
 				className="scale-75 md:scale-100"
 			>
-				{/* Capa */}
 				<BookPage src={coverImage} alt="Capa" side="left" />
-
-				{/* Primeira página (esquerda e direita) */}
 				<BookPage src={page1Left} alt="Página 1 esquerda" side="left" />
 				<BookPage src={page1Right} alt="Página 1 direita" side="right" />
 				
-				{/* Segunda página (esquerda e direita) */}
 				<BookPage src={page2Left} alt="Página 2 esquerda" side="left" />
 				<BookPage src={page2Right} alt="Página 2 direita" side="right" />
 				
-				{/* Terceira página (esquerda e direita) */}
 				<BookPage src={page3Left} alt="Página 3 esquerda" side="left" />
 				<BookPage src={page3Right} alt="Página 3 direita" side="right" />
 				
-				{/* Quarta página bloqueada (esquerda e direita) */}
 				<LockedBookPage src={page4Left} alt="Página 4 esquerda" side="left" />
 				<LockedBookPage src={page4Right} alt="Página 4 direita" side="right" />
 			</TypedFlipBook>
 
-			{/* Seta próxima */}
+
 			<button
 				onClick={handleNextPage}
 				disabled={currentPage >= totalPages - 1}
