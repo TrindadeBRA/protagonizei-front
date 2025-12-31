@@ -4,38 +4,38 @@ import Link from "next/link";
 const benefits = [
   {
     icon: Heart,
-    title: "Laços que duram",
-    description: "Momentos de leitura emocionantes que unem famílias e criam memórias inesquecíveis para sempre.",
+    title: "Memórias que duram para sempre",
+    description: "Crie momentos especiais de leitura em família que seu filho vai guardar no coração. Cada página é uma lembrança única que fortalece os laços familiares.",
     color: "from-pink-main to-blue-main"
   },
   {
     icon: BookOpen,
-    title: "Amor pela Leitura",
-    description: "Crianças que se veem como protagonistas desenvolvem naturalmente o prazer pela leitura com alegria.",
+    title: "Desperta o amor pela leitura",
+    description: "Quando seu filho se vê como protagonista, ele desenvolve naturalmente o hábito de ler. Crianças que leem mais têm melhor desempenho escolar e criatividade.",
     color: "from-pink-main to-blue-main"
   },
   {
     icon: Camera,
-    title: "Reconhecimento que encanta",
-    description: "Nossa IA transforma a foto do seu filho em ilustrações mágicas, fazendo com que ele se reconheça na história.",
+    title: "Seu filho se reconhece na história",
+    description: "Nossa tecnologia transforma a foto do seu filho em ilustrações mágicas. Ele vai se ver como herói e ficar encantado ao se reconhecer em cada página.",
     color: "from-pink-main to-blue-main"
   },
   {
     icon: Gift,
-    title: "Presente especialmente mágico",
-    description: "Uma história única onde o seu filho é o herói principal, ideal para impressionar avós, tios e padrinhos.",
+    title: "O presente que impressiona",
+    description: "Presenteie avós, tios e padrinhos com algo único. Uma história onde seu filho é o herói principal - um presente que ninguém esquece.",
     color: "from-pink-main to-blue-main"
   },
   {
     icon: Star,
-    title: "Autoconfiança e exclusividade",
-    description: "Sentir-se protagonista desenvolve autoestima e alegria de ser especial.",
+    title: "Aumenta a autoconfiança",
+    description: "Ser protagonista da própria história desenvolve autoestima e autoconfiança. Seu filho vai se sentir especial e único, fortalecendo sua personalidade.",
     color: "from-pink-main to-blue-main"
   },
   {
     icon: PartyPopper,
-    title: "Diversão educativa",
-    description: "Além da magia, cada página incentiva aprendizado, imaginação e criatividade de forma lúdica.",
+    title: "Diversão que educa",
+    description: "Cada página combina magia com aprendizado. Desenvolve imaginação, criatividade e habilidades de leitura de forma natural e divertida.",
     color: "from-pink-main to-blue-main"
   }
 ];
@@ -48,11 +48,10 @@ const BenefitsSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">
-            Por que escolher essa aventura
-            <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent"> personalizada</span>?
+            Por que mais de <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">1000 famílias</span> escolheram essa aventura?
           </h2>
           <p className="text-lg text-black max-w-2xl mx-auto" data-aos="fade-up">
-            Mais do que um livro, é uma experiência mágica que transforma a infância do seu filho para sempre.
+            Mais do que um livro digital, é uma experiência única que transforma a infância do seu filho e cria memórias que duram para sempre.
           </p>
         </div>
 
@@ -70,7 +69,7 @@ const BenefitsSection = () => {
                 {benefit.title}
               </h3>
 
-              <p className="text-blocack leading-relaxed">
+              <p className="text-black leading-relaxed">
                 {benefit.description}
               </p>
             </div>

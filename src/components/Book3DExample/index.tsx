@@ -140,7 +140,7 @@ export default function Book3DExample({
 		stopAutoFlip,
 	} = useAutoFlip({
 		maxFlips: 1, // Apenas a primeira página (capa -> primeira página)
-		initialDelay: 1500, // Aumentei o delay para dar tempo do livro estar pronto
+		initialDelay: 1000, // Aumentei o delay para dar tempo do livro estar pronto
 		interval: 2500,
 		enabled: isInView // Só habilita quando estiver visível
 	});
