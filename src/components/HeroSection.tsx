@@ -7,7 +7,7 @@ const HeroSection = () => {
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 overflow-hidden">
       {/* Floating decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-70 md:opacity-45">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20 md:opacity-40">
         <div className="absolute top-20 left-10 float-animation">
           <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={32} height={32} data-aos="fade-in" data-aos-delay={100} />
         </div>
