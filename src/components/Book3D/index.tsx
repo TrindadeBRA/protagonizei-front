@@ -46,14 +46,13 @@ const LOCK_ICON_CLASSES = "magical-border border-4 border-transparent text-white
 
 // Componente para páginas normais
 const BookPage = forwardRef<HTMLDivElement, { src: string; alt: string; side: 'left' | 'right'; priority?: boolean }>(
-	({ src, alt, side, priority = false }, ref) => (
+	({ src, alt, side, priority = true }, ref) => (
 		<div ref={ref} className="w-full h-full bg-white rounded-xl shadow-md overflow-hidden">
 			<Image
 				src={src}
 				alt={alt}
 				className={side === 'left' ? PAGE_CLASSES.left : PAGE_CLASSES.right}
 				draggable={false}
-				loading={priority ? undefined : "lazy"}
 				priority={priority}
 				width={538}
 				height={600}
@@ -76,7 +75,7 @@ const LockedBookPage = forwardRef<HTMLDivElement, { src: string; alt: string; si
 						PAGE_CLASSES.locked
 					)}
 					draggable={false}
-					loading="lazy"
+					priority={true}
 					width={538}
 					height={600}
 				/>
@@ -127,6 +126,7 @@ export default function Book3D({ className }: Book3DProps) {
 				alt="Protagonizei"
 				width={200}
 				height={200}
+				priority
 				className={cn(
 					"absolute top-[20px] left-[180px] w-[130px] z-10 animate-arrow-appear",
 					"min-md:top-[0px] min-md:left-[250px] min-md:w-[300px]"
@@ -156,14 +156,14 @@ export default function Book3D({ className }: Book3DProps) {
 
 
 				{/* Páginas 0-3 (sem blur) */}
-				<BookPage src="/assets/images/book/page1-1.webp" alt="Página 0 esquerda" side="left" />
-				<BookPage src="/assets/images/book/page1-1.webp" alt="Página 0 direita" side="right" />
+				<BookPage src="/assets/images/book/page1-1.webp" alt="Página 0 esquerda" side="left" priority />
+				<BookPage src="/assets/images/book/page1-1.webp" alt="Página 0 direita" side="right" priority />
 								
-				<BookPage src="/assets/images/book/page2-1.webp" alt="Página 2 esquerda" side="left" />
-				<BookPage src="/assets/images/book/page2-1.webp" alt="Página 2 direita" side="right" />
+				<BookPage src="/assets/images/book/page2-1.webp" alt="Página 2 esquerda" side="left" priority />
+				<BookPage src="/assets/images/book/page2-1.webp" alt="Página 2 direita" side="right" priority />
 				
-				<BookPage src="/assets/images/book/page3-1.webp" alt="Página 3 esquerda" side="left" />
-				<BookPage src="/assets/images/book/page3-1.webp" alt="Página 3 direita" side="right" />
+				<BookPage src="/assets/images/book/page3-1.webp" alt="Página 3 esquerda" side="left" priority />
+				<BookPage src="/assets/images/book/page3-1.webp" alt="Página 3 direita" side="right" priority />
 
 				{/* Páginas 4-9 (com blur e cadeado) */}
 				<LockedBookPage src="/assets/images/book/page4-1.webp" alt="Página 4 esquerda" side="left" />
