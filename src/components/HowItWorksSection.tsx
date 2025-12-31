@@ -8,21 +8,21 @@ const steps = [
     number: "01",
     icon: FileText,
     title: "Conte sobre seu pequeno",
-    description: "Informe nome, idade, gênero e envie uma foto. Em 2 minutos, a magia começa!",
+    description: "Nome, idade e uma foto. Leva menos de 2 minutos. Pronto! O resto é com a gente.",
     color: "from-pink-400 to-rose-400"
   },
   {
     number: "02",
     icon: Wand2,
-    title: "Nossa IA transforma tudo",
-    description: "Receba um PDF encantado com ilustrações únicas e história sob medida.",
+    title: "Nossa IA faz a transformação",
+    description: "Criamos um livro com o rosto do seu filho, ilustrado página por página — exclusivo, único, com a história dele.",
     color: "from-purple-400 to-indigo-400"
   },
   {
     number: "03",
     icon: Mail,
-    title: "A magia é entregue",
-    description: "Em até 2h, o livro chega por e-mail, pronto para baixar e criar memórias para sempre.",
+    title: "A magia chega até você",
+    description: "Enviamos o PDF pelo e-mail. Abra no celular, tablet ou TV e veja o brilho nos olhos dele!",
     color: "from-blue-400 to-cyan-400"
   }
 ];
@@ -53,11 +53,11 @@ const HowItWorksSection = () => {
             <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
               mágica
             </span>
-            !
+            {" "}✨
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto" data-aos="fade-up">
-            Crie em 3 cliques e receba em{" "}
-            <b>até 2h</b>
+            Em 3 passos rápidos e você recebe o livro no seu e-mail —{" "}
+            <b>ainda hoje!</b>
           </p>
         </div>
 
@@ -105,15 +105,15 @@ const HowItWorksSection = () => {
           ))}
         </div>
 
-        <div className="flex justify-center mt-16">
+        <div className="flex flex-col items-center mt-16">
           <Link
             href="/#criar-historia"
             key="/#criar-historia"
             className="magical-border border-4 border-transparent text-white font-bold py-2 px-6 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert"
             data-aos="fade-up"
           >
-            Crie sua história!
-          </Link>
+              Crie sua história
+            </Link>
         </div>
       </div>
     </section>
