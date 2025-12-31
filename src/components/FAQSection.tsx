@@ -7,20 +7,40 @@ import Link from "next/link";
 
 const faqs = [
   {
-    question: "Preciso instalar algum aplicativo ou programa?",
-    answer: "Não! Tudo funciona online. Você só precisa preencher o formulário e receberá o PDF pronto por e-mail. Simples assim!"
+    question: "📸 É seguro enviar foto do meu filho?",
+    answer: "Sim. Sua foto é usada apenas para criar o livro e é automaticamente apagada após a finalização. Usamos tecnologia profissional (Nano Banana Pro) — nenhuma imagem fica armazenada ou compartilhada. Segurança e privacidade são prioridade."
   },
   {
-    question: "Quanto tempo demora para receber o livro?",
-    answer: "Normalmente em até 2 horas você recebe o PDF personalizado no seu e-mail. Em períodos de alta demanda, pode levar até 48 horas."
+    question: "🕒 Quanto tempo demora para receber o livro?",
+    answer: "Você recebe no e-mail em até 2 horas. A maioria das famílias recebe em menos de 40 minutos ✨ Em períodos de alta demanda, o prazo máximo é de 24 horas."
   },
   {
-    question: "Posso imprimir o livro em casa?",
+    question: "📱 O livro funciona no celular?",
+    answer: "Sim! Funciona em qualquer celular, tablet, notebook e TV. Você pode abrir, ampliar, contar a história junto ou até enviar para os avós."
+  },
+  {
+    question: "💰 Posso pagar de forma segura?",
+    answer: "Sim. O pagamento é feito via Pix com confirmação imediata, sem cadastro e sem expor dados do cartão."
+  },
+  {
+    question: "🎁 Posso presentear alguém?",
+    answer: "Pode — e fica lindo! 🎉 Você pode enviar o livro por WhatsApp, e-mail ou abrir no tablet como surpresa. Muitas famílias usam para datas especiais, aniversário e dia das crianças."
+  },
+  {
+    question: "👶 Para qual idade é indicado?",
+    answer: "De 1 a 8 anos — mas pais relatam que crianças até 10 amam se ver na história 📚✨"
+  },
+  {
+    question: "🧑‍🔧 Preciso instalar alguma coisa?",
+    answer: "Nada! É só clicar no link que enviamos e o livro abre direto no navegador, como mágica."
+  },
+  {
+    question: "📄 Posso imprimir o livro em casa?",
     answer: "Sim! O PDF vem otimizado para impressão caseira ou em gráficas. Recomendamos papel de gramatura mais alta para melhor qualidade."
   },
   {
-    question: "A foto do meu filho fica igual nas ilustrações?",
-    answer: "Nossa IA cria ilustrações artísticas baseadas na foto, mantendo as características principais da criança de forma encantadora e respeitosa."
+    question: "⏳ O livro fica disponível para sempre?",
+    answer: "Sim — você pode salvar no celular ou computador. Bônus por hoje: também enviamos link de acesso por 30 dias para baixar novamente quando quiser."
   }
 ];
 
@@ -57,7 +77,7 @@ const FAQSection = () => {
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-white/50 transition-colors duration-200"
+                className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-white/50 transition-colors duration-200 cursor-pointer"
                 aria-label={`${openIndex === index ? 'Fechar' : 'Abrir'} pergunta: ${faq.question}`}
                 aria-expanded={openIndex === index}
               >
