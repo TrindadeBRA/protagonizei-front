@@ -41,17 +41,17 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/favicon.ico?v=2', sizes: 'any' },
-      { url: '/icon-64.png', type: 'image/png', sizes: '32x32' },
-      { url: '/icon-192.png', type: 'image/png', sizes: '192x192' },
-      { url: '/icon-512.png', type: 'image/png', sizes: '512x512' },
+      { url: '/assets/images/icon-64.png', type: 'image/png', sizes: '32x32' },
+      { url: '/assets/images/icon-192.png', type: 'image/png', sizes: '192x192' },
+      { url: '/assets/images/icon-512.png', type: 'image/png', sizes: '512x512' },
     ],
     apple: [
-      { url: '/icon-192.png', sizes: '180x180' },
+      { url: '/assets/images/icon-192.png', sizes: '180x180' },
     ],
     other: [
       {
         rel: 'mask-icon',
-        url: '/safari-pinned-tab.svg',
+        url: '/assets/images/safari-pinned-tab.svg',
         color: '#000000',
       },
     ],
