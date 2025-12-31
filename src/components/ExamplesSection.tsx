@@ -68,7 +68,7 @@ const ExamplesSection = () => {
               data-aos="fade-in" 
               data-aos-delay={index * 100}
             >
-              <div className={`bg-gradient-to-br ${example.color} p-4 md:p-6 text-black relative`}>
+              <div className={`bg-gradient-to-br ${example.color} p-4 md:p-6 text-black relative overflow-hidden`}>
                 <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
                   <div className="flex-shrink-0 animate-avatar-pulse" style={{ animationDelay: `${index * 0.2}s` }}>
                     <Image src={example.avatar} alt={example.name} width={120} height={120} className="rounded-full" />
@@ -83,7 +83,7 @@ const ExamplesSection = () => {
                 </div>
               </div>
 
-              <div className="px-2 md:px-6 py-2 md:py-4 relative overflow-hidden">
+              <div className="px-2 md:px-6 py-2 md:py-4 relative overflow-visible">
                 {/* Floating decorative elements */}
                 <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
                   <div className="absolute top-[8%] left-[12%] float-animation" style={{ animationDelay: `${index * 0.15 + 0}s` }}>
@@ -159,7 +159,7 @@ const ExamplesSection = () => {
                     <Image src="/assets/images/asset-star-2.png" alt="" width={14} height={14} />
                   </div>
                 </div>
-                <div className="max-w-md mx-auto relative z-10">
+                <div className="max-w-md mx-auto relative z-10 px-8 md:px-12">
                   <Book3DExample 
                     coverImage={example.pages.coverImage}
                     page1Left={example.pages.page1Left}
@@ -170,6 +170,7 @@ const ExamplesSection = () => {
                     page3Right={example.pages.page3Right}
                     page4Left={example.pages.page4Left}
                     page4Right={example.pages.page4Right}
+                    arrowColor={example.name === "João" ? "blue" : "pink"}
                   />
                 </div>
               </div>

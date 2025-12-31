@@ -17,7 +17,7 @@ const testimonials = [
     name: "Ana Beatriz",
     gender_child: "male",
     location: "São Paulo, SP",
-    child: "Mãe do João (4 anos)",
+    child: "Mãe do João (3 anos)",
     rating: 5,
     text: "Meu filho não desgruda do livro! Agora ele mesmo conta a história pros amiguinhos. É leitura divertida garantida.",
     avatar: "/assets/images/testimonials/ana-beatriz.jpeg"
