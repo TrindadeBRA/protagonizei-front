@@ -11,6 +11,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import customFetch from "@/src/services/custom-fetch";
 import { getGetConfigsUrl } from "@/src/services/api";
 import Navigation from "@/src/components/Navigation";
+import Image from "next/image";
 
 const inter = Inter({
   variable: '--font-inter',
@@ -135,7 +136,7 @@ fbq('track', 'PageView');`}
         {/* Meta Pixel noscript */}
         {metaPixelId && (
           <noscript>
-            <img height="1" width="1" style={{ display: "none" }}
+            <Image height="1" width="1" className="hidden" alt="Meta Pixel"
               src={`https://www.facebook.com/tr?id=${metaPixelId}&ev=PageView&noscript=1`}
             />
           </noscript>

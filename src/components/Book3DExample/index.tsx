@@ -8,6 +8,7 @@ import type { FlipBookProps, FlipBookRef } from '../../types/pageflip';
 import Link from 'next/link';
 import { Lock, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/src/lib/utils';
+import Image from 'next/image';
 
 const FlipBook = dynamic(
 	() => import('react-pageflip').then((m) => m.default),
@@ -37,12 +38,14 @@ const LOCK_ICON_CLASSES = "magical-border border-4 border-transparent text-white
 const BookPage = forwardRef<HTMLDivElement, { src: string; alt: string; side: 'left' | 'right' }>(
 	({ src, alt, side }, ref) => (
 		<div ref={ref} className="w-full h-full bg-white rounded-xl shadow-md overflow-hidden">
-			<img
+			<Image
 				src={src}
 				alt={alt}
 				className={side === 'left' ? PAGE_CLASSES.left : PAGE_CLASSES.right}
 				draggable={false}
 				loading="lazy"
+				width={538}
+				height={600}
 			/>
 		</div>
 	)
@@ -53,7 +56,7 @@ const LockedBookPage = forwardRef<HTMLDivElement, { src: string; alt: string; si
 	({ src, alt, side }, ref) => (
 		<div ref={ref} className="w-full h-full bg-white rounded-xl shadow-md overflow-hidden">
 			<Link href="/#criar-historia">
-				<img
+				<Image
 					src={src}
 					alt={alt}
 					className={cn(
@@ -62,6 +65,8 @@ const LockedBookPage = forwardRef<HTMLDivElement, { src: string; alt: string; si
 					)}
 					draggable={false}
 					loading="lazy"
+					width={538}
+					height={600}
 				/>
 				<div className={LOCK_OVERLAY_CLASSES}>
 					<div className={LOCK_ICON_CLASSES}>
@@ -111,6 +116,18 @@ export default function Book3DExample({
 	const [totalPages, setTotalPages] = useState(5);
 	const isBlue = arrowColor === 'blue';
 
+	const {
+		flipBookRef,
+		handleFlip,
+		handleChangeState,
+		stopAutoFlip,
+	} = useAutoFlip({
+		maxFlips: 1,
+		initialDelay: 1000,
+		interval: 2500,
+		enabled: isInView
+	});
+
 	useEffect(() => {
 		const checkPages = setInterval(() => {
 			if (flipBookRef.current?.pageFlip()) {
@@ -123,19 +140,7 @@ export default function Book3DExample({
 		}, 100);
 
 		return () => clearInterval(checkPages);
-	}, []);
-
-	const {
-		flipBookRef,
-		handleFlip,
-		handleChangeState,
-		stopAutoFlip,
-	} = useAutoFlip({
-		maxFlips: 1,
-		initialDelay: 1000,
-		interval: 2500,
-		enabled: isInView
-	});
+	}, [flipBookRef]);
 
 	const handlePageFlip = (e: any) => {
 		handleFlip(e);

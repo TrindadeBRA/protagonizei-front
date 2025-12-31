@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { CheckCircle, XCircle, Loader2, Tag } from "lucide-react";
@@ -57,7 +57,7 @@ const CouponDiscount = ({
     const originalPriceRef = useRef<number | null>(null);
     const autoApplyAttemptedRef = useRef<boolean>(false);
 
-    const handleCouponCheck = async () => {
+    const handleCouponCheck = useCallback(async () => {
         if (!couponValue.trim()) {
             setCouponState({
                 status: "error",
@@ -115,7 +115,7 @@ const CouponDiscount = ({
             }
             setCouponState({ status: "error", message: errorMessage, appliedCoupon: null });
         }
-    };
+    }, [couponValue, hasBookId, bookId, currentPrice, onPriceUpdate]);
 
     const handleRemoveCoupon = () => {
         if (couponState.appliedCoupon) {
@@ -146,7 +146,7 @@ const CouponDiscount = ({
                 setIsCouponFromUrl(false);
             }
         }
-    }, [isCouponFromUrl, hasBookId, couponValue, couponState.status]);
+    }, [isCouponFromUrl, hasBookId, couponValue, couponState.status, handleCouponCheck, setIsCouponFromUrl]);
 
     // Desabilita input se cupom já estiver aplicado (estado local) ou se detectarmos desconto via preços
     const isAppliedByPrice = typeof originalPrice === 'number' && typeof currentPrice === 'number' && currentPrice < originalPrice;
@@ -154,7 +154,7 @@ const CouponDiscount = ({
         if (isAppliedByPrice && couponValue && couponState.status !== 'success') {
             setCouponState({ status: 'success', message: '', appliedCoupon: couponValue });
         }
-    }, [isAppliedByPrice, couponValue]);
+    }, [isAppliedByPrice, couponValue, couponState.status]);
 
     const isInputDisabled = disabled || couponState.status === "success" || isAppliedByPrice || !hasBookId;
     const showRemoveButton = couponState.status === "success" && couponState.appliedCoupon;

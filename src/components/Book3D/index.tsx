@@ -45,15 +45,18 @@ const LOCK_OVERLAY_CLASSES = "absolute inset-0 bg-black/50 flex items-center jus
 const LOCK_ICON_CLASSES = "magical-border border-4 border-transparent text-white font-bold w-16 h-16 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert flex items-center justify-center";
 
 // Componente para páginas normais
-const BookPage = forwardRef<HTMLDivElement, { src: string; alt: string; side: 'left' | 'right' }>(
-	({ src, alt, side }, ref) => (
+const BookPage = forwardRef<HTMLDivElement, { src: string; alt: string; side: 'left' | 'right'; priority?: boolean }>(
+	({ src, alt, side, priority = false }, ref) => (
 		<div ref={ref} className="w-full h-full bg-white rounded-xl shadow-md overflow-hidden">
-			<img
+			<Image
 				src={src}
 				alt={alt}
 				className={side === 'left' ? PAGE_CLASSES.left : PAGE_CLASSES.right}
 				draggable={false}
-				loading="lazy"
+				loading={priority ? undefined : "lazy"}
+				priority={priority}
+				width={538}
+				height={600}
 			/>
 		</div>
 	)
@@ -65,7 +68,7 @@ const LockedBookPage = forwardRef<HTMLDivElement, { src: string; alt: string; si
 	({ src, alt, side }, ref) => (
 		<div ref={ref} className="w-full h-full bg-white rounded-xl shadow-md overflow-hidden">
 			<Link href="/#criar-historia">
-				<img
+				<Image
 					src={src}
 					alt={alt}
 					className={cn(
@@ -74,6 +77,8 @@ const LockedBookPage = forwardRef<HTMLDivElement, { src: string; alt: string; si
 					)}
 					draggable={false}
 					loading="lazy"
+					width={538}
+					height={600}
 				/>
 				<div className={LOCK_OVERLAY_CLASSES}>
 					<div className={LOCK_ICON_CLASSES}>
@@ -109,10 +114,12 @@ export default function Book3D({ className }: Book3DProps) {
 				alt="Protagonizei"
 				width={284}
 				height={355}
+				priority
 				className={cn(
 					"absolute -top-[20px] left-[0] h-[150px] w-auto animate-avatar-move z-10",
 					"min-md:h-[250px] min-md:-top-[35px] min-md:animate-avatar-move"
 				)}
+				style={{ width: "auto" }}
 			/>
 
 			<Image
@@ -124,6 +131,7 @@ export default function Book3D({ className }: Book3DProps) {
 					"absolute top-[20px] left-[180px] w-[130px] z-10 animate-arrow-appear",
 					"min-md:top-[0px] min-md:left-[250px] min-md:w-[300px]"
 				)}
+				style={{ width: "auto" }}
 			/>
 
 
@@ -145,7 +153,7 @@ export default function Book3D({ className }: Book3DProps) {
 				)}
 			>
 				{/* Capa */}
-				<BookPage src="/assets/images/book/cover-1.webp" alt="Capa" side="left" />
+				<BookPage src="/assets/images/book/cover-1.webp" alt="Capa" side="left" priority />
 
 
 				{/* Páginas 0-3 (sem blur) */}

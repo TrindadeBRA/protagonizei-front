@@ -9,6 +9,7 @@ import { FormDataState } from "../useFormSection";
 import CouponDiscount from "../CouponDiscount";
 import PriceSummary from "../PriceSummary";
 import { useFormColors } from "../useFormColors";
+import Image from "next/image";
 
 type Props = {
   formData: FormDataState;
@@ -133,10 +134,12 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
             <span className="text-gray-600">Foto:</span>
             <div className="flex items-center gap-3">
               {croppedPreviewUrl || photoPreviewUrl ? (
-                <img
+                <Image
                   src={croppedPreviewUrl || photoPreviewUrl || ""}
                   alt={`Foto de ${formData.childName || "criança"}`}
                   onClick={onChangePhoto}
+                  width={48}
+                  height={48}
                   className={twMerge(
                     "w-12 h-12 rounded-lg object-cover ring-2 ring-pink-200 shadow-sm",
                     onChangePhoto ? "cursor-pointer hover:ring-4 hover:ring-pink-300 transition-all" : ""
