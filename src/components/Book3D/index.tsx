@@ -10,8 +10,8 @@ import Image from 'next/image';
 import { cn } from '@/src/lib/utils';
 
 const FlipBook = dynamic(
-	() => import('react-pageflip').then((m) => m.default),
-	{ ssr: true }
+        () => import('react-pageflip').then((m) => m.default),
+        { ssr: false }
 ) as React.ComponentType<any>;
 
 const Page = forwardRef<HTMLDivElement, { children?: React.ReactNode }>(
@@ -46,19 +46,20 @@ const LOCK_ICON_CLASSES = "magical-border border-4 border-transparent text-white
 
 // Componente para páginas normais
 const BookPage = forwardRef<HTMLDivElement, { src: string; alt: string; side: 'left' | 'right'; priority?: boolean }>(
-	({ src, alt, side, priority = true }, ref) => (
-		<div ref={ref} className="w-full h-full bg-white rounded-xl shadow-md overflow-hidden">
-			<Image
-				src={src}
-				alt={alt}
-				className={side === 'left' ? PAGE_CLASSES.left : PAGE_CLASSES.right}
-				draggable={false}
-				priority={priority}
-				width={538}
-				height={600}
-			/>
-		</div>
-	)
+        ({ src, alt, side, priority = false }, ref) => (
+                <div ref={ref} className="w-full h-full bg-white rounded-xl shadow-md overflow-hidden">
+                        <Image
+                                src={src}
+                                alt={alt}
+                                className={side === 'left' ? PAGE_CLASSES.left : PAGE_CLASSES.right}
+                                draggable={false}
+                                priority={priority}
+                                loading={priority ? undefined : "lazy"}
+                                width={538}
+                                height={600}
+                        />
+                </div>
+        )
 );
 BookPage.displayName = 'BookPage';
 
@@ -68,17 +69,17 @@ const LockedBookPage = forwardRef<HTMLDivElement, { src: string; alt: string; si
 		<div ref={ref} className="w-full h-full bg-white rounded-xl shadow-md overflow-hidden">
 			<Link href="/#criar-historia">
 				<Image
-					src={src}
-					alt={alt}
-					className={cn(
-						side === 'left' ? PAGE_CLASSES.left : PAGE_CLASSES.right,
-						PAGE_CLASSES.locked
-					)}
-					draggable={false}
-					priority={true}
-					width={538}
-					height={600}
-				/>
+                                        src={src}
+                                        alt={alt}
+                                        className={cn(
+                                                side === 'left' ? PAGE_CLASSES.left : PAGE_CLASSES.right,
+                                                PAGE_CLASSES.locked
+                                        )}
+                                        draggable={false}
+                                        loading="lazy"
+                                        width={538}
+                                        height={600}
+                                />
 				<div className={LOCK_OVERLAY_CLASSES}>
 					<div className={LOCK_ICON_CLASSES}>
 						<Lock className="size-8 text-white" />
@@ -108,29 +109,27 @@ export default function Book3D({ className }: Book3DProps) {
 
 	return (
 		<div className={className}>
-			<Image
-				src="/assets/images/book/avatar.webp"
-				alt="Protagonizei"
-				width={284}
-				height={355}
-				priority
-				className={cn(
-					"absolute -top-[20px] left-[0] h-[150px] w-auto animate-avatar-move z-10",
-					"min-md:h-[250px] min-md:-top-[35px] min-md:animate-avatar-move"
-				)}
+                        <Image
+                                src="/assets/images/book/avatar.webp"
+                                alt="Protagonizei"
+                                width={284}
+                                height={355}
+                                className={cn(
+                                        "absolute -top-[20px] left-[0] h-[150px] w-auto animate-avatar-move z-10",
+                                        "min-md:h-[250px] min-md:-top-[35px] min-md:animate-avatar-move"
+                                )}
 				style={{ width: "auto" }}
 			/>
 
-			<Image
-				src="/assets/images/book/arrow.png"
-				alt="Protagonizei"
-				width={200}
-				height={200}
-				priority
-				className={cn(
-					"absolute top-[20px] left-[180px] w-[130px] z-10 animate-arrow-appear",
-					"min-md:top-[0px] min-md:left-[250px] min-md:w-[300px]"
-				)}
+                        <Image
+                                src="/assets/images/book/arrow.png"
+                                alt="Protagonizei"
+                                width={200}
+                                height={200}
+                                className={cn(
+                                        "absolute top-[20px] left-[180px] w-[130px] z-10 animate-arrow-appear",
+                                        "min-md:top-[0px] min-md:left-[250px] min-md:w-[300px]"
+                                )}
 			/>
 
 
@@ -146,24 +145,24 @@ export default function Book3D({ className }: Book3DProps) {
 				autoSize={true}
 				onFlip={handleFlip}
 				onChangeState={handleChangeState}
-				className={cn(
-					"mt-[150px] float-animation",
-					"min-md:mt-[230px]"
-				)}
-			>
-				{/* Capa */}
-				<BookPage src="/assets/images/book/cover-1.webp" alt="Capa" side="left" priority />
+                                className={cn(
+                                        "mt-[150px] float-animation",
+                                        "min-md:mt-[230px]"
+                                )}
+                        >
+                                {/* Capa */}
+                                <BookPage src="/assets/images/book/cover-1.webp" alt="Capa" side="left" priority />
 
 
 				{/* Páginas 0-3 (sem blur) */}
-				<BookPage src="/assets/images/book/page1-1.webp" alt="Página 0 esquerda" side="left" priority />
-				<BookPage src="/assets/images/book/page1-1.webp" alt="Página 0 direita" side="right" priority />
+                                <BookPage src="/assets/images/book/page1-1.webp" alt="Página 0 esquerda" side="left" priority />
+                                <BookPage src="/assets/images/book/page1-1.webp" alt="Página 0 direita" side="right" priority />
 								
-				<BookPage src="/assets/images/book/page2-1.webp" alt="Página 2 esquerda" side="left" priority />
-				<BookPage src="/assets/images/book/page2-1.webp" alt="Página 2 direita" side="right" priority />
+                                <BookPage src="/assets/images/book/page2-1.webp" alt="Página 2 esquerda" side="left" />
+                                <BookPage src="/assets/images/book/page2-1.webp" alt="Página 2 direita" side="right" />
 				
-				<BookPage src="/assets/images/book/page3-1.webp" alt="Página 3 esquerda" side="left" priority />
-				<BookPage src="/assets/images/book/page3-1.webp" alt="Página 3 direita" side="right" priority />
+                                <BookPage src="/assets/images/book/page3-1.webp" alt="Página 3 esquerda" side="left" />
+                                <BookPage src="/assets/images/book/page3-1.webp" alt="Página 3 direita" side="right" />
 
 				{/* Páginas 4-9 (com blur e cadeado) */}
 				<LockedBookPage src="/assets/images/book/page4-1.webp" alt="Página 4 esquerda" side="left" />

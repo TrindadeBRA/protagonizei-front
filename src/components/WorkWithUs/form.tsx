@@ -90,14 +90,14 @@ export function WorkWithUsForm() {
       })
 
       if (response.success) {
-        successToast("Formulário enviado com sucesso! Entraremos em contato em breve.")
+        await successToast("Formulário enviado com sucesso! Entraremos em contato em breve.")
         reset()
       } else {
         throw new Error(response.message || "Erro ao enviar formulário")
       }
     } catch (e) {
       console.error("Erro ao enviar o formulário", e)
-      errorToast("Ocorreu um erro ao enviar o formulário. Tente novamente mais tarde.")
+      await errorToast("Ocorreu um erro ao enviar o formulário. Tente novamente mais tarde.")
     } finally {
       setIsSubmitting(false)
     }

@@ -1,40 +1,29 @@
 import type { Metadata } from "next";
-import { Comic_Neue, Englebert, Fredoka, Inter } from "next/font/google";
+import { Fredoka, Inter } from "next/font/google";
 import "./globals.css";
-import "toastify-js/src/toastify.css"
 import Script from "next/script";
 import { WhatsAppFloat } from "../src/components/WhatsAppFloat";
 import Footer from "@/src/components/Footer";
-import AOS_Init from "@/src/components/AOS_Init";
 import { CookieConsentComponent } from "@/src/components/CookieConsentComponent";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import customFetch from "@/src/services/custom-fetch";
 import { getGetConfigsUrl } from "@/src/services/api";
 import Navigation from "@/src/components/Navigation";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
 });
 
-const englebert = Englebert({
-  variable: '--font-englebert',
-  subsets: ['latin'],
-  weight: ['400'],
-});
 const fredoka = Fredoka({
   variable: '--font-fredoka',
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700'],
 });
 
-const comicNeue = Comic_Neue({
-  variable: '--font-comic-neue',
-  subsets: ['latin'],
-  weight: ['300', '400', '700'],
-});
-
+const AOS_Init = dynamic(() => import("@/src/components/AOS_Init"), { ssr: false });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://protagonizei.com/'),
@@ -82,7 +71,7 @@ export default async function RootLayout({
       <head>
         {/* Google Tag Manager */}
         {gtmId && (
-          <Script id="google-tag-manager" strategy="beforeInteractive">
+          <Script id="google-tag-manager" strategy="afterInteractive">
             {`(function(w,d,s,l,i){w[l] = w[l] || [];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -111,18 +100,18 @@ fbq('track', 'PageView');`}
         <Script
           id="google-translate-init"
           src="/assets/scripts/translation.js"
-          strategy="beforeInteractive"
+          strategy="lazyOnload"
         />
         <Script
           id="google-translate-api"
-          src="//translate.google.com/translate_a/element.js?cb=TranslateInit"
-          strategy="afterInteractive"
+          src="https://translate.google.com/translate_a/element.js?cb=TranslateInit"
+          strategy="lazyOnload"
         />
 
       </head>
 
       <body
-        className={`${inter.variable} ${fredoka.variable} ${comicNeue.variable} ${englebert.variable} antialiased !bg-white !text-black !top-0 !pt-16 overflow-x-hidden`}
+        className={`${inter.variable} ${fredoka.variable} antialiased !bg-white !text-black !top-0 !pt-16 overflow-x-hidden`}
       >
 
         {/* Google Tag Manager */}

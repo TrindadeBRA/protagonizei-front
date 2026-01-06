@@ -11,8 +11,8 @@ import { cn } from '@/src/lib/utils';
 import Image from 'next/image';
 
 const FlipBook = dynamic(
-	() => import('react-pageflip').then((m) => m.default),
-	{ ssr: true }
+        () => import('react-pageflip').then((m) => m.default),
+        { ssr: false }
 ) as React.ComponentType<any>;
 
 interface TypedFlipBookProps extends Partial<FlipBookProps> {
