@@ -11,6 +11,10 @@ import customFetch from '@/src/services/custom-fetch'
 import Link from 'next/link'
 
 const whatsAppFormSchema = z.object({
+    name: z
+        .string()
+        .min(1, 'Nome é obrigatório')
+        .min(2, 'Nome deve ter pelo menos 2 caracteres'),
     email: z
         .string()
         .min(1, 'Email é obrigatório')
@@ -41,11 +45,14 @@ export function WhatsAppForm({ setIsOpen, whatsAppUrl }: WhatsAppFormProps) {
             setIsSubmitting(true)
 
             const formData = new FormData()
+            formData.append('name', data.name)
             formData.append('email', data.email)
+            formData.append('phone', 'N/A')
             formData.append('tag', 'WhatsApp Widget')
             formData.append('message',
                 `
                 Página origem: ${window.location.href}
+                Nome: ${data.name}
                 Email: ${data.email}
                 `
             )
@@ -79,6 +86,23 @@ export function WhatsAppForm({ setIsOpen, whatsAppUrl }: WhatsAppFormProps) {
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-3">
                 <div>
+                    <label htmlFor="name" className="text-xs text-muted-foreground">
+                        Seu nome:
+                    </label>
+                    <input
+                        id="name"
+                        {...register('name')}
+                        type="text"
+                        autoComplete="name"
+                        placeholder="Seu nome completo"
+                        className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:border-green-500 dark:bg-gray-800 dark:text-white bg-white! placeholder:text-gray-500 text-black! text-sm"
+                    />
+                    {errors.name && (
+                        <p className="mt-1 text-xs text-red-600">{errors.name.message}</p>
+                    )}
+                </div>
+
+                <div>
                     <label htmlFor="email" className="text-xs text-muted-foreground">
                         Seu email para contato:
                     </label>
@@ -88,10 +112,10 @@ export function WhatsAppForm({ setIsOpen, whatsAppUrl }: WhatsAppFormProps) {
                         type="email"
                         autoComplete="email"
                         placeholder="seu@email.com"
-                        className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-800 dark:text-white bg-white! placeholder:text-gray-500 text-black! text-sm"
+                        className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:border-green-500 dark:bg-gray-800 dark:text-white bg-white! placeholder:text-gray-500 text-black! text-sm"
                     />
                     {errors.email && (
-                        <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                        <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>
                     )}
                 </div>
 
