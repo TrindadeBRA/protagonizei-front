@@ -50,7 +50,7 @@ export function TalkToUsForm() {
       })
         
       if (response.success) {
-        successToast("Mensagem enviada com sucesso! Entraremos em contato em breve.")
+        await successToast("Mensagem enviada com sucesso! Entraremos em contato em breve.")
         reset()
       } else {
         throw new Error("Erro ao enviar formulário")
@@ -58,7 +58,7 @@ export function TalkToUsForm() {
 
     } catch (e) {
       console.error("Erro ao enviar o formulário", e)
-      errorToast("Ocorreu um erro ao enviar o formulário. Tente novamente mais tarde.")
+      await errorToast("Ocorreu um erro ao enviar o formulário. Tente novamente mais tarde.")
     } finally {
       setIsSubmitting(false)
 

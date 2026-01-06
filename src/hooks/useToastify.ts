@@ -1,7 +1,16 @@
 import Toastify from 'toastify-js'
 
+let toastCssPromise: Promise<unknown> | null = null
 
-export function successToast(message: string) {
+const ensureToastStyles = () => {
+  if (!toastCssPromise) {
+    toastCssPromise = import('toastify-js/src/toastify.css')
+  }
+  return toastCssPromise
+}
+
+export async function successToast(message: string) {
+    await ensureToastStyles()
     Toastify({
         text: message,
         duration: 5000,
@@ -24,7 +33,8 @@ export function successToast(message: string) {
       }).showToast();
 }
 
-export function errorToast(message: string) {
+export async function errorToast(message: string) {
+    await ensureToastStyles()
     Toastify({
         text: message,
         duration: 5000,
