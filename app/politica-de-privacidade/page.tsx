@@ -46,7 +46,7 @@ export default function PoliticaPrivacidadePage() {
               <li><strong>Dados de cadastro e contato:</strong> nome, e-mail, telefone</li>
               <li><strong>Dados do pedido:</strong> nome da criança, idade, gênero, tom de pele e foto enviada</li>
               <li><strong>Dados de navegação:</strong> IP, navegador, páginas acessadas, cookies e tecnologias similares</li>
-              <li><strong>Currículos e dados profissionais,</strong> quando enviados via "Trabalhe Conosco"</li>
+              <li><strong>Currículos e dados profissionais,</strong> quando enviados via &quot;Trabalhe Conosco&quot;</li>
             </ul>
           </section>
 
