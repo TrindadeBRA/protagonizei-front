@@ -2,7 +2,7 @@
 
 import { useAutoFlip } from '../../../src/hooks/useAutoFlip';
 import { useBookDimensions } from '../../../src/hooks/useBookDimensions';
-import { BookPage, BookControls, FlipBookWrapper, FullscreenWidget } from '../../../src/components/play';
+import { BookPage, BookControls, FlipBookWrapper } from '../../../src/components/play';
 
 /**
  * Página de visualização interativa do livro
@@ -20,8 +20,6 @@ export default function PlayPage() {
 
 	return (
 		<div className="min-h-screen w-full bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100">
-			<FullscreenWidget />
-
 			<BookControls>
 				<div className="flex items-center justify-center h-screen">
 					<FlipBookWrapper
