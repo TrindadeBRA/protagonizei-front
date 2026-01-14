@@ -68,6 +68,16 @@ const Footer = () => {
         {/* Separador */}
         <div className="w-full h-px bg-gradient-to-r from-transparent via-pink-300 to-transparent mb-6"></div>
 
+        {/* Links Legais */}
+        <div className="flex justify-center mb-4" data-aos="fade-up" data-aos-delay={75} data-aos-anchor="#footer-logo">
+          <Link
+            href="/politica-de-privacidade"
+            className="text-black hover:text-pink-main transition-colors duration-200 font-medium text-sm"
+          >
+            Política de Privacidade
+          </Link>
+        </div>
+
         {/* Copyright */}
         <div className="text-center space-y-2" data-aos="fade-left" data-aos-delay={100} data-aos-anchor="#footer-logo">
           <p className="text-black font-medium">

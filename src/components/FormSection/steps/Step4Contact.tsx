@@ -10,6 +10,7 @@ import CouponDiscount from "../CouponDiscount";
 import PriceSummary from "../PriceSummary";
 import { useFormColors } from "../useFormColors";
 import Image from "next/image";
+import Link from "next/link";
 
 type Props = {
   formData: FormDataState;
@@ -171,6 +172,20 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-lg mb-4">
+        <p className="text-xs text-gray-700 leading-relaxed">
+          Ao continuar, você concorda com nossa{" "}
+          <Link 
+            href="/politica-de-privacidade" 
+            target="_blank"
+            className="text-blue-600 hover:text-blue-800 underline font-semibold"
+          >
+            Política de Privacidade
+          </Link>
+          {" "}e autoriza o uso de seus dados para envio de comunicações promocionais, automações de marketing e publicidade direcionada.
+        </p>
       </div>
 
       <div className="flex space-x-4">
