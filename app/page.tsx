@@ -5,6 +5,7 @@ import FAQSection from "@/src/components/FAQSection";
 import HeroSection from "@/src/components/HeroSection";
 import HowItWorksSection from "@/src/components/HowItWorksSection";
 import TestimonialsSection from "@/src/components/TestimonialsSection";
+import PricingSection from "@/src/components/PricingSection";
 import CouponHandler from "@/src/components/CouponHandler";
 import Script from 'next/script';
 
@@ -78,6 +79,9 @@ export default async function Home() {
       </div>
       <div id="faq">
         <FAQSection />
+      </div>
+      <div id="preco">
+        <PricingSection />
       </div>
       <div id="form">
         <FormSection />

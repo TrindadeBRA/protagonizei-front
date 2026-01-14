@@ -25,7 +25,7 @@ const Footer = () => {
         {/* Links de navegação */}
         <div className="flex justify-center mb-8" id="footer-logo" data-aos="fade-left">
           <Link href="/" className="block">
-            <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="w-full sm:max-w-[200px] sm:h-auto" />
+            <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="max-w-[150px] sm:max-w-[200px] h-auto" />
           </Link>
         </div>
 
@@ -72,7 +72,7 @@ const Footer = () => {
         <div className="flex justify-center mb-4" data-aos="fade-up" data-aos-delay={75} data-aos-anchor="#footer-logo">
           <Link
             href="/politica-de-privacidade"
-            className="text-black hover:text-pink-main transition-colors duration-200 font-medium text-sm"
+            className="text-black hover:text-pink-main hover:underline transition-all duration-200 font-medium text-sm"
           >
             Política de Privacidade
           </Link>

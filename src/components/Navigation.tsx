@@ -32,6 +32,7 @@ const Navigation = () => {
     { label: "Depoimentos", href: "/#depoimentos" },
     { label: "Blog", href: "/blog" },
     { label: "FAQ", href: "/#faq" },
+    { label: "Preço", href: "/#preco" },
     { label: "Crie sua história!", href: "/#criar-historia", cta: true },
   ]), []);
 
