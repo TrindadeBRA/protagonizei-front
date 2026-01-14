@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useAutoFlip } from '../../../src/hooks/useAutoFlip';
 import { useBookDimensions } from '../../../src/hooks/useBookDimensions';
+import { useMinimizeControls } from '../../../src/hooks/useMinimizeControls';
 import { BookPage, BookControls, FlipBookWrapper } from '../../../src/components/play';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '../../../src/lib/utils';
@@ -14,6 +15,7 @@ import { cn } from '../../../src/lib/utils';
 export default function PlayPage() {
 	// Hooks personalizados
 	const dimensions = useBookDimensions();
+	const { isMinimized, toggleMinimize } = useMinimizeControls();
 	const [currentPage, setCurrentPage] = useState(0);
 	const [totalPages, setTotalPages] = useState(0);
 	
@@ -66,7 +68,7 @@ export default function PlayPage() {
 
 	return (
 		<div className="min-h-screen w-full bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100">
-			<BookControls>
+			<BookControls isMinimized={isMinimized} onToggleMinimize={toggleMinimize}>
 				<div className="flex items-center justify-center h-screen">
 					<FlipBookWrapper
 						ref={flipBookRef}
@@ -112,59 +114,64 @@ export default function PlayPage() {
 			</BookControls>
 
 			{/* Setas de navegação - fora do BookControls para não serem afetadas pelo zoom */}
-			{/* Seta esquerda - Página anterior */}
-			<button
-				onClick={handlePrevPage}
-				disabled={currentPage === 0}
-				onMouseEnter={(e) => {
-					e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
-				}}
-				onMouseLeave={(e) => {
-					e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)'; // purple-600/40
-				}}
-				onMouseDown={(e) => {
-					e.currentTarget.style.backgroundColor = 'rgba(126, 34, 206, 0.4)'; // purple-700/40
-				}}
-				onMouseUp={(e) => {
-					e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
-				}}
-				style={{
-					backgroundColor: 'rgba(147, 51, 234, 0.4)', // purple-600/40
-					backdropFilter: 'blur(12px)',
-					borderColor: 'rgba(196, 181, 253, 0.4)', // purple-300/40
-				}}
-				className="fixed left-[10%] top-1/2 -translate-y-1/2 z-50 text-white rounded-full p-4 transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg flex items-center justify-center prev-page-button"
-				aria-label="Página anterior"
-			>
-				<ChevronLeft className="h-7 w-7" />
-			</button>
+			{/* Só aparecem quando não está minimizado */}
+			{!isMinimized && (
+				<>
+					{/* Seta esquerda - Página anterior */}
+					<button
+						onClick={handlePrevPage}
+						disabled={currentPage === 0}
+						onMouseEnter={(e) => {
+							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
+						}}
+						onMouseLeave={(e) => {
+							e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)'; // purple-600/40
+						}}
+						onMouseDown={(e) => {
+							e.currentTarget.style.backgroundColor = 'rgba(126, 34, 206, 0.4)'; // purple-700/40
+						}}
+						onMouseUp={(e) => {
+							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
+						}}
+						style={{
+							backgroundColor: 'rgba(147, 51, 234, 0.4)', // purple-600/40
+							backdropFilter: 'blur(12px)',
+							borderColor: 'rgba(196, 181, 253, 0.4)', // purple-300/40
+						}}
+						className="fixed left-[10%] top-1/2 -translate-y-1/2 z-50 text-white rounded-full p-4 transition-all duration-300 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg flex items-center justify-center"
+						aria-label="Página anterior"
+					>
+						<ChevronLeft className="h-7 w-7" />
+					</button>
 
-			{/* Seta direita - Próxima página */}
-			<button
-				onClick={handleNextPage}
-				disabled={currentPage >= totalPages - 1}
-				onMouseEnter={(e) => {
-					e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
-				}}
-				onMouseLeave={(e) => {
-					e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)'; // purple-600/40
-				}}
-				onMouseDown={(e) => {
-					e.currentTarget.style.backgroundColor = 'rgba(126, 34, 206, 0.4)'; // purple-700/40
-				}}
-				onMouseUp={(e) => {
-					e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
-				}}
-				style={{
-					backgroundColor: 'rgba(147, 51, 234, 0.4)', // purple-600/40
-					backdropFilter: 'blur(12px)',
-					borderColor: 'rgba(196, 181, 253, 0.4)', // purple-300/40
-				}}
-				className="fixed right-[10%] top-1/2 -translate-y-1/2 z-50 text-white rounded-full p-4 transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg flex items-center justify-center next-page-button	"
-				aria-label="Próxima página"
-			>
-				<ChevronRight className="h-7 w-7" />
-			</button>
+					{/* Seta direita - Próxima página */}
+					<button
+						onClick={handleNextPage}
+						disabled={currentPage >= totalPages - 1}
+						onMouseEnter={(e) => {
+							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
+						}}
+						onMouseLeave={(e) => {
+							e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)'; // purple-600/40
+						}}
+						onMouseDown={(e) => {
+							e.currentTarget.style.backgroundColor = 'rgba(126, 34, 206, 0.4)'; // purple-700/40
+						}}
+						onMouseUp={(e) => {
+							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
+						}}
+						style={{
+							backgroundColor: 'rgba(147, 51, 234, 0.4)', // purple-600/40
+							backdropFilter: 'blur(12px)',
+							borderColor: 'rgba(196, 181, 253, 0.4)', // purple-300/40
+						}}
+						className="fixed right-[10%] top-1/2 -translate-y-1/2 z-50 text-white rounded-full p-4 transition-all duration-300 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg flex items-center justify-center"
+						aria-label="Próxima página"
+					>
+						<ChevronRight className="h-7 w-7" />
+					</button>
+				</>
+			)}
 		</div>
 	);
 }
