@@ -116,34 +116,54 @@ export default function PlayPage() {
 			<button
 				onClick={handlePrevPage}
 				disabled={currentPage === 0}
-				className={cn(
-					"fixed left-[10%] top-1/2 -translate-y-1/2 z-50",
-					"w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full",
-					"bg-purple-700 hover:bg-purple-600 active:bg-purple-800 text-white",
-					"flex items-center justify-center shadow-2xl",
-					"cursor-pointer hover:scale-110 active:scale-95 transition-all duration-200",
-					"disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-				)}
+				onMouseEnter={(e) => {
+					e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
+				}}
+				onMouseLeave={(e) => {
+					e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)'; // purple-600/40
+				}}
+				onMouseDown={(e) => {
+					e.currentTarget.style.backgroundColor = 'rgba(126, 34, 206, 0.4)'; // purple-700/40
+				}}
+				onMouseUp={(e) => {
+					e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
+				}}
+				style={{
+					backgroundColor: 'rgba(147, 51, 234, 0.4)', // purple-600/40
+					backdropFilter: 'blur(12px)',
+					borderColor: 'rgba(196, 181, 253, 0.4)', // purple-300/40
+				}}
+				className="fixed left-[10%] top-1/2 -translate-y-1/2 z-50 text-white rounded-full p-4 transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg flex items-center justify-center prev-page-button"
 				aria-label="Página anterior"
 			>
-				<ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />
+				<ChevronLeft className="h-7 w-7" />
 			</button>
 
 			{/* Seta direita - Próxima página */}
 			<button
 				onClick={handleNextPage}
 				disabled={currentPage >= totalPages - 1}
-				className={cn(
-					"fixed right-[10%] top-1/2 -translate-y-1/2 z-50",
-					"w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full",
-					"bg-purple-700 hover:bg-purple-600 active:bg-purple-800 text-white",
-					"flex items-center justify-center shadow-2xl",
-					"cursor-pointer hover:scale-110 active:scale-95 transition-all duration-200",
-					"disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-				)}
+				onMouseEnter={(e) => {
+					e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
+				}}
+				onMouseLeave={(e) => {
+					e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)'; // purple-600/40
+				}}
+				onMouseDown={(e) => {
+					e.currentTarget.style.backgroundColor = 'rgba(126, 34, 206, 0.4)'; // purple-700/40
+				}}
+				onMouseUp={(e) => {
+					e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
+				}}
+				style={{
+					backgroundColor: 'rgba(147, 51, 234, 0.4)', // purple-600/40
+					backdropFilter: 'blur(12px)',
+					borderColor: 'rgba(196, 181, 253, 0.4)', // purple-300/40
+				}}
+				className="fixed right-[10%] top-1/2 -translate-y-1/2 z-50 text-white rounded-full p-4 transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg flex items-center justify-center next-page-button	"
 				aria-label="Próxima página"
 			>
-				<ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />
+				<ChevronRight className="h-7 w-7" />
 			</button>
 		</div>
 	);
