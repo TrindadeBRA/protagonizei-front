@@ -73,7 +73,7 @@ export const BookControls: React.FC<BookControlsProps> = ({
 							backdropFilter: 'blur(12px)',
 							borderColor: 'rgba(196, 181, 253, 0.4)', // purple-300/40
 						}}
-						className="text-white rounded-full p-4 transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg"
+						className="text-white rounded-full p-4 transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg cursor-pointer"
 						disabled={scale <= 0.25}
 						aria-label="Diminuir zoom"
 						title="Diminuir zoom (ou Ctrl + Scroll)"
@@ -108,7 +108,7 @@ export const BookControls: React.FC<BookControlsProps> = ({
 							backdropFilter: 'blur(12px)',
 							borderColor: 'rgba(196, 181, 253, 0.4)', // purple-300/40
 						}}
-						className="text-white rounded-full p-4 transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg"
+						className="text-white rounded-full p-4 transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg cursor-pointer"
 						disabled={scale >= 3}
 						aria-label="Aumentar zoom"
 						title="Aumentar zoom (ou Ctrl + Scroll)"
@@ -141,7 +141,7 @@ export const BookControls: React.FC<BookControlsProps> = ({
 							backdropFilter: 'blur(12px)',
 							borderColor: 'rgba(196, 181, 253, 0.4)', // purple-300/40
 						}}
-						className="text-white rounded-full p-4 transition-all duration-200 hover:scale-110 active:scale-95 border shadow-lg"
+						className="text-white rounded-full p-4 transition-all duration-200 hover:scale-110 active:scale-95 border shadow-lg cursor-pointer"
 						aria-label="Minimizar controles"
 						title="Minimizar controles"
 					>
@@ -171,7 +171,7 @@ export const BookControls: React.FC<BookControlsProps> = ({
 						backdropFilter: 'blur(12px)',
 						borderColor: 'rgba(196, 181, 253, 0.4)', // purple-300/40
 					}}
-					className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 text-white rounded-full p-2 transition-all duration-300 hover:scale-110 active:scale-95 border shadow-lg flex items-center justify-center"
+					className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 text-white rounded-full p-2 transition-all duration-300 hover:scale-110 active:scale-95 border shadow-lg flex items-center justify-center cursor-pointer"
 					aria-label="Restaurar controles"
 					title="Restaurar controles"
 				>

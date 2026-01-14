@@ -114,64 +114,86 @@ export default function PlayPage() {
 			</BookControls>
 
 			{/* Setas de navegação - fora do BookControls para não serem afetadas pelo zoom */}
-			{/* Só aparecem quando não está minimizado */}
-			{!isMinimized && (
-				<>
-					{/* Seta esquerda - Página anterior */}
-					<button
-						onClick={handlePrevPage}
-						disabled={currentPage === 0}
-						onMouseEnter={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
-						}}
-						onMouseLeave={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)'; // purple-600/40
-						}}
-						onMouseDown={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(126, 34, 206, 0.4)'; // purple-700/40
-						}}
-						onMouseUp={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
-						}}
-						style={{
-							backgroundColor: 'rgba(147, 51, 234, 0.4)', // purple-600/40
-							backdropFilter: 'blur(12px)',
-							borderColor: 'rgba(196, 181, 253, 0.4)', // purple-300/40
-						}}
-						className="fixed left-[10%] top-1/2 -translate-y-1/2 z-50 text-white rounded-full p-4 transition-all duration-300 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg flex items-center justify-center"
-						aria-label="Página anterior"
-					>
-						<ChevronLeft className="h-7 w-7" />
-					</button>
+			{/* Sempre visíveis, mas com opacidade reduzida quando minimizado */}
+			{/* Seta esquerda - Página anterior */}
+			<button
+				onClick={handlePrevPage}
+				disabled={currentPage === 0}
+				onMouseEnter={(e) => {
+					e.currentTarget.style.backgroundColor = isMinimized 
+						? 'rgba(168, 85, 247, 0.25)' // purple-500/25 quando minimizado
+						: 'rgba(168, 85, 247, 0.5)'; // purple-500/50 quando expandido
+				}}
+				onMouseLeave={(e) => {
+					e.currentTarget.style.backgroundColor = isMinimized 
+						? 'rgba(147, 51, 234, 0.15)' // purple-600/15 quando minimizado
+						: 'rgba(147, 51, 234, 0.4)'; // purple-600/40 quando expandido
+				}}
+				onMouseDown={(e) => {
+					e.currentTarget.style.backgroundColor = isMinimized 
+						? 'rgba(126, 34, 206, 0.2)' // purple-700/20 quando minimizado
+						: 'rgba(126, 34, 206, 0.4)'; // purple-700/40 quando expandido
+				}}
+				onMouseUp={(e) => {
+					e.currentTarget.style.backgroundColor = isMinimized 
+						? 'rgba(168, 85, 247, 0.25)' // purple-500/25 quando minimizado
+						: 'rgba(168, 85, 247, 0.5)'; // purple-500/50 quando expandido
+				}}
+				style={{
+					backgroundColor: isMinimized 
+						? 'rgba(147, 51, 234, 0.15)' // purple-600/15 quando minimizado
+						: 'rgba(147, 51, 234, 0.4)', // purple-600/40 quando expandido
+					backdropFilter: 'blur(12px)',
+					borderColor: isMinimized 
+						? 'rgba(196, 181, 253, 0.2)' // purple-300/20 quando minimizado
+						: 'rgba(196, 181, 253, 0.4)', // purple-300/40 quando expandido
+					transition: 'all 0.3s ease',
+				}}
+				className="fixed left-[10%] top-1/2 -translate-y-1/2 z-50 text-white rounded-full p-4 transition-all duration-300 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg flex items-center justify-center cursor-pointer"
+				aria-label="Página anterior"
+			>
+				<ChevronLeft className="h-7 w-7" />
+			</button>
 
-					{/* Seta direita - Próxima página */}
-					<button
-						onClick={handleNextPage}
-						disabled={currentPage >= totalPages - 1}
-						onMouseEnter={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
-						}}
-						onMouseLeave={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)'; // purple-600/40
-						}}
-						onMouseDown={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(126, 34, 206, 0.4)'; // purple-700/40
-						}}
-						onMouseUp={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
-						}}
-						style={{
-							backgroundColor: 'rgba(147, 51, 234, 0.4)', // purple-600/40
-							backdropFilter: 'blur(12px)',
-							borderColor: 'rgba(196, 181, 253, 0.4)', // purple-300/40
-						}}
-						className="fixed right-[10%] top-1/2 -translate-y-1/2 z-50 text-white rounded-full p-4 transition-all duration-300 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg flex items-center justify-center"
-						aria-label="Próxima página"
-					>
-						<ChevronRight className="h-7 w-7" />
-					</button>
-				</>
-			)}
+			{/* Seta direita - Próxima página */}
+			<button
+				onClick={handleNextPage}
+				disabled={currentPage >= totalPages - 1}
+				onMouseEnter={(e) => {
+					e.currentTarget.style.backgroundColor = isMinimized 
+						? 'rgba(168, 85, 247, 0.25)' // purple-500/25 quando minimizado
+						: 'rgba(168, 85, 247, 0.5)'; // purple-500/50 quando expandido
+				}}
+				onMouseLeave={(e) => {
+					e.currentTarget.style.backgroundColor = isMinimized 
+						? 'rgba(147, 51, 234, 0.15)' // purple-600/15 quando minimizado
+						: 'rgba(147, 51, 234, 0.4)'; // purple-600/40 quando expandido
+				}}
+				onMouseDown={(e) => {
+					e.currentTarget.style.backgroundColor = isMinimized 
+						? 'rgba(126, 34, 206, 0.2)' // purple-700/20 quando minimizado
+						: 'rgba(126, 34, 206, 0.4)'; // purple-700/40 quando expandido
+				}}
+				onMouseUp={(e) => {
+					e.currentTarget.style.backgroundColor = isMinimized 
+						? 'rgba(168, 85, 247, 0.25)' // purple-500/25 quando minimizado
+						: 'rgba(168, 85, 247, 0.5)'; // purple-500/50 quando expandido
+				}}
+				style={{
+					backgroundColor: isMinimized 
+						? 'rgba(147, 51, 234, 0.15)' // purple-600/15 quando minimizado
+						: 'rgba(147, 51, 234, 0.4)', // purple-600/40 quando expandido
+					backdropFilter: 'blur(12px)',
+					borderColor: isMinimized 
+						? 'rgba(196, 181, 253, 0.2)' // purple-300/20 quando minimizado
+						: 'rgba(196, 181, 253, 0.4)', // purple-300/40 quando expandido
+					transition: 'all 0.3s ease',
+				}}
+				className="fixed right-[10%] top-1/2 -translate-y-1/2 z-50 text-white rounded-full p-4 transition-all duration-300 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg flex items-center justify-center cursor-pointer"
+				aria-label="Próxima página"
+			>
+				<ChevronRight className="h-7 w-7" />
+			</button>
 		</div>
 	);
 }
