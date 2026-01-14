@@ -10,15 +10,10 @@ interface BookControlsProps {
 export const BookControls: React.FC<BookControlsProps> = ({ children }) => {
 	const {
 		scale,
-		position,
-		isDragging,
-		isPinching,
 		containerRef,
 		zoomIn,
 		zoomOut,
 		reset,
-		handleMouseDown,
-		handleTouchStart,
 		handleWheel,
 	} = useBookControls({
 		minScale: 0.25,
@@ -84,20 +79,23 @@ export const BookControls: React.FC<BookControlsProps> = ({ children }) => {
 	return (
 		<div
 			ref={containerRef}
-			className="relative w-full h-screen overflow-hidden"
+			className="relative w-full h-screen"
 			onWheel={handleWheel}
+			style={{ 
+				touchAction: 'pan-x pan-y pinch-zoom',
+				overflow: 'hidden',
+			}}
 		>
 			{/* Área do livro com transformações */}
 			<div
 				style={{
-					transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
+					transform: `scale(${scale})`,
 					transformOrigin: 'center center',
-					cursor: isDragging ? 'grabbing' : 'grab',
-					transition: (isDragging || isPinching) ? 'none' : 'transform 0.1s ease-out',
+					transition: 'transform 0.1s ease-out',
+					pointerEvents: 'auto',
+					willChange: 'transform',
 				}}
-				onMouseDown={handleMouseDown}
-				onTouchStart={handleTouchStart}
-				className="touch-none select-none"
+				className="select-none"
 			>
 				{children}
 			</div>
@@ -142,8 +140,8 @@ export const BookControls: React.FC<BookControlsProps> = ({ children }) => {
 				<button
 					onClick={reset}
 					className="bg-purple-700 hover:bg-purple-600 active:bg-purple-800 text-white rounded-full p-4 transition-all duration-200 hover:scale-110 active:scale-95"
-					aria-label="Resetar zoom e posição"
-					title="Resetar zoom e posição"
+					aria-label="Resetar zoom"
+					title="Resetar zoom"
 				>
 					<svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />

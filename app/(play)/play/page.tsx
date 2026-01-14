@@ -1,8 +1,11 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useAutoFlip } from '../../../src/hooks/useAutoFlip';
 import { useBookDimensions } from '../../../src/hooks/useBookDimensions';
 import { BookPage, BookControls, FlipBookWrapper } from '../../../src/components/play';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { cn } from '../../../src/lib/utils';
 
 /**
  * Página de visualização interativa do livro
@@ -11,12 +14,55 @@ import { BookPage, BookControls, FlipBookWrapper } from '../../../src/components
 export default function PlayPage() {
 	// Hooks personalizados
 	const dimensions = useBookDimensions();
-	const { flipBookRef, handleFlip, handleChangeState } = useAutoFlip({
+	const [currentPage, setCurrentPage] = useState(0);
+	const [totalPages, setTotalPages] = useState(0);
+	
+	const { flipBookRef, handleFlip, handleChangeState, stopAutoFlip } = useAutoFlip({
 		maxFlips: 0,
 		initialDelay: 0,
 		interval: 0,
 		enabled: false,
 	});
+
+	// Detectar total de páginas
+	useEffect(() => {
+		const checkPages = setInterval(() => {
+			if (flipBookRef.current?.pageFlip()) {
+				const count = flipBookRef.current.pageFlip().getPageCount();
+				if (count > 0) {
+					setTotalPages(count);
+					clearInterval(checkPages);
+				}
+			}
+		}, 100);
+
+		return () => clearInterval(checkPages);
+	}, [flipBookRef]);
+
+	// Handler para atualizar página atual após flip
+	const handlePageFlip = (e: any) => {
+		handleFlip(e);
+		setTimeout(() => {
+			const newPage = flipBookRef.current?.pageFlip()?.getCurrentPageIndex() || 0;
+			setCurrentPage(newPage);
+		}, 100);
+	};
+
+	// Navegação para página anterior
+	const handlePrevPage = () => {
+		if (currentPage > 0) {
+			stopAutoFlip();
+			flipBookRef.current?.pageFlip()?.flipPrev();
+		}
+	};
+
+	// Navegação para próxima página
+	const handleNextPage = () => {
+		if (currentPage < totalPages - 1) {
+			stopAutoFlip();
+			flipBookRef.current?.pageFlip()?.flipNext();
+		}
+	};
 
 	return (
 		<div className="min-h-screen w-full bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100">
@@ -29,10 +75,11 @@ export default function PlayPage() {
 						size="stretch"
 						drawShadow={false}
 						showCover={true}
-						mobileScrollSupport={true}
+						mobileScrollSupport={false}
 						flippingTime={800}
 						autoSize={true}
-						onFlip={handleFlip}
+						useMouseEvents={false}
+						onFlip={handlePageFlip}
 						onChangeState={handleChangeState}
 					>
 						{/* Capa */}
@@ -63,6 +110,41 @@ export default function PlayPage() {
 					</FlipBookWrapper>
 				</div>
 			</BookControls>
+
+			{/* Setas de navegação - fora do BookControls para não serem afetadas pelo zoom */}
+			{/* Seta esquerda - Página anterior */}
+			<button
+				onClick={handlePrevPage}
+				disabled={currentPage === 0}
+				className={cn(
+					"fixed left-[10%] top-1/2 -translate-y-1/2 z-50",
+					"w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full",
+					"bg-purple-700 hover:bg-purple-600 active:bg-purple-800 text-white",
+					"flex items-center justify-center shadow-2xl",
+					"cursor-pointer hover:scale-110 active:scale-95 transition-all duration-200",
+					"disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+				)}
+				aria-label="Página anterior"
+			>
+				<ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />
+			</button>
+
+			{/* Seta direita - Próxima página */}
+			<button
+				onClick={handleNextPage}
+				disabled={currentPage >= totalPages - 1}
+				className={cn(
+					"fixed right-[10%] top-1/2 -translate-y-1/2 z-50",
+					"w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full",
+					"bg-purple-700 hover:bg-purple-600 active:bg-purple-800 text-white",
+					"flex items-center justify-center shadow-2xl",
+					"cursor-pointer hover:scale-110 active:scale-95 transition-all duration-200",
+					"disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+				)}
+				aria-label="Próxima página"
+			>
+				<ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" />
+			</button>
 		</div>
 	);
 }
