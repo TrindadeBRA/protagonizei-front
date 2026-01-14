@@ -137,7 +137,8 @@ export function TalkToUsForm() {
             </div>
 
             <div className="w-full leading-3">
-              <span className="text-[11px] font-semibold text-white">Ao enviar, você concorda com nossa <Link href="/politica-de-privacidade" className="text-blue-300 hover:text-blue-400 underline">Política de Privacidade</Link> e autoriza o recebimento de comunicações da TTW.</span>
+              <span className="text-[11px] font-semibold text-white">Ao enviar, você concorda com nossa <Link href="/politica-de-privacidade" className="text-blue-300 hover:text-blue-400 underline">
+              Política de Privacidade</Link> e autoriza o recebimento de comunicações da Protagonizei.</span>
             </div>
           </div>
 

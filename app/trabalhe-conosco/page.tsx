@@ -1,8 +1,8 @@
 import WorkWithUs from "@/src/components/WorkWithUs";
 
 export const metadata = {
-  title: 'TTW - Trabalhe Conosco',
-  description: 'Junte-se à TTW!',
+  title: 'Protagonizei - Trabalhe Conosco',
+  description: 'Junte-se à Protagonizei!',
 }
 
 export default function TrabalheConosco() {

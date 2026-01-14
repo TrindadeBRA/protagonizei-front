@@ -59,7 +59,7 @@ export default function TalkToUs() {
               className="mt-6 text-lg/8 text-white" 
               data-aos={isMobile ? "fade-in" : "fade-right"}
             >
-              Sua mensagem é muito importante para nós da TTW. Queremos ouvir você e entender melhor a sua necessidade.
+              Sua mensagem é muito importante para nós da Protagonizei. Queremos ouvir você e entender melhor a sua necessidade.
             </p>
           </div>
         </div>
