@@ -66,7 +66,7 @@ const FormSection = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 relative overflow-hidden" id="criar-historia">
+    <section className="py-20 bg-gradient-to-b from-pink-50 via-purple-50 to-blue-50 relative overflow-hidden" id="criar-historia">
       {/* Decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 float-animation">
