@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import { AlertBox } from "@/src/components/ui/alert-box";
 
 export const metadata: Metadata = {
   title: "Política de Privacidade - Protagonizei",
@@ -74,9 +75,9 @@ export default function PoliticaPrivacidadePage() {
               <li>Contato comercial via e-mail, WhatsApp ou telefone</li>
               <li>Publicidade direcionada (Google e Meta)</li>
             </ul>
-            <p className="bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 border-l-4 border-pink-main p-4 my-4">
+            <AlertBox>
               Você pode cancelar comunicações ou solicitar exclusão a qualquer momento.
-            </p>
+            </AlertBox>
           </section>
 
           <section>
@@ -92,9 +93,9 @@ export default function PoliticaPrivacidadePage() {
             <p>
               Essas ferramentas auxiliam na análise de uso e em campanhas publicitárias.
             </p>
-            <p className="bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 border-l-4 border-pink-main p-4 my-4">
+            <AlertBox>
               O consentimento é gerenciado pelo banner de cookies do site.
-            </p>
+            </AlertBox>
           </section>
 
           <section>
@@ -141,14 +142,14 @@ export default function PoliticaPrivacidadePage() {
               <li>Revogar consentimentos</li>
               <li>Solicitar portabilidade ou oposição ao tratamento</li>
             </ul>
-            <div className="bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 border-l-4 border-pink-main p-4 my-4">
+            <AlertBox>
               <p className="mb-2">
                 <strong>contato@thetrinityweb.com.br</strong>
               </p>
               <p>
                 Responderemos em até 15 dias.
               </p>
-            </div>
+            </AlertBox>
           </section>
 
           <section>
