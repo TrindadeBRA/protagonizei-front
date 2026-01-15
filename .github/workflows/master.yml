@@ -86,6 +86,53 @@ jobs:
           echo "RewriteRule ^blog$ /blog/page/1 [R=301,L]" >> out/.htaccess
           echo "" >> out/.htaccess
           echo "ErrorDocument 404 /404.html" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "# ========================================" >> out/.htaccess
+          echo "# Cache Headers - Otimização de Performance" >> out/.htaccess
+          echo "# ========================================" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "<IfModule mod_headers.c>" >> out/.htaccess
+          echo "  # Imagens - Cache de 1 ano (31536000 segundos)" >> out/.htaccess
+          echo "  <FilesMatch \"\.(jpg|jpeg|png|gif|webp|svg|ico)$\">" >> out/.htaccess
+          echo "    Header set Cache-Control \"public, max-age=31536000, immutable\"" >> out/.htaccess
+          echo "  </FilesMatch>" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "  # JavaScript e CSS - Cache de 1 ano" >> out/.htaccess
+          echo "  <FilesMatch \"\.(js|css)$\">" >> out/.htaccess
+          echo "    Header set Cache-Control \"public, max-age=31536000, immutable\"" >> out/.htaccess
+          echo "  </FilesMatch>" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "  # Fontes - Cache de 1 ano" >> out/.htaccess
+          echo "  <FilesMatch \"\.(woff|woff2|ttf|eot|otf)$\">" >> out/.htaccess
+          echo "    Header set Cache-Control \"public, max-age=31536000, immutable\"" >> out/.htaccess
+          echo "  </FilesMatch>" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "  # Assets estáticos em /assets/ - Cache de 1 ano" >> out/.htaccess
+          echo "  <FilesMatch \"^/assets/(images|scripts|fonts)/\">" >> out/.htaccess
+          echo "    Header set Cache-Control \"public, max-age=31536000, immutable\"" >> out/.htaccess
+          echo "  </FilesMatch>" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "  # HTML - Cache curto com revalidação (1 hora)" >> out/.htaccess
+          echo "  <FilesMatch \"\.(html|htm)$\">" >> out/.htaccess
+          echo "    Header set Cache-Control \"public, max-age=3600, must-revalidate\"" >> out/.htaccess
+          echo "  </FilesMatch>" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "  # Manifest, sitemap e robots - Cache de 1 dia" >> out/.htaccess
+          echo "  <FilesMatch \"(manifest\.json|sitemap\.xml|robots\.txt)$\">" >> out/.htaccess
+          echo "    Header set Cache-Control \"public, max-age=86400\"" >> out/.htaccess
+          echo "  </FilesMatch>" >> out/.htaccess
+          echo "</IfModule>" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "# Compressão GZIP" >> out/.htaccess
+          echo "<IfModule mod_deflate.c>" >> out/.htaccess
+          echo "  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json" >> out/.htaccess
+          echo "</IfModule>" >> out/.htaccess
+          echo "" >> out/.htaccess
+          echo "# Desabilitar ETags (usar Cache-Control)" >> out/.htaccess
+          echo "<IfModule mod_headers.c>" >> out/.htaccess
+          echo "  Header unset ETag" >> out/.htaccess
+          echo "</IfModule>" >> out/.htaccess
+          echo "FileETag None" >> out/.htaccess
 
       - name: Cache dependencies
         uses: actions/cache@v3
