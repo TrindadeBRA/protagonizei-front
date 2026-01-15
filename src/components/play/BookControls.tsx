@@ -2,17 +2,20 @@
 
 import { useBookControls } from '../../hooks/useBookControls';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface BookControlsProps {
 	children: React.ReactNode;
 	isMinimized: boolean;
 	onToggleMinimize: () => void;
+	onScaleChange?: (scale: number) => void;
 }
 
 export const BookControls: React.FC<BookControlsProps> = ({ 
 	children, 
 	isMinimized, 
-	onToggleMinimize 
+	onToggleMinimize,
+	onScaleChange 
 }) => {
 	const {
 		scale,
@@ -26,24 +29,100 @@ export const BookControls: React.FC<BookControlsProps> = ({
 		initialScale: 0.5,
 	});
 
+	// Estados para pan/drag quando há zoom
+	const [isDragging, setIsDragging] = useState(false);
+	const [position, setPosition] = useState({ x: 0, y: 0 });
+	const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+	const bookContentRef = useRef<HTMLDivElement>(null);
+
+	// Notificar mudança de scale para o componente pai
+	useEffect(() => {
+		if (onScaleChange) {
+			onScaleChange(scale);
+		}
+	}, [scale, onScaleChange]);
+
+	// Reset position quando scale volta para <= 1
+	useEffect(() => {
+		if (scale <= 1) {
+			setPosition({ x: 0, y: 0 });
+		}
+	}, [scale]);
+
+	// Handlers para pan/drag quando há zoom ativo
+	const handleMouseDown = useCallback((e: React.MouseEvent) => {
+		if (scale > 1) {
+			setIsDragging(true);
+			setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+			e.preventDefault();
+		}
+	}, [scale, position]);
+
+	const handleMouseMove = useCallback((e: React.MouseEvent) => {
+		if (isDragging && scale > 1) {
+			setPosition({
+				x: e.clientX - dragStart.x,
+				y: e.clientY - dragStart.y,
+			});
+		}
+	}, [isDragging, scale, dragStart]);
+
+	const handleMouseUp = useCallback(() => {
+		setIsDragging(false);
+	}, []);
+
+	// Touch handlers para mobile
+	const handleTouchStart = useCallback((e: React.TouchEvent) => {
+		if (scale > 1 && e.touches.length === 1) {
+			setIsDragging(true);
+			setDragStart({ 
+				x: e.touches[0].clientX - position.x, 
+				y: e.touches[0].clientY - position.y 
+			});
+		}
+	}, [scale, position]);
+
+	const handleTouchMove = useCallback((e: React.TouchEvent) => {
+		if (isDragging && scale > 1 && e.touches.length === 1) {
+			setPosition({
+				x: e.touches[0].clientX - dragStart.x,
+				y: e.touches[0].clientY - dragStart.y,
+			});
+		}
+	}, [isDragging, scale, dragStart]);
+
+	const handleTouchEnd = useCallback(() => {
+		setIsDragging(false);
+	}, []);
+
 	return (
 		<div
 			ref={containerRef}
 			className="relative w-full h-screen"
 			onWheel={handleWheel}
+			onMouseMove={handleMouseMove}
+			onMouseUp={handleMouseUp}
+			onMouseLeave={handleMouseUp}
+			onTouchMove={handleTouchMove}
+			onTouchEnd={handleTouchEnd}
 			style={{ 
-				touchAction: 'pan-x pan-y pinch-zoom',
+				touchAction: scale > 1 ? 'none' : 'pan-x pan-y pinch-zoom',
 				overflow: 'hidden',
+				cursor: isDragging ? 'grabbing' : 'default',
 			}}
 		>
 			{/* Área do livro com transformações */}
 			<div
+				ref={bookContentRef}
+				onMouseDown={handleMouseDown}
+				onTouchStart={handleTouchStart}
 				style={{
-					transform: `scale(${scale})`,
+					transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
 					transformOrigin: 'center center',
-					transition: 'transform 0.1s ease-out',
+					transition: isDragging ? 'none' : 'transform 0.1s ease-out',
 					pointerEvents: 'auto',
 					willChange: 'transform',
+					cursor: scale > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default',
 				}}
 				className="select-none"
 			>

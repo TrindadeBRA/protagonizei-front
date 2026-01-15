@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useAutoFlip } from '../../../src/hooks/useAutoFlip';
 import { useBookDimensions } from '../../../src/hooks/useBookDimensions';
 import { useMinimizeControls } from '../../../src/hooks/useMinimizeControls';
@@ -18,6 +18,7 @@ export default function PlayPage() {
 	const { isMinimized, toggleMinimize } = useMinimizeControls();
 	const [currentPage, setCurrentPage] = useState(0);
 	const [totalPages, setTotalPages] = useState(0);
+	const [currentScale, setCurrentScale] = useState(0.5);
 	
 	const { flipBookRef, handleFlip, handleChangeState, stopAutoFlip } = useAutoFlip({
 		maxFlips: 0,
@@ -66,9 +67,18 @@ export default function PlayPage() {
 		}
 	};
 
+	// Callback para receber o scale atual do BookControls
+	const handleScaleChange = useCallback((newScale: number) => {
+		setCurrentScale(newScale);
+	}, []);
+
 	return (
 		<div className="min-h-screen w-full bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100">
-			<BookControls isMinimized={isMinimized} onToggleMinimize={toggleMinimize}>
+			<BookControls 
+				isMinimized={isMinimized} 
+				onToggleMinimize={toggleMinimize}
+				onScaleChange={handleScaleChange}
+			>
 				<div className="flex items-center justify-center h-screen">
 					<FlipBookWrapper
 						ref={flipBookRef}
@@ -77,10 +87,12 @@ export default function PlayPage() {
 						size="stretch"
 						drawShadow={false}
 						showCover={true}
-						mobileScrollSupport={false}
+						mobileScrollSupport={currentScale <= 1}
 						flippingTime={800}
 						autoSize={true}
-						useMouseEvents={false}
+						useMouseEvents={currentScale <= 1}
+						swipeDistance={50}
+						clickEventForward={true}
 						onFlip={handlePageFlip}
 						onChangeState={handleChangeState}
 					>

@@ -170,3 +170,80 @@ Os componentes são otimizados para funcionar em dispositivos móveis:
 - ✅ Dimensões responsivas automáticas
 - ✅ Suporte a scroll no mobile
 
+## 🎮 Navegação e Interatividade
+
+### Métodos de Navegação
+
+O livro suporta múltiplas formas de navegação, com comportamento adaptativo baseado no nível de zoom:
+
+#### **Sem Zoom (scale <= 1)**
+
+1. **Clique e Arrastar (Desktop)**
+   - Clique e arraste as páginas para virar
+   - Funciona com `useMouseEvents={true}`
+
+2. **Swipe/Deslizar (Mobile)**
+   - Deslize as páginas para navegar
+   - Suporte nativo com `mobileScrollSupport={true}`
+   - Distância mínima de swipe configurável com `swipeDistance`
+
+3. **Setas de Navegação**
+   - Botões laterais fixos para navegação
+   - Sempre visíveis e acessíveis
+
+4. **Controles no Menu**
+   - Menu inferior com controles de zoom
+   - Minimizável para melhor visualização
+
+#### **Com Zoom Ativo (scale > 1)**
+
+1. **Pan/Arrastar**
+   - Arraste para mover o livro pela tela
+   - Cursor muda para "grab/grabbing"
+   - Funciona em desktop e mobile
+
+2. **Setas de Navegação**
+   - Botões laterais continuam funcionando
+   - Permitem trocar de página mesmo com zoom
+
+3. **Controles no Menu**
+   - Zoom in/out para ajustar visualização
+   - Reset automático de posição ao desabilitar zoom
+
+### Sistema Inteligente de Eventos
+
+O sistema detecta automaticamente o nível de zoom e ajusta o comportamento:
+
+- **Scale <= 1:** Eventos nativos do FlipBook habilitados (virar páginas por arraste)
+- **Scale > 1:** Eventos nativos desabilitados, pan/drag habilitado (mover livro pela tela)
+- **Transição Suave:** Mudança automática e imperceptível entre os modos
+
+### Compatibilidade com Zoom
+
+```typescript
+// Sistema dinâmico que ajusta baseado no zoom
+<FlipBookWrapper
+  useMouseEvents={currentScale <= 1}        // Desabilita ao fazer zoom
+  mobileScrollSupport={currentScale <= 1}   // Desabilita ao fazer zoom
+  swipeDistance={50}
+  clickEventForward={true}
+  flippingTime={800}
+/>
+```
+
+### Como Funciona
+
+1. **Zoom Controlado:** `Ctrl + Scroll` ou botões de zoom
+2. **Detecção Automática:** Sistema detecta mudança de scale
+3. **Troca de Modo:** 
+   - Scale <= 1: Modo "virar páginas"
+   - Scale > 1: Modo "pan/arrastar"
+4. **Reset Automático:** Posição reseta ao voltar para scale <= 1
+
+### Benefícios
+
+✅ **Sem Conflitos:** Eventos de mouse/touch não interferem entre zoom e navegação  
+✅ **Experiência Fluida:** Transição suave entre modos  
+✅ **Intuitivo:** Comportamento esperado em cada contexto  
+✅ **Mobile-Friendly:** Funciona perfeitamente em touch devices
+
