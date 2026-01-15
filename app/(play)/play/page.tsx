@@ -8,7 +8,6 @@ import { useAutoFlip } from '../../../src/hooks/useAutoFlip';
 import { useBookDimensions } from '../../../src/hooks/useBookDimensions';
 import { useMinimizeControls } from '../../../src/hooks/useMinimizeControls';
 import { useBookSize } from '../../../src/hooks/useBookSize';
-import { useDarkMode } from '../../../src/hooks/useDarkMode';
 import { BookPage, BookControls, FlipBookWrapper, NavButton } from '../../../src/components/play';
 import {
 	BOOK_PAGES,
@@ -52,7 +51,6 @@ function PlayPageContent() {
 
 	const { isMinimized, toggleMinimize } = useMinimizeControls();
 	const { zoom, zoomIn, zoomOut, config, canZoomIn, canZoomOut } = useBookSize();
-	const { isDark, toggleDarkMode } = useDarkMode();
 	const dimensions = useBookDimensions({
 		viewportUsage: config.viewportUsage,
 		padding: config.padding,
@@ -275,16 +273,13 @@ function PlayPageContent() {
 	// Estado de erro (mostra mesmo com modal aberto)
 	if (orderId && error && !isLoading) {
 		return (
-			<div className={`min-h-screen w-full flex items-center justify-center transition-all duration-500 ${isDark
-					? 'bg-gradient-to-br from-pink-950/90 via-purple-950/90 to-blue-950/90'
-					: 'bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100'
-				}`}>
+			<div className="min-h-screen w-full flex items-center justify-center">
 				<div className="text-center max-w-md mx-auto px-4">
 					<div className="text-6xl mb-4">📚</div>
-					<h1 className={`text-2xl font-bold mb-2 ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
+					<h1 className="text-2xl font-bold mb-2 text-gray-800">
 						Livro não encontrado
 					</h1>
-					<p className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+					<p className="text-lg text-gray-600">
 						{error || 'Nenhuma página disponível para este pedido'}
 					</p>
 				</div>
@@ -303,16 +298,11 @@ function PlayPageContent() {
 					}}
 				>
 					<DialogPortal>
-						<DialogOverlay className={`${isDark
-								? 'bg-gradient-to-br from-pink-950/90 via-purple-950/90 to-blue-950/90'
-								: 'bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100'
-							}`} />
+						<DialogOverlay className="bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 transition-colors duration-500" />
 						<DialogPrimitive.Content
 							className={cn(
 								"fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg sm:max-w-md",
-								isDark
-									? 'bg-gray-800/95 border-gray-700 text-gray-100'
-									: 'bg-white/95 border-gray-200 text-gray-900'
+								"bg-white/95 border-gray-200 text-gray-900"
 							)}
 							onEscapeKeyDown={(e) => {
 								e.preventDefault();
@@ -327,7 +317,7 @@ function PlayPageContent() {
 							{/* Logo acima do modal */}
 							<div className="flex justify-center">
 								<Image
-									src={isDark ? '/assets/images/logo white.svg' : '/assets/images/logo black.svg'}
+									src="/assets/images/logo black.svg"
 									alt="Protagonizei"
 									width={200}
 									height={80}
@@ -337,33 +327,24 @@ function PlayPageContent() {
 							</div>
 
 							<DialogHeader>
-								<DialogTitle className={`text-2xl font-bold text-center ${isDark ? 'text-gray-100' : 'text-gray-900'
-									}`}>
+								<DialogTitle className="text-2xl font-bold text-center text-gray-900">
 									Bem-vindo ao seu livro!
 								</DialogTitle>
-								<DialogDescription className={`text-center ${isDark ? 'text-gray-400' : 'text-gray-600'
-									}`}>
+								<DialogDescription className="text-center text-gray-600">
 									Instruções para melhor experiência
 								</DialogDescription>
 							</DialogHeader>
 
 							<div className="space-y-4 py-4">
 								{/* Recomendação de modo paisagem */}
-								<AlertBox className={cn(
-									isDark 
-										? '!bg-blue-950/30 !border-blue-800 !from-transparent !via-transparent !to-transparent' 
-										: ''
-								)}>
+								<AlertBox>
 									<div className="flex items-start gap-3">
-										<Smartphone className={`h-5 w-5 mt-0.5 flex-shrink-0 ${isDark ? 'text-blue-400' : 'text-blue-600'
-											}`} />
+										<Smartphone className="h-5 w-5 mt-0.5 flex-shrink-0 text-blue-600" />
 										<div className="flex-1">
-											<p className={`text-sm font-semibold mb-1 ${isDark ? 'text-blue-100' : 'text-blue-900'
-												}`}>
+											<p className="text-sm font-semibold mb-1 text-blue-900">
 												Recomendamos o modo paisagem
 											</p>
-											<p className={`text-xs ${isDark ? 'text-blue-300' : 'text-blue-700'
-												}`}>
+											<p className="text-xs text-blue-700">
 												Para uma melhor visualização, gire seu dispositivo para o modo horizontal (paisagem).
 											</p>
 										</div>
@@ -372,27 +353,25 @@ function PlayPageContent() {
 
 								{/* Instruções de uso */}
 								<div className="space-y-2">
-									<h4 className={`font-semibold text-sm ${isDark ? 'text-gray-200' : 'text-gray-900'
-										}`}>
+									<h4 className="font-semibold text-sm text-gray-900">
 										Como usar:
 									</h4>
-									<ul className={`space-y-1.5 text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'
-										}`}>
+									<ul className="space-y-1.5 text-sm text-gray-600">
 										<li className="flex items-start gap-2">
-											<span className={isDark ? 'text-purple-400' : 'text-purple-600'}>•</span>
+											<span className="text-purple-600">•</span>
 											<span>Clique ou arraste nas páginas para virar</span>
 										</li>
 										<li className="flex items-start gap-2">
-											<span className={isDark ? 'text-purple-400' : 'text-purple-600'}>•</span>
+											<span className="text-purple-600">•</span>
 											<span>Use as setas laterais para navegar</span>
 										</li>
 										<li className="flex items-start gap-2">
-											<span className={isDark ? 'text-purple-400' : 'text-purple-600'}>•</span>
+											<span className="text-purple-600">•</span>
 											<span>No mobile, deslize para os lados</span>
 										</li>
 										<li className="flex items-start gap-2">
-											<span className={isDark ? 'text-purple-400' : 'text-purple-600'}>•</span>
-											<span>Use os controles para ajustar zoom e tema</span>
+											<span className="text-purple-600">•</span>
+											<span>Use os controles para ajustar zoom</span>
 										</li>
 									</ul>
 								</div>
@@ -427,10 +406,7 @@ function PlayPageContent() {
 
 			{/* Conteúdo do livro (só mostra se não estiver no modal ou se não tiver orderId) */}
 			{(!orderId || (!showModal && pages.length > 0)) && (
-				<div className={`min-h-screen w-full transition-all duration-500 ${isDark
-						? 'bg-gradient-to-br from-pink-950/90 via-purple-950/90 to-blue-950/90'
-						: 'bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100'
-					}`}>
+				<div className="min-h-screen w-full">
 					{/* Sistema de Controles de Tamanho */}
 					<BookControls
 						isMinimized={isMinimized}
@@ -440,8 +416,6 @@ function PlayPageContent() {
 						currentZoom={zoom}
 						canZoomIn={canZoomIn}
 						canZoomOut={canZoomOut}
-						onDarkModeToggle={toggleDarkMode}
-						isDarkMode={isDark}
 					>
 						<FlipBookWrapper
 							key={`flipbook-${zoom}-${dimensions.width}-${dimensions.height}`}
@@ -498,8 +472,8 @@ function PlayPageContent() {
 // =================================================================
 function LoadingScreen() {
 	return (
-		<div className="flex justify-center items-center h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 dark:from-pink-950/90 dark:via-purple-950/90 dark:to-blue-950/90">
-			<div className="animate-spin rounded-full h-32 w-32 border-4 border-t-transparent border-purple-500 dark:border-purple-400"></div>
+		<div className="flex justify-center items-center h-screen">
+			<div className="animate-spin rounded-full h-32 w-32 border-4 border-t-transparent border-purple-500"></div>
 		</div>
 	);
 }

@@ -26,6 +26,10 @@ export default function PlayLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <div className="min-h-screen w-full bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100">
+      {children}
+    </div>
+  );
 }
 
