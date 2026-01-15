@@ -8,7 +8,7 @@ import { useAutoFlip } from '../../../src/hooks/useAutoFlip';
 import { useBookDimensions } from '../../../src/hooks/useBookDimensions';
 import { useMinimizeControls } from '../../../src/hooks/useMinimizeControls';
 import { useBookSize } from '../../../src/hooks/useBookSize';
-import { BookPage, BookControls, FlipBookWrapper, NavButton } from '../../../src/components/play';
+import { BookPage, LockedBookPage, BookControls, FlipBookWrapper, NavButton } from '../../../src/components/play';
 import {
 	BOOK_PAGES,
 	PAGE_FLIP_DURATION,
@@ -233,22 +233,27 @@ function PlayPageContent() {
 		}
 
 		// Páginas internas (cada imagem aparece 2x: left e right)
+		// No modo demo (sem orderId), mostra todas as páginas, mas bloqueia visualmente a partir do índice 6 (após página 5)
 		for (let i = 1; i < pagesToUse.length; i++) {
 			const page = pagesToUse[i];
+			// A partir do índice 6 (depois da página 5), usa páginas bloqueadas no modo demo
+			const isLocked = !orderId && i >= 6;
+			const PageComponent = isLocked ? LockedBookPage : BookPage;
+			
 			renderedPages.push(
-				<BookPage
+				<PageComponent
 					key={`${page.id}-left`}
 					src={page.src}
 					alt={`${page.id} esquerda`}
 					side="left"
-					priority={page.priority}
+					priority={isLocked ? false : page.priority}
 				/>,
-				<BookPage
+				<PageComponent
 					key={`${page.id}-right`}
 					src={page.src}
 					alt={`${page.id} direita`}
 					side="right"
-					priority={page.priority}
+					priority={isLocked ? false : page.priority}
 				/>
 			);
 		}
