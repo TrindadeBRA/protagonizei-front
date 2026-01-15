@@ -1,44 +1,58 @@
 'use client';
 
 import React, { memo } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
-import { BookSize, useBookSize, BOOK_SIZES } from '../../hooks/useBookSize';
+import { ChevronDown, ChevronUp, ZoomIn, ZoomOut } from 'lucide-react';
 
 // =================================================================
 // COMPONENTES AUXILIARES
 // =================================================================
 
-interface SizeButtonProps {
-	size: BookSize;
-	currentSize: BookSize;
+interface ZoomButtonProps {
 	onClick: () => void;
+	disabled: boolean;
 	label: string;
+	title: string;
+	children: React.ReactNode;
 }
 
 /**
- * Botão de seleção de tamanho
+ * Botão de zoom reutilizável
  */
-const SizeButton = memo<SizeButtonProps>(({ size, currentSize, onClick, label }) => {
-	const isActive = size === currentSize;
-	
-	return (
-		<button
-			onClick={onClick}
-			className={`
-				px-4 py-2 rounded-lg font-medium transition-all duration-200
-				${isActive 
-					? 'bg-purple-600 text-white scale-105 shadow-lg' 
-					: 'bg-purple-600/20 text-white hover:bg-purple-600/40'
-				}
-			`}
-			aria-label={`Tamanho ${label}`}
-			title={`Mudar para tamanho ${label}`}
-		>
-			{label}
-		</button>
-	);
-});
-SizeButton.displayName = 'SizeButton';
+const ZoomButton = memo<ZoomButtonProps>(({ onClick, disabled, label, title, children }) => (
+	<button
+		onClick={onClick}
+		disabled={disabled}
+		className="text-white rounded-full p-4 transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg cursor-pointer"
+		style={{
+			backgroundColor: 'rgba(147, 51, 234, 0.4)',
+			backdropFilter: 'blur(12px)',
+			borderColor: 'rgba(196, 181, 253, 0.4)',
+		}}
+		onMouseEnter={(e) => {
+			if (!disabled) {
+				e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)';
+			}
+		}}
+		onMouseLeave={(e) => {
+			e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)';
+		}}
+		aria-label={label}
+		title={title}
+	>
+		{children}
+	</button>
+));
+ZoomButton.displayName = 'ZoomButton';
+
+/**
+ * Indicador de zoom
+ */
+const ZoomIndicator = memo<{ zoom: number }>(({ zoom }) => (
+	<div className="px-5 py-2 text-white text-xl font-medium min-w-[90px] text-center bg-purple-600/30 backdrop-blur-md rounded-lg border border-purple-300/40">
+		{zoom}%
+	</div>
+));
+ZoomIndicator.displayName = 'ZoomIndicator';
 
 // =================================================================
 // COMPONENTE PRINCIPAL
@@ -48,32 +62,32 @@ interface BookControlsProps {
 	children: React.ReactNode;
 	isMinimized: boolean;
 	onToggleMinimize: () => void;
-	onSizeChange?: (size: BookSize) => void;
-	currentSize?: BookSize;
+	onZoomIn?: () => void;
+	onZoomOut?: () => void;
+	currentZoom?: number;
+	canZoomIn?: boolean;
+	canZoomOut?: boolean;
 }
 
 /**
- * Container de controles do livro com seleção de tamanho
- * 
- * Funcionalidades:
- * - Escolha de tamanho (P, M, G)
- * - Salva preferência do usuário
- * - Minimizar/expandir controles
+ * Container de controles do livro com zoom
  */
 export const BookControls = memo<BookControlsProps>(({ 
 	children, 
 	isMinimized, 
 	onToggleMinimize,
-	onSizeChange,
-	currentSize = 'medium'
+	onZoomIn,
+	onZoomOut,
+	currentZoom = 100,
+	canZoomIn = true,
+	canZoomOut = true,
 }) => {
-	const sizes = BOOK_SIZES;
+	const handleZoomIn = () => {
+		if (onZoomIn) onZoomIn();
+	};
 
-	const handleSizeChange = (newSize: BookSize) => {
-		console.log('🔄 Mudando tamanho para:', newSize);
-		if (onSizeChange) {
-			onSizeChange(newSize);
-		}
+	const handleZoomOut = () => {
+		if (onZoomOut) onZoomOut();
 	};
 
 	return (
@@ -83,26 +97,31 @@ export const BookControls = memo<BookControlsProps>(({
 				{children}
 			</div>
 
-			{/* Controles de Tamanho - Menu inferior */}
+			{/* Controles de Zoom - Menu inferior */}
 			{!isMinimized && (
 				<div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 flex items-center gap-4 bg-purple-500/20 backdrop-blur-md rounded-full px-8 py-5 shadow-2xl border border-purple-300/30 transition-all duration-300">
-					{/* Label */}
-					<span className="text-white font-medium text-sm">
-						Tamanho:
-					</span>
+					{/* Zoom Out (-) */}
+					<ZoomButton
+						onClick={handleZoomOut}
+						disabled={!canZoomOut}
+						label="Diminuir zoom"
+						title={`Diminuir zoom (Mín: 10%)`}
+					>
+						<ZoomOut className="h-6 w-6" />
+					</ZoomButton>
 
-					{/* Botões de Tamanho */}
-					<div className="flex gap-2">
-						{(Object.keys(sizes) as BookSize[]).map((sizeKey) => (
-							<SizeButton
-								key={sizeKey}
-								size={sizeKey}
-								currentSize={currentSize}
-								onClick={() => handleSizeChange(sizeKey)}
-								label={sizes[sizeKey].label}
-							/>
-						))}
-					</div>
+					{/* Indicador de % */}
+					<ZoomIndicator zoom={currentZoom} />
+
+					{/* Zoom In (+) */}
+					<ZoomButton
+						onClick={handleZoomIn}
+						disabled={!canZoomIn}
+						label="Aumentar zoom"
+						title={`Aumentar zoom (Máx: 250%)`}
+					>
+						<ZoomIn className="h-6 w-6" />
+					</ZoomButton>
 
 					{/* Separador */}
 					<div className="h-8 w-px bg-purple-300/40 mx-2" />

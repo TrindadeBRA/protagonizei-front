@@ -33,20 +33,13 @@ export default function PlayPage() {
 	// HOOKS E ESTADOS
 	// =================================================================
 	const { isMinimized, toggleMinimize } = useMinimizeControls();
-	const { size, changeSize, config } = useBookSize();
+	const { zoom, zoomIn, zoomOut, config, canZoomIn, canZoomOut } = useBookSize();
 	const dimensions = useBookDimensions({
 		viewportUsage: config.viewportUsage,
 		padding: config.padding,
 	});
 	const [currentPage, setCurrentPage] = useState(0);
 	const [totalPages, setTotalPages] = useState(0);
-
-	// Debug - remover depois
-	useEffect(() => {
-		console.log('📏 Tamanho atual:', size);
-		console.log('📐 Config:', config);
-		console.log('📊 Dimensões:', dimensions);
-	}, [size, config, dimensions]);
 	
 	const { flipBookRef, handleFlip, handleChangeState, stopAutoFlip } = useAutoFlip({
 		maxFlips: 0,
@@ -180,11 +173,14 @@ export default function PlayPage() {
 			<BookControls 
 				isMinimized={isMinimized} 
 				onToggleMinimize={toggleMinimize}
-				onSizeChange={changeSize}
-				currentSize={size}
+				onZoomIn={zoomIn}
+				onZoomOut={zoomOut}
+				currentZoom={zoom}
+				canZoomIn={canZoomIn}
+				canZoomOut={canZoomOut}
 			>
 				<FlipBookWrapper
-					key={`flipbook-${size}-${dimensions.width}-${dimensions.height}`}
+					key={`flipbook-${zoom}-${dimensions.width}-${dimensions.height}`}
 					ref={flipBookRef}
 					width={dimensions.width}
 					height={dimensions.height}

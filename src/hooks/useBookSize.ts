@@ -3,50 +3,55 @@
 import { useState, useEffect, useCallback } from 'react';
 
 // =================================================================
-// TAMANHOS DISPONÍVEIS
+// CONFIGURAÇÕES DE ZOOM
 // =================================================================
 
-export type BookSize = 'small' | 'medium' | 'large';
+const MIN_ZOOM = 10;    // 10%
+const MAX_ZOOM = 250;   // 250%
+const ZOOM_STEP = 10;   // Incremento de 10%
+const DEFAULT_ZOOM = 100; // 100% padrão
 
-interface BookSizeConfig {
-	label: string;
-	viewportUsage: number; // Porcentagem da viewport (0.0 a 1.0)
-	padding: number; // Padding em pixels
+const STORAGE_KEY = 'protagonizei_book_zoom';
+
+// Conversão: zoom% → viewportUsage
+// 100% = 0.85 da viewport (base)
+// 50% = 0.425, 150% = 1.275, etc
+const BASE_VIEWPORT_USAGE = 0.85;
+
+/**
+ * Converte porcentagem de zoom para viewportUsage
+ * @param zoomPercent - Porcentagem (10-250)
+ * @returns viewportUsage (0.0-1.0)
+ */
+function zoomToViewportUsage(zoomPercent: number): number {
+	return (zoomPercent / 100) * BASE_VIEWPORT_USAGE;
 }
 
-export const BOOK_SIZES: Record<BookSize, BookSizeConfig> = {
-	small: {
-		label: 'Pequeno',
-		viewportUsage: 0.70,
-		padding: 60,
-	},
-	medium: {
-		label: 'Médio',
-		viewportUsage: 0.85,
-		padding: 40,
-	},
-	large: {
-		label: 'Grande',
-		viewportUsage: 0.95,
-		padding: 20,
-	},
-};
-
-const STORAGE_KEY = 'protagonizei_book_size';
-const DEFAULT_SIZE: BookSize = 'medium';
+/**
+ * Calcula padding baseado no zoom (maior zoom = menor padding)
+ */
+function zoomToPadding(zoomPercent: number): number {
+	if (zoomPercent <= 50) return 80;
+	if (zoomPercent <= 80) return 60;
+	if (zoomPercent <= 120) return 40;
+	return 20;
+}
 
 // =================================================================
 // HOOK
 // =================================================================
 
+interface BookSizeConfig {
+	viewportUsage: number;
+	padding: number;
+}
+
 /**
- * Hook para gerenciar o tamanho do livro escolhido pelo usuário
+ * Hook para gerenciar o zoom do livro (10% - 250%)
  * Salva a preferência no localStorage
- * 
- * @returns {Object} Estado e funções para gerenciar o tamanho do livro
  */
 export function useBookSize() {
-	const [size, setSize] = useState<BookSize>(DEFAULT_SIZE);
+	const [zoom, setZoom] = useState<number>(DEFAULT_ZOOM);
 	const [isMounted, setIsMounted] = useState(false);
 
 	// Carregar preferência salva
@@ -56,12 +61,15 @@ export function useBookSize() {
 		if (typeof window === 'undefined') return;
 		
 		try {
-			const saved = localStorage.getItem(STORAGE_KEY) as BookSize | null;
-			if (saved && BOOK_SIZES[saved]) {
-				setSize(saved);
+			const saved = localStorage.getItem(STORAGE_KEY);
+			if (saved) {
+				const parsedZoom = parseInt(saved, 10);
+				if (parsedZoom >= MIN_ZOOM && parsedZoom <= MAX_ZOOM) {
+					setZoom(parsedZoom);
+				}
 			}
 		} catch (error) {
-			console.warn('Erro ao carregar preferência de tamanho:', error);
+			console.warn('Erro ao carregar preferência de zoom:', error);
 		}
 	}, []);
 
@@ -70,30 +78,59 @@ export function useBookSize() {
 		if (!isMounted || typeof window === 'undefined') return;
 		
 		try {
-			localStorage.setItem(STORAGE_KEY, size);
+			localStorage.setItem(STORAGE_KEY, zoom.toString());
 		} catch (error) {
-			console.warn('Erro ao salvar preferência de tamanho:', error);
+			console.warn('Erro ao salvar preferência de zoom:', error);
 		}
-	}, [size, isMounted]);
+	}, [zoom, isMounted]);
 
 	/**
-	 * Atualiza o tamanho do livro
+	 * Aumenta o zoom em 10%
 	 */
-	const changeSize = useCallback((newSize: BookSize) => {
-		console.log('✅ useBookSize.changeSize chamado com:', newSize);
-		setSize(newSize);
+	const zoomIn = useCallback(() => {
+		setZoom(prev => {
+			const newZoom = Math.min(prev + ZOOM_STEP, MAX_ZOOM);
+			console.log('➕ Zoom In:', prev + '%', '→', newZoom + '%');
+			return newZoom;
+		});
 	}, []);
 
 	/**
-	 * Retorna a configuração do tamanho atual
+	 * Diminui o zoom em 10%
 	 */
-	const currentConfig = BOOK_SIZES[size];
+	const zoomOut = useCallback(() => {
+		setZoom(prev => {
+			const newZoom = Math.max(prev - ZOOM_STEP, MIN_ZOOM);
+			console.log('➖ Zoom Out:', prev + '%', '→', newZoom + '%');
+			return newZoom;
+		});
+	}, []);
+
+	/**
+	 * Define um zoom específico
+	 */
+	const setZoomPercent = useCallback((percent: number) => {
+		const clampedZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, percent));
+		setZoom(clampedZoom);
+	}, []);
+
+	/**
+	 * Retorna a configuração do zoom atual
+	 */
+	const config: BookSizeConfig = {
+		viewportUsage: zoomToViewportUsage(zoom),
+		padding: zoomToPadding(zoom),
+	};
 
 	return {
-		size,
-		changeSize,
-		config: currentConfig,
-		sizes: BOOK_SIZES,
+		zoom,
+		zoomIn,
+		zoomOut,
+		setZoomPercent,
+		config,
+		canZoomIn: zoom < MAX_ZOOM,
+		canZoomOut: zoom > MIN_ZOOM,
+		minZoom: MIN_ZOOM,
+		maxZoom: MAX_ZOOM,
 	};
 }
-
