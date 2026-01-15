@@ -1,7 +1,8 @@
 'use client';
 
 import React, { memo, useEffect, useRef } from 'react';
-import { ChevronDown, ChevronUp, ZoomIn, ZoomOut } from 'lucide-react';
+import { ChevronDown, ChevronUp, ZoomIn, ZoomOut, Maximize2, Minimize2 } from 'lucide-react';
+import { useFullscreen } from '../../hooks/useFullscreen';
 
 // =================================================================
 // COMPONENTES AUXILIARES
@@ -90,6 +91,7 @@ export const BookControls = memo<BookControlsProps>(({
 		if (onZoomOut) onZoomOut();
 	};
 
+	const { isFullscreen, toggleFullscreen } = useFullscreen();
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	/**
@@ -165,6 +167,23 @@ export const BookControls = memo<BookControlsProps>(({
 						title={`Aumentar zoom (Máx: 250%) - Ou Ctrl + Scroll Up`}
 					>
 						<ZoomIn className="h-6 w-6" />
+					</ZoomButton>
+
+					{/* Separador */}
+					<div className="h-8 w-px bg-purple-300/40 mx-2" />
+
+					{/* Botão Tela Cheia */}
+					<ZoomButton
+						onClick={toggleFullscreen}
+						disabled={false}
+						label={isFullscreen ? "Sair de tela cheia" : "Tela cheia"}
+						title={isFullscreen ? "Sair de tela cheia (F11)" : "Entrar em tela cheia (F11)"}
+					>
+						{isFullscreen ? (
+							<Minimize2 className="h-6 w-6" />
+						) : (
+							<Maximize2 className="h-6 w-6" />
+						)}
 					</ZoomButton>
 
 					{/* Separador */}
