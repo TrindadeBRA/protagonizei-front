@@ -85,7 +85,7 @@ const TestimonialsSection = () => {
                   <Image src={testimonial.avatar} alt={testimonial.name} width={48} height={48} className="rounded-full" />
                 </div>
                 <div>
-                  <h4 className="font-heading font-bold text-gray-800">{testimonial.name}</h4>
+                  <p className="font-heading font-bold text-gray-800">{testimonial.name}</p>
                   <p className={`text-sm font-semibold ${testimonial.gender_child === "male" ? "text-blue-main" : "text-pink-main"}`}>{testimonial.child}</p>
                   <p className="text-xs text-gray-500">{testimonial.location}</p>
                 </div>
