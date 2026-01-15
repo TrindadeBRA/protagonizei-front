@@ -3,6 +3,7 @@
 import React, { memo, useEffect, useRef } from 'react';
 import { ChevronDown, ChevronUp, ZoomIn, ZoomOut, Maximize2, Minimize2 } from 'lucide-react';
 import { useFullscreen } from '../../hooks/useFullscreen';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 // =================================================================
 // COMPONENTES AUXILIARES
@@ -92,6 +93,7 @@ export const BookControls = memo<BookControlsProps>(({
 	};
 
 	const { isFullscreen, toggleFullscreen } = useFullscreen();
+	const isMobile = useIsMobile();
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	/**
@@ -172,22 +174,26 @@ export const BookControls = memo<BookControlsProps>(({
 					{/* Separador */}
 					<div className="h-8 w-px bg-purple-300/40 mx-2" />
 
-					{/* Botão Tela Cheia */}
-					<ZoomButton
-						onClick={toggleFullscreen}
-						disabled={false}
-						label={isFullscreen ? "Sair de tela cheia" : "Tela cheia"}
-						title={isFullscreen ? "Sair de tela cheia (F11)" : "Entrar em tela cheia (F11)"}
-					>
-						{isFullscreen ? (
-							<Minimize2 className="h-6 w-6" />
-						) : (
-							<Maximize2 className="h-6 w-6" />
-						)}
-					</ZoomButton>
+					{/* Botão Tela Cheia - Oculto em mobile/tablet */}
+					{!isMobile && (
+						<>
+							<ZoomButton
+								onClick={toggleFullscreen}
+								disabled={false}
+								label={isFullscreen ? "Sair de tela cheia" : "Tela cheia"}
+								title={isFullscreen ? "Sair de tela cheia (F11)" : "Entrar em tela cheia (F11)"}
+							>
+								{isFullscreen ? (
+									<Minimize2 className="h-6 w-6" />
+								) : (
+									<Maximize2 className="h-6 w-6" />
+								)}
+							</ZoomButton>
 
-					{/* Separador */}
-					<div className="h-8 w-px bg-purple-300/40 mx-2" />
+							{/* Separador */}
+							<div className="h-8 w-px bg-purple-300/40 mx-2" />
+						</>
+					)}
 
 					{/* Botão Minimizar */}
 					<button
