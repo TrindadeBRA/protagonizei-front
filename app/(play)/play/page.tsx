@@ -60,7 +60,7 @@ function PlayPageContent() {
 	const [pages, setPages] = useState<BookPageData[]>([]);
 	const [isLoading, setIsLoading] = useState(!!orderId); // Inicia carregando se houver orderId
 	const [error, setError] = useState<string | null>(null);
-	const [showModal, setShowModal] = useState(!!orderId); // Abre modal imediatamente se houver orderId
+	const [showModal, setShowModal] = useState(true); // Modal sempre aparece ao entrar na rota
 	const fetchPagesRef = useRef(false); // Ref para evitar requisições duplicadas
 
 	const { flipBookRef, handleFlip, handleChangeState, stopAutoFlip } = useAutoFlip({
@@ -82,7 +82,7 @@ function PlayPageContent() {
 	useEffect(() => {
 		if (!orderId) {
 			setIsLoading(false);
-			setShowModal(false);
+			// Mantém o modal aberto quando não há orderId (modo demo)
 			fetchPagesRef.current = false;
 			return;
 		}
@@ -191,13 +191,19 @@ function PlayPageContent() {
 
 	/**
 	 * Handler para fechar o modal
-	 * Só permite fechar se não estiver carregando e tiver páginas
+	 * Permite fechar se não estiver carregando ou se não houver orderId (modo demo)
 	 */
 	const handleCloseModal = useCallback(() => {
-		if (!isLoading && pages.length > 0) {
-			setShowModal(false);
+		if (!isLoading) {
+			if (!orderId) {
+				// Se não tiver orderId, pode fechar imediatamente (é um modelo)
+				setShowModal(false);
+			} else if (pages.length > 0) {
+				// Se tiver orderId, só fecha quando as páginas estiverem carregadas
+				setShowModal(false);
+			}
 		}
-	}, [isLoading, pages.length]);
+	}, [isLoading, pages.length, orderId]);
 
 	// =================================================================
 	// RENDERIZAÇÃO DAS PÁGINAS
@@ -289,123 +295,126 @@ function PlayPageContent() {
 
 	return (
 		<>
-			{/* Modal de Instruções (só aparece quando há orderId) */}
-			{orderId && (
-				<Dialog
-					open={showModal}
-					onOpenChange={() => {
-						// Modal não pode ser fechado
-					}}
-				>
-					<DialogPortal>
-						<DialogOverlay className="bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 transition-colors duration-500" />
-						<DialogPrimitive.Content
-							className={cn(
-								"fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg sm:max-w-md",
-								"bg-white/95 border-gray-200 text-gray-900"
-							)}
-							onEscapeKeyDown={(e) => {
-								e.preventDefault();
-							}}
-							onPointerDownOutside={(e) => {
-								e.preventDefault();
-							}}
-							onInteractOutside={(e) => {
-								e.preventDefault();
-							}}
-						>
-							{/* Logo acima do modal */}
-							<div className="flex justify-center">
-								<Image
-									src="/assets/images/logo black.svg"
-									alt="Protagonizei"
-									width={200}
-									height={80}
-									className="object-contain"
-									priority
-								/>
-							</div>
+			{/* Modal de Instruções - sempre aparece ao entrar na rota */}
+			<Dialog
+				open={showModal}
+				onOpenChange={() => {
+					// Modal não pode ser fechado
+				}}
+			>
+				<DialogPortal>
+					<DialogOverlay className="bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 transition-colors duration-500" />
+					<DialogPrimitive.Content
+						className={cn(
+							"fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg sm:max-w-md",
+							"bg-white/95 border-gray-200 text-gray-900"
+						)}
+						onEscapeKeyDown={(e) => {
+							e.preventDefault();
+						}}
+						onPointerDownOutside={(e) => {
+							e.preventDefault();
+						}}
+						onInteractOutside={(e) => {
+							e.preventDefault();
+						}}
+					>
+						{/* Logo acima do modal */}
+						<div className="flex justify-center">
+							<Image
+								src="/assets/images/logo black.svg"
+								alt="Protagonizei"
+								width={200}
+								height={80}
+								className="object-contain"
+								priority
+							/>
+						</div>
 
-							<DialogHeader>
-								<DialogTitle className="text-2xl font-bold text-center text-gray-900">
-									Bem-vindo ao seu livro!
-								</DialogTitle>
-								<DialogDescription className="text-center text-gray-600">
-									Instruções para melhor experiência
-								</DialogDescription>
-							</DialogHeader>
 
-							<div className="space-y-4 py-4">
-								{/* Recomendação de modo paisagem */}
-								<AlertBox>
-									<div className="flex items-start gap-3">
-										<Smartphone className="h-5 w-5 mt-0.5 flex-shrink-0 text-blue-600" />
-										<div className="flex-1">
-											<p className="text-sm font-semibold mb-1 text-blue-900">
-												Recomendamos o modo paisagem
-											</p>
-											<p className="text-xs text-blue-700">
-												Para uma melhor visualização, gire seu dispositivo para o modo horizontal (paisagem).
-											</p>
-										</div>
+						<div className="w-full px-4">
+							<h2 className="text-xl font-bold text-center text-gray-900">
+								{orderId ? 'Bem-vindo ao seu livro!' : 'Explore nosso livro modelo!'}
+							</h2>
+							<h3 className="text-sm text-center text-gray-600">
+								{orderId
+									? 'Instruções para melhor experiência'
+									: 'Conheça como será a experiência do seu livro personalizado'}
+							</h3>
+						</div>
+
+
+						<div className="space-y-4 pb-4">
+							{/* Recomendação de modo paisagem */}
+							<AlertBox>
+								<div className="flex items-start gap-3">
+									<Smartphone className="h-5 w-5 mt-0.5 flex-shrink-0 text-blue-600" />
+									<div className="flex-1">
+										<p className="text-sm font-semibold mb-1 text-blue-900">
+											Recomendamos o modo paisagem
+										</p>
+										<p className="text-xs text-blue-700">
+											Para uma melhor visualização, gire seu dispositivo para o modo horizontal (paisagem).
+										</p>
 									</div>
-								</AlertBox>
-
-								{/* Instruções de uso */}
-								<div className="space-y-2">
-									<h4 className="font-semibold text-sm text-gray-900">
-										Como usar:
-									</h4>
-									<ul className="space-y-1.5 text-sm text-gray-600">
-										<li className="flex items-start gap-2">
-											<span className="text-purple-600">•</span>
-											<span>Clique ou arraste nas páginas para virar</span>
-										</li>
-										<li className="flex items-start gap-2">
-											<span className="text-purple-600">•</span>
-											<span>Use as setas laterais para navegar</span>
-										</li>
-										<li className="flex items-start gap-2">
-											<span className="text-purple-600">•</span>
-											<span>No mobile, deslize para os lados</span>
-										</li>
-										<li className="flex items-start gap-2">
-											<span className="text-purple-600">•</span>
-											<span>Use os controles para ajustar zoom</span>
-										</li>
-									</ul>
 								</div>
+							</AlertBox>
+
+							{/* Instruções de uso */}
+							<div className="space-y-2">
+								<h4 className="font-semibold text-sm text-gray-900">
+									Como usar:
+								</h4>
+								<ul className="space-y-1.5 text-sm text-gray-600">
+									<li className="flex items-start gap-2">
+										<span className="text-purple-600">•</span>
+										<span>Clique ou arraste nas páginas para virar</span>
+									</li>
+									<li className="flex items-start gap-2">
+										<span className="text-purple-600">•</span>
+										<span>Use as setas laterais para navegar</span>
+									</li>
+									<li className="flex items-start gap-2">
+										<span className="text-purple-600">•</span>
+										<span>No mobile, deslize para os lados</span>
+									</li>
+									<li className="flex items-start gap-2">
+										<span className="text-purple-600">•</span>
+										<span>Use os controles para ajustar zoom</span>
+									</li>
+								</ul>
 							</div>
+						</div>
 
-							<DialogFooter>
-								<button
-									onClick={handleCloseModal}
-									disabled={isLoading}
-									className={`w-full magical-border border-4 border-transparent text-white font-bold py-3 px-8 rounded-full text-lg shadow-xl transition-all duration-300 font-englebert text-center ${
-										isLoading
-											? 'opacity-50 cursor-not-allowed hover:scale-100'
-											: 'hover:scale-105 cursor-pointer'
+						<DialogFooter>
+							<button
+								onClick={handleCloseModal}
+								disabled={isLoading}
+								className={`w-full magical-border border-4 border-transparent text-white font-bold py-3 px-8 rounded-full text-lg shadow-xl transition-all duration-300 font-englebert text-center ${isLoading
+										? 'opacity-50 cursor-not-allowed hover:scale-100'
+										: 'hover:scale-105 cursor-pointer'
 									}`}
-								>
-									{isLoading ? (
-										<span className="flex items-center justify-center gap-2">
-											<div className={`h-4 w-4 animate-spin rounded-full border-2 border-t-transparent border-white`}></div>
-											Carregando...
-										</span>
-									) : pages.length > 0 ? (
-										'Começar a ler'
-									) : (
-										'Aguardando...'
-									)}
-								</button>
-							</DialogFooter>
-						</DialogPrimitive.Content>
-					</DialogPortal>
-				</Dialog>
-			)}
+							>
+								{isLoading ? (
+									<span className="flex items-center justify-center gap-2">
+										<div className={`h-4 w-4 animate-spin rounded-full border-2 border-t-transparent border-white`}></div>
+										Carregando...
+									</span>
+								) : orderId && pages.length > 0 ? (
+									'Começar a ler'
+								) : !orderId ? (
+									'Ver modelo'
+								) : (
+									'Aguardando...'
+								)}
+							</button>
+						</DialogFooter>
+					</DialogPrimitive.Content>
+				</DialogPortal>
+			</Dialog>
 
-			{/* Conteúdo do livro (só mostra se não estiver no modal ou se não tiver orderId) */}
-			{(!orderId || (!showModal && pages.length > 0)) && (
+			{/* Conteúdo do livro - mostra quando modal está fechado */}
+			{!showModal && (
 				<div className="min-h-screen w-full">
 					{/* Sistema de Controles de Tamanho */}
 					<BookControls
