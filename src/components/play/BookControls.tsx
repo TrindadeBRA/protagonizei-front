@@ -69,6 +69,8 @@ interface BookControlsProps {
 	currentZoom?: number;
 	canZoomIn?: boolean;
 	canZoomOut?: boolean;
+	onPrevPage?: () => void;
+	onNextPage?: () => void;
 }
 
 /**
@@ -83,6 +85,8 @@ export const BookControls = memo<BookControlsProps>(({
 	currentZoom = 100,
 	canZoomIn = true,
 	canZoomOut = true,
+	onPrevPage,
+	onNextPage,
 }) => {
 	const handleZoomIn = () => {
 		if (onZoomIn) onZoomIn();
@@ -134,6 +138,46 @@ export const BookControls = memo<BookControlsProps>(({
 			container.removeEventListener('wheel', handleWheelNative, { capture: true });
 		};
 	}, [canZoomIn, canZoomOut, onZoomIn, onZoomOut]);
+
+	/**
+	 * Listener para eventos de teclado (setas para navegação)
+	 * Usa window para capturar eventos globais
+	 */
+	useEffect(() => {
+		if (!onPrevPage && !onNextPage) return;
+
+		const handleKeyDown = (e: KeyboardEvent) => {
+			// Só processa se não estiver digitando em um input
+			if (
+				e.target instanceof HTMLInputElement ||
+				e.target instanceof HTMLTextAreaElement ||
+				(e.target as HTMLElement).isContentEditable
+			) {
+				return;
+			}
+
+			switch (e.key) {
+				case 'ArrowLeft':
+					e.preventDefault();
+					if (onPrevPage) {
+						onPrevPage();
+					}
+					break;
+				case 'ArrowRight':
+					e.preventDefault();
+					if (onNextPage) {
+						onNextPage();
+					}
+					break;
+			}
+		};
+
+		window.addEventListener('keydown', handleKeyDown);
+
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [onPrevPage, onNextPage]);
 
 	return (
 		<div 

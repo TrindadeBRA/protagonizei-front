@@ -17,13 +17,10 @@ import {
 import customFetch from '../../../src/services/custom-fetch';
 import {
 	Dialog,
-	DialogContent,
-	DialogDescription,
 	DialogFooter,
-	DialogHeader,
-	DialogTitle,
 	DialogOverlay,
 	DialogPortal,
+	DialogTitle,
 } from '../../../src/components/ui/dialog';
 import { AlertBox } from '../../../src/components/ui/alert-box';
 import * as DialogPrimitive from "@radix-ui/react-dialog";
@@ -333,10 +330,10 @@ function PlayPageContent() {
 
 
 						<div className="w-full px-4">
-							<h2 className="text-xl font-bold text-center text-gray-900">
+							<DialogTitle className="text-xl font-bold text-center text-gray-900">
 								{orderId ? 'Bem-vindo ao seu livro!' : 'Explore nosso livro modelo!'}
-							</h2>
-							<h3 className="text-sm text-center text-gray-600">
+							</DialogTitle>
+							<h3 className="text-sm text-center text-gray-600 mt-2">
 								{orderId
 									? 'Instruções para melhor experiência'
 									: 'Conheça como será a experiência do seu livro personalizado'}
@@ -372,7 +369,7 @@ function PlayPageContent() {
 									</li>
 									<li className="flex items-start gap-2">
 										<span className="text-purple-600">•</span>
-										<span>Use as setas laterais para navegar</span>
+										<span>Use as setas laterais ou do teclado para navegar</span>
 									</li>
 									<li className="flex items-start gap-2">
 										<span className="text-purple-600">•</span>
@@ -425,6 +422,8 @@ function PlayPageContent() {
 						currentZoom={zoom}
 						canZoomIn={canZoomIn}
 						canZoomOut={canZoomOut}
+						onPrevPage={handlePrevPage}
+						onNextPage={handleNextPage}
 					>
 						<FlipBookWrapper
 							key={`flipbook-${zoom}-${dimensions.width}-${dimensions.height}`}
