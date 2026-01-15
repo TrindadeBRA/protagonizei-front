@@ -1,7 +1,9 @@
 'use client';
 
-import { useEffect, useState, useCallback, useMemo } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useEffect, useState, useCallback, useMemo, Suspense, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
+import Image from 'next/image';
+import { ChevronLeft, ChevronRight, Smartphone, X } from 'lucide-react';
 import { useAutoFlip } from '../../../src/hooks/useAutoFlip';
 import { useBookDimensions } from '../../../src/hooks/useBookDimensions';
 import { useMinimizeControls } from '../../../src/hooks/useMinimizeControls';
@@ -13,26 +15,41 @@ import {
 	PAGE_FLIP_DURATION,
 	SWIPE_DISTANCE,
 } from '../../../src/components/play/bookConfig';
+import customFetch from '../../../src/services/custom-fetch';
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogOverlay,
+	DialogPortal,
+} from '../../../src/components/ui/dialog';
+import { AlertBox } from '../../../src/components/ui/alert-box';
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { cn } from '../../../src/lib/utils';
 
 // =================================================================
-// PÁGINA PRINCIPAL DO LIVRO DIGITAL
+// TIPOS
 // =================================================================
-/**
- * Página de visualização interativa do livro
- * 
- * Funcionalidades:
- * - Navegação por clique/arrastar nas páginas
- * - Navegação por setas laterais
- * - Swipe no mobile
- * - Zoom com Ctrl+Scroll ou botões
- * - Menu de controles minimizável
- * 
- * @returns Página completa com livro e controles
- */
-export default function PlayPage() {
+
+interface BookPageData {
+	id: string;
+	src: string;
+	priority: boolean;
+}
+
+// =================================================================
+// COMPONENTE INTERNO QUE USA SEARCH PARAMS
+// =================================================================
+function PlayPageContent() {
 	// =================================================================
 	// HOOKS E ESTADOS
 	// =================================================================
+	const searchParams = useSearchParams();
+	const orderId = searchParams.get('id');
+
 	const { isMinimized, toggleMinimize } = useMinimizeControls();
 	const { zoom, zoomIn, zoomOut, config, canZoomIn, canZoomOut } = useBookSize();
 	const { isDark, toggleDarkMode } = useDarkMode();
@@ -42,7 +59,12 @@ export default function PlayPage() {
 	});
 	const [currentPage, setCurrentPage] = useState(0);
 	const [totalPages, setTotalPages] = useState(0);
-	
+	const [pages, setPages] = useState<BookPageData[]>([]);
+	const [isLoading, setIsLoading] = useState(!!orderId); // Inicia carregando se houver orderId
+	const [error, setError] = useState<string | null>(null);
+	const [showModal, setShowModal] = useState(!!orderId); // Abre modal imediatamente se houver orderId
+	const fetchPagesRef = useRef(false); // Ref para evitar requisições duplicadas
+
 	const { flipBookRef, handleFlip, handleChangeState, stopAutoFlip } = useAutoFlip({
 		maxFlips: 0,
 		initialDelay: 0,
@@ -53,12 +75,73 @@ export default function PlayPage() {
 	// =================================================================
 	// EFEITOS
 	// =================================================================
-	
+
 	/**
-	 * Detecta o número total de páginas do livro
-	 * Executa uma vez quando o componente monta
+	 * Carrega as páginas do livro da API quando há orderId
+	 * A requisição inicia imediatamente quando a tela abre
+	 * Usa ref para evitar requisições duplicadas (React Strict Mode)
 	 */
 	useEffect(() => {
+		if (!orderId) {
+			setIsLoading(false);
+			setShowModal(false);
+			fetchPagesRef.current = false;
+			return;
+		}
+
+		// Evita requisições duplicadas
+		if (fetchPagesRef.current) {
+			return;
+		}
+
+		// Marca que a requisição já foi iniciada
+		fetchPagesRef.current = true;
+
+		// Abre modal imediatamente
+		setShowModal(true);
+		setIsLoading(true);
+		setError(null);
+
+		const fetchPages = async () => {
+			try {
+				const data = await customFetch<BookPageData[]>(
+					`/orders/${orderId}/pages`
+				);
+
+				if (Array.isArray(data) && data.length > 0) {
+					setPages(data);
+				} else {
+					setError('Nenhuma página encontrada para este pedido');
+				}
+			} catch (err: any) {
+				console.error('Erro ao carregar páginas:', err);
+				setError(
+					err?.message ||
+						err?.code === 'order_not_found'
+						? 'Pedido não encontrado'
+						: err?.code === 'invalid_order_status'
+							? 'Pedido não está disponível para visualização'
+							: 'Erro ao carregar páginas do livro'
+				);
+				// Permite tentar novamente em caso de erro
+				fetchPagesRef.current = false;
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		// Inicia requisição imediatamente
+		fetchPages();
+	}, [orderId]);
+
+	/**
+	 * Detecta o número total de páginas do livro
+	 * Executa quando as páginas são carregadas ou quando usa BOOK_PAGES
+	 */
+	useEffect(() => {
+		const pagesToCheck = orderId ? pages : BOOK_PAGES;
+		if (orderId && pages.length === 0) return;
+
 		const checkPages = setInterval(() => {
 			if (flipBookRef.current?.pageFlip()) {
 				const count = flipBookRef.current.pageFlip().getPageCount();
@@ -70,12 +153,12 @@ export default function PlayPage() {
 		}, 100);
 
 		return () => clearInterval(checkPages);
-	}, [flipBookRef]);
+	}, [flipBookRef, pages, orderId]);
 
 	// =================================================================
 	// HANDLERS
 	// =================================================================
-	
+
 	/**
 	 * Handler para atualizar página atual após flip
 	 * Usa setTimeout para garantir que a animação complete
@@ -108,32 +191,50 @@ export default function PlayPage() {
 		}
 	}, [currentPage, totalPages, stopAutoFlip, flipBookRef]);
 
+	/**
+	 * Handler para fechar o modal
+	 * Só permite fechar se não estiver carregando e tiver páginas
+	 */
+	const handleCloseModal = useCallback(() => {
+		if (!isLoading && pages.length > 0) {
+			setShowModal(false);
+		}
+	}, [isLoading, pages.length]);
+
 	// =================================================================
 	// RENDERIZAÇÃO DAS PÁGINAS
 	// =================================================================
-	
+
 	/**
-	 * Gera os componentes de página do livro baseado na configuração
-	 * Cada imagem é duplicada (left/right) pois contém 2 páginas
+	 * Gera os componentes de página do livro
+	 * Se houver orderId, usa as páginas da API, senão usa BOOK_PAGES
 	 */
 	const bookPages = useMemo(() => {
-		const pages = [];
-		
+		const pagesToUse = orderId ? pages : BOOK_PAGES;
+
+		if (orderId && pages.length === 0) {
+			return [];
+		}
+
+		const renderedPages = [];
+
 		// Capa (apenas uma vez)
-		pages.push(
-			<BookPage
-				key="cover"
-				src={BOOK_PAGES[0].src}
-				alt="Capa"
-				side="left"
-				priority={BOOK_PAGES[0].priority}
-			/>
-		);
+		if (pagesToUse[0]) {
+			renderedPages.push(
+				<BookPage
+					key="cover"
+					src={pagesToUse[0].src}
+					alt="Capa"
+					side="left"
+					priority={pagesToUse[0].priority}
+				/>
+			);
+		}
 
 		// Páginas internas (cada imagem aparece 2x: left e right)
-		for (let i = 1; i < BOOK_PAGES.length; i++) {
-			const page = BOOK_PAGES[i];
-			pages.push(
+		for (let i = 1; i < pagesToUse.length; i++) {
+			const page = pagesToUse[i];
+			renderedPages.push(
 				<BookPage
 					key={`${page.id}-left`}
 					src={page.src}
@@ -151,86 +252,286 @@ export default function PlayPage() {
 			);
 		}
 
-		// Contracapa
-		pages.push(
-			<BookPage
-				key="backcover"
-				src={BOOK_PAGES[0].src}
-				alt="Contracapa"
-				side="right"
-				priority={false}
-			/>
-		);
+		// Contracapa (usa a capa novamente)
+		if (pagesToUse[0]) {
+			renderedPages.push(
+				<BookPage
+					key="backcover"
+					src={pagesToUse[0].src}
+					alt="Contracapa"
+					side="right"
+					priority={false}
+				/>
+			);
+		}
 
-		return pages;
-	}, []);
+		return renderedPages;
+	}, [pages, orderId]);
 
 	// =================================================================
 	// RENDERIZAÇÃO
 	// =================================================================
-	
+
+	// Estado de erro (mostra mesmo com modal aberto)
+	if (orderId && error && !isLoading) {
+		return (
+			<div className={`min-h-screen w-full flex items-center justify-center transition-all duration-500 ${isDark
+					? 'bg-gradient-to-br from-pink-950/90 via-purple-950/90 to-blue-950/90'
+					: 'bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100'
+				}`}>
+				<div className="text-center max-w-md mx-auto px-4">
+					<div className="text-6xl mb-4">📚</div>
+					<h1 className={`text-2xl font-bold mb-2 ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
+						Livro não encontrado
+					</h1>
+					<p className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+						{error || 'Nenhuma página disponível para este pedido'}
+					</p>
+				</div>
+			</div>
+		);
+	}
+
 	return (
-		<div className={`min-h-screen w-full transition-all duration-500 ${
-			isDark 
-				? 'bg-gradient-to-br from-pink-950/90 via-purple-950/90 to-blue-950/90' 
-				: 'bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100'
-		}`}>
-			{/* Sistema de Controles de Tamanho */}
-			<BookControls 
-				isMinimized={isMinimized} 
-				onToggleMinimize={toggleMinimize}
-				onZoomIn={zoomIn}
-				onZoomOut={zoomOut}
-				currentZoom={zoom}
-				canZoomIn={canZoomIn}
-				canZoomOut={canZoomOut}
-				onDarkModeToggle={toggleDarkMode}
-				isDarkMode={isDark}
-			>
-				<FlipBookWrapper
-					key={`flipbook-${zoom}-${dimensions.width}-${dimensions.height}`}
-					ref={flipBookRef}
-					width={dimensions.width}
-					height={dimensions.height}
-					size="fixed"
-					minWidth={dimensions.width}
-					maxWidth={dimensions.width}
-					minHeight={dimensions.height}
-					maxHeight={dimensions.height}
-					drawShadow={false}
-					showCover={true}
-					usePortrait={false}
-					mobileScrollSupport={true}
-					flippingTime={PAGE_FLIP_DURATION}
-					autoSize={false}
-					useMouseEvents={true}
-					swipeDistance={SWIPE_DISTANCE}
-					clickEventForward={true}
-					onFlip={handlePageFlip}
-					onChangeState={handleChangeState}
+		<>
+			{/* Modal de Instruções (só aparece quando há orderId) */}
+			{orderId && (
+				<Dialog
+					open={showModal}
+					onOpenChange={(open) => {
+						if (!open && !isLoading && pages.length > 0) {
+							setShowModal(false);
+						}
+					}}
 				>
-					{bookPages}
-				</FlipBookWrapper>
-			</BookControls>
+					<DialogPortal>
+						<DialogOverlay className={`${isDark
+								? 'bg-gradient-to-br from-pink-950/90 via-purple-950/90 to-blue-950/90'
+								: 'bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100'
+							}`} />
+						<DialogPrimitive.Content
+							className={cn(
+								"fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg sm:max-w-md",
+								isDark
+									? 'bg-gray-800/95 border-gray-700 text-gray-100'
+									: 'bg-white/95 border-gray-200 text-gray-900'
+							)}
+							onEscapeKeyDown={(e) => {
+								if (isLoading) {
+									e.preventDefault();
+								}
+							}}
+							onPointerDownOutside={(e) => {
+								if (isLoading) {
+									e.preventDefault();
+								}
+							}}
+						>
+							{/* Logo acima do modal */}
+							<div className="flex justify-center">
+								<Image
+									src={isDark ? '/assets/images/logo white.svg' : '/assets/images/logo black.svg'}
+									alt="Protagonizei"
+									width={200}
+									height={80}
+									className="object-contain"
+									priority
+								/>
+							</div>
 
-			{/* Botões de Navegação Lateral */}
-			<NavButton
-				onClick={handlePrevPage}
-				disabled={currentPage === 0}
-				icon={ChevronLeft}
-				label="Página anterior"
-				position="left"
-				isMinimized={isMinimized}
-			/>
+							<DialogHeader>
+								<DialogTitle className={`text-2xl font-bold text-center ${isDark ? 'text-gray-100' : 'text-gray-900'
+									}`}>
+									Bem-vindo ao seu livro!
+								</DialogTitle>
+								<DialogDescription className={`text-center ${isDark ? 'text-gray-400' : 'text-gray-600'
+									}`}>
+									Instruções para melhor experiência
+								</DialogDescription>
+							</DialogHeader>
 
-			<NavButton
-				onClick={handleNextPage}
-				disabled={currentPage >= totalPages - 1}
-				icon={ChevronRight}
-				label="Próxima página"
-				position="right"
-				isMinimized={isMinimized}
-			/>
+							<div className="space-y-4 py-4">
+								{/* Recomendação de modo paisagem */}
+								<AlertBox className={cn(
+									isDark 
+										? '!bg-blue-950/30 !border-blue-800 !from-transparent !via-transparent !to-transparent' 
+										: ''
+								)}>
+									<div className="flex items-start gap-3">
+										<Smartphone className={`h-5 w-5 mt-0.5 flex-shrink-0 ${isDark ? 'text-blue-400' : 'text-blue-600'
+											}`} />
+										<div className="flex-1">
+											<p className={`text-sm font-semibold mb-1 ${isDark ? 'text-blue-100' : 'text-blue-900'
+												}`}>
+												Recomendamos o modo paisagem
+											</p>
+											<p className={`text-xs ${isDark ? 'text-blue-300' : 'text-blue-700'
+												}`}>
+												Para uma melhor visualização, gire seu dispositivo para o modo horizontal (paisagem).
+											</p>
+										</div>
+									</div>
+								</AlertBox>
+
+								{/* Instruções de uso */}
+								<div className="space-y-2">
+									<h4 className={`font-semibold text-sm ${isDark ? 'text-gray-200' : 'text-gray-900'
+										}`}>
+										Como usar:
+									</h4>
+									<ul className={`space-y-1.5 text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'
+										}`}>
+										<li className="flex items-start gap-2">
+											<span className={isDark ? 'text-purple-400' : 'text-purple-600'}>•</span>
+											<span>Clique ou arraste nas páginas para virar</span>
+										</li>
+										<li className="flex items-start gap-2">
+											<span className={isDark ? 'text-purple-400' : 'text-purple-600'}>•</span>
+											<span>Use as setas laterais para navegar</span>
+										</li>
+										<li className="flex items-start gap-2">
+											<span className={isDark ? 'text-purple-400' : 'text-purple-600'}>•</span>
+											<span>No mobile, deslize para os lados</span>
+										</li>
+										<li className="flex items-start gap-2">
+											<span className={isDark ? 'text-purple-400' : 'text-purple-600'}>•</span>
+											<span>Use os controles para ajustar zoom e tema</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+							<DialogFooter>
+								<button
+									onClick={handleCloseModal}
+									disabled={isLoading}
+									className={`w-full magical-border border-4 border-transparent text-white font-bold py-3 px-8 rounded-full text-lg shadow-xl transition-all duration-300 font-englebert text-center ${
+										isLoading
+											? 'opacity-50 cursor-not-allowed hover:scale-100'
+											: 'hover:scale-105 cursor-pointer'
+									}`}
+								>
+									{isLoading ? (
+										<span className="flex items-center justify-center gap-2">
+											<div className={`h-4 w-4 animate-spin rounded-full border-2 border-t-transparent border-white`}></div>
+											Carregando...
+										</span>
+									) : pages.length > 0 ? (
+										'Começar a ler'
+									) : (
+										'Aguardando...'
+									)}
+								</button>
+							</DialogFooter>
+							<DialogPrimitive.Close className={`absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none ${isDark ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900'
+								}`}>
+								<X className="h-4 w-4" />
+								<span className="sr-only">Close</span>
+							</DialogPrimitive.Close>
+						</DialogPrimitive.Content>
+					</DialogPortal>
+				</Dialog>
+			)}
+
+			{/* Conteúdo do livro (só mostra se não estiver no modal ou se não tiver orderId) */}
+			{(!orderId || (!showModal && pages.length > 0)) && (
+				<div className={`min-h-screen w-full transition-all duration-500 ${isDark
+						? 'bg-gradient-to-br from-pink-950/90 via-purple-950/90 to-blue-950/90'
+						: 'bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100'
+					}`}>
+					{/* Sistema de Controles de Tamanho */}
+					<BookControls
+						isMinimized={isMinimized}
+						onToggleMinimize={toggleMinimize}
+						onZoomIn={zoomIn}
+						onZoomOut={zoomOut}
+						currentZoom={zoom}
+						canZoomIn={canZoomIn}
+						canZoomOut={canZoomOut}
+						onDarkModeToggle={toggleDarkMode}
+						isDarkMode={isDark}
+					>
+						<FlipBookWrapper
+							key={`flipbook-${zoom}-${dimensions.width}-${dimensions.height}`}
+							ref={flipBookRef}
+							width={dimensions.width}
+							height={dimensions.height}
+							size="fixed"
+							minWidth={dimensions.width}
+							maxWidth={dimensions.width}
+							minHeight={dimensions.height}
+							maxHeight={dimensions.height}
+							drawShadow={false}
+							showCover={true}
+							usePortrait={false}
+							mobileScrollSupport={true}
+							flippingTime={PAGE_FLIP_DURATION}
+							autoSize={false}
+							useMouseEvents={true}
+							swipeDistance={SWIPE_DISTANCE}
+							clickEventForward={true}
+							onFlip={handlePageFlip}
+							onChangeState={handleChangeState}
+						>
+							{bookPages}
+						</FlipBookWrapper>
+					</BookControls>
+
+					{/* Botões de Navegação Lateral */}
+					<NavButton
+						onClick={handlePrevPage}
+						disabled={currentPage === 0}
+						icon={ChevronLeft}
+						label="Página anterior"
+						position="left"
+						isMinimized={isMinimized}
+					/>
+
+					<NavButton
+						onClick={handleNextPage}
+						disabled={currentPage >= totalPages - 1}
+						icon={ChevronRight}
+						label="Próxima página"
+						position="right"
+						isMinimized={isMinimized}
+					/>
+				</div>
+			)}
+		</>
+	);
+}
+
+// =================================================================
+// COMPONENTE DE LOADING
+// =================================================================
+function LoadingScreen() {
+	return (
+		<div className="flex justify-center items-center h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 dark:from-pink-950/90 dark:via-purple-950/90 dark:to-blue-950/90">
+			<div className="animate-spin rounded-full h-32 w-32 border-4 border-t-transparent border-purple-500 dark:border-purple-400"></div>
 		</div>
+	);
+}
+
+// =================================================================
+// PÁGINA PRINCIPAL DO LIVRO DIGITAL
+// =================================================================
+/**
+ * Página de visualização interativa do livro
+ * 
+ * Funcionalidades:
+ * - Navegação por clique/arrastar nas páginas
+ * - Navegação por setas laterais
+ * - Swipe no mobile
+ * - Zoom com Ctrl+Scroll ou botões
+ * - Menu de controles minimizável
+ * - Suporte para query parameter ?id=XXX para carregar livro do pedido
+ * 
+ * @returns Página completa com livro e controles
+ */
+export default function PlayPage() {
+	return (
+		<Suspense fallback={<LoadingScreen />}>
+			<PlayPageContent />
+		</Suspense>
 	);
 }
