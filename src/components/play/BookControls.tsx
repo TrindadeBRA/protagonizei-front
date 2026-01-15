@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import { ChevronDown, ChevronUp, ZoomIn, ZoomOut } from 'lucide-react';
 
 // =================================================================
@@ -90,8 +90,52 @@ export const BookControls = memo<BookControlsProps>(({
 		if (onZoomOut) onZoomOut();
 	};
 
+	const containerRef = useRef<HTMLDivElement>(null);
+
+	/**
+	 * Listener nativo para capturar Ctrl+Scroll antes do navegador
+	 * Isso previne o zoom do navegador completamente
+	 */
+	useEffect(() => {
+		const container = containerRef.current;
+		if (!container) return;
+
+		const handleWheelNative = (e: WheelEvent) => {
+			if (e.ctrlKey || e.metaKey) {
+				// Previne zoom do navegador
+				e.preventDefault();
+				e.stopPropagation();
+				e.stopImmediatePropagation();
+				
+				const delta = e.deltaY;
+				
+				if (delta > 0) {
+					// Scroll para baixo = Zoom Out
+					if (canZoomOut && onZoomOut) {
+						onZoomOut();
+					}
+				} else {
+					// Scroll para cima = Zoom In
+					if (canZoomIn && onZoomIn) {
+						onZoomIn();
+					}
+				}
+			}
+		};
+
+		// Usa capture phase para interceptar antes do navegador
+		container.addEventListener('wheel', handleWheelNative, { passive: false, capture: true });
+
+		return () => {
+			container.removeEventListener('wheel', handleWheelNative, { capture: true });
+		};
+	}, [canZoomIn, canZoomOut, onZoomIn, onZoomOut]);
+
 	return (
-		<div className="relative w-full h-screen overflow-hidden">
+		<div 
+			ref={containerRef}
+			className="relative w-full h-screen overflow-hidden"
+		>
 			{/* Container centralizado do livro */}
 			<div className="w-full h-full flex items-center justify-center">
 				{children}
@@ -105,7 +149,7 @@ export const BookControls = memo<BookControlsProps>(({
 						onClick={handleZoomOut}
 						disabled={!canZoomOut}
 						label="Diminuir zoom"
-						title={`Diminuir zoom (Mín: 10%)`}
+						title={`Diminuir zoom (Mín: 10%) - Ou Ctrl + Scroll Down`}
 					>
 						<ZoomOut className="h-6 w-6" />
 					</ZoomButton>
@@ -118,7 +162,7 @@ export const BookControls = memo<BookControlsProps>(({
 						onClick={handleZoomIn}
 						disabled={!canZoomIn}
 						label="Aumentar zoom"
-						title={`Aumentar zoom (Máx: 250%)`}
+						title={`Aumentar zoom (Máx: 250%) - Ou Ctrl + Scroll Up`}
 					>
 						<ZoomIn className="h-6 w-6" />
 					</ZoomButton>
