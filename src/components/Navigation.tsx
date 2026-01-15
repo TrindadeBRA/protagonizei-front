@@ -37,33 +37,51 @@ const Navigation = () => {
   ]), []);
 
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.5,
-    };
+    let observer: IntersectionObserver | null = null;
+    let rafId: number | null = null;
 
-    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          setActiveSection(id);
-        }
+    // Adiar a inicialização do observer para evitar reflow forçado
+    const initObserver = () => {
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.5,
+      };
+
+      const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            setActiveSection(id);
+          }
+        });
+      };
+
+      observer = new IntersectionObserver(handleIntersect, observerOptions);
+
+      // Observe all sections usando requestAnimationFrame para evitar reflow
+      rafId = requestAnimationFrame(() => {
+        navLinks.forEach((link) => {
+          const sectionId = link.href.replace("/#", "");
+          const element = document.getElementById(sectionId);
+          if (element) {
+            observer?.observe(element);
+          }
+        });
       });
     };
 
-    const observer = new IntersectionObserver(handleIntersect, observerOptions);
+    // Aguardar o próximo frame antes de inicializar
+    rafId = requestAnimationFrame(initObserver);
 
-    // Observe all sections
-    navLinks.forEach((link) => {
-      const sectionId = link.href.replace("/#", "");
-      const element = document.getElementById(sectionId);
-      if (element) {
-        observer.observe(element);
+    return () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
       }
-    });
-
-    return () => observer.disconnect();
+      if (observer) {
+        observer.disconnect();
+      }
+    };
   }, [navLinks]);
 
   return (

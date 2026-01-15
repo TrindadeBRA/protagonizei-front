@@ -36,33 +36,60 @@ export const useBookDimensions = (options: UseBookDimensionsOptions = {}): BookD
 	});
 
 	useEffect(() => {
+		let rafId: number | null = null;
+		let timeoutId: NodeJS.Timeout | null = null;
+
 		const updateDimensions = () => {
-			const viewportWidth = window.innerWidth;
-			const viewportHeight = window.innerHeight;
-
-			// Área disponível após remover padding
-			const availableWidth = viewportWidth - padding * 2;
-			const availableHeight = viewportHeight - padding * 2;
-
-			// Calcular dimensões baseado na largura disponível com a porcentagem configurada
-			let width = availableWidth * viewportUsage;
-			let height = width / BOOK_ASPECT_RATIO;
-
-			// Se a altura calculada exceder o espaço vertical disponível, recalcular pela altura
-			if (height > availableHeight * viewportUsage) {
-				height = availableHeight * viewportUsage;
-				width = height * BOOK_ASPECT_RATIO;
+			// Usar requestAnimationFrame para evitar reflow forçado
+			if (rafId) {
+				cancelAnimationFrame(rafId);
 			}
 
-			setDimensions({
-				width: Math.round(width),
-				height: Math.round(height),
+			rafId = requestAnimationFrame(() => {
+				const viewportWidth = window.innerWidth;
+				const viewportHeight = window.innerHeight;
+
+				// Área disponível após remover padding
+				const availableWidth = viewportWidth - padding * 2;
+				const availableHeight = viewportHeight - padding * 2;
+
+				// Calcular dimensões baseado na largura disponível com a porcentagem configurada
+				let width = availableWidth * viewportUsage;
+				let height = width / BOOK_ASPECT_RATIO;
+
+				// Se a altura calculada exceder o espaço vertical disponível, recalcular pela altura
+				if (height > availableHeight * viewportUsage) {
+					height = availableHeight * viewportUsage;
+					width = height * BOOK_ASPECT_RATIO;
+				}
+
+				setDimensions({
+					width: Math.round(width),
+					height: Math.round(height),
+				});
 			});
 		};
 
+		// Debounce para resize events
+		const handleResize = () => {
+			if (timeoutId) {
+				clearTimeout(timeoutId);
+			}
+			timeoutId = setTimeout(updateDimensions, 16); // ~60fps
+		};
+
 		updateDimensions();
-		window.addEventListener('resize', updateDimensions);
-		return () => window.removeEventListener('resize', updateDimensions);
+		window.addEventListener('resize', handleResize);
+		
+		return () => {
+			window.removeEventListener('resize', handleResize);
+			if (rafId) {
+				cancelAnimationFrame(rafId);
+			}
+			if (timeoutId) {
+				clearTimeout(timeoutId);
+			}
+		};
 	}, [viewportUsage, padding]); // Recalcula quando viewportUsage ou padding mudam
 
 	return dimensions;
