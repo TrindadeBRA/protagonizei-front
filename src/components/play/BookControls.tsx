@@ -1,9 +1,10 @@
 'use client';
 
 import React, { memo, useEffect, useRef } from 'react';
-import { ChevronDown, ChevronUp, ZoomIn, ZoomOut, Maximize2, Minimize2 } from 'lucide-react';
+import { ChevronDown, ChevronUp, ZoomIn, ZoomOut, Maximize2, Minimize2, Moon, Sun } from 'lucide-react';
 import { useFullscreen } from '../../hooks/useFullscreen';
 import { useIsMobile } from '../../hooks/useIsMobile';
+import { useDarkMode } from '../../hooks/useDarkMode';
 
 // =================================================================
 // COMPONENTES AUXILIARES
@@ -69,6 +70,8 @@ interface BookControlsProps {
 	currentZoom?: number;
 	canZoomIn?: boolean;
 	canZoomOut?: boolean;
+	onDarkModeToggle?: () => void;
+	isDarkMode?: boolean;
 }
 
 /**
@@ -83,6 +86,8 @@ export const BookControls = memo<BookControlsProps>(({
 	currentZoom = 100,
 	canZoomIn = true,
 	canZoomOut = true,
+	onDarkModeToggle,
+	isDarkMode = false,
 }) => {
 	const handleZoomIn = () => {
 		if (onZoomIn) onZoomIn();
@@ -95,6 +100,12 @@ export const BookControls = memo<BookControlsProps>(({
 	const { isFullscreen, toggleFullscreen } = useFullscreen();
 	const isMobile = useIsMobile();
 	const containerRef = useRef<HTMLDivElement>(null);
+
+	const handleDarkModeToggle = () => {
+		if (onDarkModeToggle) {
+			onDarkModeToggle();
+		}
+	};
 
 	/**
 	 * Listener nativo para capturar Ctrl+Scroll antes do navegador
@@ -194,6 +205,23 @@ export const BookControls = memo<BookControlsProps>(({
 							<div className="h-8 w-px bg-purple-300/40 mx-2" />
 						</>
 					)}
+
+					{/* Botão Dark Mode */}
+					<ZoomButton
+						onClick={handleDarkModeToggle}
+						disabled={false}
+						label={isDarkMode ? "Modo claro" : "Modo escuro"}
+						title={isDarkMode ? "Alternar para modo claro" : "Alternar para modo escuro"}
+					>
+						{isDarkMode ? (
+							<Sun className="h-6 w-6" />
+						) : (
+							<Moon className="h-6 w-6" />
+						)}
+					</ZoomButton>
+
+					{/* Separador */}
+					<div className="h-8 w-px bg-purple-300/40 mx-2" />
 
 					{/* Botão Minimizar */}
 					<button

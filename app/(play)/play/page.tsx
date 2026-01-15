@@ -6,6 +6,7 @@ import { useAutoFlip } from '../../../src/hooks/useAutoFlip';
 import { useBookDimensions } from '../../../src/hooks/useBookDimensions';
 import { useMinimizeControls } from '../../../src/hooks/useMinimizeControls';
 import { useBookSize } from '../../../src/hooks/useBookSize';
+import { useDarkMode } from '../../../src/hooks/useDarkMode';
 import { BookPage, BookControls, FlipBookWrapper, NavButton } from '../../../src/components/play';
 import {
 	BOOK_PAGES,
@@ -34,6 +35,7 @@ export default function PlayPage() {
 	// =================================================================
 	const { isMinimized, toggleMinimize } = useMinimizeControls();
 	const { zoom, zoomIn, zoomOut, config, canZoomIn, canZoomOut } = useBookSize();
+	const { isDark, toggleDarkMode } = useDarkMode();
 	const dimensions = useBookDimensions({
 		viewportUsage: config.viewportUsage,
 		padding: config.padding,
@@ -168,7 +170,11 @@ export default function PlayPage() {
 	// =================================================================
 	
 	return (
-		<div className="min-h-screen w-full bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100">
+		<div className={`min-h-screen w-full transition-all duration-500 ${
+			isDark 
+				? 'bg-gradient-to-br from-pink-950/90 via-purple-950/90 to-blue-950/90' 
+				: 'bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100'
+		}`}>
 			{/* Sistema de Controles de Tamanho */}
 			<BookControls 
 				isMinimized={isMinimized} 
@@ -178,6 +184,8 @@ export default function PlayPage() {
 				currentZoom={zoom}
 				canZoomIn={canZoomIn}
 				canZoomOut={canZoomOut}
+				onDarkModeToggle={toggleDarkMode}
+				isDarkMode={isDark}
 			>
 				<FlipBookWrapper
 					key={`flipbook-${zoom}-${dimensions.width}-${dimensions.height}`}

@@ -190,7 +190,7 @@ Virar → Páginas 3-4
 import { 
   BookPage, 
   BookControls, 
-  FlipBookWrapper,
+  FlipBookWrapper, 
   NavButton 
 } from '@/src/components/play';
 ```
@@ -204,27 +204,27 @@ import { BOOK_PAGES } from '@/src/components/play/bookConfig';
 function MyBookPage() {
   const dimensions = useBookDimensions();
   const [isMinimized, setIsMinimized] = useState(false);
-
+  
   return (
     <BookControls
       isMinimized={isMinimized}
       onToggleMinimize={() => setIsMinimized(!isMinimized)}
     >
-      <FlipBookWrapper
-        width={dimensions.width}
-        height={dimensions.height}
-        showCover={true}
+    <FlipBookWrapper
+      width={dimensions.width}
+      height={dimensions.height}
+      showCover={true}
         usePortrait={false}
       >
         {BOOK_PAGES.map(page => (
-          <BookPage
+        <BookPage
             key={page.id}
             src={page.src}
             alt={page.id}
             side="left"
             priority={page.priority}
-          />
-        ))}
+        />
+      ))}
       </FlipBookWrapper>
     </BookControls>
   );
