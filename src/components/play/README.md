@@ -21,8 +21,13 @@ Sistema completo para visualização de livros digitais com:
 - ✅ Navegação por clique/arrastar
 - ✅ Navegação por setas laterais
 - ✅ Swipe no mobile
+- ✅ Navegação por teclado (setas ← →)
 - ✅ Zoom profissional (Ctrl+Scroll, pinch, botões)
 - ✅ Menu de controles minimizável
+- ✅ Botão de ajuda com modal interativo
+- ✅ Modal de boas-vindas com instruções
+- ✅ Modo tela cheia (F11)
+- ✅ Indicador de zoom em tempo real
 - ✅ Performance otimizada com React.memo e useMemo
 - ✅ Código limpo e bem documentado
 
@@ -52,19 +57,29 @@ Sistema de zoom e controles do livro.
 **Props:**
 ```typescript
 interface BookControlsProps {
-  children: React.ReactNode;    // Conteúdo (FlipBook)
-  isMinimized: boolean;          // Estado dos controles
-  onToggleMinimize: () => void;  // Toggle minimizar/expandir
+  children: React.ReactNode;      // Conteúdo (FlipBook)
+  isMinimized: boolean;            // Estado dos controles
+  onToggleMinimize: () => void;   // Toggle minimizar/expandir
+  onZoomIn?: () => void;          // Função para aumentar zoom
+  onZoomOut?: () => void;         // Função para diminuir zoom
+  currentZoom?: number;           // Zoom atual (padrão: 100)
+  canZoomIn?: boolean;            // Se pode aumentar zoom
+  canZoomOut?: boolean;           // Se pode diminuir zoom
+  onPrevPage?: () => void;        // Função para página anterior
+  onNextPage?: () => void;        // Função para próxima página
+  onShowHelp?: () => void;        // Função para abrir modal de ajuda
 }
 ```
 
 **Funcionalidades:**
-- Zoom com `react-zoom-pan-pinch` (profissional)
+- Zoom com controle manual (10% a 250%)
 - Ctrl + Scroll para zoom
-- Pinch-to-zoom no mobile
 - Botões +/- com estados visuais
-- Indicador de % do zoom
-- Pan desabilitado (não interfere com FlipBook)
+- Indicador de % do zoom em tempo real
+- Botão de ajuda integrado
+- Botão minimizar/expandir menu
+- Modo tela cheia (F11) - desktop apenas
+- Navegação por teclado (setas ← →)
 - Otimizado com React.memo
 
 ### `NavButton`
@@ -134,6 +149,31 @@ BOOK_PAGES = [
   // ...
 ];
 ```
+
+## 🆕 Novas Features
+
+### **Modal de Boas-Vindas**
+- Aparece automaticamente ao abrir o livro
+- Mostra instruções de uso
+- Recomendação de modo paisagem para mobile
+- Lista de funcionalidades disponíveis
+
+### **Central de Ajuda**
+- Botão de ajuda (?) no menu de controles
+- Modal com todos os atalhos de teclado
+- Guia completo de navegação
+- Dicas de uso dos controles
+
+### **Sistema de Zoom Aprimorado**
+- Zoom de 10% a 250%
+- Indicador visual em tempo real
+- Controle via Ctrl+Scroll ou botões
+- Estados visuais para limites de zoom
+
+### **Navegação por Teclado**
+- Setas ← → para navegar páginas
+- Suporte completo a acessibilidade
+- Prevenção de conflitos com inputs
 
 ## 🎮 Como Funciona
 
@@ -275,8 +315,9 @@ export const MAX_ZOOM_SCALE = 5;    // 500% máximo
 - ✅ Mobile (iOS Safari, Chrome Mobile, Samsung Internet)
 - ✅ Tablets
 - ✅ Touch devices
-- ✅ Teclado (Tab, Enter, Arrows)
+- ✅ Teclado (Tab, Enter, Arrows ← →)
 - ✅ Screen readers
+- ✅ Modo paisagem recomendado para mobile
 
 ## 🎨 Estética
 
@@ -286,6 +327,8 @@ O design mantém:
 - Animações suaves e transições
 - Efeitos hover/active responsivos
 - Shadow e backdrop-blur profissionais
+- Modal de ajuda com mesmo design do menu principal
+- Ícone animado de rotação para modo paisagem
 
 ## 📝 Manutenção
 
@@ -315,6 +358,11 @@ console.log('Current scale:', currentScale);
 - **Tipagem forte** - TypeScript em todos os componentes
 - **Performance** - React.memo, useMemo, useCallback
 - **Manutenibilidade** - Comentários e documentação clara
+
+## 📄 Documentação Adicional
+
+Para documentação voltada para marketing e comunicação, consulte:
+- `MARKETING-FEATURES.md` na raiz do projeto
 
 ---
 
