@@ -239,7 +239,7 @@ function PlayPageContent() {
 			// A partir do índice 6 (depois da página 5), usa páginas bloqueadas no modo demo
 			const isLocked = !orderId && i >= 6;
 			const PageComponent = isLocked ? LockedBookPage : BookPage;
-			
+
 			renderedPages.push(
 				<PageComponent
 					key={`${page.id}-left`}
@@ -340,7 +340,7 @@ function PlayPageContent() {
 							</DialogTitle>
 							<h3 className="text-sm text-center text-gray-600 mt-2">
 								{orderId
-									? 'Instruções para melhor experiência'
+									? 'Leia as instruções para melhor experiência'
 									: 'Conheça como será a experiência do seu livro personalizado'}
 							</h3>
 						</div>
@@ -349,13 +349,15 @@ function PlayPageContent() {
 						<div className="space-y-4 pb-4">
 							{/* Recomendação de modo paisagem */}
 							<AlertBox>
-								<div className="flex items-start gap-3">
-									<Smartphone className="h-5 w-5 mt-0.5 flex-shrink-0 text-blue-600" />
+								<div className="flex items-center gap-3">
+									<div className="flex-shrink-0 rounded-full bg-pink-500 p-2 flex items-center justify-center">
+										<Smartphone className="size-8 text-white animate-rotate-landscape" />
+									</div>
 									<div className="flex-1">
-										<p className="text-sm font-semibold mb-1 text-blue-900">
+										<p className="text-sm font-semibold mb-1 text-black">
 											Recomendamos o modo paisagem
 										</p>
-										<p className="text-xs text-blue-700">
+										<p className="text-xs text-gray-600">
 											Para uma melhor visualização, gire seu dispositivo para o modo horizontal (paisagem).
 										</p>
 									</div>
@@ -393,8 +395,8 @@ function PlayPageContent() {
 								onClick={handleCloseModal}
 								disabled={isLoading}
 								className={`w-full magical-border border-4 border-transparent text-white font-bold py-3 px-8 rounded-full text-lg shadow-xl transition-all duration-300 font-englebert text-center ${isLoading
-										? 'opacity-50 cursor-not-allowed hover:scale-100'
-										: 'hover:scale-105 cursor-pointer'
+									? 'opacity-50 cursor-not-allowed hover:scale-100'
+									: 'hover:scale-105 cursor-pointer'
 									}`}
 							>
 								{isLoading ? (
