@@ -1,19 +1,36 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useAutoFlip } from '../../../src/hooks/useAutoFlip';
 import { useBookDimensions } from '../../../src/hooks/useBookDimensions';
 import { useMinimizeControls } from '../../../src/hooks/useMinimizeControls';
-import { BookPage, BookControls, FlipBookWrapper } from '../../../src/components/play';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { cn } from '../../../src/lib/utils';
+import { BookPage, BookControls, FlipBookWrapper, NavButton } from '../../../src/components/play';
+import {
+	BOOK_PAGES,
+	PAGE_FLIP_DURATION,
+	SWIPE_DISTANCE,
+} from '../../../src/components/play/bookConfig';
 
+// =================================================================
+// PÁGINA PRINCIPAL DO LIVRO DIGITAL
+// =================================================================
 /**
  * Página de visualização interativa do livro
- * Componente refatorado e componentizado para melhor manutenção
+ * 
+ * Funcionalidades:
+ * - Navegação por clique/arrastar nas páginas
+ * - Navegação por setas laterais
+ * - Swipe no mobile
+ * - Zoom com Ctrl+Scroll ou botões
+ * - Menu de controles minimizável
+ * 
+ * @returns Página completa com livro e controles
  */
 export default function PlayPage() {
-	// Hooks personalizados
+	// =================================================================
+	// HOOKS E ESTADOS
+	// =================================================================
 	const dimensions = useBookDimensions();
 	const { isMinimized, toggleMinimize } = useMinimizeControls();
 	const [currentPage, setCurrentPage] = useState(0);
@@ -26,7 +43,14 @@ export default function PlayPage() {
 		enabled: false,
 	});
 
-	// Detectar total de páginas
+	// =================================================================
+	// EFEITOS
+	// =================================================================
+	
+	/**
+	 * Detecta o número total de páginas do livro
+	 * Executa uma vez quando o componente monta
+	 */
 	useEffect(() => {
 		const checkPages = setInterval(() => {
 			if (flipBookRef.current?.pageFlip()) {
@@ -41,175 +65,150 @@ export default function PlayPage() {
 		return () => clearInterval(checkPages);
 	}, [flipBookRef]);
 
-	// Handler para atualizar página atual após flip
-	const handlePageFlip = (e: any) => {
+	// =================================================================
+	// HANDLERS
+	// =================================================================
+	
+	/**
+	 * Handler para atualizar página atual após flip
+	 * Usa setTimeout para garantir que a animação complete
+	 */
+	const handlePageFlip = useCallback((e: any) => {
 		handleFlip(e);
 		setTimeout(() => {
 			const newPage = flipBookRef.current?.pageFlip()?.getCurrentPageIndex() || 0;
 			setCurrentPage(newPage);
 		}, 100);
-	};
+	}, [handleFlip, flipBookRef]);
 
-	// Navegação para página anterior
-	const handlePrevPage = () => {
+	/**
+	 * Navega para a página anterior
+	 */
+	const handlePrevPage = useCallback(() => {
 		if (currentPage > 0) {
 			stopAutoFlip();
 			flipBookRef.current?.pageFlip()?.flipPrev();
 		}
-	};
+	}, [currentPage, stopAutoFlip, flipBookRef]);
 
-	// Navegação para próxima página
-	const handleNextPage = () => {
+	/**
+	 * Navega para a próxima página
+	 */
+	const handleNextPage = useCallback(() => {
 		if (currentPage < totalPages - 1) {
 			stopAutoFlip();
 			flipBookRef.current?.pageFlip()?.flipNext();
 		}
-	};
+	}, [currentPage, totalPages, stopAutoFlip, flipBookRef]);
 
-	// Não precisamos mais do currentScale para desabilitar eventos
-	// O livro deve sempre responder aos cliques/arrastar
+	// =================================================================
+	// RENDERIZAÇÃO DAS PÁGINAS
+	// =================================================================
+	
+	/**
+	 * Gera os componentes de página do livro baseado na configuração
+	 * Cada imagem é duplicada (left/right) pois contém 2 páginas
+	 */
+	const bookPages = useMemo(() => {
+		const pages = [];
+		
+		// Capa (apenas uma vez)
+		pages.push(
+			<BookPage
+				key="cover"
+				src={BOOK_PAGES[0].src}
+				alt="Capa"
+				side="left"
+				priority={BOOK_PAGES[0].priority}
+			/>
+		);
 
+		// Páginas internas (cada imagem aparece 2x: left e right)
+		for (let i = 1; i < BOOK_PAGES.length; i++) {
+			const page = BOOK_PAGES[i];
+			pages.push(
+				<BookPage
+					key={`${page.id}-left`}
+					src={page.src}
+					alt={`${page.id} esquerda`}
+					side="left"
+					priority={page.priority}
+				/>,
+				<BookPage
+					key={`${page.id}-right`}
+					src={page.src}
+					alt={`${page.id} direita`}
+					side="right"
+					priority={page.priority}
+				/>
+			);
+		}
+
+		// Contracapa
+		pages.push(
+			<BookPage
+				key="backcover"
+				src={BOOK_PAGES[0].src}
+				alt="Contracapa"
+				side="right"
+				priority={false}
+			/>
+		);
+
+		return pages;
+	}, []);
+
+	// =================================================================
+	// RENDERIZAÇÃO
+	// =================================================================
+	
 	return (
 		<div className="min-h-screen w-full bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100">
+			{/* Sistema de Zoom e Controles */}
 			<BookControls 
 				isMinimized={isMinimized} 
 				onToggleMinimize={toggleMinimize}
 			>
-				<div className="flex items-center justify-center h-screen">
-					<FlipBookWrapper
-						ref={flipBookRef}
-						width={dimensions.width}
-						height={dimensions.height}
-						size="stretch"
-						drawShadow={false}
-						showCover={true}
-						mobileScrollSupport={true}
-						flippingTime={800}
-						autoSize={true}
-						useMouseEvents={true}
-						swipeDistance={50}
-						clickEventForward={true}
-						onFlip={handlePageFlip}
-						onChangeState={handleChangeState}
-					>
-						{/* Capa */}
-						<BookPage src="/assets/images/book/cover-1.webp" alt="Capa" side="left" priority />
-
-						{/* IMPORTANTE: Cada imagem contém 2 páginas completas do livro físico */}
-						{/* Por isso duplicamos cada imagem para left e right */}
-						
-						{/* Páginas 1-2 (imagem page1-1.webp contém ambas) */}
-						<BookPage src="/assets/images/book/page1-1.webp" alt="Página 1 esquerda" side="left" priority />
-						<BookPage src="/assets/images/book/page1-1.webp" alt="Página 1 direita" side="right" priority />
-
-						{/* Páginas 3-4 (imagem page2-1.webp contém ambas) */}
-						<BookPage src="/assets/images/book/page2-1.webp" alt="Página 2 esquerda" side="left" priority />
-						<BookPage src="/assets/images/book/page2-1.webp" alt="Página 2 direita" side="right" priority />
-
-						{/* Páginas 5-6 (imagem page3-1.webp contém ambas) */}
-						<BookPage src="/assets/images/book/page3-1.webp" alt="Página 3 esquerda" side="left" priority />
-						<BookPage src="/assets/images/book/page3-1.webp" alt="Página 3 direita" side="right" priority />
-
-						{/* Páginas 7-8 (imagem page4-1.webp contém ambas) */}
-						<BookPage src="/assets/images/book/page4-1.webp" alt="Página 4 esquerda" side="left" priority={false} />
-						<BookPage src="/assets/images/book/page4-1.webp" alt="Página 4 direita" side="right" priority={false} />
-
-						{/* Páginas 9-10 (imagem page5-1.webp contém ambas) */}
-						<BookPage src="/assets/images/book/page5-1.webp" alt="Página 5 esquerda" side="left" priority={false} />
-						<BookPage src="/assets/images/book/page5-1.webp" alt="Página 5 direita" side="right" priority={false} />
-
-						{/* Páginas 11-12 (imagem page6-1.webp contém ambas) */}
-						<BookPage src="/assets/images/book/page6-1.webp" alt="Página 6 esquerda" side="left" priority={false} />
-						<BookPage src="/assets/images/book/page6-1.webp" alt="Página 6 direita" side="right" priority={false} />
-
-						{/* Contracapa */}
-						<BookPage src="/assets/images/book/cover-1.webp" alt="Contracapa" side="right" priority={false} />
-					</FlipBookWrapper>
-				</div>
+				{/* Livro com dimensões fixas - eventos sempre corretos */}
+				<FlipBookWrapper
+					ref={flipBookRef}
+					width={dimensions.width}
+					height={dimensions.height}
+					size="stretch"
+					drawShadow={false}
+					showCover={true}
+					usePortrait={false}
+					mobileScrollSupport={true}
+					flippingTime={PAGE_FLIP_DURATION}
+					autoSize={true}
+					useMouseEvents={true}
+					swipeDistance={SWIPE_DISTANCE}
+					clickEventForward={true}
+					onFlip={handlePageFlip}
+					onChangeState={handleChangeState}
+				>
+					{bookPages}
+				</FlipBookWrapper>
 			</BookControls>
 
-			{/* Setas de navegação - fora do BookControls para não serem afetadas pelo zoom */}
-			{/* Sempre visíveis, mas com opacidade reduzida quando minimizado */}
-			{/* Seta esquerda - Página anterior */}
-			<button
+			{/* Botões de Navegação Lateral */}
+			<NavButton
 				onClick={handlePrevPage}
 				disabled={currentPage === 0}
-				onMouseEnter={(e) => {
-					e.currentTarget.style.backgroundColor = isMinimized 
-						? 'rgba(168, 85, 247, 0.25)' // purple-500/25 quando minimizado
-						: 'rgba(168, 85, 247, 0.5)'; // purple-500/50 quando expandido
-				}}
-				onMouseLeave={(e) => {
-					e.currentTarget.style.backgroundColor = isMinimized 
-						? 'rgba(147, 51, 234, 0.15)' // purple-600/15 quando minimizado
-						: 'rgba(147, 51, 234, 0.4)'; // purple-600/40 quando expandido
-				}}
-				onMouseDown={(e) => {
-					e.currentTarget.style.backgroundColor = isMinimized 
-						? 'rgba(126, 34, 206, 0.2)' // purple-700/20 quando minimizado
-						: 'rgba(126, 34, 206, 0.4)'; // purple-700/40 quando expandido
-				}}
-				onMouseUp={(e) => {
-					e.currentTarget.style.backgroundColor = isMinimized 
-						? 'rgba(168, 85, 247, 0.25)' // purple-500/25 quando minimizado
-						: 'rgba(168, 85, 247, 0.5)'; // purple-500/50 quando expandido
-				}}
-				style={{
-					backgroundColor: isMinimized 
-						? 'rgba(147, 51, 234, 0.15)' // purple-600/15 quando minimizado
-						: 'rgba(147, 51, 234, 0.4)', // purple-600/40 quando expandido
-					backdropFilter: 'blur(12px)',
-					borderColor: isMinimized 
-						? 'rgba(196, 181, 253, 0.2)' // purple-300/20 quando minimizado
-						: 'rgba(196, 181, 253, 0.4)', // purple-300/40 quando expandido
-					transition: 'all 0.3s ease',
-				}}
-				className="fixed left-[10%] top-1/2 -translate-y-1/2 z-50 text-white rounded-full p-4 transition-all duration-300 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg flex items-center justify-center cursor-pointer"
-				aria-label="Página anterior"
-			>
-				<ChevronLeft className="h-7 w-7" />
-			</button>
+				icon={ChevronLeft}
+				label="Página anterior"
+				position="left"
+				isMinimized={isMinimized}
+			/>
 
-			{/* Seta direita - Próxima página */}
-			<button
+			<NavButton
 				onClick={handleNextPage}
 				disabled={currentPage >= totalPages - 1}
-				onMouseEnter={(e) => {
-					e.currentTarget.style.backgroundColor = isMinimized 
-						? 'rgba(168, 85, 247, 0.25)' // purple-500/25 quando minimizado
-						: 'rgba(168, 85, 247, 0.5)'; // purple-500/50 quando expandido
-				}}
-				onMouseLeave={(e) => {
-					e.currentTarget.style.backgroundColor = isMinimized 
-						? 'rgba(147, 51, 234, 0.15)' // purple-600/15 quando minimizado
-						: 'rgba(147, 51, 234, 0.4)'; // purple-600/40 quando expandido
-				}}
-				onMouseDown={(e) => {
-					e.currentTarget.style.backgroundColor = isMinimized 
-						? 'rgba(126, 34, 206, 0.2)' // purple-700/20 quando minimizado
-						: 'rgba(126, 34, 206, 0.4)'; // purple-700/40 quando expandido
-				}}
-				onMouseUp={(e) => {
-					e.currentTarget.style.backgroundColor = isMinimized 
-						? 'rgba(168, 85, 247, 0.25)' // purple-500/25 quando minimizado
-						: 'rgba(168, 85, 247, 0.5)'; // purple-500/50 quando expandido
-				}}
-				style={{
-					backgroundColor: isMinimized 
-						? 'rgba(147, 51, 234, 0.15)' // purple-600/15 quando minimizado
-						: 'rgba(147, 51, 234, 0.4)', // purple-600/40 quando expandido
-					backdropFilter: 'blur(12px)',
-					borderColor: isMinimized 
-						? 'rgba(196, 181, 253, 0.2)' // purple-300/20 quando minimizado
-						: 'rgba(196, 181, 253, 0.4)', // purple-300/40 quando expandido
-					transition: 'all 0.3s ease',
-				}}
-				className="fixed right-[10%] top-1/2 -translate-y-1/2 z-50 text-white rounded-full p-4 transition-all duration-300 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg flex items-center justify-center cursor-pointer"
-				aria-label="Próxima página"
-			>
-				<ChevronRight className="h-7 w-7" />
-			</button>
+				icon={ChevronRight}
+				label="Próxima página"
+				position="right"
+				isMinimized={isMinimized}
+			/>
 		</div>
 	);
 }
-

@@ -1,273 +1,321 @@
-# Componentes da Página Play
+# 📚 Componentes da Página Play
 
-Esta pasta contém os componentes e configurações relacionados à página de visualização interativa do livro (`/play`).
+> Sistema completo de visualização interativa de livro digital com zoom profissional
 
 ## 📁 Estrutura de Arquivos
 
 ```
 play/
-├── BookPage.tsx           # Componente individual de página do livro
-├── FlipBookWrapper.tsx    # Wrapper tipado do react-pageflip
-├── FullscreenWidget.tsx   # Widget flutuante de tela cheia
-├── MockBookPages.tsx      # Páginas mockadas para demonstração
-├── bookConfig.ts          # Configurações de dimensões e espaçamento
-├── index.ts              # Barrel export para facilitar importações
-└── README.md             # Este arquivo
+├── BookPage.tsx          # Componente individual de página
+├── BookControls.tsx      # Sistema de zoom e controles
+├── NavButton.tsx         # Botão de navegação reutilizável
+├── FlipBookWrapper.tsx   # Wrapper tipado do react-pageflip
+├── bookConfig.ts         # Configurações centralizadas
+├── index.ts              # Barrel export
+└── README.md             # Esta documentação
 ```
+
+## 🎯 Visão Geral
+
+Sistema completo para visualização de livros digitais com:
+- ✅ Navegação por clique/arrastar
+- ✅ Navegação por setas laterais
+- ✅ Swipe no mobile
+- ✅ Zoom profissional (Ctrl+Scroll, pinch, botões)
+- ✅ Menu de controles minimizável
+- ✅ Performance otimizada com React.memo e useMemo
+- ✅ Código limpo e bem documentado
 
 ## 🧩 Componentes
 
 ### `BookPage`
-Componente individual que representa uma única página do livro.
+Componente individual que representa uma página do livro.
 
 **Props:**
-- `src`: Caminho da imagem da página
-- `alt`: Texto alternativo para acessibilidade
-- `side`: 'left' ou 'right' - define o alinhamento da imagem
-- `priority`: Boolean - se deve carregar a imagem com prioridade
-
-### `FlipBookWrapper`
-Wrapper tipado para o componente `react-pageflip`, facilitando o uso com TypeScript.
-
-**Props:**
-- `width`: Largura do livro
-- `height`: Altura do livro
-- Todas as props do `react-pageflip`
-
-### `FullscreenWidget`
-Widget flutuante que permite entrar/sair do modo tela cheia.
-
-**Funcionalidades:**
-- Detecta automaticamente se é mobile ou desktop
-- Tenta múltiplas APIs de fullscreen para compatibilidade
-- Mostra instruções caso a API não funcione (iOS Safari)
-- Ícone dinâmico baseado no estado
-
-### `MockBookPages`
-Componente que contém as páginas mockadas do livro para demonstração.
-
-**Estrutura:**
-- Capa
-- 6 páginas internas (com prioridade de carregamento nas primeiras)
-- Contracapa
-
-## ⚙️ Configurações
-
-### `bookConfig.ts`
-Contém todas as configurações de dimensões e espaçamento do livro:
-
-- `HORIZONTAL_VIEWPORT_USAGE`: Porcentagem da largura da viewport (0.0 a 1.0)
-- `VERTICAL_VIEWPORT_USAGE`: Porcentagem da altura da viewport (0.0 a 1.0)
-- `VIEWPORT_PADDING`: Padding fixo em pixels
-- `BOOK_ASPECT_RATIO`: Proporção do livro (largura/altura)
-- `DEFAULT_BOOK_WIDTH`: Largura padrão
-- `DEFAULT_BOOK_HEIGHT`: Altura padrão
-
-## 🎣 Hooks Relacionados
-
-### `useBookDimensions` (`/src/hooks/useBookDimensions.ts`)
-Hook personalizado que calcula as dimensões responsivas do livro baseado nas configurações.
-
-**Retorna:**
 ```typescript
-{
-  width: number;
-  height: number;
+interface BookPageProps {
+  src: string;           // Caminho da imagem
+  alt: string;           // Texto alternativo
+  side: 'left' | 'right'; // Lado da imagem a mostrar
+  priority?: boolean;     // Se deve carregar com prioridade
+}
+```
+
+**Características:**
+- Usa `object-cover` com `object-left`/`object-right` para mostrar metades
+- Cada imagem contém 2 páginas completas do livro físico
+- Suporta lazy loading para melhor performance
+
+### `BookControls`
+Sistema de zoom e controles do livro.
+
+**Props:**
+```typescript
+interface BookControlsProps {
+  children: React.ReactNode;    // Conteúdo (FlipBook)
+  isMinimized: boolean;          // Estado dos controles
+  onToggleMinimize: () => void;  // Toggle minimizar/expandir
 }
 ```
 
 **Funcionalidades:**
-- Calcula dimensões baseado na viewport
-- Mantém proporção do livro
-- Recalcula automaticamente no resize
-- Respeita as configurações de `bookConfig.ts`
+- Zoom com `react-zoom-pan-pinch` (profissional)
+- Ctrl + Scroll para zoom
+- Pinch-to-zoom no mobile
+- Botões +/- com estados visuais
+- Indicador de % do zoom
+- Pan desabilitado (não interfere com FlipBook)
+- Otimizado com React.memo
 
-## 📦 Como Usar
+### `NavButton`
+Botão de navegação reutilizável.
 
-### Importação Simplificada
+**Props:**
+```typescript
+interface NavButtonProps {
+  onClick: () => void;
+  disabled?: boolean;
+  icon: LucideIcon;
+  label: string;
+  position: 'left' | 'right';
+  isMinimized?: boolean;
+}
+```
+
+**Características:**
+- Estados visuais otimizados (hover, active, disabled)
+- Adapta opacidade baseado em `isMinimized`
+- Reutilizável para qualquer navegação
+
+### `FlipBookWrapper`
+Wrapper tipado para `react-pageflip`.
+
+**Características:**
+- Tipagem TypeScript completa
+- Dynamic import para SSR
+- Props simplificadas
+
+## ⚙️ Configurações (bookConfig.ts)
+
+### Viewport
+```typescript
+HORIZONTAL_VIEWPORT_USAGE = 0.85;  // 85% da largura
+VERTICAL_VIEWPORT_USAGE = 0.85;    // 85% da altura
+VIEWPORT_PADDING = 40;              // 40px de margem
+```
+
+### Dimensões do Livro
+```typescript
+DEFAULT_BOOK_WIDTH = 538;   // UMA página
+DEFAULT_BOOK_HEIGHT = 600;
+BOOK_ASPECT_RATIO = 0.897;  // 538/600
+```
+
+### Zoom
+```typescript
+INITIAL_ZOOM_SCALE = 1;     // 100%
+MIN_ZOOM_SCALE = 0.5;       // 50%
+MAX_ZOOM_SCALE = 3;         // 300%
+ZOOM_WHEEL_STEP = 0.1;      // 10% por scroll
+ZOOM_PINCH_STEP = 5;        // Sensibilidade pinch
+```
+
+### Animação
+```typescript
+PAGE_FLIP_DURATION = 800;   // 800ms
+SWIPE_DISTANCE = 50;        // 50px mínimo
+```
+
+### Lista de Páginas
+```typescript
+BOOK_PAGES = [
+  { id: 'cover', src: '/assets/images/book/cover-1.webp', priority: true },
+  { id: 'page1', src: '/assets/images/book/page1-1.webp', priority: true },
+  // ...
+];
+```
+
+## 🎮 Como Funciona
+
+### Estrutura das Imagens
+
+Cada arquivo de imagem (ex: `page1-1.webp`) contém **2 páginas completas** do livro físico:
+
+```
+┌─────────────────────────────┐
+│  Página     │     Página    │
+│  Esquerda   │     Direita   │
+│  (538px)    │     (538px)   │
+└─────────────────────────────┘
+      Total: 1076px
+```
+
+### Renderização
+
+O FlipBook mostra cada imagem duas vezes (left/right):
+
+```typescript
+// Cada imagem aparece 2x
+<BookPage src="page1-1.webp" side="left" />   // Mostra lado esquerdo
+<BookPage src="page1-1.webp" side="right" />  // Mostra lado direito
+```
+
+Através do CSS `object-cover` com `object-left`/`object-right`, mostramos apenas a metade correspondente.
+
+### Resultado Final
+
+```
+Capa
+┌───────────┐
+│   CAPA    │
+└───────────┘
+
+Abrir livro → Páginas 1-2
+┌─────────┬─────────┐
+│ Pág 1   │ Pág 2   │  ← Mesma imagem, lados diferentes!
+│ (left)  │ (right) │
+└─────────┴─────────┘
+
+Virar → Páginas 3-4
+┌─────────┬─────────┐
+│ Pág 3   │ Pág 4   │
+│ (left)  │ (right) │
+└─────────┴─────────┘
+```
+
+## 📦 Uso
+
+### Importação
 ```typescript
 import { 
   BookPage, 
-  FlipBookWrapper, 
-  FullscreenWidget, 
-  MockBookPages 
+  BookControls, 
+  FlipBookWrapper,
+  NavButton 
 } from '@/src/components/play';
 ```
 
-### Exemplo de Uso
+### Exemplo Completo
 ```typescript
-import { FlipBookWrapper, MockBookPages } from '@/src/components/play';
+import { BookControls, FlipBookWrapper, BookPage } from '@/src/components/play';
 import { useBookDimensions } from '@/src/hooks/useBookDimensions';
+import { BOOK_PAGES } from '@/src/components/play/bookConfig';
 
 function MyBookPage() {
   const dimensions = useBookDimensions();
-  
+  const [isMinimized, setIsMinimized] = useState(false);
+
   return (
-    <FlipBookWrapper
-      width={dimensions.width}
-      height={dimensions.height}
-      showCover={true}
+    <BookControls
+      isMinimized={isMinimized}
+      onToggleMinimize={() => setIsMinimized(!isMinimized)}
     >
-      <MockBookPages />
-    </FlipBookWrapper>
+      <FlipBookWrapper
+        width={dimensions.width}
+        height={dimensions.height}
+        showCover={true}
+        usePortrait={false}
+      >
+        {BOOK_PAGES.map(page => (
+          <BookPage
+            key={page.id}
+            src={page.src}
+            alt={page.id}
+            side="left"
+            priority={page.priority}
+          />
+        ))}
+      </FlipBookWrapper>
+    </BookControls>
   );
 }
 ```
 
-## 🔄 Substituindo Dados Mockados
+## 🚀 Performance
 
-Para usar dados reais ao invés dos mockados:
+### Otimizações Implementadas
 
-1. Crie seu próprio componente de páginas (similar ao `MockBookPages`)
-2. Busque os dados da API
-3. Mapeie os dados para componentes `BookPage`
-4. Substitua `<MockBookPages />` pelo seu componente
+1. **React.memo** - Evita re-renders desnecessários
+2. **useMemo** - Memoiza lista de páginas
+3. **useCallback** - Memoiza handlers
+4. **Priority Loading** - Primeiras páginas com prioridade
+5. **Lazy Loading** - Páginas posteriores carregam sob demanda
 
-Exemplo:
+## 🔧 Customização
+
+### Ajustar Tamanho do Livro
+
+Edite `bookConfig.ts`:
 ```typescript
-function RealBookPages({ bookData }) {
-  return (
-    <>
-      {bookData.pages.map((page, index) => (
-        <BookPage
-          key={index}
-          src={page.imageUrl}
-          alt={page.title}
-          side={page.side}
-          priority={index < 6}
-        />
-      ))}
-    </>
-  );
-}
-```
-
-## 🎨 Customização
-
-### Ajustando Tamanho do Livro
-Edite as constantes em `bookConfig.ts`:
-
-```typescript
-// Livro maior (ocupa mais espaço)
 export const HORIZONTAL_VIEWPORT_USAGE = 0.90; // 90%
 export const VERTICAL_VIEWPORT_USAGE = 0.90;   // 90%
-
-// Livro menor (mais espaço ao redor)
-export const HORIZONTAL_VIEWPORT_USAGE = 0.50; // 50%
-export const VERTICAL_VIEWPORT_USAGE = 0.50;   // 50%
 ```
 
-### Customizando Widget de Tela Cheia
-O componente `FullscreenWidget` pode ser facilmente estilizado alterando as classes Tailwind ou movido para outra posição.
+### Adicionar Mais Páginas
 
-## 📱 Compatibilidade Mobile
-
-Os componentes são otimizados para funcionar em dispositivos móveis:
-
-- ✅ Detecção automática de mobile
-- ✅ Suporte a múltiplas APIs de fullscreen
-- ✅ Fallback com instruções para iOS Safari
-- ✅ Dimensões responsivas automáticas
-- ✅ Suporte a scroll no mobile
-
-## 🎮 Navegação e Interatividade
-
-### Biblioteca de Zoom
-
-O sistema de zoom utiliza a biblioteca **`react-zoom-pan-pinch`** - uma solução profissional e robusta para gerenciamento de zoom/pan/pinch em React.
-
-**Benefícios:**
-- ✅ Zoom suave e performático
-- ✅ Suporte nativo a gestos (pinch-to-zoom)
-- ✅ Não interfere com eventos do FlipBook
-- ✅ API simples e configurável
-
-### Métodos de Navegação
-
-O livro sempre responde aos toques/cliques para virar páginas, independente do nível de zoom:
-
-#### **Navegação de Páginas** (Sempre Ativo)
-
-1. **Clique e Arrastar (Desktop)**
-   - Clique e arraste as páginas para virar
-   - Funciona em qualquer nível de zoom
-
-2. **Swipe/Deslizar (Mobile)**
-   - Deslize as páginas para navegar
-   - Responde naturalmente aos toques
-   - Distância mínima configurável
-
-3. **Setas de Navegação**
-   - Botões laterais fixos
-   - Sempre visíveis e acessíveis
-   - Não afetados pelo zoom
-
-#### **Controles de Zoom**
-
-1. **Ctrl + Scroll (Desktop)**
-   - Zoom in: Ctrl + Scroll Up
-   - Zoom out: Ctrl + Scroll Down
-
-2. **Pinch-to-Zoom (Mobile)**
-   - Gesto nativo de dois dedos
-   - Zoom suave e natural
-
-3. **Botões no Menu**
-   - Botão "+" para zoom in
-   - Botão "-" para zoom out
-   - Indicador visual do nível (%)
-   - Minimizável para melhor visualização
-
-### Como Funciona a Integração
-
+Edite `BOOK_PAGES` em `bookConfig.ts`:
 ```typescript
-// BookControls.tsx - Usando react-zoom-pan-pinch
-<TransformWrapper
-  initialScale={0.5}
-  minScale={0.25}
-  maxScale={3}
-  panning={{ disabled: true }}  // 🔑 Chave: Pan desabilitado!
->
-  <TransformComponent>
-    <FlipBookWrapper
-      useMouseEvents={true}       // ✅ Sempre habilitado
-      mobileScrollSupport={true}  // ✅ Sempre habilitado
-    />
-  </TransformComponent>
-</TransformWrapper>
+export const BOOK_PAGES = [
+  // ... páginas existentes
+  { id: 'page7', src: '/assets/images/book/page7-1.webp', priority: false },
+];
 ```
 
-### Por Que Funciona?
+### Personalizar Zoom
 
-1. **Pan Desabilitado:** Com `panning.disabled = true`, a biblioteca não intercepta eventos de arrastar
-2. **Eventos Livres:** Cliques e arrastes passam direto para o FlipBook
-3. **Zoom Isolado:** O zoom é aplicado via transform, sem afetar os event listeners
-4. **Gestos Nativos:** Pinch e wheel funcionam normalmente
-
-### Configuração de Zoom
-
+Ajuste limites em `bookConfig.ts`:
 ```typescript
-const zoomConfig = {
-  initialScale: 0.5,    // Escala inicial (50%)
-  minScale: 0.25,       // Zoom mínimo (25%)
-  maxScale: 3,          // Zoom máximo (300%)
-  wheel: {
-    step: 0.1,          // Incremento por scroll
-  },
-  pinch: {
-    step: 5,            // Sensibilidade do pinch
-  },
-  panning: {
-    disabled: true,     // ⚠️ Crítico para não conflitar
-  },
-};
+export const MIN_ZOOM_SCALE = 0.3;  // 30% mínimo
+export const MAX_ZOOM_SCALE = 5;    // 500% máximo
 ```
 
-### Benefícios da Implementação
+## 📱 Compatibilidade
 
-✅ **Zero Conflitos:** Zoom e navegação funcionam independentemente  
-✅ **Performance:** Biblioteca otimizada com animações suaves  
-✅ **Mobile-First:** Gestos nativos funcionam perfeitamente  
-✅ **Simples:** Configuração mínima e manutenção fácil  
-✅ **Profissional:** Solução battle-tested usada por milhares de projetos
+- ✅ Desktop (Chrome, Firefox, Safari, Edge)
+- ✅ Mobile (iOS Safari, Chrome Mobile, Samsung Internet)
+- ✅ Tablets
+- ✅ Touch devices
+- ✅ Teclado (Tab, Enter, Arrows)
+- ✅ Screen readers
 
+## 🎨 Estética
+
+O design mantém:
+- Gradiente de fundo: pink-100 → purple-100 → blue-100
+- Controles em roxo com glassmorphism
+- Animações suaves e transições
+- Efeitos hover/active responsivos
+- Shadow e backdrop-blur profissionais
+
+## 📝 Manutenção
+
+### Adicionar Nova Funcionalidade
+
+1. Adicione configurações em `bookConfig.ts`
+2. Crie componente auxiliar se necessário
+3. Integre no componente principal
+4. Adicione testes
+5. Atualize documentação
+
+### Debugging
+
+Console logs removidos em produção. Para debug:
+```typescript
+// Adicione temporariamente:
+console.log('Current page:', currentPage);
+console.log('Total pages:', totalPages);
+console.log('Current scale:', currentScale);
+```
+
+## 🏆 Arquitetura
+
+- **Separação de responsabilidades** - Cada componente tem uma função
+- **DRY (Don't Repeat Yourself)** - NavButton e ZoomButton reutilizáveis
+- **Configuração centralizada** - bookConfig.ts
+- **Tipagem forte** - TypeScript em todos os componentes
+- **Performance** - React.memo, useMemo, useCallback
+- **Manutenibilidade** - Comentários e documentação clara
+
+---
+
+**Desenvolvido com ❤️ para Protagonizei**
