@@ -45,8 +45,8 @@ const LOCK_OVERLAY_CLASSES = "absolute inset-0 bg-black/50 flex items-center jus
 const LOCK_ICON_CLASSES = "magical-border border-4 border-transparent text-white font-bold w-16 h-16 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert flex items-center justify-center";
 
 // Componente para páginas normais
-const BookPage = forwardRef<HTMLDivElement, { src: string; alt: string; side: 'left' | 'right'; priority?: boolean }>(
-	({ src, alt, side, priority = true }, ref) => (
+const BookPage = forwardRef<HTMLDivElement, { src: string; alt: string; side: 'left' | 'right'; priority?: boolean; fetchPriority?: 'high' | 'low' | 'auto' }>(
+	({ src, alt, side, priority = true, fetchPriority }, ref) => (
 		<div ref={ref} className="w-full h-full bg-white rounded-xl shadow-md overflow-hidden">
 			<Image
 				src={src}
@@ -54,6 +54,7 @@ const BookPage = forwardRef<HTMLDivElement, { src: string; alt: string; side: 'l
 				className={side === 'left' ? PAGE_CLASSES.left : PAGE_CLASSES.right}
 				draggable={false}
 				priority={priority}
+				fetchPriority={fetchPriority}
 				width={538}
 				height={600}
 			/>
@@ -153,8 +154,8 @@ export default function Book3D({ className }: Book3DProps) {
 					"min-md:mt-[230px]"
 				)}
 			>
-				{/* Capa */}
-				<BookPage src="/assets/images/book/cover-1.webp" alt="Capa" side="left" priority />
+				{/* Capa - Imagem LCP otimizada */}
+				<BookPage src="/assets/images/book/cover-1.webp" alt="Capa" side="left" priority fetchPriority="high" />
 
 
 				{/* Páginas 0-3 (sem blur) */}
