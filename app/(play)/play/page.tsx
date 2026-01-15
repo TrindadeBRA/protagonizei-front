@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback, useMemo, Suspense, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, Smartphone, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Smartphone } from 'lucide-react';
 import { useAutoFlip } from '../../../src/hooks/useAutoFlip';
 import { useBookDimensions } from '../../../src/hooks/useBookDimensions';
 import { useMinimizeControls } from '../../../src/hooks/useMinimizeControls';
@@ -298,10 +298,8 @@ function PlayPageContent() {
 			{orderId && (
 				<Dialog
 					open={showModal}
-					onOpenChange={(open) => {
-						if (!open && !isLoading && pages.length > 0) {
-							setShowModal(false);
-						}
+					onOpenChange={() => {
+						// Modal não pode ser fechado
 					}}
 				>
 					<DialogPortal>
@@ -317,14 +315,13 @@ function PlayPageContent() {
 									: 'bg-white/95 border-gray-200 text-gray-900'
 							)}
 							onEscapeKeyDown={(e) => {
-								if (isLoading) {
-									e.preventDefault();
-								}
+								e.preventDefault();
 							}}
 							onPointerDownOutside={(e) => {
-								if (isLoading) {
-									e.preventDefault();
-								}
+								e.preventDefault();
+							}}
+							onInteractOutside={(e) => {
+								e.preventDefault();
 							}}
 						>
 							{/* Logo acima do modal */}
@@ -423,11 +420,6 @@ function PlayPageContent() {
 									)}
 								</button>
 							</DialogFooter>
-							<DialogPrimitive.Close className={`absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none ${isDark ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900'
-								}`}>
-								<X className="h-4 w-4" />
-								<span className="sr-only">Close</span>
-							</DialogPrimitive.Close>
 						</DialogPrimitive.Content>
 					</DialogPortal>
 				</Dialog>
