@@ -340,7 +340,7 @@ function PlayPageContent() {
 							</DialogTitle>
 							<h3 className="text-sm text-center text-gray-600 mt-2">
 								{orderId
-									? 'Leia as instruções para melhor experiência'
+									? 'Confira as instruções abaixo para aproveitar ao máximo seu livro'
 									: 'Conheça como será a experiência do seu livro personalizado'}
 							</h3>
 						</div>
