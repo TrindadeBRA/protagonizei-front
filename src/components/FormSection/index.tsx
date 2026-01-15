@@ -70,13 +70,13 @@ const FormSection = () => {
       {/* Decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 float-animation">
-          <Image src="/assets/images/asset-star.png" alt="Star" width={100} height={100} className="w-12 h-12 opacity-30" />
+          <Image src="/assets/images/asset-star.png" alt="Star" width={48} height={48} className="w-12 h-12 opacity-30" sizes="48px" />
         </div>
         <div className="absolute bottom-40 right-20 float-animation" style={{ animationDelay: '1s' }}>
-          <Image src="/assets/images/asset-heart-2.png" alt="Heart" width={100} height={100} className="w-10 h-10 opacity-30" />
+          <Image src="/assets/images/asset-heart-2.png" alt="Heart" width={40} height={40} className="w-10 h-10 opacity-30" sizes="40px" />
         </div>
         <div className="absolute top-1/2 right-10 float-animation" style={{ animationDelay: '2s' }}>
-          <Image src="/assets/images/asset-star-2.png" alt="Star" width={100} height={100} className="w-8 h-8 opacity-30" />
+          <Image src="/assets/images/asset-star-2.png" alt="Star" width={32} height={32} className="w-8 h-8 opacity-30" sizes="32px" />
         </div>
       </div>
 

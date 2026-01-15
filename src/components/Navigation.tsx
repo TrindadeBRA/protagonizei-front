@@ -80,7 +80,15 @@ const Navigation = () => {
             <span className="text-xl font-bold font-heading text-purple-700">
               Protagonizei
             </span> */}
-            <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={200} height={200} className="w-full sm:max-w-[200px] sm:h-auto" style={{ height: "auto" }} />
+            <Image 
+              src="/assets/images/navigation-logo.png" 
+              alt="Protagonizei" 
+              width={200} 
+              height={41} 
+              className="w-full sm:max-w-[200px] sm:h-auto" 
+              style={{ height: "auto" }}
+              sizes="(max-width: 640px) 100vw, 200px"
+            />
           </Link>
 
           {/* Desktop Menu */}
@@ -144,7 +152,15 @@ const Navigation = () => {
                 <SheetHeader>
                   <SheetTitle className="flex items-center space-x-2">
                     <Link href="/" className="flex items-center space-x-2 cursor-pointer w-full relative h-full py-2">
-                      <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="w-[200px] h-auto" style={{ height: "auto" }} />
+                      <Image 
+                        src="/assets/images/navigation-logo.png" 
+                        alt="Protagonizei" 
+                        width={200} 
+                        height={41} 
+                        className="w-[200px] h-auto" 
+                        style={{ height: "auto" }}
+                        sizes="200px"
+                      />
                     </Link>
                   </SheetTitle>
                 </SheetHeader>

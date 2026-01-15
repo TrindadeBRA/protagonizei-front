@@ -32,10 +32,10 @@ const HowItWorksSection = () => {
     <section className="py-20 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-10 left-10 opacity-15">
-        <Image src="/assets/images/asset-star-2.png" alt="Protagonizei" width={80} height={80} />
+        <Image src="/assets/images/asset-star-2.png" alt="Protagonizei" width={80} height={80} sizes="80px" />
       </div>
       <div className="hidden lg:block absolute top-10 right-10 opacity-15">
-        <Image src="/assets/images/asset-heart-2.png" alt="Protagonizei" width={80} height={80} />
+        <Image src="/assets/images/asset-heart-2.png" alt="Protagonizei" width={80} height={80} sizes="80px" />
       </div>
       {/* <div className="absolute bottom-10 right-10 opacity-20">
         <Image src="/assets/images/asset-star.png" alt="Protagonizei" width={80} height={80} />

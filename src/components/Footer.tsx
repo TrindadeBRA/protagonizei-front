@@ -10,7 +10,14 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-center mb-8" id="footer-logo" data-aos="fade-left">
           <Link href="/" className="block">
-            <Image src="/assets/images/navigation-logo.png" alt="Protagonizei" width={500} height={500} className="max-w-[150px] sm:max-w-[200px] h-auto" />
+            <Image 
+              src="/assets/images/navigation-logo.png" 
+              alt="Protagonizei" 
+              width={200} 
+              height={41} 
+              className="max-w-[150px] sm:max-w-[200px] h-auto"
+              sizes="(max-width: 640px) 150px, 200px"
+            />
           </Link>
         </div>
 

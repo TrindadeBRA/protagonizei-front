@@ -111,26 +111,28 @@ export default function Book3D({ className }: Book3DProps) {
 			<Image
 				src="/assets/images/book/avatar.webp"
 				alt="Protagonizei"
-				width={284}
-				height={355}
+				width={253}
+				height={250}
 				priority
 				className={cn(
 					"absolute -top-[20px] left-[0] h-[150px] w-auto animate-avatar-move z-10",
 					"min-md:h-[250px] min-md:-top-[35px] min-md:animate-avatar-move"
 				)}
 				style={{ width: "auto" }}
+				sizes="(max-width: 768px) 150px, 250px"
 			/>
 
 			<Image
 				src="/assets/images/book/arrow.png"
 				alt="Protagonizei"
-				width={200}
-				height={200}
+				width={300}
+				height={299}
 				priority
 				className={cn(
 					"absolute top-[20px] left-[180px] w-[130px] z-10 animate-arrow-appear",
 					"min-md:top-[0px] min-md:left-[250px] min-md:w-[300px]"
 				)}
+				sizes="(max-width: 768px) 130px, 300px"
 			/>
 
 

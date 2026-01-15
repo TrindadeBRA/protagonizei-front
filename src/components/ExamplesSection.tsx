@@ -71,7 +71,14 @@ const ExamplesSection = () => {
               <div className={`bg-gradient-to-br ${example.color} p-4 md:p-6 text-black relative overflow-hidden`}>
                 <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
                   <div className="flex-shrink-0 animate-avatar-pulse" style={{ animationDelay: `${index * 0.2}s` }}>
-                    <Image src={example.avatar} alt={example.name} width={120} height={120} className="rounded-full" />
+                    <Image 
+                      src={example.avatar} 
+                      alt={example.name} 
+                      width={120} 
+                      height={120} 
+                      className="rounded-full"
+                      sizes="120px"
+                    />
                   </div>
                   <div className="flex-1 text-center md:text-left">
                     <p className="text-sm md:text-base opacity-90 mb-2"><b>{example.name}</b>, {example.age} anos</p>
@@ -87,76 +94,76 @@ const ExamplesSection = () => {
                 {/* Floating decorative elements */}
                 <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
                   <div className="absolute top-[8%] left-[12%] float-animation" style={{ animationDelay: `${index * 0.15 + 0}s` }}>
-                    <Image src="/assets/images/asset-heart.png" alt="" width={18} height={18} />
+                    <Image src="/assets/images/asset-heart.png" alt="" width={18} height={18} sizes="18px" />
                   </div>
                   <div className="absolute top-[5%] right-[18%] float-animation" style={{ animationDelay: `${index * 0.15 + 0.4}s` }}>
-                    <Image src="/assets/images/asset-heart-2.png" alt="" width={16} height={16} />
+                    <Image src="/assets/images/asset-heart-2.png" alt="" width={16} height={16} sizes="16px" />
                   </div>
                   <div className="absolute top-[15%] left-[35%] float-animation" style={{ animationDelay: `${index * 0.15 + 0.8}s` }}>
-                    <Image src="/assets/images/asset-star.png" alt="" width={20} height={20} />
+                    <Image src="/assets/images/asset-star.png" alt="" width={20} height={20} sizes="20px" />
                   </div>
                   <div className="absolute top-[12%] right-[42%] float-animation" style={{ animationDelay: `${index * 0.15 + 1.2}s` }}>
-                    <Image src="/assets/images/asset-star-2.png" alt="" width={14} height={14} />
+                    <Image src="/assets/images/asset-star-2.png" alt="" width={14} height={14} sizes="14px" />
                   </div>
                   <div className="absolute top-[22%] left-[8%] float-animation" style={{ animationDelay: `${index * 0.15 + 1.6}s` }}>
-                    <Image src="/assets/images/asset-heart-2.png" alt="" width={22} height={22} />
+                    <Image src="/assets/images/asset-heart-2.png" alt="" width={22} height={22} sizes="22px" />
                   </div>
                   <div className="absolute top-[25%] right-[25%] float-animation" style={{ animationDelay: `${index * 0.15 + 2}s` }}>
-                    <Image src="/assets/images/asset-star.png" alt="" width={18} height={18} />
+                    <Image src="/assets/images/asset-star.png" alt="" width={18} height={18} sizes="18px" />
                   </div>
                   <div className="absolute top-[28%] left-[55%] float-animation" style={{ animationDelay: `${index * 0.15 + 2.4}s` }}>
-                    <Image src="/assets/images/asset-heart.png" alt="" width={16} height={16} />
+                    <Image src="/assets/images/asset-heart.png" alt="" width={16} height={16} sizes="16px" />
                   </div>
                   <div className="absolute top-[32%] right-[8%] float-animation" style={{ animationDelay: `${index * 0.15 + 2.8}s` }}>
-                    <Image src="/assets/images/asset-star-2.png" alt="" width={20} height={20} />
+                    <Image src="/assets/images/asset-star-2.png" alt="" width={20} height={20} sizes="20px" />
                   </div>
                   <div className="absolute top-[38%] left-[22%] float-animation" style={{ animationDelay: `${index * 0.15 + 3.2}s` }}>
-                    <Image src="/assets/images/asset-star.png" alt="" width={14} height={14} />
+                    <Image src="/assets/images/asset-star.png" alt="" width={14} height={14} sizes="14px" />
                   </div>
                   <div className="absolute top-[42%] right-[38%] float-animation" style={{ animationDelay: `${index * 0.15 + 3.6}s` }}>
-                    <Image src="/assets/images/asset-heart-2.png" alt="" width={18} height={18} />
+                    <Image src="/assets/images/asset-heart-2.png" alt="" width={18} height={18} sizes="18px" />
                   </div>
                   <div className="absolute top-[48%] left-[45%] float-animation" style={{ animationDelay: `${index * 0.15 + 4}s` }}>
-                    <Image src="/assets/images/asset-heart.png" alt="" width={22} height={22} />
+                    <Image src="/assets/images/asset-heart.png" alt="" width={22} height={22} sizes="22px" />
                   </div>
                   <div className="absolute top-[52%] right-[15%] float-animation" style={{ animationDelay: `${index * 0.15 + 4.4}s` }}>
-                    <Image src="/assets/images/asset-star-2.png" alt="" width={16} height={16} />
+                    <Image src="/assets/images/asset-star-2.png" alt="" width={16} height={16} sizes="16px" />
                   </div>
                   <div className="absolute top-[58%] left-[18%] float-animation" style={{ animationDelay: `${index * 0.15 + 4.8}s` }}>
-                    <Image src="/assets/images/asset-star.png" alt="" width={20} height={20} />
+                    <Image src="/assets/images/asset-star.png" alt="" width={20} height={20} sizes="20px" />
                   </div>
                   <div className="absolute top-[62%] right-[48%] float-animation" style={{ animationDelay: `${index * 0.15 + 5.2}s` }}>
-                    <Image src="/assets/images/asset-heart-2.png" alt="" width={14} height={14} />
+                    <Image src="/assets/images/asset-heart-2.png" alt="" width={14} height={14} sizes="14px" />
                   </div>
                   <div className="absolute top-[68%] left-[32%] float-animation" style={{ animationDelay: `${index * 0.15 + 5.6}s` }}>
-                    <Image src="/assets/images/asset-heart.png" alt="" width={18} height={18} />
+                    <Image src="/assets/images/asset-heart.png" alt="" width={18} height={18} sizes="18px" />
                   </div>
                   <div className="absolute top-[72%] right-[28%] float-animation" style={{ animationDelay: `${index * 0.15 + 6}s` }}>
-                    <Image src="/assets/images/asset-star-2.png" alt="" width={16} height={16} />
+                    <Image src="/assets/images/asset-star-2.png" alt="" width={16} height={16} sizes="16px" />
                   </div>
                   <div className="absolute top-[78%] left-[52%] float-animation" style={{ animationDelay: `${index * 0.15 + 6.4}s` }}>
-                    <Image src="/assets/images/asset-star.png" alt="" width={20} height={20} />
+                    <Image src="/assets/images/asset-star.png" alt="" width={20} height={20} sizes="20px" />
                   </div>
                   <div className="absolute top-[82%] right-[12%] float-animation" style={{ animationDelay: `${index * 0.15 + 6.8}s` }}>
-                    <Image src="/assets/images/asset-heart-2.png" alt="" width={18} height={18} />
+                    <Image src="/assets/images/asset-heart-2.png" alt="" width={18} height={18} sizes="18px" />
                   </div>
                   <div className="absolute top-[85%] left-[28%] float-animation" style={{ animationDelay: `${index * 0.15 + 7.2}s` }}>
-                    <Image src="/assets/images/asset-heart.png" alt="" width={14} height={14} />
+                    <Image src="/assets/images/asset-heart.png" alt="" width={14} height={14} sizes="14px" />
                   </div>
                   <div className="absolute top-[88%] right-[35%] float-animation" style={{ animationDelay: `${index * 0.15 + 7.6}s` }}>
-                    <Image src="/assets/images/asset-star-2.png" alt="" width={22} height={22} />
+                    <Image src="/assets/images/asset-star-2.png" alt="" width={22} height={22} sizes="22px" />
                   </div>
                   <div className="absolute top-[35%] left-[68%] float-animation" style={{ animationDelay: `${index * 0.15 + 8}s` }}>
-                    <Image src="/assets/images/asset-star.png" alt="" width={16} height={16} />
+                    <Image src="/assets/images/asset-star.png" alt="" width={16} height={16} sizes="16px" />
                   </div>
                   <div className="absolute top-[55%] left-[75%] float-animation" style={{ animationDelay: `${index * 0.15 + 8.4}s` }}>
-                    <Image src="/assets/images/asset-heart-2.png" alt="" width={18} height={18} />
+                    <Image src="/assets/images/asset-heart-2.png" alt="" width={18} height={18} sizes="18px" />
                   </div>
                   <div className="absolute top-[18%] left-[78%] float-animation" style={{ animationDelay: `${index * 0.15 + 8.8}s` }}>
-                    <Image src="/assets/images/asset-heart.png" alt="" width={20} height={20} />
+                    <Image src="/assets/images/asset-heart.png" alt="" width={20} height={20} sizes="20px" />
                   </div>
                   <div className="absolute top-[65%] right-[55%] float-animation" style={{ animationDelay: `${index * 0.15 + 9.2}s` }}>
-                    <Image src="/assets/images/asset-star-2.png" alt="" width={14} height={14} />
+                    <Image src="/assets/images/asset-star-2.png" alt="" width={14} height={14} sizes="14px" />
                   </div>
                 </div>
                 <div className="max-w-md mx-auto relative z-10 px-8 md:px-12">
