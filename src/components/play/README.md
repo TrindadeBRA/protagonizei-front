@@ -172,78 +172,102 @@ Os componentes são otimizados para funcionar em dispositivos móveis:
 
 ## 🎮 Navegação e Interatividade
 
+### Biblioteca de Zoom
+
+O sistema de zoom utiliza a biblioteca **`react-zoom-pan-pinch`** - uma solução profissional e robusta para gerenciamento de zoom/pan/pinch em React.
+
+**Benefícios:**
+- ✅ Zoom suave e performático
+- ✅ Suporte nativo a gestos (pinch-to-zoom)
+- ✅ Não interfere com eventos do FlipBook
+- ✅ API simples e configurável
+
 ### Métodos de Navegação
 
-O livro suporta múltiplas formas de navegação, com comportamento adaptativo baseado no nível de zoom:
+O livro sempre responde aos toques/cliques para virar páginas, independente do nível de zoom:
 
-#### **Sem Zoom (scale <= 1)**
+#### **Navegação de Páginas** (Sempre Ativo)
 
 1. **Clique e Arrastar (Desktop)**
    - Clique e arraste as páginas para virar
-   - Funciona com `useMouseEvents={true}`
+   - Funciona em qualquer nível de zoom
 
 2. **Swipe/Deslizar (Mobile)**
    - Deslize as páginas para navegar
-   - Suporte nativo com `mobileScrollSupport={true}`
-   - Distância mínima de swipe configurável com `swipeDistance`
+   - Responde naturalmente aos toques
+   - Distância mínima configurável
 
 3. **Setas de Navegação**
-   - Botões laterais fixos para navegação
+   - Botões laterais fixos
    - Sempre visíveis e acessíveis
+   - Não afetados pelo zoom
 
-4. **Controles no Menu**
-   - Menu inferior com controles de zoom
+#### **Controles de Zoom**
+
+1. **Ctrl + Scroll (Desktop)**
+   - Zoom in: Ctrl + Scroll Up
+   - Zoom out: Ctrl + Scroll Down
+
+2. **Pinch-to-Zoom (Mobile)**
+   - Gesto nativo de dois dedos
+   - Zoom suave e natural
+
+3. **Botões no Menu**
+   - Botão "+" para zoom in
+   - Botão "-" para zoom out
+   - Indicador visual do nível (%)
    - Minimizável para melhor visualização
 
-#### **Com Zoom Ativo (scale > 1)**
-
-1. **Pan/Arrastar**
-   - Arraste para mover o livro pela tela
-   - Cursor muda para "grab/grabbing"
-   - Funciona em desktop e mobile
-
-2. **Setas de Navegação**
-   - Botões laterais continuam funcionando
-   - Permitem trocar de página mesmo com zoom
-
-3. **Controles no Menu**
-   - Zoom in/out para ajustar visualização
-   - Reset automático de posição ao desabilitar zoom
-
-### Sistema Inteligente de Eventos
-
-O sistema detecta automaticamente o nível de zoom e ajusta o comportamento:
-
-- **Scale <= 1:** Eventos nativos do FlipBook habilitados (virar páginas por arraste)
-- **Scale > 1:** Eventos nativos desabilitados, pan/drag habilitado (mover livro pela tela)
-- **Transição Suave:** Mudança automática e imperceptível entre os modos
-
-### Compatibilidade com Zoom
+### Como Funciona a Integração
 
 ```typescript
-// Sistema dinâmico que ajusta baseado no zoom
-<FlipBookWrapper
-  useMouseEvents={currentScale <= 1}        // Desabilita ao fazer zoom
-  mobileScrollSupport={currentScale <= 1}   // Desabilita ao fazer zoom
-  swipeDistance={50}
-  clickEventForward={true}
-  flippingTime={800}
-/>
+// BookControls.tsx - Usando react-zoom-pan-pinch
+<TransformWrapper
+  initialScale={0.5}
+  minScale={0.25}
+  maxScale={3}
+  panning={{ disabled: true }}  // 🔑 Chave: Pan desabilitado!
+>
+  <TransformComponent>
+    <FlipBookWrapper
+      useMouseEvents={true}       // ✅ Sempre habilitado
+      mobileScrollSupport={true}  // ✅ Sempre habilitado
+    />
+  </TransformComponent>
+</TransformWrapper>
 ```
 
-### Como Funciona
+### Por Que Funciona?
 
-1. **Zoom Controlado:** `Ctrl + Scroll` ou botões de zoom
-2. **Detecção Automática:** Sistema detecta mudança de scale
-3. **Troca de Modo:** 
-   - Scale <= 1: Modo "virar páginas"
-   - Scale > 1: Modo "pan/arrastar"
-4. **Reset Automático:** Posição reseta ao voltar para scale <= 1
+1. **Pan Desabilitado:** Com `panning.disabled = true`, a biblioteca não intercepta eventos de arrastar
+2. **Eventos Livres:** Cliques e arrastes passam direto para o FlipBook
+3. **Zoom Isolado:** O zoom é aplicado via transform, sem afetar os event listeners
+4. **Gestos Nativos:** Pinch e wheel funcionam normalmente
 
-### Benefícios
+### Configuração de Zoom
 
-✅ **Sem Conflitos:** Eventos de mouse/touch não interferem entre zoom e navegação  
-✅ **Experiência Fluida:** Transição suave entre modos  
-✅ **Intuitivo:** Comportamento esperado em cada contexto  
-✅ **Mobile-Friendly:** Funciona perfeitamente em touch devices
+```typescript
+const zoomConfig = {
+  initialScale: 0.5,    // Escala inicial (50%)
+  minScale: 0.25,       // Zoom mínimo (25%)
+  maxScale: 3,          // Zoom máximo (300%)
+  wheel: {
+    step: 0.1,          // Incremento por scroll
+  },
+  pinch: {
+    step: 5,            // Sensibilidade do pinch
+  },
+  panning: {
+    disabled: true,     // ⚠️ Crítico para não conflitar
+  },
+};
+```
+
+### Benefícios da Implementação
+
+✅ **Zero Conflitos:** Zoom e navegação funcionam independentemente  
+✅ **Performance:** Biblioteca otimizada com animações suaves  
+✅ **Mobile-First:** Gestos nativos funcionam perfeitamente  
+✅ **Simples:** Configuração mínima e manutenção fácil  
+✅ **Profissional:** Solução battle-tested usada por milhares de projetos
 

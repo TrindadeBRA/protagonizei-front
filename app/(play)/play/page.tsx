@@ -18,7 +18,6 @@ export default function PlayPage() {
 	const { isMinimized, toggleMinimize } = useMinimizeControls();
 	const [currentPage, setCurrentPage] = useState(0);
 	const [totalPages, setTotalPages] = useState(0);
-	const [currentScale, setCurrentScale] = useState(0.5);
 	
 	const { flipBookRef, handleFlip, handleChangeState, stopAutoFlip } = useAutoFlip({
 		maxFlips: 0,
@@ -67,17 +66,14 @@ export default function PlayPage() {
 		}
 	};
 
-	// Callback para receber o scale atual do BookControls
-	const handleScaleChange = useCallback((newScale: number) => {
-		setCurrentScale(newScale);
-	}, []);
+	// Não precisamos mais do currentScale para desabilitar eventos
+	// O livro deve sempre responder aos cliques/arrastar
 
 	return (
 		<div className="min-h-screen w-full bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100">
 			<BookControls 
 				isMinimized={isMinimized} 
 				onToggleMinimize={toggleMinimize}
-				onScaleChange={handleScaleChange}
 			>
 				<div className="flex items-center justify-center h-screen">
 					<FlipBookWrapper
@@ -87,10 +83,10 @@ export default function PlayPage() {
 						size="stretch"
 						drawShadow={false}
 						showCover={true}
-						mobileScrollSupport={currentScale <= 1}
+						mobileScrollSupport={true}
 						flippingTime={800}
 						autoSize={true}
-						useMouseEvents={currentScale <= 1}
+						useMouseEvents={true}
 						swipeDistance={50}
 						clickEventForward={true}
 						onFlip={handlePageFlip}
@@ -99,23 +95,30 @@ export default function PlayPage() {
 						{/* Capa */}
 						<BookPage src="/assets/images/book/cover-1.webp" alt="Capa" side="left" priority />
 
-						{/* Páginas 1-3 (com prioridade de carregamento) */}
+						{/* IMPORTANTE: Cada imagem contém 2 páginas completas do livro físico */}
+						{/* Por isso duplicamos cada imagem para left e right */}
+						
+						{/* Páginas 1-2 (imagem page1-1.webp contém ambas) */}
 						<BookPage src="/assets/images/book/page1-1.webp" alt="Página 1 esquerda" side="left" priority />
 						<BookPage src="/assets/images/book/page1-1.webp" alt="Página 1 direita" side="right" priority />
 
+						{/* Páginas 3-4 (imagem page2-1.webp contém ambas) */}
 						<BookPage src="/assets/images/book/page2-1.webp" alt="Página 2 esquerda" side="left" priority />
 						<BookPage src="/assets/images/book/page2-1.webp" alt="Página 2 direita" side="right" priority />
 
+						{/* Páginas 5-6 (imagem page3-1.webp contém ambas) */}
 						<BookPage src="/assets/images/book/page3-1.webp" alt="Página 3 esquerda" side="left" priority />
 						<BookPage src="/assets/images/book/page3-1.webp" alt="Página 3 direita" side="right" priority />
 
-						{/* Páginas 4-6 (carregamento lazy) */}
+						{/* Páginas 7-8 (imagem page4-1.webp contém ambas) */}
 						<BookPage src="/assets/images/book/page4-1.webp" alt="Página 4 esquerda" side="left" priority={false} />
 						<BookPage src="/assets/images/book/page4-1.webp" alt="Página 4 direita" side="right" priority={false} />
 
+						{/* Páginas 9-10 (imagem page5-1.webp contém ambas) */}
 						<BookPage src="/assets/images/book/page5-1.webp" alt="Página 5 esquerda" side="left" priority={false} />
 						<BookPage src="/assets/images/book/page5-1.webp" alt="Página 5 direita" side="right" priority={false} />
 
+						{/* Páginas 11-12 (imagem page6-1.webp contém ambas) */}
 						<BookPage src="/assets/images/book/page6-1.webp" alt="Página 6 esquerda" side="left" priority={false} />
 						<BookPage src="/assets/images/book/page6-1.webp" alt="Página 6 direita" side="right" priority={false} />
 

@@ -2,20 +2,17 @@
 
 import { useBookControls } from '../../hooks/useBookControls';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface BookControlsProps {
 	children: React.ReactNode;
 	isMinimized: boolean;
 	onToggleMinimize: () => void;
-	onScaleChange?: (scale: number) => void;
 }
 
 export const BookControls: React.FC<BookControlsProps> = ({ 
 	children, 
 	isMinimized, 
-	onToggleMinimize,
-	onScaleChange 
+	onToggleMinimize 
 }) => {
 	const {
 		scale,
@@ -24,107 +21,30 @@ export const BookControls: React.FC<BookControlsProps> = ({
 		zoomOut,
 		handleWheel,
 	} = useBookControls({
-		minScale: 0.25,
+		minScale: 0.5,
 		maxScale: 3,
-		initialScale: 0.5,
+		initialScale: 1,
 	});
-
-	// Estados para pan/drag quando há zoom
-	const [isDragging, setIsDragging] = useState(false);
-	const [position, setPosition] = useState({ x: 0, y: 0 });
-	const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-	const bookContentRef = useRef<HTMLDivElement>(null);
-
-	// Notificar mudança de scale para o componente pai
-	useEffect(() => {
-		if (onScaleChange) {
-			onScaleChange(scale);
-		}
-	}, [scale, onScaleChange]);
-
-	// Reset position quando scale volta para <= 1
-	useEffect(() => {
-		if (scale <= 1) {
-			setPosition({ x: 0, y: 0 });
-		}
-	}, [scale]);
-
-	// Handlers para pan/drag quando há zoom ativo
-	const handleMouseDown = useCallback((e: React.MouseEvent) => {
-		if (scale > 1) {
-			setIsDragging(true);
-			setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
-			e.preventDefault();
-		}
-	}, [scale, position]);
-
-	const handleMouseMove = useCallback((e: React.MouseEvent) => {
-		if (isDragging && scale > 1) {
-			setPosition({
-				x: e.clientX - dragStart.x,
-				y: e.clientY - dragStart.y,
-			});
-		}
-	}, [isDragging, scale, dragStart]);
-
-	const handleMouseUp = useCallback(() => {
-		setIsDragging(false);
-	}, []);
-
-	// Touch handlers para mobile
-	const handleTouchStart = useCallback((e: React.TouchEvent) => {
-		if (scale > 1 && e.touches.length === 1) {
-			setIsDragging(true);
-			setDragStart({ 
-				x: e.touches[0].clientX - position.x, 
-				y: e.touches[0].clientY - position.y 
-			});
-		}
-	}, [scale, position]);
-
-	const handleTouchMove = useCallback((e: React.TouchEvent) => {
-		if (isDragging && scale > 1 && e.touches.length === 1) {
-			setPosition({
-				x: e.touches[0].clientX - dragStart.x,
-				y: e.touches[0].clientY - dragStart.y,
-			});
-		}
-	}, [isDragging, scale, dragStart]);
-
-	const handleTouchEnd = useCallback(() => {
-		setIsDragging(false);
-	}, []);
 
 	return (
 		<div
 			ref={containerRef}
 			className="relative w-full h-screen"
 			onWheel={handleWheel}
-			onMouseMove={handleMouseMove}
-			onMouseUp={handleMouseUp}
-			onMouseLeave={handleMouseUp}
-			onTouchMove={handleTouchMove}
-			onTouchEnd={handleTouchEnd}
 			style={{ 
-				touchAction: scale > 1 ? 'none' : 'pan-x pan-y pinch-zoom',
+				touchAction: 'auto',
 				overflow: 'hidden',
-				cursor: isDragging ? 'grabbing' : 'default',
 			}}
 		>
-			{/* Área do livro com transformações */}
+			{/* Área do livro com zoom - eventos passam direto para o FlipBook */}
 			<div
-				ref={bookContentRef}
-				onMouseDown={handleMouseDown}
-				onTouchStart={handleTouchStart}
 				style={{
-					transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
+					transform: `scale(${scale})`,
 					transformOrigin: 'center center',
-					transition: isDragging ? 'none' : 'transform 0.1s ease-out',
+					transition: 'transform 0.1s ease-out',
 					pointerEvents: 'auto',
 					willChange: 'transform',
-					cursor: scale > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default',
 				}}
-				className="select-none"
 			>
 				{children}
 			</div>
@@ -136,24 +56,24 @@ export const BookControls: React.FC<BookControlsProps> = ({
 					<button
 						onClick={zoomOut}
 						onMouseEnter={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
+							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)';
 						}}
 						onMouseLeave={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)'; // purple-600/40
+							e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)';
 						}}
 						onMouseDown={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(126, 34, 206, 0.4)'; // purple-700/40
+							e.currentTarget.style.backgroundColor = 'rgba(126, 34, 206, 0.4)';
 						}}
 						onMouseUp={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
+							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)';
 						}}
 						style={{
-							backgroundColor: 'rgba(147, 51, 234, 0.4)', // purple-600/40
+							backgroundColor: 'rgba(147, 51, 234, 0.4)',
 							backdropFilter: 'blur(12px)',
-							borderColor: 'rgba(196, 181, 253, 0.4)', // purple-300/40
+							borderColor: 'rgba(196, 181, 253, 0.4)',
 						}}
 						className="text-white rounded-full p-4 transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg cursor-pointer"
-						disabled={scale <= 0.25}
+						disabled={scale <= 0.5}
 						aria-label="Diminuir zoom"
 						title="Diminuir zoom (ou Ctrl + Scroll)"
 					>
@@ -171,21 +91,21 @@ export const BookControls: React.FC<BookControlsProps> = ({
 					<button
 						onClick={zoomIn}
 						onMouseEnter={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
+							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)';
 						}}
 						onMouseLeave={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)'; // purple-600/40
+							e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)';
 						}}
 						onMouseDown={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(126, 34, 206, 0.4)'; // purple-700/40
+							e.currentTarget.style.backgroundColor = 'rgba(126, 34, 206, 0.4)';
 						}}
 						onMouseUp={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
+							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)';
 						}}
 						style={{
-							backgroundColor: 'rgba(147, 51, 234, 0.4)', // purple-600/40
+							backgroundColor: 'rgba(147, 51, 234, 0.4)',
 							backdropFilter: 'blur(12px)',
-							borderColor: 'rgba(196, 181, 253, 0.4)', // purple-300/40
+							borderColor: 'rgba(196, 181, 253, 0.4)',
 						}}
 						className="text-white rounded-full p-4 transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed border shadow-lg cursor-pointer"
 						disabled={scale >= 3}
@@ -204,21 +124,21 @@ export const BookControls: React.FC<BookControlsProps> = ({
 					<button
 						onClick={onToggleMinimize}
 						onMouseEnter={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
+							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)';
 						}}
 						onMouseLeave={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)'; // purple-600/40
+							e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)';
 						}}
 						onMouseDown={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(126, 34, 206, 0.4)'; // purple-700/40
+							e.currentTarget.style.backgroundColor = 'rgba(126, 34, 206, 0.4)';
 						}}
 						onMouseUp={(e) => {
-							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
+							e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)';
 						}}
 						style={{
-							backgroundColor: 'rgba(147, 51, 234, 0.4)', // purple-600/40
+							backgroundColor: 'rgba(147, 51, 234, 0.4)',
 							backdropFilter: 'blur(12px)',
-							borderColor: 'rgba(196, 181, 253, 0.4)', // purple-300/40
+							borderColor: 'rgba(196, 181, 253, 0.4)',
 						}}
 						className="text-white rounded-full p-4 transition-all duration-200 hover:scale-110 active:scale-95 border shadow-lg cursor-pointer"
 						aria-label="Minimizar controles"
@@ -234,21 +154,21 @@ export const BookControls: React.FC<BookControlsProps> = ({
 				<button
 					onClick={onToggleMinimize}
 					onMouseEnter={(e) => {
-						e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
+						e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)';
 					}}
 					onMouseLeave={(e) => {
-						e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)'; // purple-600/40
+						e.currentTarget.style.backgroundColor = 'rgba(147, 51, 234, 0.4)';
 					}}
 					onMouseDown={(e) => {
-						e.currentTarget.style.backgroundColor = 'rgba(126, 34, 206, 0.4)'; // purple-700/40
+						e.currentTarget.style.backgroundColor = 'rgba(126, 34, 206, 0.4)';
 					}}
 					onMouseUp={(e) => {
-						e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)'; // purple-500/50
+						e.currentTarget.style.backgroundColor = 'rgba(168, 85, 247, 0.5)';
 					}}
 					style={{
-						backgroundColor: 'rgba(147, 51, 234, 0.4)', // purple-600/40
+						backgroundColor: 'rgba(147, 51, 234, 0.4)',
 						backdropFilter: 'blur(12px)',
-						borderColor: 'rgba(196, 181, 253, 0.4)', // purple-300/40
+						borderColor: 'rgba(196, 181, 253, 0.4)',
 					}}
 					className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 text-white rounded-full p-2 transition-all duration-300 hover:scale-110 active:scale-95 border shadow-lg flex items-center justify-center cursor-pointer"
 					aria-label="Restaurar controles"
