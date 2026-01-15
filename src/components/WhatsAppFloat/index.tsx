@@ -15,9 +15,9 @@ export function WhatsAppFloat({ whatsAppUrl }: WhatsAppFloatProps) {
     return (
         <div className="fixed bottom-6 right-6 z-50">
             {isOpen ? (
-                <div className="bg-white! dark:bg-gray-800 rounded-lg p-4 w-72 animate-in slide-in-from-bottom-5 duration-300 shadow-lg">
+                <div className="bg-white dark:bg-gray-800 rounded-lg p-4 w-72 animate-in slide-in-from-bottom-5 duration-300 shadow-lg">
                     <div className="flex justify-between items-center mb-3">
-                        <h3 className="font-bold text-sm">Fale conosco pelo WhatsApp</h3>
+                        <h3 className="font-bold text-sm text-gray-900">Fale conosco pelo WhatsApp</h3>
                         <button
                             type="button"
                             onClick={() => setIsOpen(false)}

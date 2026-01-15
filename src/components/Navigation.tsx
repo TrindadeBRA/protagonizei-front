@@ -67,7 +67,7 @@ const Navigation = () => {
   }, [navLinks]);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-pink-200 shadow-sm">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white backdrop-blur-md border-b border-pink-200 shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
 
@@ -101,8 +101,8 @@ const Navigation = () => {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-black xl:hover:text-pink-main transition-colors duration-200 font-semibold font-englebert text-[1.2rem] ${
-                    isActive ? "text-pink-main border-b-2 border-pink-main" : ""
+                  className={`text-gray-900 xl:hover:text-pink-700 transition-colors duration-200 font-semibold font-englebert text-[1.2rem] ${
+                    isActive ? "text-pink-700 border-b-2 border-pink-700" : ""
                   }`}
                 >
                   {link.label}
@@ -115,7 +115,7 @@ const Navigation = () => {
                 href="https://www.facebook.com/profile.php?id=61584693167182"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-black hover:text-blue-600 transition-colors duration-200"
+                className="text-gray-900 hover:text-blue-600 transition-colors duration-200"
                 aria-label="Facebook"
               >
                 <FaFacebook className="h-6 w-6" />
@@ -124,7 +124,7 @@ const Navigation = () => {
                 href="https://www.instagram.com/protagonizei.app/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-black hover:text-pink-600 transition-colors duration-200"
+                className="text-gray-900 hover:text-pink-600 transition-colors duration-200"
                 aria-label="Instagram"
               >
                 <FaInstagram className="h-6 w-6" />
@@ -166,7 +166,7 @@ const Navigation = () => {
                       <Link
                         key={link.href}
                         href={link.href}
-                        className={`text-black transition-colors duration-200 font-semibold font-englebert text-[1.2rem] ${
+                        className={`text-gray-900 transition-colors duration-200 font-semibold font-englebert text-[1.2rem] ${
                           isActive ? "text-pink-main border-b-2 border-pink-main" : ""
                         }`}
                         onClick={() => setIsOpen(false)}
@@ -181,7 +181,7 @@ const Navigation = () => {
                       href="https://www.facebook.com/profile.php?id=61584693167182"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-black hover:text-blue-600 transition-colors duration-200"
+                      className="text-gray-900 hover:text-blue-600 transition-colors duration-200"
                       aria-label="Facebook"
                       onClick={() => setIsOpen(false)}
                     >
@@ -191,7 +191,7 @@ const Navigation = () => {
                       href="https://www.instagram.com/protagonizei.app/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-black hover:text-pink-600 transition-colors duration-200"
+                      className="text-gray-900 hover:text-pink-600 transition-colors duration-200"
                       aria-label="Instagram"
                       onClick={() => setIsOpen(false)}
                     >
