@@ -5,9 +5,6 @@ import {
 	BOOK_ASPECT_RATIO,
 	DEFAULT_BOOK_WIDTH,
 	DEFAULT_BOOK_HEIGHT,
-	HORIZONTAL_VIEWPORT_USAGE,
-	VERTICAL_VIEWPORT_USAGE,
-	VIEWPORT_PADDING,
 } from '../components/play/bookConfig';
 
 interface BookDimensions {
@@ -15,7 +12,24 @@ interface BookDimensions {
 	height: number;
 }
 
-export const useBookDimensions = (): BookDimensions => {
+interface UseBookDimensionsOptions {
+	viewportUsage?: number;
+	padding?: number;
+}
+
+/**
+ * Hook para calcular dimensões responsivas do livro
+ * Aceita configuração dinâmica de viewport e padding
+ * 
+ * @param options - Configurações opcionais
+ * @returns Dimensões calculadas do livro
+ */
+export const useBookDimensions = (options: UseBookDimensionsOptions = {}): BookDimensions => {
+	const {
+		viewportUsage = 0.85, // Padrão: 85%
+		padding = 40,         // Padrão: 40px
+	} = options;
+
 	const [dimensions, setDimensions] = useState<BookDimensions>({
 		width: DEFAULT_BOOK_WIDTH,
 		height: DEFAULT_BOOK_HEIGHT,
@@ -27,16 +41,16 @@ export const useBookDimensions = (): BookDimensions => {
 			const viewportHeight = window.innerHeight;
 
 			// Área disponível após remover padding
-			const availableWidth = viewportWidth - VIEWPORT_PADDING * 2;
-			const availableHeight = viewportHeight - VIEWPORT_PADDING * 2;
+			const availableWidth = viewportWidth - padding * 2;
+			const availableHeight = viewportHeight - padding * 2;
 
 			// Calcular dimensões baseado na largura disponível com a porcentagem configurada
-			let width = availableWidth * HORIZONTAL_VIEWPORT_USAGE;
+			let width = availableWidth * viewportUsage;
 			let height = width / BOOK_ASPECT_RATIO;
 
 			// Se a altura calculada exceder o espaço vertical disponível, recalcular pela altura
-			if (height > availableHeight * VERTICAL_VIEWPORT_USAGE) {
-				height = availableHeight * VERTICAL_VIEWPORT_USAGE;
+			if (height > availableHeight * viewportUsage) {
+				height = availableHeight * viewportUsage;
 				width = height * BOOK_ASPECT_RATIO;
 			}
 
@@ -49,8 +63,7 @@ export const useBookDimensions = (): BookDimensions => {
 		updateDimensions();
 		window.addEventListener('resize', updateDimensions);
 		return () => window.removeEventListener('resize', updateDimensions);
-	}, []);
+	}, [viewportUsage, padding]); // Recalcula quando viewportUsage ou padding mudam
 
 	return dimensions;
 };
-

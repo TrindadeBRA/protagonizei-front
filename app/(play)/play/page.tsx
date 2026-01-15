@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useAutoFlip } from '../../../src/hooks/useAutoFlip';
 import { useBookDimensions } from '../../../src/hooks/useBookDimensions';
 import { useMinimizeControls } from '../../../src/hooks/useMinimizeControls';
+import { useBookSize } from '../../../src/hooks/useBookSize';
 import { BookPage, BookControls, FlipBookWrapper, NavButton } from '../../../src/components/play';
 import {
 	BOOK_PAGES,
@@ -31,10 +32,21 @@ export default function PlayPage() {
 	// =================================================================
 	// HOOKS E ESTADOS
 	// =================================================================
-	const dimensions = useBookDimensions();
 	const { isMinimized, toggleMinimize } = useMinimizeControls();
+	const { size, changeSize, config } = useBookSize();
+	const dimensions = useBookDimensions({
+		viewportUsage: config.viewportUsage,
+		padding: config.padding,
+	});
 	const [currentPage, setCurrentPage] = useState(0);
 	const [totalPages, setTotalPages] = useState(0);
+
+	// Debug - remover depois
+	useEffect(() => {
+		console.log('📏 Tamanho atual:', size);
+		console.log('📐 Config:', config);
+		console.log('📊 Dimensões:', dimensions);
+	}, [size, config, dimensions]);
 	
 	const { flipBookRef, handleFlip, handleChangeState, stopAutoFlip } = useAutoFlip({
 		maxFlips: 0,
@@ -164,23 +176,29 @@ export default function PlayPage() {
 	
 	return (
 		<div className="min-h-screen w-full bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100">
-			{/* Sistema de Zoom e Controles */}
+			{/* Sistema de Controles de Tamanho */}
 			<BookControls 
 				isMinimized={isMinimized} 
 				onToggleMinimize={toggleMinimize}
+				onSizeChange={changeSize}
+				currentSize={size}
 			>
-				{/* Livro com dimensões fixas - eventos sempre corretos */}
 				<FlipBookWrapper
+					key={`flipbook-${size}-${dimensions.width}-${dimensions.height}`}
 					ref={flipBookRef}
 					width={dimensions.width}
 					height={dimensions.height}
-					size="stretch"
+					size="fixed"
+					minWidth={dimensions.width}
+					maxWidth={dimensions.width}
+					minHeight={dimensions.height}
+					maxHeight={dimensions.height}
 					drawShadow={false}
 					showCover={true}
 					usePortrait={false}
 					mobileScrollSupport={true}
 					flippingTime={PAGE_FLIP_DURATION}
-					autoSize={true}
+					autoSize={false}
 					useMouseEvents={true}
 					swipeDistance={SWIPE_DISTANCE}
 					clickEventForward={true}
