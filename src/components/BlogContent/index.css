@@ -3,8 +3,8 @@
     line-height: 1.6;
     font-size: 1.125rem;
     font-family: 'Comic Neue', cursive;
-    white-space: pre-wrap;
-    word-spacing: normal;
+    /* white-space: pre-wrap;
+    word-spacing: normal; */
 }
 
 .blog-content h1,
