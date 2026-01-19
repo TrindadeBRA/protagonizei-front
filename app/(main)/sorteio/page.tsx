@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { ArrowRightIcon, Gift, CheckCircle2, Calendar, Trophy, AlertTriangle, Heart, Star, Sparkles } from 'lucide-react'
-import { useState } from 'react'
-import { getPostContactFormSubmitUrl, postContactFormSubmitResponse } from '@/src/services/api'
+import { useState, useEffect } from 'react'
+import { getPostContactFormSubmitUrl, postContactFormSubmitResponse, getGetPostSlugsUrl } from '@/src/services/api'
 import customFetch from '@/src/services/custom-fetch'
 import { errorToast, successToast } from '@/src/hooks/useToastify'
 import { useHookFormMask } from 'use-mask-input'
@@ -15,6 +15,8 @@ import { Input } from '@/src/components/ui/input'
 import { Label } from '@/src/components/ui/label'
 import { AlertBox } from '@/src/components/ui/alert-box'
 import { twMerge } from 'tailwind-merge'
+import RecentPostsSection from '@/src/components/RecentPostsSection'
+import { GetPostSlugs200DataItem, GetPostSlugs200 } from '@/src/services/model'
 
 const sorteioFormSchema = z.object({
   name: z.string().min(1, 'Campo obrigatório').min(3, 'Nome deve ter pelo menos 3 caracteres'),
@@ -26,6 +28,8 @@ type SorteioFormData = z.infer<typeof sorteioFormSchema>
 
 export default function SorteioPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [posts, setPosts] = useState<GetPostSlugs200DataItem[]>([])
+  const [isLoadingPosts, setIsLoadingPosts] = useState(true)
 
   const {
     register,
@@ -36,6 +40,29 @@ export default function SorteioPage() {
     resolver: zodResolver(sorteioFormSchema),
   })
   const registerWithMask = useHookFormMask(register)
+
+  // Buscar posts do blog
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        setIsLoadingPosts(true)
+        const response = await customFetch<GetPostSlugs200>(
+          getGetPostSlugsUrl({ quantity: 3 })
+        )
+        
+        // customFetch retorna GetPostSlugs200 diretamente
+        if (response && response.data && Array.isArray(response.data)) {
+          setPosts(response.data)
+        }
+      } catch (error) {
+        console.error('Erro ao buscar posts:', error)
+      } finally {
+        setIsLoadingPosts(false)
+      }
+    }
+
+    fetchPosts()
+  }, [])
 
   // Obter nome do mês atual em português
   const meses = [
@@ -350,6 +377,11 @@ export default function SorteioPage() {
           </div>
         </div>
       </div>
+
+      {/* TERCEIRA DOBRA - Posts Recentes do Blog */}
+      {!isLoadingPosts && posts.length > 0 && (
+        <RecentPostsSection posts={posts} />
+      )}
     </section>
   )
 }
