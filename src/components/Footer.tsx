@@ -44,12 +44,26 @@ const Footer = () => {
 
         <div className="w-full h-px bg-gradient-to-r from-transparent via-pink-300 to-transparent mb-6"></div>
 
-        <div className="flex justify-center mb-4" data-aos="fade-up" data-aos-delay={75} data-aos-anchor="#footer-logo">
+        <div className="flex flex-wrap items-center justify-center gap-4 mb-4" data-aos="fade-up" data-aos-delay={75} data-aos-anchor="#footer-logo">
           <Link
             href="/politica-de-privacidade"
             className="text-black hover:text-pink-main hover:underline transition-all duration-200 font-medium text-sm"
           >
             Política de Privacidade
+          </Link>
+          <span className="text-gray-400">•</span>
+          <Link
+            href="/play"
+            className="text-black hover:text-pink-main hover:underline transition-all duration-200 font-medium text-sm"
+          >
+            Modo Interativo
+          </Link>
+          <span className="text-gray-400">•</span>
+          <Link
+            href="/sorteio"
+            className="text-black hover:text-pink-main hover:underline transition-all duration-200 font-medium text-sm"
+          >
+            Sorteio Mensal
           </Link>
         </div>
 

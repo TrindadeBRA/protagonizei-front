@@ -90,16 +90,16 @@ export default function SorteioPage() {
       {/* Elementos decorativos flutuantes */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20 md:opacity-40">
         <div className="absolute top-20 left-10 float-animation">
-          <Image src="/assets/images/asset-star.png" alt="Star" width={32} height={32} sizes="32px" />
+          <Image src="/assets/images/asset-star.png" alt="Star" width={32} height={32} sizes="32px" data-aos="fade-in" data-aos-delay={100} />
         </div>
         <div className="absolute top-40 right-20 float-animation" style={{ animationDelay: '1s' }}>
-          <Image src="/assets/images/asset-heart.png" alt="Heart" width={32} height={32} sizes="32px" />
+          <Image src="/assets/images/asset-heart.png" alt="Heart" width={32} height={32} sizes="32px" data-aos="fade-in" data-aos-delay={200} />
         </div>
         <div className="absolute bottom-40 left-20 float-animation" style={{ animationDelay: '2s' }}>
-          <Image src="/assets/images/asset-star.png" alt="Star" width={32} height={32} />
+          <Image src="/assets/images/asset-star.png" alt="Star" width={32} height={32} data-aos="fade-in" data-aos-delay={300} />
         </div>
         <div className="absolute top-60 left-1/3 float-animation" style={{ animationDelay: '0.5s' }}>
-          <Image src="/assets/images/asset-star-2.png" alt="Star" width={32} height={32} sizes="32px" />
+          <Image src="/assets/images/asset-star-2.png" alt="Star" width={32} height={32} sizes="32px" data-aos="fade-in" data-aos-delay={400} />
         </div>
       </div>
 
@@ -111,7 +111,7 @@ export default function SorteioPage() {
             {/* Coluna Esquerda - Hero e Benefícios */}
             <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left z-10">
               {/* Badge de Urgência */}
-              <div className="inline-block mb-4">
+              <div className="inline-block mb-4" data-aos="fade-down">
                 <span className="bg-gradient-to-r from-pink-main to-blue-main text-white px-4 py-1.5 rounded-full text-xs font-semibold shadow-md flex items-center gap-2">
                   <Sparkles className="w-4 h-4" />
                   Sorteio Mensal • Grátis
@@ -119,9 +119,9 @@ export default function SorteioPage() {
               </div>
 
               {/* Título Principal */}
-              <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 leading-tight">
+              <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 leading-tight" data-aos="fade-up">
                 <span className="text-black">
-                  Ganhe um livro{' '}
+                  Participe e ganhe um livro{' '}
                   <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
                     personalizado
                   </span>
@@ -130,16 +130,16 @@ export default function SorteioPage() {
               </h1>
 
               {/* Subtítulo com Benefício */}
-              <p className="text-lg md:text-xl text-gray-700 font-medium mb-3 leading-relaxed">
+              <p className="text-lg md:text-xl text-gray-700 font-medium mb-3 leading-relaxed" data-aos="fade-up" data-aos-delay={100}>
                 Livro digital com <strong className="text-pink-600">nome e rosto</strong> da criança como protagonista
               </p>
 
-              <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed">
+              <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed" data-aos="fade-up" data-aos-delay={200}>
                 Preencha o formulário e concorra! O sorteio acontece <strong className="text-blue-600">mensalmente</strong>.
               </p>
 
               {/* Prova Social */}
-              <div className="w-full flex flex-wrap items-center justify-center gap-3 mb-8">
+              <div className="w-full flex flex-wrap items-center justify-center gap-3 mb-8" data-aos="fade-up" data-aos-delay={300}>
                 <div className="flex items-center bg-white/80 px-3 py-1.5 rounded-full shadow-sm">
                   <Heart className="w-4 h-4 text-pink-main mr-1.5 fill-current" />
                   <span className="text-gray-800 font-semibold text-sm">+1000 famílias</span>
@@ -155,7 +155,7 @@ export default function SorteioPage() {
               </div>
 
               {/* Imagem do Livro */}
-              <div className="w-full max-w-sm mx-auto mb-6 lg:mb-0">
+              <div className="w-full max-w-lg mx-auto mb-6 lg:mb-0" data-aos="fade-up" data-aos-delay={400}>
                 <Image
                   src="/assets/images/open-book.png"
                   alt="Livro personalizado"
@@ -168,7 +168,7 @@ export default function SorteioPage() {
             </div>
 
             {/* Coluna Direita - Formulário de Inscrição */}
-            <div className="w-full lg:w-1/2 flex flex-col z-10">
+            <div className="w-full lg:w-1/2 flex flex-col z-10" data-aos="fade-left" data-aos-delay={200}>
               <div className="bg-white rounded-3xl overflow-hidden animate-shadow-pulse-gradient shadow-2xl">
                 <div className="p-6 md:p-8">
                   {/* Título do Formulário */}
@@ -278,14 +278,14 @@ export default function SorteioPage() {
       <div className="container mx-auto px-4 py-12 lg:py-16 border-t border-pink-200/50">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white/60 backdrop-blur-sm rounded-3xl p-6 md:p-8 lg:p-10 shadow-lg">
-            <h3 className="font-heading text-2xl md:text-3xl font-bold mb-8 text-center">
+            <h3 className="font-heading text-2xl md:text-3xl font-bold mb-8 text-center" data-aos="fade-up">
               <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
                 Regras do Sorteio
               </span>
             </h3>
 
             <div className="space-y-6">
-              <div className="bg-gradient-to-r from-pink-50 to-blue-50 rounded-xl p-5 border-l-4 border-pink-main">
+              <div className="bg-gradient-to-r from-pink-50 to-blue-50 rounded-xl p-5 border-l-4 border-pink-main" data-aos="fade-up" data-aos-delay={100}>
                 <p className="font-semibold text-gray-900 mb-2 text-lg flex items-center gap-2">
                   <Gift className="w-5 h-5 text-pink-main flex-shrink-0" />
                   Prêmio:
@@ -295,7 +295,7 @@ export default function SorteioPage() {
                 </p>
               </div>
 
-              <div className="bg-gradient-to-r from-blue-50 to-pink-50 rounded-xl p-5 border-l-4 border-blue-main">
+              <div className="bg-gradient-to-r from-blue-50 to-pink-50 rounded-xl p-5 border-l-4 border-blue-main" data-aos="fade-up" data-aos-delay={200}>
                 <p className="font-semibold text-gray-900 mb-3 text-lg flex items-center gap-2">
                   <CheckCircle2 className="w-5 h-5 text-blue-main flex-shrink-0" />
                   Como participar:
@@ -320,7 +320,7 @@ export default function SorteioPage() {
                 </ol>
               </div>
 
-              <div className="bg-gradient-to-r from-pink-50 to-blue-50 rounded-xl p-5 border-l-4 border-pink-main">
+              <div className="bg-gradient-to-r from-pink-50 to-blue-50 rounded-xl p-5 border-l-4 border-pink-main" data-aos="fade-up" data-aos-delay={300}>
                 <p className="font-semibold text-gray-900 mb-2 text-lg flex items-center gap-2">
                   <Calendar className="w-5 h-5 text-pink-main flex-shrink-0" />
                   Período:
@@ -330,7 +330,7 @@ export default function SorteioPage() {
                 </p>
               </div>
 
-              <div className="bg-gradient-to-r from-blue-50 to-pink-50 rounded-xl p-5 border-l-4 border-blue-main">
+              <div className="bg-gradient-to-r from-blue-50 to-pink-50 rounded-xl p-5 border-l-4 border-blue-main" data-aos="fade-up" data-aos-delay={400}>
                 <p className="font-semibold text-gray-900 mb-2 text-lg flex items-center gap-2">
                   <Trophy className="w-5 h-5 text-blue-main flex-shrink-0" />
                   Resultado:
@@ -340,7 +340,7 @@ export default function SorteioPage() {
                 </p>
               </div>
 
-              <div className="bg-gradient-to-r from-pink-50 to-blue-50 rounded-xl p-5 border-l-4 border-pink-main">
+              <div className="bg-gradient-to-r from-pink-50 to-blue-50 rounded-xl p-5 border-l-4 border-pink-main" data-aos="fade-up" data-aos-delay={500}>
                 <p className="text-gray-800 text-base flex items-start gap-2 leading-relaxed">
                   <AlertTriangle className="w-5 h-5 text-pink-main flex-shrink-0 mt-0.5" />
                   <span><strong>Atenção:</strong> Caso o vencedor não responda em até 48 horas, um novo sorteio poderá ser realizado.</span>
