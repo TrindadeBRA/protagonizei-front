@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { ArrowRightIcon, Gift, CheckCircle2, Calendar, Trophy, AlertTriangle, Instagram } from 'lucide-react'
+import { ArrowRightIcon, Gift, CheckCircle2, Calendar, Trophy, AlertTriangle, Heart, Star, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { getPostContactFormSubmitUrl, postContactFormSubmitResponse } from '@/src/services/api'
 import customFetch from '@/src/services/custom-fetch'
@@ -36,6 +36,13 @@ export default function SorteioPage() {
     resolver: zodResolver(sorteioFormSchema),
   })
   const registerWithMask = useHookFormMask(register)
+
+  // Obter nome do mês atual em português
+  const meses = [
+    'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+  ]
+  const mesAtual = meses[new Date().getMonth()]
 
   // Cores do formulário no estilo FormSection (gradiente padrão)
   const formColors = {
@@ -80,181 +87,269 @@ export default function SorteioPage() {
 
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 overflow-hidden">
-      <div className="container mx-auto px-4 py-20 flex flex-col lg:flex-row items-start lg:justify-between gap-8">
-        {/* Coluna da esquerda - Regras escritas */}
-        <div className="w-full lg:w-1/2 flex flex-col">
-          <div className="text-center lg:text-left space-y-4 text-base text-gray-800">
-            <h3 className="font-heading text-2xl md:text-3xl font-bold mb-6">
+      {/* Elementos decorativos flutuantes */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20 md:opacity-40">
+        <div className="absolute top-20 left-10 float-animation">
+          <Image src="/assets/images/asset-star.png" alt="Star" width={32} height={32} sizes="32px" />
+        </div>
+        <div className="absolute top-40 right-20 float-animation" style={{ animationDelay: '1s' }}>
+          <Image src="/assets/images/asset-heart.png" alt="Heart" width={32} height={32} sizes="32px" />
+        </div>
+        <div className="absolute bottom-40 left-20 float-animation" style={{ animationDelay: '2s' }}>
+          <Image src="/assets/images/asset-star.png" alt="Star" width={32} height={32} />
+        </div>
+        <div className="absolute top-60 left-1/3 float-animation" style={{ animationDelay: '0.5s' }}>
+          <Image src="/assets/images/asset-star-2.png" alt="Star" width={32} height={32} sizes="32px" />
+        </div>
+      </div>
+
+      {/* PRIMEIRA DOBRA - Hero + Formulário (Foco na Conversão) */}
+      <div className="container mx-auto px-4 py-12 lg:py-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12">
+            
+            {/* Coluna Esquerda - Hero e Benefícios */}
+            <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left z-10">
+              {/* Badge de Urgência */}
+              <div className="inline-block mb-4">
+                <span className="bg-gradient-to-r from-pink-main to-blue-main text-white px-4 py-1.5 rounded-full text-xs font-semibold shadow-md flex items-center gap-2">
+                  <Sparkles className="w-4 h-4" />
+                  Sorteio Mensal • Grátis
+                </span>
+              </div>
+
+              {/* Título Principal */}
+              <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 leading-tight">
+                <span className="text-black">
+                  Ganhe um livro{' '}
+                  <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
+                    personalizado
+                  </span>
+                  !
+                </span>
+              </h1>
+
+              {/* Subtítulo com Benefício */}
+              <p className="text-lg md:text-xl text-gray-700 font-medium mb-3 leading-relaxed">
+                Livro digital com <strong className="text-pink-600">nome e rosto</strong> da criança como protagonista
+              </p>
+
+              <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed">
+                Preencha o formulário e concorra! O sorteio acontece <strong className="text-blue-600">mensalmente</strong>.
+              </p>
+
+              {/* Prova Social */}
+              <div className="w-full flex flex-wrap items-center justify-center gap-3 mb-8">
+                <div className="flex items-center bg-white/80 px-3 py-1.5 rounded-full shadow-sm">
+                  <Heart className="w-4 h-4 text-pink-main mr-1.5 fill-current" />
+                  <span className="text-gray-800 font-semibold text-sm">+1000 famílias</span>
+                </div>
+                <div className="flex items-center bg-white/80 px-3 py-1.5 rounded-full shadow-sm">
+                  <Star className="w-4 h-4 text-blue-main mr-1.5 fill-current" />
+                  <span className="text-gray-800 font-semibold text-sm">5/5 estrelas</span>
+                </div>
+                <div className="flex items-center bg-white/80 px-3 py-1.5 rounded-full shadow-sm">
+                  <Gift className="w-4 h-4 text-pink-main mr-1.5" />
+                  <span className="text-gray-800 font-semibold text-sm">Entrega Digital</span>
+                </div>
+              </div>
+
+              {/* Imagem do Livro */}
+              <div className="w-full max-w-sm mx-auto mb-6 lg:mb-0">
+                <Image
+                  src="/assets/images/open-book.png"
+                  alt="Livro personalizado"
+                  width={600}
+                  height={800}
+                  className="w-full h-auto object-contain float-animation"
+                  priority
+                />
+              </div>
+            </div>
+
+            {/* Coluna Direita - Formulário de Inscrição */}
+            <div className="w-full lg:w-1/2 flex flex-col z-10">
+              <div className="bg-white rounded-3xl overflow-hidden animate-shadow-pulse-gradient shadow-2xl">
+                <div className="p-6 md:p-8">
+                  {/* Título do Formulário */}
+                  <div className="mb-6 text-center">
+                    <h2 className="font-heading text-2xl md:text-3xl font-bold text-gray-800 mb-2">
+                      Participe agora do sorteio do mês de {mesAtual}
+                    </h2>
+                    <p className="text-sm text-gray-600">
+                      Preencha seus dados e concorra ao sorteio
+                    </p>
+                  </div>
+
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                    <div className="space-y-4">
+                      <div>
+                        <Label htmlFor="name" className="text-gray-700 font-semibold mb-2 block text-sm">
+                          Nome Completo *
+                        </Label>
+                        <Input
+                          id="name"
+                          {...register('name')}
+                          type="text"
+                          autoComplete="name"
+                          placeholder="Digite seu nome completo"
+                          className={twMerge(formColors.inputBorderClass, formColors.inputFocusBorderClass, "h-12")}
+                          style={formColors.inputBorderStyle}
+                        />
+                        {errors.name && (
+                          <p className="text-xs text-red-500 mt-1">{errors.name.message}</p>
+                        )}
+                      </div>
+
+                      <div>
+                        <Label htmlFor="email" className="text-gray-700 font-semibold mb-2 block text-sm">
+                          Email *
+                        </Label>
+                        <Input
+                          id="email"
+                          {...register('email')}
+                          type="email"
+                          autoComplete="email"
+                          placeholder="seuemail@exemplo.com"
+                          className={twMerge(formColors.inputBorderClass, formColors.inputFocusBorderClass, "h-12")}
+                          style={formColors.inputBorderStyle}
+                        />
+                        {errors.email && (
+                          <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>
+                        )}
+                      </div>
+
+                      <div>
+                        <Label htmlFor="phone" className="text-gray-700 font-semibold mb-2 block text-sm">
+                          Telefone (WhatsApp) *
+                        </Label>
+                        <Input
+                          id="phone"
+                          {...registerWithMask("phone", ['(99) 99999-9999'])}
+                          type="tel"
+                          autoComplete="tel"
+                          placeholder="(00) 00000-0000"
+                          className={twMerge(formColors.inputBorderClass, formColors.inputFocusBorderClass, "h-12")}
+                          style={formColors.inputBorderStyle}
+                        />
+                        {errors.phone && (
+                          <p className="text-xs text-red-500 mt-1">{errors.phone.message}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    <AlertBox className="rounded-lg">
+                      <p className="text-xs text-gray-700 leading-relaxed">
+                        Ao enviar, você concorda com nossa{' '}
+                        <Link 
+                          href="/politica-de-privacidade" 
+                          target="_blank"
+                          className="text-pink-main hover:text-pink-700 underline font-semibold"
+                        >
+                          Política de Privacidade
+                        </Link>
+                        {' '}e autoriza o recebimento de comunicações da Protagonizei.
+                      </p>
+                    </AlertBox>
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full magical-border border-4 border-transparent text-white font-bold py-4 px-8 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-x-2"
+                      aria-label={isSubmitting ? 'Enviando inscrição...' : 'Participar do sorteio'}
+                    >
+                      {isSubmitting ? 'Enviando...' : 'Participar do Sorteio'}
+                      {!isSubmitting && <ArrowRightIcon className="size-5" />}
+                    </button>
+
+                    {/* Texto de Confiança */}
+                    <p className="text-center text-xs text-gray-500 mt-4">
+                      ✓ Inscrição gratuita • ✓ Sem compromisso • ✓ Dados protegidos
+                    </p>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* SEGUNDA DOBRA - Regras e Detalhes (Transparência) */}
+      <div className="container mx-auto px-4 py-12 lg:py-16 border-t border-pink-200/50">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white/60 backdrop-blur-sm rounded-3xl p-6 md:p-8 lg:p-10 shadow-lg">
+            <h3 className="font-heading text-2xl md:text-3xl font-bold mb-8 text-center">
               <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">
                 Regras do Sorteio
               </span>
             </h3>
 
-            <div className="space-y-4">
-              <div>
+            <div className="space-y-6">
+              <div className="bg-gradient-to-r from-pink-50 to-blue-50 rounded-xl p-5 border-l-4 border-pink-main">
                 <p className="font-semibold text-gray-900 mb-2 text-lg flex items-center gap-2">
-                  <Gift className="w-5 h-5 text-pink-main" />
+                  <Gift className="w-5 h-5 text-pink-main flex-shrink-0" />
                   Prêmio:
                 </p>
-                <p className="text-gray-700 text-base leading-relaxed">01 livro infantil personalizado digital, com a criança como protagonista (nome e aparência), entregue por e-mail.</p>
+                <p className="text-gray-700 text-base leading-relaxed ml-7">
+                  01 livro infantil personalizado digital, com a criança como protagonista (nome e aparência), entregue por e-mail.
+                </p>
               </div>
 
-              <div>
-                <p className="font-semibold text-gray-900 mb-3 text-lg flex items-center gap-2 justify-center lg:justify-start">
-                  <CheckCircle2 className="w-5 h-5 text-blue-main" />
+              <div className="bg-gradient-to-r from-blue-50 to-pink-50 rounded-xl p-5 border-l-4 border-blue-main">
+                <p className="font-semibold text-gray-900 mb-3 text-lg flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-blue-main flex-shrink-0" />
                   Como participar:
                 </p>
-                <ol className="space-y-2 text-gray-700 text-base list-decimal list-inside ml-2 leading-relaxed">
-                  <li>Siga o perfil <a href="https://instagram.com/protagonizei" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-semibold">@protagonizei</a> no Instagram</li>
-                  <li>Envie a palavra &ldquo;SORTEIO&rdquo; na DM do Instagram</li>
-                  <li>Acesse o link enviado e preencha o formulário com: Nome completo, E-mail válido e Telefone (WhatsApp)</li>
+                <ol className="space-y-2 text-gray-700 text-base leading-relaxed ml-7">
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-black">1.</span>
+                    <span>Siga o perfil <a href="https://instagram.com/protagonizei" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-semibold underline">@protagonizei</a> no Instagram</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-black">2.</span>
+                    <span>Envie a palavra &ldquo;SORTEIO&rdquo; na DM do Instagram</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-black">3.</span>
+                    <span>Acesse o link enviado e preencha o formulário acima com: Nome completo, E-mail válido e Telefone (WhatsApp)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-black">4.</span>
+                    <span>Quanto mais posts você interagir (curtir, comentar, compartilhar), maiores serão suas chances de ganhar!</span>
+                  </li>
                 </ol>
               </div>
 
-              <div>
-                <p className="font-semibold text-gray-900 mb-2 text-lg flex items-center gap-2 justify-center lg:justify-start">
-                  <Calendar className="w-5 h-5 text-blue-main" />
+              <div className="bg-gradient-to-r from-pink-50 to-blue-50 rounded-xl p-5 border-l-4 border-pink-main">
+                <p className="font-semibold text-gray-900 mb-2 text-lg flex items-center gap-2">
+                  <Calendar className="w-5 h-5 text-pink-main flex-shrink-0" />
                   Período:
                 </p>
-                <p className="text-gray-700 text-base leading-relaxed">O sorteio acontece mensalmente. As inscrições são válidas até o último dia de cada mês, às 23h59.</p>
+                <p className="text-gray-700 text-base leading-relaxed ml-7">
+                  O sorteio acontece mensalmente. As inscrições são válidas até o último dia de cada mês, às 23h59.
+                </p>
               </div>
 
-              <div>
-                <p className="font-semibold text-gray-900 mb-2 text-lg flex items-center gap-2 justify-center lg:justify-start">
-                  <Trophy className="w-5 h-5 text-yellow-600" />
+              <div className="bg-gradient-to-r from-blue-50 to-pink-50 rounded-xl p-5 border-l-4 border-blue-main">
+                <p className="font-semibold text-gray-900 mb-2 text-lg flex items-center gap-2">
+                  <Trophy className="w-5 h-5 text-blue-main flex-shrink-0" />
                   Resultado:
                 </p>
-                <p className="text-gray-700 text-base leading-relaxed">O vencedor será escolhido de forma aleatória. O anúncio será feito por DM no Instagram e/ou pelos Stories da <a href="https://instagram.com/protagonizei" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-semibold">@protagonizei</a>.</p>
+                <p className="text-gray-700 text-base leading-relaxed ml-7">
+                  O vencedor será escolhido de forma aleatória. O anúncio será feito por DM no Instagram e/ou pelos Stories da <a href="https://instagram.com/protagonizei" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-semibold underline">@protagonizei</a>.
+                </p>
               </div>
 
-              <div className="pt-2">
-                <p className="text-orange-700 text-base flex items-start gap-2 justify-center lg:justify-start leading-relaxed">
-                  <AlertTriangle className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
+              <div className="bg-gradient-to-r from-pink-50 to-blue-50 rounded-xl p-5 border-l-4 border-pink-main">
+                <p className="text-gray-800 text-base flex items-start gap-2 leading-relaxed">
+                  <AlertTriangle className="w-5 h-5 text-pink-main flex-shrink-0 mt-0.5" />
                   <span><strong>Atenção:</strong> Caso o vencedor não responda em até 48 horas, um novo sorteio poderá ser realizado.</span>
                 </p>
               </div>
             </div>
           </div>
         </div>
-
-        {/* Coluna da direita - Formulário */}
-        <div className="w-full lg:w-1/2 flex flex-col">
-          <div className="mb-6">
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
-              <span className="text-black leading-tight">
-                Participe do{' '}
-                <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">Sorteio</span>
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl text-gray-700 mb-4 leading-relaxed">
-              Transforme seu pequeno em protagonista de uma história única e mágica! Preencha o formulário e concorra a um livro infantil personalizado com o nome e a aparência da criança.
-            </p>
-          </div>
-
-          {/* Imagem fora do box, abaixo do texto */}
-          <div className="flex items-center justify-center mb-6">
-            <Image
-              src="/assets/images/open-book.png"
-              alt="Livro aberto"
-              width={600}
-              height={800}
-              className="w-full h-auto max-w-md object-contain float-animation"
-              priority
-            />
-          </div>
-
-          {/* Card do Formulário no estilo FormSection */}
-          <div className="bg-white rounded-3xl overflow-hidden animate-shadow-pulse-gradient">
-            <div className="p-8">
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="name" className="text-gray-700 font-semibold mb-2 block">
-                      Nome Completo *
-                    </Label>
-                    <Input
-                      id="name"
-                      {...register('name')}
-                      type="text"
-                      autoComplete="name"
-                      placeholder="Digite seu nome completo"
-                      className={twMerge(formColors.inputBorderClass, formColors.inputFocusBorderClass)}
-                      style={formColors.inputBorderStyle}
-                    />
-                    {errors.name && (
-                      <p className="text-xs text-red-500 mt-1">{errors.name.message}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="email" className="text-gray-700 font-semibold mb-2 block">
-                      Email *
-                    </Label>
-                    <Input
-                      id="email"
-                      {...register('email')}
-                      type="email"
-                      autoComplete="email"
-                      placeholder="seuemail@exemplo.com"
-                      className={twMerge(formColors.inputBorderClass, formColors.inputFocusBorderClass)}
-                      style={formColors.inputBorderStyle}
-                    />
-                    {errors.email && (
-                      <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="phone" className="text-gray-700 font-semibold mb-2 block">
-                      Telefone *
-                    </Label>
-                    <Input
-                      id="phone"
-                      {...registerWithMask("phone", ['(99) 99999-9999'])}
-                      type="tel"
-                      autoComplete="tel"
-                      placeholder="(00) 00000-0000"
-                      className={twMerge(formColors.inputBorderClass, formColors.inputFocusBorderClass)}
-                      style={formColors.inputBorderStyle}
-                    />
-                    {errors.phone && (
-                      <p className="text-xs text-red-500 mt-1">{errors.phone.message}</p>
-                    )}
-                    <p className="text-sm text-gray-500 mt-1">📱 Para contato em caso de dúvidas</p>
-                  </div>
-                </div>
-
-                <AlertBox className="rounded-lg">
-                  <p className="text-xs text-gray-700 leading-relaxed">
-                    Ao enviar, você concorda com nossa{' '}
-                    <Link 
-                      href="/politica-de-privacidade" 
-                      target="_blank"
-                      className="text-pink-main hover:text-pink-700 underline font-semibold"
-                    >
-                      Política de Privacidade
-                    </Link>
-                    {' '}e autoriza o recebimento de comunicações da Protagonizei.
-                  </p>
-                </AlertBox>
-
-                <div className="flex justify-center">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="magical-border border-4 border-transparent text-white font-bold py-3 px-8 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-x-2"
-                    aria-label={isSubmitting ? 'Enviando inscrição...' : 'Enviar inscrição'}
-                  >
-                    {isSubmitting ? 'Enviando...' : 'Participar do Sorteio'}
-                    {!isSubmitting && <ArrowRightIcon className="size-4" />}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
       </div>
-
     </section>
   )
 }
