@@ -106,7 +106,7 @@ export default function SorteioPage() {
       {/* PRIMEIRA DOBRA - Hero + Formulário (Foco na Conversão) */}
       <div className="container mx-auto px-4 py-12 lg:py-16">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12">
+          <div className="flex flex-col lg:flex-row items-center lg:items-center gap-8 lg:gap-12">
             
             {/* Coluna Esquerda - Hero e Benefícios */}
             <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left z-10">
