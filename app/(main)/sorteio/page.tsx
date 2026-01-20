@@ -11,6 +11,7 @@ import { errorToast, successToast } from '@/src/hooks/useToastify'
 import { useHookFormMask } from 'use-mask-input'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { Input } from '@/src/components/ui/input'
 import { Label } from '@/src/components/ui/label'
 import { AlertBox } from '@/src/components/ui/alert-box'
@@ -27,6 +28,7 @@ const sorteioFormSchema = z.object({
 type SorteioFormData = z.infer<typeof sorteioFormSchema>
 
 export default function SorteioPage() {
+  const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [posts, setPosts] = useState<GetPostSlugs200DataItem[]>([])
   const [isLoadingPosts, setIsLoadingPosts] = useState(true)
@@ -41,7 +43,6 @@ export default function SorteioPage() {
   })
   const registerWithMask = useHookFormMask(register)
 
-  // Buscar posts do blog
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -50,7 +51,6 @@ export default function SorteioPage() {
           getGetPostSlugsUrl({ quantity: 3 })
         )
         
-        // customFetch retorna GetPostSlugs200 diretamente
         if (response && response.data && Array.isArray(response.data)) {
           setPosts(response.data)
         }
@@ -64,14 +64,12 @@ export default function SorteioPage() {
     fetchPosts()
   }, [])
 
-  // Obter nome do mês atual em português
   const meses = [
     'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
     'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
   ]
   const mesAtual = meses[new Date().getMonth()]
 
-  // Cores do formulário no estilo FormSection (gradiente padrão)
   const formColors = {
     inputBorderClass: "border-2 rounded-xl bg-white transition-colors",
     inputBorderStyle: {
@@ -100,6 +98,7 @@ export default function SorteioPage() {
       if (response.success) {
         successToast("Inscrição realizada com sucesso! Boa sorte no sorteio!")
         reset()
+        router.push('/sorteio/obrigado')
       } else {
         throw new Error("Erro ao enviar formulário")
       }
@@ -114,7 +113,6 @@ export default function SorteioPage() {
 
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 overflow-hidden">
-      {/* Elementos decorativos flutuantes */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20 md:opacity-40">
         <div className="absolute top-20 left-10 float-animation">
           <Image src="/assets/images/asset-star.png" alt="Star" width={32} height={32} sizes="32px" data-aos="fade-in" data-aos-delay={100} />
@@ -130,14 +128,11 @@ export default function SorteioPage() {
         </div>
       </div>
 
-      {/* PRIMEIRA DOBRA - Hero + Formulário (Foco na Conversão) */}
       <div className="container mx-auto px-4 py-12 lg:py-16">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col lg:flex-row items-center lg:items-center gap-8 lg:gap-12">
             
-            {/* Coluna Esquerda - Hero e Benefícios */}
             <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left z-10">
-              {/* Badge de Urgência */}
               <div className="inline-block mb-4" data-aos="fade-down">
                 <span className="bg-gradient-to-r from-pink-main to-blue-main text-white px-4 py-1.5 rounded-full text-xs font-semibold shadow-md flex items-center gap-2">
                   <Sparkles className="w-4 h-4" />
@@ -145,7 +140,6 @@ export default function SorteioPage() {
                 </span>
               </div>
 
-              {/* Título Principal */}
               <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 leading-tight" data-aos="fade-up">
                 <span className="text-black">
                   Participe e ganhe um livro{' '}
@@ -156,7 +150,6 @@ export default function SorteioPage() {
                 </span>
               </h1>
 
-              {/* Subtítulo com Benefício */}
               <p className="text-lg md:text-xl text-gray-700 font-medium mb-3 leading-relaxed" data-aos="fade-up" data-aos-delay={100}>
                 Livro digital com <strong className="text-pink-600">nome e rosto</strong> da criança como protagonista
               </p>
@@ -165,7 +158,6 @@ export default function SorteioPage() {
                 Preencha o formulário e concorra! O sorteio acontece <strong className="text-blue-600">mensalmente</strong>.
               </p>
 
-              {/* Prova Social */}
               <div className="w-full flex flex-wrap items-center justify-center gap-3 mb-8" data-aos="fade-up" data-aos-delay={300}>
                 <div className="flex items-center bg-white/80 px-3 py-1.5 rounded-full shadow-sm">
                   <Heart className="w-4 h-4 text-pink-main mr-1.5 fill-current" />
@@ -181,7 +173,6 @@ export default function SorteioPage() {
                 </div>
               </div>
 
-              {/* Imagem do Livro */}
               <div className="w-full max-w-lg mx-auto mb-6 lg:mb-0" data-aos="fade-up" data-aos-delay={400}>
                 <Image
                   src="/assets/images/open-book.png"
@@ -194,11 +185,9 @@ export default function SorteioPage() {
               </div>
             </div>
 
-            {/* Coluna Direita - Formulário de Inscrição */}
             <div className="w-full lg:w-1/2 flex flex-col z-10" data-aos="fade-left" data-aos-delay={200}>
               <div className="bg-white rounded-3xl overflow-hidden animate-shadow-pulse-gradient shadow-2xl">
                 <div className="p-6 md:p-8">
-                  {/* Título do Formulário */}
                   <div className="mb-6 text-center">
                     <h2 className="font-heading text-2xl md:text-3xl font-bold text-gray-800 mb-2">
                       Participe agora do sorteio do mês de {mesAtual}
@@ -289,7 +278,6 @@ export default function SorteioPage() {
                       {!isSubmitting && <ArrowRightIcon className="size-5" />}
                     </button>
 
-                    {/* Texto de Confiança */}
                     <p className="text-center text-xs text-gray-500 mt-4">
                       ✓ Inscrição gratuita • ✓ Sem compromisso • ✓ Dados protegidos
                     </p>
@@ -301,7 +289,6 @@ export default function SorteioPage() {
         </div>
       </div>
 
-      {/* SEGUNDA DOBRA - Regras e Detalhes (Transparência) */}
       <div className="container mx-auto px-4 py-12 lg:py-16 border-t border-pink-200/50">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white/60 backdrop-blur-sm rounded-3xl p-6 md:p-8 lg:p-10 shadow-lg">
@@ -378,7 +365,6 @@ export default function SorteioPage() {
         </div>
       </div>
 
-      {/* TERCEIRA DOBRA - Posts Recentes do Blog */}
       {!isLoadingPosts && posts.length > 0 && (
         <RecentPostsSection posts={posts} />
       )}
