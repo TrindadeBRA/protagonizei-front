@@ -88,7 +88,7 @@ export default function ObrigadoPage() {
 
             <div className="mb-6" data-aos="fade-up" data-aos-delay={500}>
               <a
-                href="https://instagram.com/protagonizei"
+                href="https://instagram.com/protagonizei.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 bg-gradient-to-r from-pink-main to-blue-main text-white font-bold py-4 px-8 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert"

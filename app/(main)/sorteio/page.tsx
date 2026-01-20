@@ -317,7 +317,7 @@ export default function SorteioPage() {
                 <ol className="space-y-2 text-gray-700 text-base leading-relaxed ml-7">
                   <li className="flex items-start gap-2">
                     <span className="font-bold text-black">1.</span>
-                    <span>Siga o perfil <a href="https://instagram.com/protagonizei" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-semibold underline">@protagonizei</a> no Instagram</span>
+                    <span>Siga o perfil <a href="https://instagram.com/protagonizei.app" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-semibold underline">@protagonizei</a> no Instagram</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="font-bold text-black">2.</span>
@@ -350,7 +350,7 @@ export default function SorteioPage() {
                   Resultado:
                 </p>
                 <p className="text-gray-700 text-base leading-relaxed ml-7">
-                  O vencedor será escolhido de forma aleatória. O anúncio será feito por DM no Instagram e/ou pelos Stories da <a href="https://instagram.com/protagonizei" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-semibold underline">@protagonizei</a>.
+                  O vencedor será escolhido de forma aleatória. O anúncio será feito por DM no Instagram e/ou pelos Stories da <a href="https://instagram.com/protagonizei.app" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-semibold underline">@protagonizei</a>.
                 </p>
               </div>
 
