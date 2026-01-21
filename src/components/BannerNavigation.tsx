@@ -48,7 +48,7 @@ export default function BannerNavigation() {
   const formatTime = (value: number) => String(value).padStart(2, '0')
 
   return (
-    <div className="fixed top-16 left-0 right-0 z-40 isolate flex items-center gap-x-6 overflow-hidden bg-gradient-to-r from-pink-light via-purple-light to-blue-light px-6 py-2.5 sm:px-3.5 sm:before:flex-1 border-b border-pink-200 shadow-lg">
+    <div className="fixed top-16 left-0 right-0 z-40 isolate flex items-center justify-center md:justify-between gap-x-2 md:gap-x-6 overflow-hidden bg-gradient-to-r from-pink-light via-purple-light to-blue-light px-3 py-1.5 md:px-6 md:py-2.5 border-b border-pink-200 shadow-lg">
       <div
         aria-hidden="true"
         className="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
@@ -73,10 +73,11 @@ export default function BannerNavigation() {
           className="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30"
         />
       </div>
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+      {/* Versão Desktop */}
+      <div className="hidden md:flex items-center justify-center gap-x-4 flex-1">
         <p className="text-sm/6 text-gray-900">
           <strong className="font-heading font-semibold">
-            🎉 <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">Sorteio</span> em andamento!
+            🎉 <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent">Sorteio</span> <span className="bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent font-bold">GRÁTIS</span> em andamento!
           </strong>
           <svg viewBox="0 0 2 2" aria-hidden="true" className="mx-2 inline size-0.5 fill-current">
             <circle r={1} cx={1} cy={1} />
@@ -93,7 +94,38 @@ export default function BannerNavigation() {
           Participar agora <span aria-hidden="true">&rarr;</span>
         </Link>
       </div>
-      <div className="flex flex-1 justify-end">
+
+      {/* Versão Mobile - Compacta */}
+      <div className="flex md:hidden items-center justify-center gap-x-1.5 flex-1 min-w-0">
+        <span className="font-heading text-xs text-black whitespace-nowrap">
+          🎉 <span className="font-semibold text-black">Sorteio</span> <span className="font-bold text-black">GRÁTIS</span>
+        </span>
+        <span className="text-gray-400 text-xs">•</span>
+        <span className="font-heading text-xs font-bold bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent whitespace-nowrap">
+          {timeLeft.days}d {formatTime(timeLeft.hours)}h {formatTime(timeLeft.minutes)}m
+        </span>
+        <Link
+          href="/sorteio"
+          className="flex-none rounded-full bg-gradient-to-r from-pink-main to-blue-main px-2.5 py-1 text-xs font-heading font-semibold text-white shadow-sm hover:opacity-90 transition-all whitespace-nowrap"
+        >
+          Participar
+        </Link>
+      </div>
+      
+      {/* Botão Fechar - Mobile */}
+      <div className="flex md:hidden flex-none">
+        <button 
+          type="button" 
+          onClick={() => setIsBannerVisible(false)}
+          className="-m-3 p-3 focus-visible:-outline-offset-4"
+        >
+          <span className="sr-only">Dismiss</span>
+          <XMarkIcon aria-hidden="true" className="size-5 text-gray-900 cursor-pointer" />
+        </button>
+      </div>
+
+      {/* Botão Fechar - Desktop */}
+      <div className="hidden md:flex flex-none justify-end">
         <button 
           type="button" 
           onClick={() => setIsBannerVisible(false)}
