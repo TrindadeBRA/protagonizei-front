@@ -59,7 +59,7 @@ const HeroSection = () => {
           </p>
 
           <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed" data-aos="fade-up">
-            Crie agora e <strong className="text-blue-600">receba ainda hoje</strong> o livro digital do seu pequeno protagonista. <strong className="text-pink-600">Sem frete, sem espera</strong>. leia em qualquer dispositivo ou imprima quando quiser.
+            <strong className="text-blue-600">Receba ainda hoje</strong> o livro digital personalizado. <strong className="text-pink-600">Sem frete, sem espera</strong>. Leia em qualquer dispositivo, <strong className="text-blue-600">experimente o modo interativo</strong> ou imprima quando quiser.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-6" data-aos="fade-up">
@@ -69,6 +69,12 @@ const HeroSection = () => {
               className="magical-border border-4 border-transparent text-white font-bold py-3 px-8 rounded-full text-lg shadow-xl hover:scale-105 transition-all duration-300 font-englebert text-center"
             >
               Crie sua história
+            </Link>
+            <Link
+              href="/play"
+              className="bg-white border-2 border-pink-main text-pink-main font-bold py-3 px-8 rounded-full text-lg shadow-lg hover:bg-pink-50 hover:scale-105 transition-all duration-300 font-englebert text-center"
+            >
+              Veja como fica
             </Link>
           </div>
 
