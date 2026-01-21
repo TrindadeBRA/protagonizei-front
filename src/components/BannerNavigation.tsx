@@ -168,7 +168,7 @@ export default function BannerNavigation() {
         </span>
         <span className="text-gray-400 text-xs">•</span>
         <span className="font-heading text-xs font-bold bg-gradient-to-r from-pink-main to-blue-main bg-clip-text text-transparent whitespace-nowrap">
-          {timeLeft.days}d {formatTime(timeLeft.hours)}h {formatTime(timeLeft.minutes)}m
+          {timeLeft.days}d {formatTime(timeLeft.hours)}h {formatTime(timeLeft.minutes)}m {formatTime(timeLeft.seconds)}s
         </span>
         <Link
           href="/sorteio"
