@@ -7,6 +7,10 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import customFetch from "@/src/services/custom-fetch";
 import { getGetConfigsUrl } from "@/src/services/api";
 import Navigation from "@/src/components/Navigation";
+import BannerNavigation from "@/src/components/BannerNavigation";
+import LayoutWrapper from "@/src/components/LayoutWrapper";
+import { BannerProvider } from "@/src/contexts/BannerContext";
+import FloatingPromoBar from "@/src/components/FloatingPromoBar";
 import Image from "next/image";
 
 export async function getSiteConfig() {
@@ -84,19 +88,22 @@ fbq('track', 'PageView');`}
         </noscript>
       )}
 
-      <div className="!bg-white !text-black !top-0 !pt-16 overflow-x-hidden">
-        <WhatsAppFloat whatsAppUrl={whatsAppUrl} />
-        <AOS_Init />
-        <Navigation />
-        {children}
-        <Footer />
-        {
-          gaId && (
-            <GoogleAnalytics gaId={gaId} />
-          )
-        }
-        <CookieConsentComponent />
-      </div>
+      <BannerProvider>
+        <LayoutWrapper>
+          <WhatsAppFloat whatsAppUrl={whatsAppUrl} />
+          <AOS_Init />
+          <Navigation />
+          <BannerNavigation />
+          {children}
+          <Footer />
+          {
+            gaId && (
+              <GoogleAnalytics gaId={gaId} />
+            )
+          }
+          <CookieConsentComponent />
+        </LayoutWrapper>
+      </BannerProvider>
     </>
   );
 }
