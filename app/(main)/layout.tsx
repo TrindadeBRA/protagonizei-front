@@ -10,7 +10,6 @@ import Navigation from "@/src/components/Navigation";
 import BannerNavigation from "@/src/components/BannerNavigation";
 import LayoutWrapper from "@/src/components/LayoutWrapper";
 import { BannerProvider } from "@/src/contexts/BannerContext";
-import FloatingPromoBar from "@/src/components/FloatingPromoBar";
 import Image from "next/image";
 
 export async function getSiteConfig() {
