@@ -13,6 +13,9 @@ export default function BannerNavigation() {
     minutes: 0,
     seconds: 0
   })
+  const [isFadingOut, setIsFadingOut] = useState(false)
+  const [hasScrolled, setHasScrolled] = useState(false)
+  const [wasManuallyClosed, setWasManuallyClosed] = useState(false)
 
   useEffect(() => {
     const calculateTimeLeft = () => {
@@ -20,7 +23,6 @@ export default function BannerNavigation() {
       const year = now.getFullYear()
       const month = now.getMonth()
       
-      // Último minuto do mês atual (dia 1 do próximo mês, 00:00:00)
       const endOfMonth = new Date(year, month + 1, 1, 0, 0, 0, 0)
       
       const difference = endOfMonth.getTime() - now.getTime()
@@ -43,12 +45,78 @@ export default function BannerNavigation() {
     return () => clearInterval(interval)
   }, [])
 
+  useEffect(() => {
+    let lastScrollY = window.scrollY
+    let touchStartY = 0
+    let isTouching = false
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      
+      if (currentScrollY <= 50) {
+        if (!isBannerVisible && !wasManuallyClosed) {
+          setIsFadingOut(false)
+          setIsBannerVisible(true)
+          setHasScrolled(false)
+        }
+      }
+      else if (currentScrollY > lastScrollY && currentScrollY > 50 && isBannerVisible) {
+        setIsFadingOut(true)
+        setTimeout(() => {
+          setIsBannerVisible(false)
+          setHasScrolled(true)
+        }, 300)
+      }
+      
+      lastScrollY = currentScrollY
+    }
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY
+      isTouching = true
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!isTouching) return
+      
+      const currentY = e.touches[0].clientY
+      const diff = touchStartY - currentY
+      
+      if (diff < -30) {
+        setIsFadingOut(true)
+        setTimeout(() => {
+          setIsBannerVisible(false)
+          setHasScrolled(true)
+        }, 300)
+        isTouching = false
+      }
+    }
+
+    const handleTouchEnd = () => {
+      isTouching = false
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('touchstart', handleTouchStart, { passive: true })
+    window.addEventListener('touchmove', handleTouchMove, { passive: true })
+    window.addEventListener('touchend', handleTouchEnd, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('touchend', handleTouchEnd)
+    }
+  }, [isBannerVisible, setIsBannerVisible, wasManuallyClosed])
+
   if (!isBannerVisible) return null
 
   const formatTime = (value: number) => String(value).padStart(2, '0')
 
   return (
-    <div className="fixed top-16 left-0 right-0 z-40 isolate flex items-center justify-center md:justify-between gap-x-2 md:gap-x-6 overflow-hidden bg-gradient-to-r from-pink-light via-purple-light to-blue-light px-3 py-1.5 md:px-6 md:py-2.5 border-b border-pink-200 shadow-lg">
+    <div className={`fixed top-16 left-0 right-0 z-40 isolate flex items-center justify-center md:justify-between gap-x-2 md:gap-x-6 overflow-hidden bg-gradient-to-r from-pink-light via-purple-light to-blue-light px-3 py-1.5 md:px-6 md:py-2.5 border-b border-pink-200 shadow-lg transition-opacity duration-300 ${
+      isFadingOut ? 'opacity-0' : 'opacity-100'
+    }`}>
       <div
         aria-hidden="true"
         className="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
@@ -73,7 +141,6 @@ export default function BannerNavigation() {
           className="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30"
         />
       </div>
-      {/* Versão Desktop */}
       <div className="hidden md:flex items-center justify-center gap-x-4 flex-1">
         <p className="text-sm/6 text-gray-900">
           <strong className="font-heading font-semibold">
@@ -95,7 +162,6 @@ export default function BannerNavigation() {
         </Link>
       </div>
 
-      {/* Versão Mobile - Compacta */}
       <div className="flex md:hidden items-center justify-center gap-x-1.5 flex-1 min-w-0">
         <span className="font-heading text-xs text-black whitespace-nowrap">
           🎉 <span className="font-semibold text-black">Sorteio</span> <span className="font-bold text-black">GRÁTIS</span>
@@ -116,7 +182,10 @@ export default function BannerNavigation() {
       <div className="flex md:hidden flex-none">
         <button 
           type="button" 
-          onClick={() => setIsBannerVisible(false)}
+          onClick={() => {
+            setWasManuallyClosed(true)
+            setIsBannerVisible(false)
+          }}
           className="-m-3 p-3 focus-visible:-outline-offset-4"
         >
           <span className="sr-only">Dismiss</span>
@@ -124,11 +193,13 @@ export default function BannerNavigation() {
         </button>
       </div>
 
-      {/* Botão Fechar - Desktop */}
       <div className="hidden md:flex flex-none justify-end">
         <button 
           type="button" 
-          onClick={() => setIsBannerVisible(false)}
+          onClick={() => {
+            setWasManuallyClosed(true)
+            setIsBannerVisible(false)
+          }}
           className="-m-3 p-3 focus-visible:-outline-offset-4"
         >
           <span className="sr-only">Dismiss</span>
