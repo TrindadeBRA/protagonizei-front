@@ -12,7 +12,7 @@ import {
   SheetTrigger,
 } from "@/src/components/ui/sheet";
 import Image from "next/image";
-import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
 
 type NavLink = {
   label: string;
@@ -155,6 +155,15 @@ const Navigation = () => {
               >
                 <FaInstagram className="h-6 w-6" />
               </Link>
+              <Link
+                href="https://www.tiktok.com/@protagonizei.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-900 hover:text-black transition-colors duration-200"
+                aria-label="TikTok"
+              >
+                <FaTiktok className="h-6 w-6" />
+              </Link>
             </div>
           </div>
 
@@ -230,6 +239,16 @@ const Navigation = () => {
                       onClick={() => setIsOpen(false)}
                     >
                       <FaInstagram className="h-7 w-7" />
+                    </Link>
+                    <Link
+                      href="https://www.tiktok.com/@protagonizei.app"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-900 hover:text-black transition-colors duration-200"
+                      aria-label="TikTok"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <FaTiktok className="h-7 w-7" />
                     </Link>
                   </div>
                 </div>

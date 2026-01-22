@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -39,6 +39,15 @@ const Footer = () => {
             aria-label="Instagram"
           >
             <FaInstagram className="h-6 w-6" />
+          </Link>
+          <Link
+            href="https://www.tiktok.com/@protagonizei.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-black hover:text-black transition-colors duration-200"
+            aria-label="TikTok"
+          >
+            <FaTiktok className="h-6 w-6" />
           </Link>
         </div>
 
