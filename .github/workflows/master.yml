@@ -86,8 +86,8 @@ jobs:
           echo "RewriteRule ^blog$ /blog/page/1 [R=301,L]" >> out/.htaccess
           echo "" >> out/.htaccess
           echo "# Redirect /play to play.protagonizei.com (preserve query parameters)" >> out/.htaccess
-          echo "RewriteCond %{REQUEST_URI} ^/play$ [NC]" >> out/.htaccess
-          echo "RewriteRule ^play$ https://play.protagonizei.com [R=301,L,QSA]" >> out/.htaccess
+          echo "RewriteCond %{REQUEST_URI} ^/play/?$ [NC]" >> out/.htaccess
+          echo "RewriteRule ^play/?$ https://play.protagonizei.com/ [R=301,L,QSA]" >> out/.htaccess
           echo "" >> out/.htaccess
           echo "ErrorDocument 404 /404.html" >> out/.htaccess
           echo "" >> out/.htaccess
