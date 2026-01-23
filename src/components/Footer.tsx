@@ -62,7 +62,9 @@ const Footer = () => {
           </Link>
           <span className="text-gray-400">•</span>
           <Link
-            href="/play"
+            href="https://play.protagonizei.com"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-black hover:text-pink-main hover:underline transition-all duration-200 font-medium text-sm"
           >
             Modo Interativo

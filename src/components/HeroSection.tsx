@@ -71,7 +71,9 @@ const HeroSection = () => {
               Crie sua história
             </Link>
             <Link
-              href="/play"
+              href="https://play.protagonizei.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-white border-2 border-pink-main text-pink-main font-bold py-3 px-8 rounded-full text-lg shadow-lg hover:bg-pink-50 hover:scale-105 transition-all duration-300 font-englebert text-center"
             >
               Veja como fica
