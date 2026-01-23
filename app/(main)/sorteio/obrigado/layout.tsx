@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     title: 'Obrigado pela sua inscrição! | Protagonizei',
     description: '🎉 Obrigado por participar do nosso sorteio! Sua inscrição foi realizada com sucesso.',
     images: ['/assets/images/ogimage.jpg'],
-    creator: '@protagonizei',
+    creator: '@protagonizei.app',
   },
   robots: {
     index: false,

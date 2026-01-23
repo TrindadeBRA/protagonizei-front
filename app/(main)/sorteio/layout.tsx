@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     title: 'Sorteio Livro Personalizado Gratuito | Protagonizei',
     description: '🎁 Participe do sorteio mensal e ganhe um livro personalizado digital! Preencha o formulário e concorra.',
     images: ['/assets/images/ogimage.jpg'],
-    creator: '@protagonizei',
+    creator: '.app',
   },
   robots: {
     index: true,
