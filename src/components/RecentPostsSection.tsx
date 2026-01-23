@@ -7,9 +7,19 @@ import { Card, CardContent, CardHeader } from "../components/ui/card"
 import { Button } from "../components/ui/button"
 import Link from "next/link"
 
-export default function RecentPostsSection({ posts }: { posts: GetPostSlugs200DataItem[] }) {
+interface RecentPostsSectionProps {
+    posts: GetPostSlugs200DataItem[];
+    containerClass?: string;
+}
+
+export default function RecentPostsSection({ posts, containerClass }: RecentPostsSectionProps) {
+    const baseClass = "py-16";
+    const defaultBgClass = "bg-gradient-to-b from-white via-purple-50 to-blue-50";
+    const bgClass = containerClass || defaultBgClass;
+    const sectionClass = `${baseClass} ${bgClass}`;
+    
     return (
-        <section className="py-16 bg-gradient-to-b from-white via-purple-50 to-blue-50" id="blog">
+        <section className={sectionClass} id="blog">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
                     <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-800 mb-6" data-aos="fade-up">

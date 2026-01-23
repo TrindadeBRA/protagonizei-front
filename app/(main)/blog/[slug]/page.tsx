@@ -3,6 +3,7 @@ import customFetch from "@/src/services/custom-fetch";
 import { GetPostSlug200Data, GetPostSlugs200 } from "@/src/services/model";
 import { Metadata } from "next";
 import { PostViewTemplate } from "@/src/components/PostViewTemplate";
+import RecentPostsSection from "@/src/components/RecentPostsSection";
 
 interface BlogPostProps {
   slug?: string;
@@ -35,6 +36,20 @@ async function getRelatedPosts(): Promise<getPostSlugsResponse> {
   }
 }
 
+async function getRecentPosts(): Promise<getPostSlugsResponse> {
+  try {
+    const response = await customFetch<getPostSlugsResponse>(
+      getGetPostSlugsUrl({
+        quantity: 3
+      })
+    );
+    return response;
+  } catch (error) {
+    console.error('Erro ao buscar posts recentes:', error);
+    throw error;
+  }
+}
+
 export async function generateMetadata({ params }: { params: Promise<BlogPostProps> }): Promise<Metadata> {
   const { slug } = await params
   if (!slug) {
@@ -62,16 +77,28 @@ export default async function Page({ params }: { params: Promise<BlogPostProps> 
   }
   let postData: any;
   let relatedPosts: any;
+  let recentPosts: any;
   try {
     postData = await getPostSlug(slug);
     relatedPosts = await getRelatedPosts();
+    recentPosts = await getRecentPosts();
   } catch (error) {
     console.error('Erro ao buscar posts:', error);
     throw error;
   }
 
+  const recentPostsData = recentPosts?.data || [];
+
   return (
-    <PostViewTemplate postData={postData} relatedPosts={relatedPosts} isPreview={false} />
+    <>
+      <PostViewTemplate postData={postData} relatedPosts={relatedPosts} isPreview={false} />
+      {recentPostsData.length > 0 && (
+        <RecentPostsSection 
+          posts={recentPostsData} 
+          containerClass="bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100"
+        />
+      )}
+    </>
   )
 }
 
