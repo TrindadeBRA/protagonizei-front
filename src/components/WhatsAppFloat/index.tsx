@@ -15,16 +15,19 @@ export function WhatsAppFloat({ whatsAppUrl }: WhatsAppFloatProps) {
     return (
         <div className="fixed bottom-6 right-6 z-50">
             {isOpen ? (
-                <div className="bg-white dark:bg-gray-800 rounded-lg p-4 w-72 animate-in slide-in-from-bottom-5 duration-300 shadow-lg">
-                    <div className="flex justify-between items-center mb-3">
-                        <h3 className="font-bold text-sm text-gray-900">Fale conosco pelo WhatsApp</h3>
+                <div className="bg-white rounded-xl p-4 w-72 animate-in slide-in-from-bottom-5 duration-300 shadow-2xl relative overflow-hidden border border-gray-200">
+                    {/* Faixa colorida no topo */}
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-pink-300 via-purple-300 to-blue-300"></div>
+                    
+                    <div className="flex justify-between items-center mb-3 pt-1">
+                        <h3 className="font-medium text-sm text-gray-900">Fale conosco pelo WhatsApp</h3>
                         <button
                             type="button"
                             onClick={() => setIsOpen(false)}
-                            className="h-6 w-6 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer"
+                            className="h-6 w-6 inline-flex items-center justify-center rounded-md text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer transition-colors"
                             aria-label="Fechar chat WhatsApp"
                         >
-                            <X className="h-4 w-4" />
+                            <X className="h-5 w-5" />
                             <span className="sr-only">Fechar</span>
                         </button>
                     </div>

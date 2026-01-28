@@ -14,23 +14,54 @@ import {
   FaHeadset,
   FaLink,
   FaWhatsapp,
-  FaEnvelope
+  FaEnvelope,
+  FaSpinner
 } from "react-icons/fa";
+import { getPostContactFormSubmitUrl, postContactFormSubmitResponse } from "@/src/services/api";
+import customFetch from "@/src/services/custom-fetch";
+import { errorToast, successToast } from "@/src/hooks/useToastify";
 
 const Footer = () => {
   const [newsletterName, setNewsletterName] = useState("");
   const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Newsletter Lead:", {
-      name: newsletterName,
-      email: newsletterEmail,
-      timestamp: new Date().toISOString()
-    });
-    // Limpar formulário após envio
-    setNewsletterName("");
-    setNewsletterEmail("");
+    
+    try {
+      setIsLoading(true);
+
+      const formData = new FormData();
+      formData.append('name', newsletterName);
+      formData.append('email', newsletterEmail);
+      formData.append('phone', 'N/A');
+      formData.append('tag', 'Newsletter');
+      formData.append('message', `
+        Página origem: ${window.location.href}
+        Nome: ${newsletterName}
+        Email: ${newsletterEmail}
+        Origem: Newsletter Footer
+      `);
+
+      const response: any = await customFetch<postContactFormSubmitResponse>(getPostContactFormSubmitUrl(), {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.success) {
+        successToast("Inscrição realizada com sucesso! Você receberá nossas novidades em breve.");
+        setNewsletterName("");
+        setNewsletterEmail("");
+      } else {
+        throw new Error("Erro ao enviar formulário");
+      }
+    } catch (e) {
+      console.error("Erro ao enviar newsletter.", e);
+      errorToast("Ocorreu um erro ao se inscrever. Tente novamente.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -212,7 +243,8 @@ const Footer = () => {
                     value={newsletterName}
                     onChange={(e) => setNewsletterName(e.target.value)}
                     required
-                    className="flex-1 px-4 py-3 bg-transparent text-gray-800 placeholder-gray-500 focus:outline-none text-sm border-0 w-full"
+                    disabled={isLoading}
+                    className="flex-1 px-4 py-3 bg-transparent text-gray-800 placeholder-gray-500 focus:outline-none text-sm border-0 w-full disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
                 <div className="w-px bg-pink-300/60 self-stretch my-2"></div>
@@ -223,7 +255,8 @@ const Footer = () => {
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
                     required
-                    className="flex-1 px-4 py-3 bg-transparent text-gray-800 placeholder-gray-500 focus:outline-none text-sm border-0 w-full"
+                    disabled={isLoading}
+                    className="flex-1 px-4 py-3 bg-transparent text-gray-800 placeholder-gray-500 focus:outline-none text-sm border-0 w-full disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
               </div>
@@ -231,9 +264,17 @@ const Footer = () => {
               {/* Segunda linha - Botão */}
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-pink-main to-purple-600 text-white font-bold py-3 px-6 hover:from-pink-600 hover:to-purple-700 transition-all duration-200 text-sm rounded-xl shadow-lg"
+                disabled={isLoading}
+                className="w-full bg-gradient-to-r from-pink-main to-purple-600 text-white font-bold py-3 px-6 hover:from-pink-600 hover:to-purple-700 transition-all duration-200 text-sm rounded-xl shadow-lg disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                Inscrever-se
+                {isLoading ? (
+                  <>
+                    <FaSpinner className="animate-spin h-4 w-4" />
+                    <span>Enviando...</span>
+                  </>
+                ) : (
+                  "Inscrever-se"
+                )}
               </button>
             </form>
           </div>

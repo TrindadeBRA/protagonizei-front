@@ -86,7 +86,7 @@ export function WhatsAppForm({ setIsOpen, whatsAppUrl }: WhatsAppFormProps) {
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-3">
                 <div>
-                    <label htmlFor="name" className="text-xs text-muted-foreground">
+                    <label htmlFor="name" className="text-xs text-gray-700">
                         Seu nome:
                     </label>
                     <input
@@ -95,7 +95,7 @@ export function WhatsAppForm({ setIsOpen, whatsAppUrl }: WhatsAppFormProps) {
                         type="text"
                         autoComplete="name"
                         placeholder="Seu nome completo"
-                        className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:border-green-500 dark:bg-gray-800 dark:text-white bg-white! placeholder:text-gray-500 text-black! text-sm"
+                        className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white placeholder:text-gray-400 text-gray-900 text-sm"
                     />
                     {errors.name && (
                         <p className="mt-1 text-xs text-red-600">{errors.name.message}</p>
@@ -103,7 +103,7 @@ export function WhatsAppForm({ setIsOpen, whatsAppUrl }: WhatsAppFormProps) {
                 </div>
 
                 <div>
-                    <label htmlFor="email" className="text-xs text-muted-foreground">
+                    <label htmlFor="email" className="text-xs text-gray-700">
                         Seu email para contato:
                     </label>
                     <input
@@ -112,7 +112,7 @@ export function WhatsAppForm({ setIsOpen, whatsAppUrl }: WhatsAppFormProps) {
                         type="email"
                         autoComplete="email"
                         placeholder="seu@email.com"
-                        className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:border-green-500 dark:bg-gray-800 dark:text-white bg-white! placeholder:text-gray-500 text-black! text-sm"
+                        className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white placeholder:text-gray-400 text-gray-900 text-sm"
                     />
                     {errors.email && (
                         <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>
@@ -122,14 +122,14 @@ export function WhatsAppForm({ setIsOpen, whatsAppUrl }: WhatsAppFormProps) {
                 <button
                     type="submit"
                     className={twMerge(
-                        "w-full px-4 py-2 rounded-md font-medium text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors",
+                        "w-full px-4 py-2.5 rounded-lg font-medium text-white bg-[#00E676] hover:bg-[#00D66F] focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-white transition-colors text-sm",
                     )}
                     aria-label={isSubmitting ? "Enviando formulário..." : "Chamar no WhatsApp"}
                 >
                     {isSubmitting ? "Enviando..." : "Chamar no WhatsApp!"}
                 </button>
-                <div className="w-full leading-3">
-                    <span className="text-[11px] font-medium text-gray-600">Ao enviar, você concorda com nossa <Link href="/politica-de-privacidade" className="text-blue-main hover:text-blue-700 underline">
+                <div className="w-full leading-4 mt-2">
+                    <span className="text-[11px] text-gray-600">Ao enviar, você concorda com nossa <Link href="/politica-de-privacidade" className="text-blue-600 hover:text-blue-700 underline">
                     Política de Privacidade</Link> e autoriza o recebimento de comunicações da Protagonizei.</span>
                 </div>
             </div>
