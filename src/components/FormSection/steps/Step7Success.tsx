@@ -3,7 +3,7 @@
 import { Button } from "@/src/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
 
-const Step6Success = () => {
+const Step7Success = () => {
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
@@ -49,6 +49,5 @@ const Step6Success = () => {
   );
 };
 
-export default Step6Success;
-
+export default Step7Success;
 

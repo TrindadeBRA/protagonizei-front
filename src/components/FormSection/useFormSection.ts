@@ -135,7 +135,7 @@ export const useFormSection = () => {
     return result.success;
   };
 
-  const nextStep = () => setStep((s) => (s < 6 ? s + 1 : s));
+  const nextStep = () => setStep((s) => (s < 7 ? s + 1 : s));
   const prevStep = () => setStep((s) => (s > 0 ? s - 1 : s));
   const goToStep = (targetStep: number) => setStep(targetStep);
 
@@ -201,14 +201,14 @@ export const useFormSection = () => {
             hasTrackedPurchaseRef.current = true;
           }
           
-          setStep(6);
+          setStep(7);
         }
       } catch (error) {
         console.error("Erro ao verificar status do pagamento:", error);
       }
     };
 
-    if (orderId && step === 5 && isPixGenerated) {
+    if (orderId && step === 6 && isPixGenerated) {
       const interval = setInterval(checkPaymentStatus, 5000);
       paymentCheckIntervalRef.current = interval;
       return () => {
@@ -358,7 +358,7 @@ export const useFormSection = () => {
           eventID: `lead_${newOrderId}`
         });
         
-        setStep(5);
+        setStep(6);
         if (paymentMethod === "pix") {
           await fetchPixData(Number(response.order_id));
         }
@@ -424,4 +424,3 @@ export const useFormSection = () => {
     setPaymentMethod,
   };
 };
-

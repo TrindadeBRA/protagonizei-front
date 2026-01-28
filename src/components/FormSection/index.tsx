@@ -9,8 +9,9 @@ import Step1ChildInfo from "./steps/Step1ChildInfo";
 import Step2PhotoUpload from "./steps/Step2PhotoUpload";
 import Step3Crop from "./steps/Step3Crop";
 import Step4Contact from "./steps/Step4Contact";
-import Step5Pix from "./steps/Step5Pix";
-import Step6Success from "./steps/Step6Success";
+import Step5PaymentSummary from "./steps/Step5PaymentSummary";
+import Step6Pix from "./steps/Step6Pix";
+import Step7Success from "./steps/Step7Success";
 
 const FormSection = () => {
   const {
@@ -103,7 +104,7 @@ const FormSection = () => {
             <div className="bg-gray-300 h-3">
               <div
                 className="bg-gradient-to-r from-pink-main  to-blue-main h-full transition-all duration-500 ease-out"
-                style={{ width: `${((step + 1) / 7) * 100}%` }}
+                style={{ width: `${((step + 1) / 8) * 100}%` }}
               ></div>
             </div>
 
@@ -177,13 +178,22 @@ const FormSection = () => {
                   formData={formData}
                   handleInputChange={handleInputChange}
                   isSubmitting={isSubmitting}
-                  skinTones={skinTones}
                   prevStep={prevStep}
-                  handleSubmit={handleSubmit}
+                  nextStep={nextStep}
                   isValid={isStep4Valid}
                   errors={step4Errors}
                   onBlurField={setFieldTouched}
                   touched={touched}
+                />
+              )}
+
+              {step === 5 && (
+                <Step5PaymentSummary
+                  formData={formData}
+                  skinTones={skinTones}
+                  isSubmitting={isSubmitting}
+                  prevStep={prevStep}
+                  handleSubmit={handleSubmit}
                   photoPreviewUrl={photoPreviewUrl}
                   croppedPreviewUrl={croppedPreviewUrl}
                   price={bookPrice}
@@ -202,8 +212,8 @@ const FormSection = () => {
                 />
               )}
 
-              {step === 5 && (
-                <Step5Pix
+              {step === 6 && (
+                <Step6Pix
                   orderId={orderId}
                   isLoadingPix={isLoadingPix}
                   qrCodeImage={qrCodeImage}
@@ -212,12 +222,11 @@ const FormSection = () => {
                   onBack={() => prevStep()}
                   childGender={formData.childGender}
                   paymentMethod={paymentMethod}
-                  setPaymentMethod={setPaymentMethod}
                 />
               )}
 
-              {step === 6 && (
-                <Step6Success />
+              {step === 7 && (
+                <Step7Success />
               )}
             </div>
           </div>
@@ -246,4 +255,3 @@ const FormSection = () => {
 };
 
 export default FormSection;
-
