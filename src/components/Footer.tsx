@@ -170,14 +170,7 @@ const Footer = () => {
               </li>
               <li className="text-gray-700 text-sm">
                 <span className="font-semibold">WhatsApp:</span>{" "}
-                <a
-                  href="https://wa.me/5511945670747"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-pink-main transition-colors duration-200"
-                >
                   11 94567-0747
-                </a>
               </li>
               <li className="text-gray-700 text-sm">
                 <span className="font-semibold">Email:</span> contato@protagonizei.com
