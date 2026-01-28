@@ -1,23 +1,38 @@
 "use client"
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { 
-  FaFacebook, 
-  FaInstagram, 
-  FaTiktok, 
-  FaShieldAlt, 
-  FaTruck, 
-  FaUndo, 
+import {
+  FaFacebook,
+  FaInstagram,
+  FaTiktok,
+  FaShieldAlt,
+  FaTruck,
+  FaUndo,
   FaLock,
-  FaCreditCard,
   FaHeadset,
   FaLink,
-  FaShareAlt,
-  FaWhatsapp
+  FaWhatsapp,
+  FaEnvelope
 } from "react-icons/fa";
 
 const Footer = () => {
+  const [newsletterName, setNewsletterName] = useState("");
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Newsletter Lead:", {
+      name: newsletterName,
+      email: newsletterEmail,
+      timestamp: new Date().toISOString()
+    });
+    // Limpar formulário após envio
+    setNewsletterName("");
+    setNewsletterEmail("");
+  };
+
   return (
     <footer className="bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 border-t-4 border-pink-200 w-full relative">
       {/* Seção de Confiança - Badges de Garantia */}
@@ -61,11 +76,91 @@ const Footer = () => {
         <div className="flex flex-wrap gap-6 md:gap-8 mb-8 items-start justify-start">
           {/* Links Rápidos */}
           <div className="w-full sm:w-[calc(50%-0.75rem)] md:w-[calc(25%-1.5rem)] flex flex-col">
+
+            {/* Logo */}
+            <Link href="/" className="block">
+              <Image
+                src="/assets/images/navigation-logo.png"
+                alt="Protagonizei"
+                width={200}
+                height={41}
+                className="max-w-[120px] sm:max-w-[180px] h-auto mb-4"
+                sizes="(max-width: 640px) 120px, 140px"
+              />
+            </Link>
+
+
+            {/* Texto descritivo */}
+            <p className="text-gray-700 text-sm mb-4 leading-relaxed">
+              Crie histórias personalizadas que transformam seu filho no herói, com customização rápida e entrega digital instantânea!
+            </p>
+
+            {/* Redes Sociais */}
+            <div className="flex items-center gap-3">
+              <Link
+                href="https://www.facebook.com/profile.php?id=61584693167182"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-700 hover:text-blue-600 transition-colors duration-200"
+                aria-label="Facebook"
+              >
+                <FaFacebook className="h-5 w-5" />
+              </Link>
+              <Link
+                href="https://www.instagram.com/protagonizei.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-700 hover:text-pink-600 transition-colors duration-200"
+                aria-label="Instagram"
+              >
+                <FaInstagram className="h-5 w-5" />
+              </Link>
+              <Link
+                href="https://www.tiktok.com/@protagonizei.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-700 hover:text-black transition-colors duration-200"
+                aria-label="TikTok"
+              >
+                <FaTiktok className="h-5 w-5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Atendimento */}
+          <div className="w-full sm:w-[calc(50%-0.75rem)] md:w-[calc(25%-1.5rem)] flex flex-col">
+            <h3 className="text-black font-bold text-sm mb-4 uppercase tracking-wide flex items-center gap-2">
+              <FaHeadset className="h-4 w-4 text-pink-main" />
+              Atendimento
+            </h3>
+            <ul className="flex flex-col space-y-2">
+              <li className="text-gray-700 text-sm">
+                <span className="font-semibold">Horário:</span> Todos os dias, 24 horas por dia
+              </li>
+              <li className="text-gray-700 text-sm">
+                <span className="font-semibold">WhatsApp:</span>{" "}
+                <a
+                  href="https://wa.me/5511945670747"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-pink-main transition-colors duration-200"
+                >
+                  11 94567-0747
+                </a>
+              </li>
+              <li className="text-gray-700 text-sm">
+                <span className="font-semibold">Email:</span> contato@protagonizei.com
+              </li>
+            </ul>
+          </div>
+
+          {/* Informações */}
+          <div className="w-full sm:w-[calc(50%-0.75rem)] md:w-[calc(25%-1.5rem)] flex flex-col">
             <h3 className="text-black font-bold text-sm mb-4 uppercase tracking-wide flex items-center gap-2">
               <FaLink className="h-4 w-4 text-pink-main" />
               Links Rápidos
             </h3>
-            <ul className="flex flex-col space-y-2 mb-6">
+            <ul className="flex flex-col space-y-2 mb-4">
               <li>
                 <Link
                   href="/politica-de-privacidade"
@@ -95,96 +190,52 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Atendimento */}
+          {/* Newsletter */}
           <div className="w-full sm:w-[calc(50%-0.75rem)] md:w-[calc(25%-1.5rem)] flex flex-col">
-            <h3 className="text-black font-bold text-sm mb-4 uppercase tracking-wide flex items-center gap-2">
-              <FaHeadset className="h-4 w-4 text-pink-main" />
-              Atendimento
+            <h3 className="text-black font-bold text-sm mb-2 uppercase tracking-wide flex items-center gap-2">
+              <FaEnvelope className="h-4 w-4 text-pink-main" />
+              Newsletter
             </h3>
-            <ul className="flex flex-col space-y-2">
-              <li className="text-gray-700 text-sm">
-                <span className="font-semibold">Horário:</span> 24/7
-              </li>
-              <li className="text-gray-700 text-sm">
-                <span className="font-semibold">WhatsApp:</span>{" "}
-                <a 
-                  href="https://wa.me/5511945670747" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="hover:text-pink-main transition-colors duration-200"
-                >
-                  11 94567-0747
-                </a>
-              </li>
-              <li className="text-gray-700 text-sm">
-                <span className="font-semibold">Email:</span> contato@protagonizei.com
-              </li>
-            </ul>
-          </div>
-
-          {/* Formas de Pagamento */}
-          <div className="w-full sm:w-[calc(50%-0.75rem)] md:w-[calc(25%-1.5rem)] flex flex-col">
-            <h3 className="text-black font-bold text-sm mb-4 uppercase tracking-wide flex items-center gap-2">
-              <FaCreditCard className="h-4 w-4 text-pink-main" />
-              Pagamento
-            </h3>
-            <div className="flex flex-col space-y-2">
-              <p className="text-gray-700 text-sm mb-2">Aceitamos:</p>
-              <div className="flex flex-wrap gap-2">
-                <span className="bg-white px-3 py-1 rounded text-xs font-semibold text-gray-700 shadow-sm border border-gray-200">
-                  PIX
-                </span>
+            <p className="text-gray-600 text-xs mb-4">
+              Não perca as novidades e novos livros
+            </p>
+            <form 
+              onSubmit={handleNewsletterSubmit} 
+              className="flex flex-col gap-2"
+            >
+              {/* Primeira linha - Nome e Email */}
+              <div className="flex gap-2 bg-gradient-to-br from-purple-200/60 via-pink-200/50 to-blue-200/60 rounded-xl overflow-hidden border-2 border-pink-300/40 shadow-md">
+                <div className="flex-1 flex items-center">
+                  <input
+                    type="text"
+                    placeholder="Nome"
+                    value={newsletterName}
+                    onChange={(e) => setNewsletterName(e.target.value)}
+                    required
+                    className="flex-1 px-4 py-3 bg-transparent text-gray-800 placeholder-gray-500 focus:outline-none text-sm border-0 w-full"
+                  />
+                </div>
+                <div className="w-px bg-pink-300/60 self-stretch my-2"></div>
+                <div className="flex-1 flex items-center">
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    value={newsletterEmail}
+                    onChange={(e) => setNewsletterEmail(e.target.value)}
+                    required
+                    className="flex-1 px-4 py-3 bg-transparent text-gray-800 placeholder-gray-500 focus:outline-none text-sm border-0 w-full"
+                  />
+                </div>
               </div>
-              <p className="text-xs text-gray-600 mt-2">
-                Pagamento 100% seguro e criptografado
-              </p>
-            </div>
-          </div>
-
-          {/* Redes Sociais */}
-          <div className="w-full sm:w-[calc(50%-0.75rem)] md:w-[calc(25%-1.5rem)] flex flex-col">
-            <h3 className="text-black font-bold text-sm mb-4 uppercase tracking-wide flex items-center gap-2">
-              <FaShareAlt className="h-4 w-4 text-pink-main" />
-              Redes Sociais
-            </h3>
-            <div className="flex flex-col space-y-2">
-              <Link
-                href="https://www.facebook.com/profile.php?id=61584693167182"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-gray-700 text-sm hover:text-pink-main transition-colors duration-200"
+              
+              {/* Segunda linha - Botão */}
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-pink-main to-purple-600 text-white font-bold py-3 px-6 hover:from-pink-600 hover:to-purple-700 transition-all duration-200 text-sm rounded-xl shadow-lg"
               >
-                <FaFacebook className="h-4 w-4 text-black" />
-                <span>@protagonizei</span>
-              </Link>
-              <Link
-                href="https://www.instagram.com/protagonizei.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-gray-700 text-sm hover:text-pink-main transition-colors duration-200"
-              >
-                <FaInstagram className="h-4 w-4 text-black" />
-                <span>@protagonizei.app</span>
-              </Link>
-              <Link
-                href="https://www.tiktok.com/@protagonizei.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-gray-700 text-sm hover:text-pink-main transition-colors duration-200"
-              >
-                <FaTiktok className="h-4 w-4 text-black" />
-                <span>@protagonizei.app</span>
-              </Link>
-              <a 
-                href="https://wa.me/5511945670747" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-gray-700 text-sm hover:text-pink-main transition-colors duration-200"
-              >
-                <FaWhatsapp className="h-4 w-4 text-black" />
-                <span>11 94567-0747</span>
-              </a>
-            </div>
+                Inscrever-se
+              </button>
+            </form>
           </div>
         </div>
 
@@ -192,20 +243,7 @@ const Footer = () => {
 
         {/* Copyright e Desenvolvimento */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 mb-0">
-          {/* Logo */}
-          <div className="flex-shrink-0" id="footer-logo">
-            <Link href="/" className="block">
-              <Image 
-                src="/assets/images/navigation-logo.png" 
-                alt="Protagonizei" 
-                width={200} 
-                height={41} 
-                className="max-w-[120px] sm:max-w-[140px] h-auto"
-                sizes="(max-width: 640px) 120px, 140px"
-              />
-            </Link>
-          </div>
-          
+
           {/* Informações */}
           <div className="flex flex-col gap-1 text-center md:text-left">
             <p className="text-black font-medium text-sm text-center">
@@ -214,13 +252,11 @@ const Footer = () => {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center md:justify-start gap-1 sm:gap-2 text-gray-600 text-xs">
               <span>CNPJ: 59.055.891/0001-26</span>
               <span className="hidden sm:inline">|</span>
-              <span>São Paulo, SP - Brasil</span>
-              <span className="hidden sm:inline">|</span>
               <span>
                 Desenvolvido por{" "}
                 <Link
-                  href="https://thetrinityweb.com.br" 
-                  target="_blank" 
+                  href="https://thetrinityweb.com.br"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="font-semibold hover:text-pink-main transition-colors duration-200"
                 >
