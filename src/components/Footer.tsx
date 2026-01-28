@@ -104,7 +104,7 @@ const Footer = () => {
 
       <div className="container mx-auto px-4 pt-8 pb-8 overflow-visible">
         {/* Links e Informações Organizados */}
-        <div className="flex flex-wrap gap-6 md:gap-8 mb-8 items-start justify-start">
+        <div className="flex flex-wrap gap-12 md:gap-6 mb-8 items-start justify-start">
           {/* Links Rápidos */}
           <div className="w-full sm:w-[calc(50%-0.75rem)] md:w-[calc(25%-1.5rem)] flex flex-col">
 
