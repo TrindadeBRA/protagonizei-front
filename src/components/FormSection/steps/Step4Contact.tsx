@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail, Loader2 } from "lucide-react";
+import { Mail, Loader2, CreditCard, QrCode } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
@@ -37,10 +37,20 @@ type Props = {
   onChangePhoto?: () => void;
   isCouponFromUrl?: boolean;
   setIsCouponFromUrl?: (value: boolean) => void;
+  paymentMethod?: "pix" | "card";
+  setPaymentMethod?: (value: "pix" | "card") => void;
 };
 
-const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl, price, isLoadingPrice, orderId, bookId, onUpdatePrice, couponCode, setCouponCode, originalPrice, onChangePhoto, isCouponFromUrl, setIsCouponFromUrl }: Props) => {
+const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, prevStep, handleSubmit, isValid, errors = {}, onBlurField, touched = {}, photoPreviewUrl, croppedPreviewUrl, price, isLoadingPrice, orderId, bookId, onUpdatePrice, couponCode, setCouponCode, originalPrice, onChangePhoto, isCouponFromUrl, setIsCouponFromUrl, paymentMethod = "pix", setPaymentMethod }: Props) => {
   const colors = useFormColors(formData.childGender);
+  const selectedCardClass =
+    formData.childGender === "boy"
+      ? "bg-[color:rgba(53,126,255,0.08)] border-[var(--color-blue-main)]"
+      : "bg-[color:rgba(245,52,155,0.08)] border-[var(--color-pink-main)]";
+  const selectedBadgeClass =
+    formData.childGender === "boy"
+      ? "bg-[color:rgba(53,126,255,0.08)] text-[var(--color-blue-main)] border-[var(--color-blue-main)]"
+      : "bg-[color:rgba(245,52,155,0.08)] text-[var(--color-pink-main)] border-[var(--color-pink-main)]";
 
   return (
     <div className="space-y-6">
@@ -110,6 +120,65 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
             <p className="text-xs text-red-500 mt-1">{errors.email[0]}</p>
           )}
           <p className="text-sm text-gray-500 mt-1">📧 O PDF será enviado para este e-mail em até 2h</p>
+        </div>
+      </div>
+
+      <div className={twMerge(colors.summaryBackgroundClass, "rounded-xl p-6")}>
+        <h4 className={twMerge("font-heading font-bold mb-4 flex items-center", colors.summaryTitleColorClass)}>
+          Forma de pagamento
+        </h4>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <button
+            type="button"
+            onClick={() => setPaymentMethod?.("pix")}
+            className={twMerge(
+              "text-left rounded-2xl p-4 border-2 transition-all relative outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-pink-main)] focus-visible:ring-offset-2",
+              paymentMethod === "pix"
+                ? `${selectedCardClass} shadow-sm`
+                : "bg-white border-gray-200 hover:border-gray-300 hover:shadow-sm"
+            )}
+          >
+            {paymentMethod === "pix" && (
+              <span className={twMerge("absolute top-3 right-3 text-[10px] uppercase tracking-wide font-semibold border px-2 py-1 rounded-full", selectedBadgeClass)}>
+                selecionado
+              </span>
+            )}
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center">
+                <QrCode className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="font-semibold text-gray-800">Pix</p>
+              <p className="text-sm text-gray-600">Pagamento instantâneo</p>
+              </div>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setPaymentMethod?.("card")}
+            className={twMerge(
+              "text-left rounded-2xl p-4 border-2 transition-all relative outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-pink-main)] focus-visible:ring-offset-2",
+              paymentMethod === "card"
+                ? `${selectedCardClass} shadow-sm`
+                : "bg-white border-gray-200 hover:border-gray-300 hover:shadow-sm"
+            )}
+          >
+            {paymentMethod === "card" && (
+              <span className={twMerge("absolute top-3 right-3 text-[10px] uppercase tracking-wide font-semibold border px-2 py-1 rounded-full", selectedBadgeClass)}>
+                selecionado
+              </span>
+            )}
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
+                <CreditCard className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="font-semibold text-gray-800">Cartão de crédito</p>
+              <p className="text-sm text-gray-600">Aprovação imediata</p>
+              </div>
+            </div>
+          </button>
         </div>
       </div>
 
@@ -215,5 +284,3 @@ const Step4Contact = ({ formData, skinTones, isSubmitting, handleInputChange, pr
 };
 
 export default Step4Contact;
-
-

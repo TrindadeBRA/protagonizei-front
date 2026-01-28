@@ -43,6 +43,7 @@ export const useFormSection = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const paymentCheckIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const hasTrackedPurchaseRef = useRef<boolean>(false);
+  const [paymentMethod, setPaymentMethod] = useState<"pix" | "card">("pix");
 
   // Editor de imagem (previews)
   const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | null>(null);
@@ -358,7 +359,9 @@ export const useFormSection = () => {
         });
         
         setStep(5);
-        await fetchPixData(Number(response.order_id));
+        if (paymentMethod === "pix") {
+          await fetchPixData(Number(response.order_id));
+        }
       } else {
         throw new Error("Erro ao criar pedido");
       }
@@ -417,7 +420,8 @@ export const useFormSection = () => {
     setCouponCode,
     isCouponFromUrl,
     setIsCouponFromUrl,
+    paymentMethod,
+    setPaymentMethod,
   };
 };
-
 

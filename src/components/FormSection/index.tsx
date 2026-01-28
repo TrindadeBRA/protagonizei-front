@@ -50,6 +50,8 @@ const FormSection = () => {
     setCouponCode,
     isCouponFromUrl,
     setIsCouponFromUrl,
+    paymentMethod,
+    setPaymentMethod,
   } = useFormSection();
 
   const getShadowAnimationClass = () => {
@@ -195,6 +197,8 @@ const FormSection = () => {
                   onChangePhoto={() => goToStep(3)}
                   isCouponFromUrl={isCouponFromUrl}
                   setIsCouponFromUrl={setIsCouponFromUrl}
+                  paymentMethod={paymentMethod}
+                  setPaymentMethod={setPaymentMethod}
                 />
               )}
 
@@ -207,6 +211,8 @@ const FormSection = () => {
                   price={bookPrice}
                   onBack={() => prevStep()}
                   childGender={formData.childGender}
+                  paymentMethod={paymentMethod}
+                  setPaymentMethod={setPaymentMethod}
                 />
               )}
 
@@ -240,5 +246,4 @@ const FormSection = () => {
 };
 
 export default FormSection;
-
 
