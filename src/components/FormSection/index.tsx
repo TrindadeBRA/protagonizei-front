@@ -10,7 +10,7 @@ import Step2PhotoUpload from "./steps/Step2PhotoUpload";
 import Step3Crop from "./steps/Step3Crop";
 import Step4Contact from "./steps/Step4Contact";
 import Step5PaymentSummary from "./steps/Step5PaymentSummary";
-import Step6Pix from "./steps/Step6Pix";
+import Step6Payment from "./steps/Step6Payment";
 import Step7Success from "./steps/Step7Success";
 
 const FormSection = () => {
@@ -213,7 +213,7 @@ const FormSection = () => {
               )}
 
               {step === 6 && (
-                <Step6Pix
+                <Step6Payment
                   orderId={orderId}
                   isLoadingPix={isLoadingPix}
                   qrCodeImage={qrCodeImage}

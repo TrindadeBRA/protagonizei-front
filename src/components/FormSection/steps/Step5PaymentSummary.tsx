@@ -1,6 +1,6 @@
 "use client";
 
-import { CreditCard, QrCode, Loader2 } from "lucide-react";
+import { CreditCard, QrCode, Loader2, CheckCircle } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { twMerge } from "tailwind-merge";
 import { FormDataState } from "../useFormSection";
@@ -63,8 +63,8 @@ const Step5PaymentSummary = ({
       : "bg-[color:rgba(245,52,155,0.08)] border-[var(--color-pink-main)]";
   const selectedBadgeClass =
     formData.childGender === "boy"
-      ? "bg-[color:rgba(53,126,255,0.08)] text-[var(--color-blue-main)] border-[var(--color-blue-main)]"
-      : "bg-[color:rgba(245,52,155,0.08)] text-[var(--color-pink-main)] border-[var(--color-pink-main)]";
+      ? "text-[var(--color-blue-main)]"
+      : "text-[var(--color-pink-main)]";
 
   return (
     <div className="space-y-6">
@@ -82,9 +82,7 @@ const Step5PaymentSummary = ({
             )}
           >
             {paymentMethod === "pix" && (
-              <span className={twMerge("absolute top-3 right-3 text-[10px] uppercase tracking-wide font-semibold border px-2 py-1 rounded-full", selectedBadgeClass)}>
-                selecionado
-              </span>
+              <CheckCircle className={twMerge("absolute top-3 right-3 w-5 h-5", selectedBadgeClass)} />
             )}
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center">
@@ -106,9 +104,7 @@ const Step5PaymentSummary = ({
             )}
           >
             {paymentMethod === "card" && (
-              <span className={twMerge("absolute top-3 right-3 text-[10px] uppercase tracking-wide font-semibold border px-2 py-1 rounded-full", selectedBadgeClass)}>
-                selecionado
-              </span>
+              <CheckCircle className={twMerge("absolute top-3 right-3 w-5 h-5", selectedBadgeClass)} />
             )}
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">

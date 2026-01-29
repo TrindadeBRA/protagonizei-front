@@ -20,9 +20,10 @@ export type CardFormData = {
 type PaymentCardFormProps = {
   childGender: string;
   onChange?: (data: CardFormData) => void;
+  installmentOptions?: { value: string; label: string }[];
 };
 
-const PaymentCardForm = ({ childGender, onChange }: PaymentCardFormProps) => {
+const PaymentCardForm = ({ childGender, onChange, installmentOptions }: PaymentCardFormProps) => {
   const colors = useFormColors(childGender);
   const [cardData, setCardData] = useState<CardFormData>({
     holderName: "",
@@ -120,6 +121,12 @@ const PaymentCardForm = ({ childGender, onChange }: PaymentCardFormProps) => {
                     {cardData.expiry || "MM/AA"}
                   </p>
                 </div>
+              </div>
+              <div className="mt-3">
+                <p className="text-white/70 text-[10px] sm:text-xs mb-1 uppercase tracking-wider">CPF</p>
+                <p className="font-bold text-sm sm:text-base drop-shadow-md">
+                  {cardData.document ? maskCpf(cardData.document) : "000.000.000-00"}
+                </p>
               </div>
             </div>
           </div>
@@ -226,9 +233,13 @@ const PaymentCardForm = ({ childGender, onChange }: PaymentCardFormProps) => {
               <SelectValue placeholder="Selecione" />
             </SelectTrigger>
             <SelectContent className={twMerge("bg-white", colors.selectContentBorderClass)} style={colors.selectContentBorderStyle}>
-              {["1", "2", "3", "4", "5", "6"].map((count) => (
-                <SelectItem key={count} value={count} className={twMerge(colors.selectItemHoverClass, "cursor-pointer")}>
-                  {count}x sem juros
+              {(installmentOptions ?? [
+                { value: "1", label: "1x" },
+                { value: "2", label: "2x" },
+                { value: "3", label: "3x" },
+              ]).map((option) => (
+                <SelectItem key={option.value} value={option.value} className={twMerge(colors.selectItemHoverClass, "cursor-pointer")}>
+                  {option.label}
                 </SelectItem>
               ))}
             </SelectContent>

@@ -3,7 +3,7 @@
 import { QrCode, Loader2, Copy, Check, CreditCard } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/src/components/ui/button";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Timer from "@/src/components/Timer";
 import { twMerge } from "tailwind-merge";
 import { useFormColors } from "../useFormColors";
@@ -20,7 +20,66 @@ type Props = {
   paymentMethod: "pix" | "card";
 };
 
-const Step6Pix = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack, childGender, paymentMethod }: Props) => {
+type PixPaymentPanelProps = {
+  isLoadingPix: boolean;
+  qrCodeImage: string | null;
+  pixCode: string | null;
+  price: number | null;
+  copied: boolean;
+  onCopy: () => void;
+};
+
+const PixPaymentPanel = ({ isLoadingPix, qrCodeImage, pixCode, price, copied, onCopy }: PixPaymentPanelProps) => {
+  return (
+    <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 text-center border-2 border-dashed border-purple-200">
+      <Timer initialTime={10 * 60} className="mb-6" />
+
+      <div className="max-w-2xs mx-auto">
+        {isLoadingPix ? (
+          <div className="w-48 h-48 bg-white rounded-xl mx-auto mb-4 flex items-center justify-center">
+            <Loader2 className="w-12 h-12 text-purple-400 animate-spin" />
+          </div>
+        ) : qrCodeImage ? (
+          <Image src={`data:image/png;base64,${qrCodeImage}`} alt="QR Code PIX" className="w-48 h-48 mx-auto mb-4" width={192} height={192} />
+        ) : (
+          <div className="w-48 h-48 bg-white rounded-xl mx-auto mb-4 flex items-center justify-center">
+            <QrCode className="w-32 h-32 text-purple-400" />
+          </div>
+        )}
+
+        {pixCode && !isLoadingPix && (
+          <Button
+            onClick={onCopy}
+            variant="outline"
+            className="w-full mb-4 border-2 border-green-300 bg-green-50 text-green-700 hover:bg-green-100 py-3 rounded-xl font-semibold transition-colors"
+          >
+            {copied ? (
+              <>
+                <Check className="w-4 h-4 mr-2" />
+                Código PIX copiado!
+              </>
+            ) : (
+              <>
+                <Copy className="w-4 h-4 mr-2" />
+                Copiar código PIX
+              </>
+            )}
+          </Button>
+        )}
+
+        <div className="text-center mb-4">
+          <p className="text-sm text-gray-500 mb-1">Valor do pagamento</p>
+          <div className="text-2xl font-bold text-green-600">
+            {price ? `R$ ${price.toFixed(2).replace(".", ",")}` : "Carregando..."}
+          </div>
+        </div>
+      </div>
+      <p className="text-sm font-bold text-black">Após o pagamento, você receberá a confirmação por e-mail.</p>
+    </div>
+  );
+};
+
+const Step6Payment = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack, childGender, paymentMethod }: Props) => {
   const colors = useFormColors(childGender);
   const [copied, setCopied] = useState(false);
   const [cardData, setCardData] = useState<CardFormData>({
@@ -37,6 +96,30 @@ const Step6Pix = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack, childGend
       : childGender === "girl"
         ? "from-pink-50 to-rose-50 border-pink-200"
         : "from-blue-50 to-pink-50 border-blue-200";
+  const calculateInstallments = (amount: number, installments: number) => {
+    const rateConfig = { jurosPorParcelaPercent: 1.5 }; // 1.5% por parcela adicional
+    const additional = Math.max(installments - 1, 0);
+    const totalValue = Number((amount * (1 + (rateConfig.jurosPorParcelaPercent / 100) * additional)).toFixed(2));
+    const installmentValue = Number((totalValue / installments).toFixed(2));
+    const lastInstallmentValue = Number((totalValue - installmentValue * (installments - 1)).toFixed(2));
+    return { totalValue, installmentValue, lastInstallmentValue };
+  };
+
+  const installmentOptions = useMemo(() => {
+    if (!price) {
+      return [
+        { value: "1", label: "1x" },
+        { value: "2", label: "2x" },
+        { value: "3", label: "3x" },
+      ];
+    }
+    return [1, 2, 3].map((count) => {
+      const { totalValue, installmentValue } = calculateInstallments(price, count);
+      const label = `${count}x de R$ ${installmentValue.toFixed(2).replace(".", ",")} (total R$ ${totalValue.toFixed(2).replace(".", ",")})`;
+      return { value: String(count), label };
+    });
+  }, [price]);
+
   const handleCopyPix = async () => {
     if (pixCode) {
       try {
@@ -48,6 +131,15 @@ const Step6Pix = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack, childGend
       }
     }
   };
+
+  const isCardFormComplete = !!(
+    cardData.holderName.trim() &&
+    cardData.cardNumber.trim() &&
+    cardData.expiry.trim() &&
+    cardData.cvc.trim() &&
+    cardData.document.trim() &&
+    cardData.installments
+  );
 
   return (
     <div className="space-y-6">
@@ -68,53 +160,14 @@ const Step6Pix = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack, childGend
       </div>
 
       {paymentMethod === "pix" ? (
-        <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 text-center border-2 border-dashed border-purple-200">
-          {/* Timer */}
-          <Timer initialTime={10 * 60} className="mb-6" />
-
-          <div className="max-w-2xs mx-auto">
-            {isLoadingPix ? (
-              <div className="w-48 h-48 bg-white rounded-xl mx-auto mb-4 flex items-center justify-center">
-                <Loader2 className="w-12 h-12 text-purple-400 animate-spin" />
-              </div>
-            ) : qrCodeImage ? (
-              <Image src={`data:image/png;base64,${qrCodeImage}`} alt="QR Code PIX" className="w-48 h-48 mx-auto mb-4" width={192} height={192} />
-            ) : (
-              <div className="w-48 h-48 bg-white rounded-xl mx-auto mb-4 flex items-center justify-center">
-                <QrCode className="w-32 h-32 text-purple-400" />
-              </div>
-            )}
-
-            {/* Botão Copiar PIX */}
-            {pixCode && !isLoadingPix && (
-              <Button
-                onClick={handleCopyPix}
-                variant="outline"
-                className="w-full mb-4 border-2 border-green-300 bg-green-50 text-green-700 hover:bg-green-100 py-3 rounded-xl font-semibold transition-colors"
-              >
-                {copied ? (
-                  <>
-                    <Check className="w-4 h-4 mr-2" />
-                    Código PIX copiado!
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-4 h-4 mr-2" />
-                    Copiar código PIX
-                  </>
-                )}
-              </Button>
-            )}
-
-            <div className="text-center mb-4">
-              <p className="text-sm text-gray-500 mb-1">Valor do pagamento</p>
-              <div className="text-2xl font-bold text-green-600">
-                {price ? `R$ ${price.toFixed(2).replace(".", ",")}` : "Carregando..."}
-              </div>
-            </div>
-          </div>
-          <p className="text-sm font-bold text-black">Após o pagamento, você receberá a confirmação por e-mail.</p>
-        </div>
+        <PixPaymentPanel
+          isLoadingPix={isLoadingPix}
+          qrCodeImage={qrCodeImage}
+          pixCode={pixCode}
+          price={price}
+          copied={copied}
+          onCopy={handleCopyPix}
+        />
       ) : (
         <div className={twMerge("bg-gradient-to-br rounded-2xl p-6 sm:p-8 border-2 border-dashed", cardFormWrapperClass)}>
           <div className="text-left mb-6">
@@ -122,7 +175,7 @@ const Step6Pix = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack, childGend
             <p className="text-sm text-gray-600">Preencha os dados para concluir o pagamento.</p>
           </div>
 
-          <PaymentCardForm childGender={childGender} onChange={setCardData} />
+          <PaymentCardForm childGender={childGender} onChange={setCardData} installmentOptions={installmentOptions} />
 
           <div className="mt-6">
             <div className="rounded-xl border border-dashed border-gray-200 bg-white/80 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
@@ -155,10 +208,12 @@ const Step6Pix = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack, childGend
         </Button>
         <Button
           onClick={paymentMethod === "pix" ? handleCopyPix : undefined}
-          disabled={paymentMethod === "pix" ? !pixCode || isLoadingPix : false}
+          disabled={paymentMethod === "pix" ? !pixCode || isLoadingPix : !isCardFormComplete}
           className={twMerge(
             `flex-1 ${colors.buttonPrimaryClass} font-bold py-4 rounded-xl shadow-lg relative`,
-            paymentMethod === "pix" && (!pixCode || isLoadingPix) ? "opacity-50 !cursor-not-allowed !pointer-events-auto" : ""
+            (paymentMethod === "pix" && (!pixCode || isLoadingPix)) || (paymentMethod === "card" && !isCardFormComplete)
+              ? "opacity-50 !cursor-not-allowed !pointer-events-auto"
+              : ""
           )}
         >
           {paymentMethod === "pix" ? (
@@ -178,4 +233,4 @@ const Step6Pix = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack, childGend
   );
 };
 
-export default Step6Pix;
+export default Step6Payment;
