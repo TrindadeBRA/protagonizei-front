@@ -8,6 +8,8 @@ import Timer from "@/src/components/Timer";
 import { twMerge } from "tailwind-merge";
 import { useFormColors } from "../useFormColors";
 import PaymentCardForm, { CardFormData } from "../PaymentCardForm";
+import customFetch from "@/src/services/custom-fetch";
+import { getPostOrdersOrderIdCreditCardUrl } from "@/src/services/api";
 
 type Props = {
   orderId: string | null;
@@ -16,6 +18,7 @@ type Props = {
   pixCode: string | null;
   price: number | null;
   onBack: () => void;
+  onSuccess: () => void;
   childGender: string;
   paymentMethod: "pix" | "card";
 };
@@ -79,9 +82,11 @@ const PixPaymentPanel = ({ isLoadingPix, qrCodeImage, pixCode, price, copied, on
   );
 };
 
-const Step6Payment = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack, childGender, paymentMethod }: Props) => {
+const Step6Payment = ({ orderId, isLoadingPix, qrCodeImage, pixCode, price, onBack, onSuccess, childGender, paymentMethod }: Props) => {
   const colors = useFormColors(childGender);
   const [copied, setCopied] = useState(false);
+  const [isCardSubmitting, setIsCardSubmitting] = useState(false);
+  const [cardError, setCardError] = useState<string | null>(null);
   const [cardData, setCardData] = useState<CardFormData>({
     holderName: "",
     cardNumber: "",
@@ -129,6 +134,53 @@ const Step6Payment = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack, child
       } catch (err) {
         console.error('Erro ao copiar código PIX:', err);
       }
+    }
+  };
+
+  const handleCardPayment = async () => {
+    if (!orderId) {
+      setCardError("Pedido não encontrado. Volte e tente novamente.");
+      return;
+    }
+
+    const cardNumber = cardData.cardNumber.replace(/\D/g, "");
+    const expiryDigits = cardData.expiry.replace(/\D/g, "");
+    const expiry = expiryDigits.length === 4 ? expiryDigits : "";
+    const cvc = cardData.cvc.replace(/\D/g, "");
+    const document = cardData.document.replace(/\D/g, "");
+    const installments = parseInt(cardData.installments || "0", 10);
+
+    setCardError(null);
+    setIsCardSubmitting(true);
+    try {
+      const payload = {
+        holderName: cardData.holderName.trim(),
+        cardNumber,
+        expiry,
+        cvc,
+        document,
+        installments,
+      };
+
+      const response: any = await customFetch(getPostOrdersOrderIdCreditCardUrl(Number(orderId)), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response || response.message !== "Pagamento cartão criado com sucesso") {
+        const message = response?.message || "Erro ao processar pagamento no cartão.";
+        setCardError(message);
+        return;
+      }
+      const status = response?.status;
+      if (status === "CONFIRMED" || status === "RECEIVED") {
+        onSuccess();
+      }
+    } catch (error: any) {
+      setCardError(error?.message || "Erro ao processar pagamento no cartão.");
+    } finally {
+      setIsCardSubmitting(false);
     }
   };
 
@@ -207,11 +259,12 @@ const Step6Payment = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack, child
           Voltar
         </Button>
         <Button
-          onClick={paymentMethod === "pix" ? handleCopyPix : undefined}
-          disabled={paymentMethod === "pix" ? !pixCode || isLoadingPix : !isCardFormComplete}
+          onClick={paymentMethod === "pix" ? handleCopyPix : handleCardPayment}
+          disabled={paymentMethod === "pix" ? !pixCode || isLoadingPix : !isCardFormComplete || isCardSubmitting}
           className={twMerge(
             `flex-1 ${colors.buttonPrimaryClass} font-bold py-4 rounded-xl shadow-lg relative`,
-            (paymentMethod === "pix" && (!pixCode || isLoadingPix)) || (paymentMethod === "card" && !isCardFormComplete)
+            (paymentMethod === "pix" && (!pixCode || isLoadingPix)) ||
+              (paymentMethod === "card" && (!isCardFormComplete || isCardSubmitting))
               ? "opacity-50 !cursor-not-allowed !pointer-events-auto"
               : ""
           )}
@@ -224,11 +277,20 @@ const Step6Payment = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack, child
             ) : (
               "Copiar Código Pix"
             )
+          ) : isCardSubmitting ? (
+            <>
+              <Loader2 className="w-5 h-5 mr-2 animate-spin inline-block" /> Processando pagamento...
+            </>
           ) : (
             "Finalizar pagamento"
           )}
         </Button>
       </div>
+      {paymentMethod === "card" && cardError && (
+        <div className="rounded-lg border border-red-200 bg-red-50 text-red-700 text-sm p-3">
+          {cardError}
+        </div>
+      )}
     </div>
   );
 };

@@ -220,6 +220,7 @@ const FormSection = () => {
                   pixCode={pixCode}
                   price={bookPrice}
                   onBack={() => prevStep()}
+                  onSuccess={() => goToStep(7)}
                   childGender={formData.childGender}
                   paymentMethod={paymentMethod}
                 />

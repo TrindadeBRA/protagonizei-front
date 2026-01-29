@@ -434,6 +434,10 @@ export const getPostOrdersOrderIdPixUrl = (orderId: number,) => {
   return `/orders/${orderId}/pix`
 }
 
+export const getPostOrdersOrderIdCreditCardUrl = (orderId: number,) => {
+  return `/orders/${orderId}/credit-card`
+}
+
 export const postOrdersOrderIdPix = async (orderId: number, options?: RequestInit): Promise<postOrdersOrderIdPixResponse> => {
   
   const res = await fetch(getPostOrdersOrderIdPixUrl(orderId),
