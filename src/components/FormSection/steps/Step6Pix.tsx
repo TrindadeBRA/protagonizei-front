@@ -7,7 +7,7 @@ import { useState } from "react";
 import Timer from "@/src/components/Timer";
 import { twMerge } from "tailwind-merge";
 import { useFormColors } from "../useFormColors";
-import PaymentCardForm from "../PaymentCardForm";
+import PaymentCardForm, { CardFormData } from "../PaymentCardForm";
 
 type Props = {
   orderId: string | null;
@@ -23,6 +23,20 @@ type Props = {
 const Step6Pix = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack, childGender, paymentMethod }: Props) => {
   const colors = useFormColors(childGender);
   const [copied, setCopied] = useState(false);
+  const [cardData, setCardData] = useState<CardFormData>({
+    holderName: "",
+    cardNumber: "",
+    expiry: "",
+    cvc: "",
+    document: "",
+    installments: "",
+  });
+  const cardFormWrapperClass =
+    childGender === "boy"
+      ? "from-blue-50 to-sky-50 border-blue-200"
+      : childGender === "girl"
+        ? "from-pink-50 to-rose-50 border-pink-200"
+        : "from-blue-50 to-pink-50 border-blue-200";
   const handleCopyPix = async () => {
     if (pixCode) {
       try {
@@ -102,19 +116,35 @@ const Step6Pix = ({ isLoadingPix, qrCodeImage, pixCode, price, onBack, childGend
           <p className="text-sm font-bold text-black">Após o pagamento, você receberá a confirmação por e-mail.</p>
         </div>
       ) : (
-        <div className="bg-gradient-to-br from-blue-50 to-pink-50 rounded-2xl p-6 sm:p-8 border-2 border-dashed border-blue-200">
+        <div className={twMerge("bg-gradient-to-br rounded-2xl p-6 sm:p-8 border-2 border-dashed", cardFormWrapperClass)}>
           <div className="text-left mb-6">
             <h4 className="text-lg font-semibold text-gray-800 mb-1">Dados do cartão</h4>
             <p className="text-sm text-gray-600">Preencha os dados para concluir o pagamento.</p>
           </div>
 
-          <PaymentCardForm childGender={childGender} />
+          <PaymentCardForm childGender={childGender} onChange={setCardData} />
 
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-500 mb-1">Valor do pagamento</p>
-            <div className="text-2xl font-bold text-green-600">
-              {price ? `R$ ${price.toFixed(2).replace(".", ",")}` : "Carregando..."}
+          <div className="mt-6">
+            <div className="rounded-xl border border-dashed border-gray-200 bg-white/80 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-xs uppercase tracking-wide text-gray-500">Total a pagar</p>
+                <div className="text-2xl font-bold text-green-600">
+                  {price ? `R$ ${price.toFixed(2).replace(".", ",")}` : "Carregando..."}
+                </div>
+              </div>
+              {cardData.installments ? (
+                <div className="text-xs text-gray-500">
+                  <span className="inline-flex items-center rounded-full bg-green-50 text-green-700 border border-green-200 px-3 py-1 font-semibold">
+                    {cardData.installments === "1"
+                      ? "Pagamento único"
+                      : `${cardData.installments}x no cartão`}
+                  </span>
+                </div>
+              ) : null}
             </div>
+            <p className="text-xs text-gray-500 mt-2">
+              Após a confirmação, você receberá o PDF por e-mail.
+            </p>
           </div>
         </div>
       )}
